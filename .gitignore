@@ -22,6 +22,7 @@ dist/
 # Maven
 target/
 dist/
+vendor/
 
 # JetBrains IDE
 .idea/
@@ -48,3 +49,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+#laravel
+/vendor
+.env
+/storage
+storage/*.key
