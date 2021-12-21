@@ -51,6 +51,6 @@ Thumbs.db
 
 #laravel
 /vendor
-.env
+.env*
 /storage
 storage/*.key
