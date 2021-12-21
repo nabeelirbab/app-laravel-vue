@@ -76,3 +76,8 @@ Broadcasting events requires echo server to run this execute`laravel-echo-server
 
 #### Server Info
 Memory limit needs to be set top 512M
+
+# Mailcoach
+https://spatie.be/docs/laravel-mailcoach/v4/installation/in-an-existing-laravel-app
+use mail from address as username
+password stored in lastpass
