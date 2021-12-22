@@ -4,18 +4,17 @@ networks:
   laravel:
 
 services:
-  site:
-    build:
-      context: ./dockerfiles
-      dockerfile: nginx.dockerfile
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}
-    container_name: nginx
+  webserver:
+    image: nginx:alpine
+    container_name: phase_webserver
+    tty: true
+    restart: unless-stopped
     ports:
-      - 80:80
+      - "8008:80"
+      - "8443:443"
     volumes:
-      - ./src:/var/www/html:delegated
+      - ./:/var/www/html:cached
+      - ./dockerfiles/nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - php
       - redis
@@ -25,11 +24,13 @@ services:
 
   mysql:
     image: mariadb:10.6
-    container_name: mysql
+    container_name: phase_mysql
     restart: unless-stopped
     tty: true
     ports:
       - 3306:3306
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: homestead
       MYSQL_USER: homestead
@@ -47,15 +48,15 @@ services:
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
-    container_name: php
+    container_name: phase_php
     volumes:
-      - ./src:/var/www/html:delegated
+      - ./:/var/www/html:delegated
     networks:
       - laravel
 
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: phase_redis
     restart: unless-stopped
     ports:
       - 6379:6379
@@ -69,22 +70,23 @@ services:
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
-    container_name: composer
+    container_name: phase_composer
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     working_dir: /var/www/html
     depends_on:
       - php
     user: laravel
-    entrypoint: ['composer', '--ignore-platform-reqs']
+    command: install
+    # entrypoint: ['composer']
     networks:
       - laravel
 
   npm:
     image: node:13.7
-    container_name: npm
+    container_name: phase_npm
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     ports:
       - 3000:3000
       - 3001:3001
@@ -100,9 +102,9 @@ services:
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
-    container_name: artisan
+    container_name: phase_artisan
     volumes:
-      - ./src:/var/www/html:delegated
+      - ./:/var/www/html:delegated
     depends_on:
       - mysql
     working_dir: /var/www/html
