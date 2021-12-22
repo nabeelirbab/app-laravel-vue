@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.40.0.
+ * Generated for Laravel 7.30.6.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -198,18 +198,6 @@
                         return $instance->langPath();
         }
                     /**
-         * Set the language file directory.
-         *
-         * @param string $path
-         * @return \Illuminate\Foundation\Application 
-         * @static 
-         */ 
-        public static function useLangPath($path)
-        {
-                        /** @var \Illuminate\Foundation\Application $instance */
-                        return $instance->useLangPath($path);
-        }
-                    /**
          * Get the path to the public / web directory.
          *
          * @return string 
@@ -254,20 +242,6 @@
         {
                         /** @var \Illuminate\Foundation\Application $instance */
                         return $instance->resourcePath($path);
-        }
-                    /**
-         * Get the path to the views directory.
-         * 
-         * This method returns the first configured path in the array of view paths.
-         *
-         * @param string $path
-         * @return string 
-         * @static 
-         */ 
-        public static function viewPath($path = '')
-        {
-                        /** @var \Illuminate\Foundation\Application $instance */
-                        return $instance->viewPath($path);
         }
                     /**
          * Get the path to the environment file directory.
@@ -339,7 +313,7 @@
                         return $instance->environment(...$environments);
         }
                     /**
-         * Determine if the application is in the local environment.
+         * Determine if application is in local environment.
          *
          * @return bool 
          * @static 
@@ -350,7 +324,7 @@
                         return $instance->isLocal();
         }
                     /**
-         * Determine if the application is in the production environment.
+         * Determine if application is in production environment.
          *
          * @return bool 
          * @static 
@@ -826,17 +800,6 @@
                         return $instance->getLocale();
         }
                     /**
-         * Get the current application locale.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function currentLocale()
-        {
-                        /** @var \Illuminate\Foundation\Application $instance */
-                        return $instance->currentLocale();
-        }
-                    /**
          * Get the current application fallback locale.
          *
          * @return string 
@@ -872,7 +835,7 @@
                         $instance->setFallbackLocale($fallbackLocale);
         }
                     /**
-         * Determine if the application locale is the given locale.
+         * Determine if application locale is the given locale.
          *
          * @param string $locale
          * @return bool 
@@ -1224,7 +1187,7 @@
                     /**
          * An alias function name for make().
          *
-         * @param string|callable $abstract
+         * @param string $abstract
          * @param array $parameters
          * @return mixed 
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
@@ -1255,26 +1218,12 @@
          * @param \Closure|string $concrete
          * @return mixed 
          * @throws \Illuminate\Contracts\Container\BindingResolutionException
-         * @throws \Illuminate\Contracts\Container\CircularDependencyException
          * @static 
          */ 
         public static function build($concrete)
         {            //Method inherited from \Illuminate\Container\Container         
                         /** @var \Illuminate\Foundation\Application $instance */
                         return $instance->build($concrete);
-        }
-                    /**
-         * Register a new before resolving callback for all types.
-         *
-         * @param \Closure|string $abstract
-         * @param \Closure|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function beforeResolving($abstract, $callback = null)
-        {            //Method inherited from \Illuminate\Container\Container         
-                        /** @var \Illuminate\Foundation\Application $instance */
-                        $instance->beforeResolving($abstract, $callback);
         }
                     /**
          * Register a new resolving callback.
@@ -1720,29 +1669,6 @@
                         return $instance->hasResolvedGuards();
         }
                     /**
-         * Forget all of the resolved guard instances.
-         *
-         * @return \Illuminate\Auth\AuthManager 
-         * @static 
-         */ 
-        public static function forgetGuards()
-        {
-                        /** @var \Illuminate\Auth\AuthManager $instance */
-                        return $instance->forgetGuards();
-        }
-                    /**
-         * Set the application instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Foundation\Application $app
-         * @return \Illuminate\Auth\AuthManager 
-         * @static 
-         */ 
-        public static function setApplication($app)
-        {
-                        /** @var \Illuminate\Auth\AuthManager $instance */
-                        return $instance->setApplication($app);
-        }
-                    /**
          * Create the user provider implementation for the driver.
          *
          * @param string|null $provider
@@ -1864,20 +1790,6 @@
                         return $instance->attempt($credentials, $remember);
         }
                     /**
-         * Attempt to authenticate a user with credentials and additional callbacks.
-         *
-         * @param array $credentials
-         * @param array|callable $callbacks
-         * @param false $remember
-         * @return bool 
-         * @static 
-         */ 
-        public static function attemptWhen($credentials = [], $callbacks = null, $remember = false)
-        {
-                        /** @var \Illuminate\Auth\SessionGuard $instance */
-                        return $instance->attemptWhen($credentials, $callbacks, $remember);
-        }
-                    /**
          * Log the given user ID into the application.
          *
          * @param mixed $id
@@ -1916,8 +1828,6 @@
         }
                     /**
          * Log the user out of the application on their current device only.
-         * 
-         * This method does not cycle the "remember" token.
          *
          * @return void 
          * @static 
@@ -1935,7 +1845,6 @@
          * @param string $password
          * @param string $attribute
          * @return bool|null 
-         * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 
         public static function logoutOtherDevices($password, $attribute = 'password')
@@ -2104,7 +2013,7 @@
                         return $instance->setRequest($request);
         }
                     /**
-         * Determine if the current user is authenticated. If not, throw an exception.
+         * Determine if current user is authenticated. If not, throw an exception.
          *
          * @return \App\User 
          * @throws \Illuminate\Auth\AuthenticationException
@@ -2360,30 +2269,6 @@
         {
                         /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
                         return $instance->getClassComponentAliases();
-        }
-                    /**
-         * Register a class-based component namespace.
-         *
-         * @param string $namespace
-         * @param string $prefix
-         * @return void 
-         * @static 
-         */ 
-        public static function componentNamespace($namespace, $prefix)
-        {
-                        /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
-                        $instance->componentNamespace($namespace, $prefix);
-        }
-                    /**
-         * Get the registered class component namespaces.
-         *
-         * @return array 
-         * @static 
-         */ 
-        public static function getClassComponentNamespaces()
-        {
-                        /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
-                        return $instance->getClassComponentNamespaces();
         }
                     /**
          * Register a component alias directive.
@@ -2706,18 +2591,6 @@
                         $instance->setDefaultDriver($name);
         }
                     /**
-         * Disconnect the given disk and remove from local cache.
-         *
-         * @param string|null $name
-         * @return void 
-         * @static 
-         */ 
-        public static function purge($name = null)
-        {
-                        /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
-                        $instance->purge($name);
-        }
-                    /**
          * Register a custom driver creator Closure.
          *
          * @param string $driver
@@ -2729,40 +2602,6 @@
         {
                         /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
                         return $instance->extend($driver, $callback);
-        }
-                    /**
-         * Get the application instance used by the manager.
-         *
-         * @return \Illuminate\Contracts\Foundation\Application 
-         * @static 
-         */ 
-        public static function getApplication()
-        {
-                        /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
-                        return $instance->getApplication();
-        }
-                    /**
-         * Set the application instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Foundation\Application $app
-         * @return \Illuminate\Broadcasting\BroadcastManager 
-         * @static 
-         */ 
-        public static function setApplication($app)
-        {
-                        /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
-                        return $instance->setApplication($app);
-        }
-                    /**
-         * Forget all of the resolved driver instances.
-         *
-         * @return \Illuminate\Broadcasting\BroadcastManager 
-         * @static 
-         */ 
-        public static function forgetDrivers()
-        {
-                        /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
-                        return $instance->forgetDrivers();
         }
          
     }
@@ -2786,21 +2625,6 @@
         }
                     /**
          * Dispatch a command to its appropriate handler in the current process.
-         * 
-         * Queueable jobs will be dispatched to the "sync" queue.
-         *
-         * @param mixed $command
-         * @param mixed $handler
-         * @return mixed 
-         * @static 
-         */ 
-        public static function dispatchSync($command, $handler = null)
-        {
-                        /** @var \Illuminate\Bus\Dispatcher $instance */
-                        return $instance->dispatchSync($command, $handler);
-        }
-                    /**
-         * Dispatch a command to its appropriate handler in the current process without using the synchronous queue.
          *
          * @param mixed $command
          * @param mixed $handler
@@ -2811,42 +2635,6 @@
         {
                         /** @var \Illuminate\Bus\Dispatcher $instance */
                         return $instance->dispatchNow($command, $handler);
-        }
-                    /**
-         * Attempt to find the batch with the given ID.
-         *
-         * @param string $batchId
-         * @return \Illuminate\Bus\Batch|null 
-         * @static 
-         */ 
-        public static function findBatch($batchId)
-        {
-                        /** @var \Illuminate\Bus\Dispatcher $instance */
-                        return $instance->findBatch($batchId);
-        }
-                    /**
-         * Create a new batch of queueable jobs.
-         *
-         * @param \Illuminate\Support\Collection|array|mixed $jobs
-         * @return \Illuminate\Bus\PendingBatch 
-         * @static 
-         */ 
-        public static function batch($jobs)
-        {
-                        /** @var \Illuminate\Bus\Dispatcher $instance */
-                        return $instance->batch($jobs);
-        }
-                    /**
-         * Create a new chain of queueable jobs.
-         *
-         * @param \Illuminate\Support\Collection|array $jobs
-         * @return \Illuminate\Foundation\Bus\PendingChain 
-         * @static 
-         */ 
-        public static function chain($jobs)
-        {
-                        /** @var \Illuminate\Bus\Dispatcher $instance */
-                        return $instance->chain($jobs);
         }
                     /**
          * Determine if the given command has a handler.
@@ -3000,43 +2788,6 @@
                         $instance->assertNotDispatchedAfterResponse($command, $callback);
         }
                     /**
-         * Assert if a chain of jobs was dispatched.
-         *
-         * @param array $expectedChain
-         * @return void 
-         * @static 
-         */ 
-        public static function assertChained($expectedChain)
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
-                        $instance->assertChained($expectedChain);
-        }
-                    /**
-         * Assert if a job was dispatched with an empty chain based on a truth-test callback.
-         *
-         * @param string|\Closure $command
-         * @param callable|null $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertDispatchedWithoutChain($command, $callback = null)
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
-                        $instance->assertDispatchedWithoutChain($command, $callback);
-        }
-                    /**
-         * Assert if a batch was dispatched based on a truth-test callback.
-         *
-         * @param callable $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function assertBatched($callback)
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
-                        $instance->assertBatched($callback);
-        }
-                    /**
          * Get all of the jobs matching a truth-test callback.
          *
          * @param string $command
@@ -3063,18 +2814,6 @@
                         return $instance->dispatchedAfterResponse($command, $callback);
         }
                     /**
-         * Get all of the pending batches matching a truth-test callback.
-         *
-         * @param callable $callback
-         * @return \Illuminate\Support\Collection 
-         * @static 
-         */ 
-        public static function batched($callback)
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
-                        return $instance->batched($callback);
-        }
-                    /**
          * Determine if there are any stored commands for a given class.
          *
          * @param string $command
@@ -3097,18 +2836,6 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         return $instance->hasDispatchedAfterResponse($command);
-        }
-                    /**
-         * Record the fake pending batch dispatch.
-         *
-         * @param \Illuminate\Bus\PendingBatch $pendingBatch
-         * @return \Illuminate\Bus\Batch 
-         * @static 
-         */ 
-        public static function recordPendingBatch($pendingBatch)
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
-                        return $instance->recordPendingBatch($pendingBatch);
         }
          
     }
@@ -3200,18 +2927,6 @@
         {
                         /** @var \Illuminate\Cache\CacheManager $instance */
                         return $instance->forgetDriver($name);
-        }
-                    /**
-         * Disconnect the given driver and remove from local cache.
-         *
-         * @param string|null $name
-         * @return void 
-         * @static 
-         */ 
-        public static function purge($name = null)
-        {
-                        /** @var \Illuminate\Cache\CacheManager $instance */
-                        $instance->purge($name);
         }
                     /**
          * Register a custom driver creator Closure.
@@ -3528,17 +3243,6 @@
                         return $instance->tags($names);
         }
                     /**
-         * Determine if the current store supports tags.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function supportsTags()
-        {
-                        /** @var \Illuminate\Cache\Repository $instance */
-                        return $instance->supportsTags();
-        }
-                    /**
          * Get the default cache time.
          *
          * @return int|null 
@@ -3695,50 +3399,6 @@
                         return $instance->macroCall($method, $parameters);
         }
                     /**
-         * Remove all items from the cache.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function flush()
-        {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->flush();
-        }
-                    /**
-         * Get the Filesystem instance.
-         *
-         * @return \Illuminate\Filesystem\Filesystem 
-         * @static 
-         */ 
-        public static function getFilesystem()
-        {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getFilesystem();
-        }
-                    /**
-         * Get the working directory of the cache.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getDirectory()
-        {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getDirectory();
-        }
-                    /**
-         * Get the cache key prefix.
-         *
-         * @return string 
-         * @static 
-         */ 
-        public static function getPrefix()
-        {
-                        /** @var \Illuminate\Cache\FileStore $instance */
-                        return $instance->getPrefix();
-        }
-                    /**
          * Get a lock instance.
          *
          * @param string $name
@@ -3749,7 +3409,7 @@
          */ 
         public static function lock($name, $seconds = 0, $owner = null)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->lock($name, $seconds, $owner);
         }
                     /**
@@ -3762,8 +3422,76 @@
          */ 
         public static function restoreLock($name, $owner)
         {
-                        /** @var \Illuminate\Cache\FileStore $instance */
+                        /** @var \Illuminate\Cache\RedisStore $instance */
                         return $instance->restoreLock($name, $owner);
+        }
+                    /**
+         * Remove all items from the cache.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function flush()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->flush();
+        }
+                    /**
+         * Get the Redis connection instance.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */ 
+        public static function connection()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->connection();
+        }
+                    /**
+         * Set the connection name to be used.
+         *
+         * @param string $connection
+         * @return void 
+         * @static 
+         */ 
+        public static function setConnection($connection)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setConnection($connection);
+        }
+                    /**
+         * Get the Redis database instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->getRedis();
+        }
+                    /**
+         * Get the cache key prefix.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getPrefix()
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        return $instance->getPrefix();
+        }
+                    /**
+         * Set the cache key prefix.
+         *
+         * @param string $prefix
+         * @return void 
+         * @static 
+         */ 
+        public static function setPrefix($prefix)
+        {
+                        /** @var \Illuminate\Cache\RedisStore $instance */
+                        $instance->setPrefix($prefix);
         }
          
     }
@@ -4010,20 +3738,6 @@
                         $instance->queue(...$parameters);
         }
                     /**
-         * Queue a cookie to expire with the next response.
-         *
-         * @param string $name
-         * @param string|null $path
-         * @param string|null $domain
-         * @return void 
-         * @static 
-         */ 
-        public static function expire($name, $path = null, $domain = null)
-        {
-                        /** @var \Illuminate\Cookie\CookieJar $instance */
-                        $instance->expire($name, $path, $domain);
-        }
-                    /**
          * Remove a cookie from the queue.
          *
          * @param string $name
@@ -4061,17 +3775,6 @@
         {
                         /** @var \Illuminate\Cookie\CookieJar $instance */
                         return $instance->getQueuedCookies();
-        }
-                    /**
-         * Flush the cookies which have been queued for the next request.
-         *
-         * @return \Illuminate\Cookie\CookieJar 
-         * @static 
-         */ 
-        public static function flushQueuedCookies()
-        {
-                        /** @var \Illuminate\Cookie\CookieJar $instance */
-                        return $instance->flushQueuedCookies();
         }
                     /**
          * Register a custom macro.
@@ -4357,29 +4060,6 @@
                         $instance->setReconnector($reconnector);
         }
                     /**
-         * Set the application instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Foundation\Application $app
-         * @return \Illuminate\Database\DatabaseManager 
-         * @static 
-         */ 
-        public static function setApplication($app)
-        {
-                        /** @var \Illuminate\Database\DatabaseManager $instance */
-                        return $instance->setApplication($app);
-        }
-                    /**
-         * Determine if the connected database is a MariaDB database.
-         *
-         * @return bool 
-         * @static 
-         */ 
-        public static function isMaria()
-        {
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        return $instance->isMaria();
-        }
-                    /**
          * Get a schema builder instance for the connection.
          *
          * @return \Illuminate\Database\Schema\MySqlBuilder 
@@ -4389,19 +4069,6 @@
         {
                         /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->getSchemaBuilder();
-        }
-                    /**
-         * Get the schema state for the connection.
-         *
-         * @param \Illuminate\Filesystem\Filesystem|null $files
-         * @param callable|null $processFactory
-         * @return \Illuminate\Database\Schema\MySqlSchemaState 
-         * @static 
-         */ 
-        public static function getSchemaState($files = null, $processFactory = null)
-        {
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        return $instance->getSchemaState($files, $processFactory);
         }
                     /**
          * Set the query grammar to the default implementation.
@@ -4680,17 +4347,6 @@
                         $instance->recordsHaveBeenModified($value);
         }
                     /**
-         * Reset the record modification state.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function forgetRecordModificationState()
-        {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        $instance->forgetRecordModificationState();
-        }
-                    /**
          * Is Doctrine available?
          *
          * @return bool 
@@ -4942,29 +4598,6 @@
                         $instance->unsetEventDispatcher();
         }
                     /**
-         * Set the transaction manager instance on the connection.
-         *
-         * @param \Illuminate\Database\DatabaseTransactionsManager $manager
-         * @return \Illuminate\Database\MySqlConnection 
-         * @static 
-         */ 
-        public static function setTransactionManager($manager)
-        {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        return $instance->setTransactionManager($manager);
-        }
-                    /**
-         * Unset the transaction manager for this connection.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function unsetTransactionManager()
-        {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        $instance->unsetTransactionManager();
-        }
-                    /**
          * Determine if the connection is in a "dry run".
          *
          * @return bool 
@@ -5173,18 +4806,6 @@
                         /** @var \Illuminate\Database\MySqlConnection $instance */
                         return $instance->transactionLevel();
         }
-                    /**
-         * Execute the callback after a transaction commits.
-         *
-         * @param callable $callback
-         * @return void 
-         * @static 
-         */ 
-        public static function afterCommit($callback)
-        {            //Method inherited from \Illuminate\Database\Connection         
-                        /** @var \Illuminate\Database\MySqlConnection $instance */
-                        $instance->afterCommit($callback);
-        }
          
     }
             /**
@@ -5196,12 +4817,12 @@
                     /**
          * Register an event listener with the dispatcher.
          *
-         * @param \Closure|string|array $events
-         * @param \Closure|string|array|null $listener
+         * @param string|array $events
+         * @param \Closure|string $listener
          * @return void 
          * @static 
          */ 
-        public static function listen($events, $listener = null)
+        public static function listen($events, $listener)
         {
                         /** @var \Illuminate\Events\Dispatcher $instance */
                         $instance->listen($events, $listener);
@@ -5404,19 +5025,6 @@
                         return \Illuminate\Events\Dispatcher::hasMacro($name);
         }
                     /**
-         * Assert if an event has a listener attached to it.
-         *
-         * @param string $expectedEvent
-         * @param string $expectedListener
-         * @return void 
-         * @static 
-         */ 
-        public static function assertListening($expectedEvent, $expectedListener)
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
-                        $instance->assertListening($expectedEvent, $expectedListener);
-        }
-                    /**
          * Assert if an event was dispatched based on a truth-test callback.
          *
          * @param string|\Closure $event
@@ -5454,17 +5062,6 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
                         $instance->assertNotDispatched($event, $callback);
-        }
-                    /**
-         * Assert that no events were dispatched.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function assertNothingDispatched()
-        {
-                        /** @var \Illuminate\Support\Testing\Fakes\EventFake $instance */
-                        $instance->assertNothingDispatched();
         }
                     /**
          * Get all of the events matching a truth-test callback.
@@ -5553,41 +5150,26 @@
          * Get the returned value of a file.
          *
          * @param string $path
-         * @param array $data
          * @return mixed 
          * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
          * @static 
          */ 
-        public static function getRequire($path, $data = [])
+        public static function getRequire($path)
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        return $instance->getRequire($path, $data);
+                        return $instance->getRequire($path);
         }
                     /**
          * Require the given file once.
          *
-         * @param string $path
-         * @param array $data
+         * @param string $file
          * @return mixed 
          * @static 
          */ 
-        public static function requireOnce($path, $data = [])
+        public static function requireOnce($file)
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        return $instance->requireOnce($path, $data);
-        }
-                    /**
-         * Get the contents of a file one line at a time.
-         *
-         * @param string $path
-         * @return \Illuminate\Support\LazyCollection 
-         * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-         * @static 
-         */ 
-        public static function lines($path)
-        {
-                        /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        return $instance->lines($path);
+                        return $instance->requireOnce($file);
         }
                     /**
          * Get the MD5 hash of the file at the given path.
@@ -5717,19 +5299,6 @@
         {
                         /** @var \Illuminate\Filesystem\Filesystem $instance */
                         $instance->link($target, $link);
-        }
-                    /**
-         * Create a relative symlink to the target file or directory.
-         *
-         * @param string $target
-         * @param string $link
-         * @return void 
-         * @static 
-         */ 
-        public static function relativeLink($target, $link)
-        {
-                        /** @var \Illuminate\Filesystem\Filesystem $instance */
-                        $instance->relativeLink($target, $link);
         }
                     /**
          * Extract the file name from a file path.
@@ -6332,18 +5901,6 @@
                         /** @var \Illuminate\Auth\Access\Gate $instance */
                         return $instance->policies();
         }
-                    /**
-         * Set the container instance used by the gate.
-         *
-         * @param \Illuminate\Contracts\Container\Container $container
-         * @return \Illuminate\Auth\Access\Gate 
-         * @static 
-         */ 
-        public static function setContainer($container)
-        {
-                        /** @var \Illuminate\Auth\Access\Gate $instance */
-                        return $instance->setContainer($container);
-        }
          
     }
             /**
@@ -6484,40 +6041,6 @@
         {            //Method inherited from \Illuminate\Support\Manager         
                         /** @var \Illuminate\Hashing\HashManager $instance */
                         return $instance->getDrivers();
-        }
-                    /**
-         * Get the container instance used by the manager.
-         *
-         * @return \Illuminate\Contracts\Container\Container 
-         * @static 
-         */ 
-        public static function getContainer()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Hashing\HashManager $instance */
-                        return $instance->getContainer();
-        }
-                    /**
-         * Set the container instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Container\Container $container
-         * @return \Illuminate\Hashing\HashManager 
-         * @static 
-         */ 
-        public static function setContainer($container)
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Hashing\HashManager $instance */
-                        return $instance->setContainer($container);
-        }
-                    /**
-         * Forget all of the resolved driver instances.
-         *
-         * @return \Illuminate\Hashing\HashManager 
-         * @static 
-         */ 
-        public static function forgetDrivers()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Hashing\HashManager $instance */
-                        return $instance->forgetDrivers();
         }
          
     }
@@ -6806,8 +6329,6 @@
             /**
      * 
      *
-     * @method static void write(string $level, string $message, array $context = [])
-     * @method static void listen(\Closure $callback)
      * @see \Illuminate\Log\Logger
      */ 
         class Log {
@@ -7624,40 +7145,6 @@
                         return $instance->getDrivers();
         }
                     /**
-         * Get the container instance used by the manager.
-         *
-         * @return \Illuminate\Contracts\Container\Container 
-         * @static 
-         */ 
-        public static function getContainer()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Notifications\ChannelManager $instance */
-                        return $instance->getContainer();
-        }
-                    /**
-         * Set the container instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Container\Container $container
-         * @return \Illuminate\Notifications\ChannelManager 
-         * @static 
-         */ 
-        public static function setContainer($container)
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Notifications\ChannelManager $instance */
-                        return $instance->setContainer($container);
-        }
-                    /**
-         * Forget all of the resolved driver instances.
-         *
-         * @return \Illuminate\Notifications\ChannelManager 
-         * @static 
-         */ 
-        public static function forgetDrivers()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Notifications\ChannelManager $instance */
-                        return $instance->forgetDrivers();
-        }
-                    /**
          * Assert if a notification was sent based on a truth-test callback.
          *
          * @param mixed $notifiable
@@ -7794,7 +7281,7 @@
      * 
      *
      * @method static mixed reset(array $credentials, \Closure $callback)
-     * @method static string sendResetLink(array $credentials, \Closure $callback = null)
+     * @method static string sendResetLink(array $credentials)
      * @method static \Illuminate\Contracts\Auth\CanResetPassword getUser(array $credentials)
      * @method static string createToken(\Illuminate\Contracts\Auth\CanResetPassword $user)
      * @method static void deleteToken(\Illuminate\Contracts\Auth\CanResetPassword $user)
@@ -7843,7 +7330,6 @@
             /**
      * 
      *
-     * @method static void popUsing(string $workerName, callable $callback)
      * @see \Illuminate\Queue\QueueManager
      * @see \Illuminate\Queue\Queue
      */ 
@@ -8004,29 +7490,6 @@
         {
                         /** @var \Illuminate\Queue\QueueManager $instance */
                         return $instance->getName($connection);
-        }
-                    /**
-         * Get the application instance used by the manager.
-         *
-         * @return \Illuminate\Contracts\Foundation\Application 
-         * @static 
-         */ 
-        public static function getApplication()
-        {
-                        /** @var \Illuminate\Queue\QueueManager $instance */
-                        return $instance->getApplication();
-        }
-                    /**
-         * Set the application instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Foundation\Application $app
-         * @return \Illuminate\Queue\QueueManager 
-         * @static 
-         */ 
-        public static function setApplication($app)
-        {
-                        /** @var \Illuminate\Queue\QueueManager $instance */
-                        return $instance->setApplication($app);
         }
                     /**
          * Assert if a job was pushed based on a truth-test callback.
@@ -8276,16 +7739,102 @@
                         return $instance->setConnectionName($name);
         }
                     /**
-         * Get the backoff for an object-based queue handler.
+         * Get the number of queue jobs that are ready to process.
+         *
+         * @param string|null $queue
+         * @return int 
+         * @static 
+         */ 
+        public static function readyNow($queue = null)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->readyNow($queue);
+        }
+                    /**
+         * Migrate the delayed jobs that are ready to the regular queue.
+         *
+         * @param string $from
+         * @param string $to
+         * @return void 
+         * @static 
+         */ 
+        public static function migrateExpiredJobs($from, $to)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->migrateExpiredJobs($from, $to);
+        }
+                    /**
+         * Delete a reserved job from the queue.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteReserved($queue, $job)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->deleteReserved($queue, $job);
+        }
+                    /**
+         * Delete a reserved job from the reserved queue and release it.
+         *
+         * @param string $queue
+         * @param \Illuminate\Queue\Jobs\RedisJob $job
+         * @param int $delay
+         * @return void 
+         * @static 
+         */ 
+        public static function deleteAndRelease($queue, $job, $delay)
+        {
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        $instance->deleteAndRelease($queue, $job, $delay);
+        }
+                    /**
+         * Get the queue or return the default.
+         *
+         * @param string|null $queue
+         * @return string 
+         * @static 
+         */ 
+        public static function getQueue($queue)
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getQueue($queue);
+        }
+                    /**
+         * Get the connection for the queue.
+         *
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */ 
+        public static function getConnection()
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getConnection();
+        }
+                    /**
+         * Get the underlying Redis instance.
+         *
+         * @return \Illuminate\Contracts\Redis\Factory 
+         * @static 
+         */ 
+        public static function getRedis()
+        {            //Method inherited from \Illuminate\Queue\RedisQueue         
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getRedis();
+        }
+                    /**
+         * Get the retry delay for an object-based queue handler.
          *
          * @param mixed $job
          * @return mixed 
          * @static 
          */ 
-        public static function getJobBackoff($job)
+        public static function getJobRetryDelay($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        return $instance->getJobBackoff($job);
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
+                        return $instance->getJobRetryDelay($job);
         }
                     /**
          * Get the expiration timestamp for an object-based queue handler.
@@ -8296,30 +7845,19 @@
          */ 
         public static function getJobExpiration($job)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         return $instance->getJobExpiration($job);
         }
                     /**
          * Register a callback to be executed when creating job payloads.
          *
-         * @param callable|null $callback
+         * @param callable $callback
          * @return void 
          * @static 
          */ 
         public static function createPayloadUsing($callback)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
-        }
-                    /**
-         * Get the container instance being used by the connection.
-         *
-         * @return \Illuminate\Container\Container 
-         * @static 
-         */ 
-        public static function getContainer()
-        {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
-                        return $instance->getContainer();
+                        \Laravel\Horizon\RedisQueue::createPayloadUsing($callback);
         }
                     /**
          * Set the IoC container instance.
@@ -8330,7 +7868,7 @@
          */ 
         public static function setContainer($container)
         {            //Method inherited from \Illuminate\Queue\Queue         
-                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        /** @var \Laravel\Horizon\RedisQueue $instance */
                         $instance->setContainer($container);
         }
          
@@ -8668,18 +8206,6 @@
                         $instance->setDriver($driver);
         }
                     /**
-         * Disconnect the given connection and remove from local cache.
-         *
-         * @param string|null $name
-         * @return void 
-         * @static 
-         */ 
-        public static function purge($name = null)
-        {
-                        /** @var \Illuminate\Redis\RedisManager $instance */
-                        $instance->purge($name);
-        }
-                    /**
          * Register a custom driver creator Closure.
          *
          * @param string $driver
@@ -8849,7 +8375,7 @@
                         return $instance->routeIs(...$patterns);
         }
                     /**
-         * Determine if the current request URL and query string match a pattern.
+         * Determine if the current request URL and query string matches a pattern.
          *
          * @param mixed $patterns
          * @return bool 
@@ -8872,7 +8398,7 @@
                         return $instance->ajax();
         }
                     /**
-         * Determine if the request is the result of a PJAX call.
+         * Determine if the request is the result of an PJAX call.
          *
          * @return bool 
          * @static 
@@ -8883,7 +8409,7 @@
                         return $instance->pjax();
         }
                     /**
-         * Determine if the request is the result of a prefetch call.
+         * Determine if the request is the result of an prefetch call.
          *
          * @return bool 
          * @static 
@@ -9310,7 +8836,7 @@
                     /**
          * Gets the list of trusted proxies.
          *
-         * @return array An array of trusted proxies
+         * @return array 
          * @static 
          */ 
         public static function getTrustedProxies()
@@ -9342,7 +8868,7 @@
                     /**
          * Gets the list of trusted host patterns.
          *
-         * @return array An array of trusted host patterns
+         * @return array 
          * @static 
          */ 
         public static function getTrustedHosts()
@@ -9355,7 +8881,7 @@
          * It builds a normalized query string, where keys/value pairs are alphabetized,
          * have consistent escaping and unneeded delimiters are removed.
          *
-         * @return string A normalized query string for the Request
+         * @return string 
          * @static 
          */ 
         public static function normalizeQueryString($qs)
@@ -9382,7 +8908,7 @@
                     /**
          * Checks whether support for the _method request parameter is enabled.
          *
-         * @return bool True when the _method request parameter is enabled, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function getHttpMethodParameterOverride()
@@ -9408,7 +8934,8 @@
          * like whether the session is started or not. It is just a way to check if this Request
          * is associated with a Session instance.
          *
-         * @return bool true when the Request contains a Session object, false otherwise
+         * @param bool $skipIfUninitialized When true, ignores factories injected by `setSessionFactory`
+         * @return bool 
          * @static 
          */ 
         public static function hasSession()
@@ -9430,6 +8957,7 @@
          * 
          *
          * @internal 
+         * @param \Symfony\Component\HttpFoundation\callable():  SessionInterface $factory
          * @static 
          */ 
         public static function setSessionFactory($factory)
@@ -9446,7 +8974,7 @@
          * 
          * Use this method carefully; you should use getClientIp() instead.
          *
-         * @return array The client IP addresses
+         * @return array 
          * @see getClientIp()
          * @static 
          */ 
@@ -9468,7 +8996,7 @@
          * ("Client-Ip" for instance), configure it via the $trustedHeaderSet
          * argument of the Request::setTrustedProxies() method instead.
          *
-         * @return string|null The client IP address
+         * @return string|null 
          * @see getClientIps()
          * @see https://wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -9562,7 +9090,7 @@
          * 
          * The "X-Forwarded-Port" header must contain the client port.
          *
-         * @return int|string can be a string if fetched from the server bag
+         * @return int|string|null Can be a string if fetched from the server bag
          * @static 
          */ 
         public static function getPort()
@@ -9595,7 +9123,7 @@
                     /**
          * Gets the user info.
          *
-         * @return string A user name and, optionally, scheme-specific information about how to gain authorization to access the server
+         * @return string|null A user name if any and, optionally, scheme-specific information about how to gain authorization to access the server
          * @static 
          */ 
         public static function getUserInfo()
@@ -9633,7 +9161,7 @@
          * If the URL was called with basic authentication, the user
          * and the password are not added to the generated string.
          *
-         * @return string The scheme and HTTP host
+         * @return string 
          * @static 
          */ 
         public static function getSchemeAndHttpHost()
@@ -9644,7 +9172,7 @@
                     /**
          * Generates a normalized URI (URL) for the Request.
          *
-         * @return string A normalized URI (URL) for the Request
+         * @return string 
          * @see getQueryString()
          * @static 
          */ 
@@ -9657,7 +9185,7 @@
          * Generates a normalized URI for the given path.
          *
          * @param string $path A path to use instead of the current one
-         * @return string The normalized URI for the path
+         * @return string 
          * @static 
          */ 
         public static function getUriForPath($path)
@@ -9680,7 +9208,7 @@
          * - "/a/b/c/other" -> "other"
          * - "/a/x/y"       -> "../../x/y"
          *
-         * @return string The relative target path
+         * @return string 
          * @static 
          */ 
         public static function getRelativeUriForPath($path)
@@ -9694,7 +9222,7 @@
          * It builds a normalized query string, where keys/value pairs are alphabetized
          * and have consistent escaping.
          *
-         * @return string|null A normalized query string for the Request
+         * @return string|null 
          * @static 
          */ 
         public static function getQueryString()
@@ -9756,7 +9284,7 @@
          * 
          * The method is always an uppercased string.
          *
-         * @return string The request method
+         * @return string 
          * @see getRealMethod()
          * @static 
          */ 
@@ -9768,7 +9296,7 @@
                     /**
          * Gets the "real" request method.
          *
-         * @return string The request method
+         * @return string 
          * @see getMethod()
          * @static 
          */ 
@@ -9780,7 +9308,7 @@
                     /**
          * Gets the mime type associated with the format.
          *
-         * @return string|null The associated mime type (null if not found)
+         * @return string|null 
          * @static 
          */ 
         public static function getMimeType($format)
@@ -9791,7 +9319,7 @@
                     /**
          * Gets the mime types associated with the format.
          *
-         * @return array The associated mime types
+         * @return array 
          * @static 
          */ 
         public static function getMimeTypes($format)
@@ -9801,7 +9329,7 @@
                     /**
          * Gets the format associated with the mime type.
          *
-         * @return string|null The format (null if not found)
+         * @return string|null 
          * @static 
          */ 
         public static function getFormat($mimeType)
@@ -9830,7 +9358,7 @@
          *  * $default
          *
          * @see getPreferredFormat
-         * @return string|null The request format
+         * @return string|null 
          * @static 
          */ 
         public static function getRequestFormat($default = 'html')
@@ -9851,7 +9379,7 @@
                     /**
          * Gets the format associated with the request.
          *
-         * @return string|null The format (null if no content type is present)
+         * @return string|null 
          * @static 
          */ 
         public static function getContentType()
@@ -9940,7 +9468,7 @@
          * Checks whether the method is cacheable or not.
          *
          * @see https://tools.ietf.org/html/rfc7231#section-4.2.3
-         * @return bool True for GET and HEAD, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isMethodCacheable()
@@ -9957,7 +9485,7 @@
          * if the proxy is trusted (see "setTrustedProxies()"), otherwise it returns
          * the latter (from the "SERVER_PROTOCOL" server parameter).
          *
-         * @return string 
+         * @return string|null 
          * @static 
          */ 
         public static function getProtocolVersion()
@@ -9969,7 +9497,7 @@
          * Returns the request body content.
          *
          * @param bool $asResource If true, a resource will be returned
-         * @return string|resource The request body content or a resource to read the body stream
+         * @return string|resource 
          * @static 
          */ 
         public static function getContent($asResource = false)
@@ -9980,7 +9508,7 @@
                     /**
          * Gets the Etags.
          *
-         * @return array The entity tags
+         * @return array 
          * @static 
          */ 
         public static function getETags()
@@ -10018,7 +9546,7 @@
          * Returns the preferred language.
          *
          * @param string[] $locales An array of ordered available locales
-         * @return string|null The preferred locale
+         * @return string|null 
          * @static 
          */ 
         public static function getPreferredLanguage($locales = null)
@@ -10027,9 +9555,9 @@
                         return $instance->getPreferredLanguage($locales);
         }
                     /**
-         * Gets a list of languages acceptable by the client browser.
+         * Gets a list of languages acceptable by the client browser ordered in the user browser preferences.
          *
-         * @return array Languages ordered in the user browser preferences
+         * @return array 
          * @static 
          */ 
         public static function getLanguages()
@@ -10038,9 +9566,9 @@
                         return $instance->getLanguages();
         }
                     /**
-         * Gets a list of charsets acceptable by the client browser.
+         * Gets a list of charsets acceptable by the client browser in preferable order.
          *
-         * @return array List of charsets in preferable order
+         * @return array 
          * @static 
          */ 
         public static function getCharsets()
@@ -10049,9 +9577,9 @@
                         return $instance->getCharsets();
         }
                     /**
-         * Gets a list of encodings acceptable by the client browser.
+         * Gets a list of encodings acceptable by the client browser in preferable order.
          *
-         * @return array List of encodings in preferable order
+         * @return array 
          * @static 
          */ 
         public static function getEncodings()
@@ -10060,9 +9588,9 @@
                         return $instance->getEncodings();
         }
                     /**
-         * Gets a list of content types acceptable by the client browser.
+         * Gets a list of content types acceptable by the client browser in preferable order.
          *
-         * @return array List of content types in preferable order
+         * @return array 
          * @static 
          */ 
         public static function getAcceptableContentTypes()
@@ -10077,7 +9605,7 @@
          * It is known to work with common JavaScript frameworks:
          *
          * @see https://wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
-         * @return bool true if the request is an XMLHttpRequest, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isXmlHttpRequest()
@@ -10102,13 +9630,25 @@
          * This can be useful to determine whether or not to trust the
          * contents of a proxy-specific header.
          *
-         * @return bool true if the request came from a trusted proxy, false otherwise
+         * @return bool 
          * @static 
          */ 
         public static function isFromTrustedProxy()
         {            //Method inherited from \Symfony\Component\HttpFoundation\Request         
                         /** @var \Illuminate\Http\Request $instance */
                         return $instance->isFromTrustedProxy();
+        }
+                    /**
+         * Determine if the given content types match.
+         *
+         * @param string $actual
+         * @param string $type
+         * @return bool 
+         * @static 
+         */ 
+        public static function matchesType($actual, $type)
+        {
+                        return \Illuminate\Http\Request::matchesType($actual, $type);
         }
                     /**
          * Determine if the request is sending JSON.
@@ -10201,18 +9741,6 @@
                         return $instance->acceptsHtml();
         }
                     /**
-         * Determine if the given content types match.
-         *
-         * @param string $actual
-         * @param string $type
-         * @return bool 
-         * @static 
-         */ 
-        public static function matchesType($actual, $type)
-        {
-                        return \Illuminate\Http\Request::matchesType($actual, $type);
-        }
-                    /**
          * Get the data format expected in the response.
          *
          * @param string $default
@@ -10229,7 +9757,7 @@
          *
          * @param string|null $key
          * @param string|array|null $default
-         * @return string|array|null 
+         * @return string|array 
          * @static 
          */ 
         public static function old($key = null, $default = null)
@@ -10605,30 +10133,6 @@
                         return $instance->file($key, $default);
         }
                     /**
-         * Dump the request items and end the script.
-         *
-         * @param array|mixed $keys
-         * @return void 
-         * @static 
-         */ 
-        public static function dd(...$keys)
-        {
-                        /** @var \Illuminate\Http\Request $instance */
-                        $instance->dd(...$keys);
-        }
-                    /**
-         * Dump the items.
-         *
-         * @param array $keys
-         * @return \Illuminate\Http\Request 
-         * @static 
-         */ 
-        public static function dump($keys = [])
-        {
-                        /** @var \Illuminate\Http\Request $instance */
-                        return $instance->dump($keys);
-        }
-                    /**
          * Register a custom macro.
          *
          * @param string $name
@@ -10699,16 +10203,6 @@
         public static function hasValidSignature($absolute = true)
         {
                         return \Illuminate\Http\Request::hasValidSignature($absolute);
-        }
-                    /**
-         * 
-         *
-         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
-         * @static 
-         */ 
-        public static function hasValidRelativeSignature()
-        {
-                        return \Illuminate\Http\Request::hasValidRelativeSignature();
         }
          
     }
@@ -10968,9 +10462,9 @@
      * @method static \Illuminate\Routing\RouteRegistrar domain(string $value)
      * @method static \Illuminate\Routing\RouteRegistrar middleware(array|string|null $middleware)
      * @method static \Illuminate\Routing\RouteRegistrar name(string $value)
-     * @method static \Illuminate\Routing\RouteRegistrar namespace(string|null $value)
-     * @method static \Illuminate\Routing\RouteRegistrar prefix(string $prefix)
-     * @method static \Illuminate\Routing\RouteRegistrar where(array $where)
+     * @method static \Illuminate\Routing\RouteRegistrar namespace(string $value)
+     * @method static \Illuminate\Routing\RouteRegistrar prefix(string  $prefix)
+     * @method static \Illuminate\Routing\RouteRegistrar where(array  $where)
      * @see \Illuminate\Routing\Router
      */ 
         class Route {
@@ -11110,15 +10604,13 @@
          * @param string $uri
          * @param string $view
          * @param array $data
-         * @param int|array $status
-         * @param array $headers
          * @return \Illuminate\Routing\Route 
          * @static 
          */ 
-        public static function view($uri, $view, $data = [], $status = 200, $headers = [])
+        public static function view($uri, $view, $data = [])
         {
                         /** @var \Illuminate\Routing\Router $instance */
-                        return $instance->view($uri, $view, $data, $status, $headers);
+                        return $instance->view($uri, $view, $data);
         }
                     /**
          * Register a new route with the given verbs.
@@ -11455,17 +10947,6 @@
                         return $instance->pushMiddlewareToGroup($group, $middleware);
         }
                     /**
-         * Flush the router's middleware groups.
-         *
-         * @return \Illuminate\Routing\Router 
-         * @static 
-         */ 
-        public static function flushMiddlewareGroups()
-        {
-                        /** @var \Illuminate\Routing\Router $instance */
-                        return $instance->flushMiddlewareGroups();
-        }
-                    /**
          * Add a new route parameter binder.
          *
          * @param string $key
@@ -11589,7 +11070,7 @@
                     /**
          * Get the currently dispatched route instance.
          *
-         * @return \Illuminate\Routing\Route|null 
+         * @return \Illuminate\Routing\Route 
          * @static 
          */ 
         public static function getCurrentRoute()
@@ -11773,18 +11254,6 @@
                         return \Illuminate\Routing\Router::uniqueMiddleware($middleware);
         }
                     /**
-         * Set the container instance used by the router.
-         *
-         * @param \Illuminate\Container\Container $container
-         * @return \Illuminate\Routing\Router 
-         * @static 
-         */ 
-        public static function setContainer($container)
-        {
-                        /** @var \Illuminate\Routing\Router $instance */
-                        return $instance->setContainer($container);
-        }
-                    /**
          * Register a custom macro.
          *
          * @param string $name
@@ -11859,6 +11328,47 @@
                     /**
          * 
          *
+         * @see \Laravel\Ui\AuthRouteMethods::auth()
+         * @param mixed $options
+         * @static 
+         */ 
+        public static function auth($options = [])
+        {
+                        return \Illuminate\Routing\Router::auth($options);
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::resetPassword()
+         * @static 
+         */ 
+        public static function resetPassword()
+        {
+                        return \Illuminate\Routing\Router::resetPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::confirmPassword()
+         * @static 
+         */ 
+        public static function confirmPassword()
+        {
+                        return \Illuminate\Routing\Router::confirmPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::emailVerification()
+         * @static 
+         */ 
+        public static function emailVerification()
+        {
+                        return \Illuminate\Routing\Router::emailVerification();
+        }
+                    /**
+         * 
+         *
          * @see \Spatie\Mailcoach\MailcoachServiceProvider::bootRoutes()
          * @param string $url
          * @static 
@@ -11898,30 +11408,6 @@
      * @see \Illuminate\Database\Schema\Builder
      */ 
         class Schema {
-                    /**
-         * Create a database in the schema.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function createDatabase($name)
-        {
-                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
-                        return $instance->createDatabase($name);
-        }
-                    /**
-         * Drop a database from the schema if the database exists.
-         *
-         * @param string $name
-         * @return bool 
-         * @static 
-         */ 
-        public static function dropDatabaseIfExists($name)
-        {
-                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
-                        return $instance->dropDatabaseIfExists($name);
-        }
                     /**
          * Determine if the given table exists.
          *
@@ -12000,27 +11486,6 @@
         public static function defaultStringLength($length)
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         \Illuminate\Database\Schema\MySqlBuilder::defaultStringLength($length);
-        }
-                    /**
-         * Set the default morph key type for migrations.
-         *
-         * @param string $type
-         * @return void 
-         * @static 
-         */ 
-        public static function defaultMorphKeyType($type)
-        {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        \Illuminate\Database\Schema\MySqlBuilder::defaultMorphKeyType($type);
-        }
-                    /**
-         * Set the default morph key type for migrations to UUIDs.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function morphUsingUuids()
-        {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        \Illuminate\Database\Schema\MySqlBuilder::morphUsingUuids();
         }
                     /**
          * Determine if the given table has a given column.
@@ -12110,19 +11575,6 @@
         {            //Method inherited from \Illuminate\Database\Schema\Builder         
                         /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
                         $instance->dropIfExists($table);
-        }
-                    /**
-         * Drop columns from a table schema.
-         *
-         * @param string $table
-         * @param string|array $columns
-         * @return void 
-         * @static 
-         */ 
-        public static function dropColumns($table, $columns)
-        {            //Method inherited from \Illuminate\Database\Schema\Builder         
-                        /** @var \Illuminate\Database\Schema\MySqlBuilder $instance */
-                        $instance->dropColumns($table, $columns);
         }
                     /**
          * Drop all types from the database.
@@ -12325,40 +11777,6 @@
                         return $instance->getDrivers();
         }
                     /**
-         * Get the container instance used by the manager.
-         *
-         * @return \Illuminate\Contracts\Container\Container 
-         * @static 
-         */ 
-        public static function getContainer()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Session\SessionManager $instance */
-                        return $instance->getContainer();
-        }
-                    /**
-         * Set the container instance used by the manager.
-         *
-         * @param \Illuminate\Contracts\Container\Container $container
-         * @return \Illuminate\Session\SessionManager 
-         * @static 
-         */ 
-        public static function setContainer($container)
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Session\SessionManager $instance */
-                        return $instance->setContainer($container);
-        }
-                    /**
-         * Forget all of the resolved driver instances.
-         *
-         * @return \Illuminate\Session\SessionManager 
-         * @static 
-         */ 
-        public static function forgetDrivers()
-        {            //Method inherited from \Illuminate\Support\Manager         
-                        /** @var \Illuminate\Session\SessionManager $instance */
-                        return $instance->forgetDrivers();
-        }
-                    /**
          * Start the session, reading the data from a handler.
          *
          * @return bool 
@@ -12425,18 +11843,6 @@
         {
                         /** @var \Illuminate\Session\Store $instance */
                         return $instance->exists($key);
-        }
-                    /**
-         * Determine if the given key is missing from the session data.
-         *
-         * @param string|array $key
-         * @return bool 
-         * @static 
-         */ 
-        public static function missing($key)
-        {
-                        /** @var \Illuminate\Session\Store $instance */
-                        return $instance->missing($key);
         }
                     /**
          * Checks if a key is present and not null.
@@ -12836,17 +12242,6 @@
                         $instance->setPreviousUrl($url);
         }
                     /**
-         * Specify that the user has confirmed their password.
-         *
-         * @return void 
-         * @static 
-         */ 
-        public static function passwordConfirmed()
-        {
-                        /** @var \Illuminate\Session\Store $instance */
-                        $instance->passwordConfirmed();
-        }
-                    /**
          * Get the underlying session handler implementation.
          *
          * @return \SessionHandlerInterface 
@@ -13019,18 +12414,6 @@
                         return $instance->forgetDisk($disk);
         }
                     /**
-         * Disconnect the given disk and remove from local cache.
-         *
-         * @param string|null $name
-         * @return void 
-         * @static 
-         */ 
-        public static function purge($name = null)
-        {
-                        /** @var \Illuminate\Filesystem\FilesystemManager $instance */
-                        $instance->purge($name);
-        }
-                    /**
          * Register a custom driver creator Closure.
          *
          * @param string $driver
@@ -13047,14 +12430,13 @@
          * Assert that the given file exists.
          *
          * @param string|array $path
-         * @param string|null $content
          * @return \Illuminate\Filesystem\FilesystemAdapter 
          * @static 
          */ 
-        public static function assertExists($path, $content = null)
+        public static function assertExists($path)
         {
                         /** @var \Illuminate\Filesystem\FilesystemAdapter $instance */
-                        return $instance->assertExists($path, $content);
+                        return $instance->assertExists($path);
         }
                     /**
          * Assert that the given file does not exist.
@@ -13651,18 +13033,6 @@
                         return $instance->hasValidSignature($request, $absolute);
         }
                     /**
-         * Determine if the given request has a valid signature for a relative URL.
-         *
-         * @param \Illuminate\Http\Request $request
-         * @return bool 
-         * @static 
-         */ 
-        public static function hasValidRelativeSignature($request)
-        {
-                        /** @var \Illuminate\Routing\UrlGenerator $instance */
-                        return $instance->hasValidRelativeSignature($request);
-        }
-                    /**
          * Determine if the signature from the given request matches the URL.
          *
          * @param \Illuminate\Http\Request $request
@@ -14112,29 +13482,6 @@
                         /** @var \Illuminate\Validation\Factory $instance */
                         $instance->setPresenceVerifier($presenceVerifier);
         }
-                    /**
-         * Get the container instance used by the validation factory.
-         *
-         * @return \Illuminate\Contracts\Container\Container 
-         * @static 
-         */ 
-        public static function getContainer()
-        {
-                        /** @var \Illuminate\Validation\Factory $instance */
-                        return $instance->getContainer();
-        }
-                    /**
-         * Set the container instance used by the validation factory.
-         *
-         * @param \Illuminate\Contracts\Container\Container $container
-         * @return \Illuminate\Validation\Factory 
-         * @static 
-         */ 
-        public static function setContainer($container)
-        {
-                        /** @var \Illuminate\Validation\Factory $instance */
-                        return $instance->setContainer($container);
-        }
          
     }
             /**
@@ -14563,7 +13910,7 @@
                     /**
          * Start a component rendering process.
          *
-         * @param \Illuminate\Contracts\View\View|\Illuminate\Contracts\Support\Htmlable|\Closure|string $view
+         * @param \Illuminate\View\View|\Closure|string $view
          * @param array $data
          * @return void 
          * @static 
@@ -14770,7 +14117,7 @@
                         return \Illuminate\View\Factory::parentPlaceholder($section);
         }
                     /**
-         * Check if the section exists.
+         * Check if section exists.
          *
          * @param string $name
          * @return bool 
@@ -15113,7 +14460,7 @@
      
 }
 
-    namespace Barryvdh\Debugbar { 
+    namespace Barryvdh\Debugbar\Facades { 
             /**
      * 
      *
@@ -15128,7 +14475,7 @@
      * @method static void warning(mixed $message)
      * @see \Barryvdh\Debugbar\LaravelDebugbar
      */ 
-        class Facade {
+        class Debugbar {
                     /**
          * Enable the Debugbar and boot, if not already booted.
          *
@@ -15162,7 +14509,7 @@
                     /**
          * Adds a data collector
          *
-         * @param \DebugBar\DataCollector\DataCollectorInterface $collector
+         * @param \Barryvdh\Debugbar\DataCollectorInterface $collector
          * @throws DebugBarException
          * @return \Barryvdh\Debugbar\LaravelDebugbar 
          * @static 
@@ -15371,7 +14718,7 @@
          * Returns a data collector
          *
          * @param string $name
-         * @return \DebugBar\DataCollector\DataCollectorInterface 
+         * @return \DebugBar\DataCollectorInterface 
          * @throws DebugBarException
          * @static 
          */ 
@@ -16051,16 +15398,6 @@
         {
                         return \Illuminate\Http\Request::hasValidSignature($absolute);
         }
-                    /**
-         * 
-         *
-         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
-         * @static 
-         */ 
-        public static function hasValidRelativeSignature()
-        {
-                        return \Illuminate\Http\Request::hasValidRelativeSignature();
-        }
          
     }
      
@@ -16094,6 +15431,47 @@
         public static function sesFeedback($url)
         {
                         return \Illuminate\Routing\Router::sesFeedback($url);
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::auth()
+         * @param mixed $options
+         * @static 
+         */ 
+        public static function auth($options = [])
+        {
+                        return \Illuminate\Routing\Router::auth($options);
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::resetPassword()
+         * @static 
+         */ 
+        public static function resetPassword()
+        {
+                        return \Illuminate\Routing\Router::resetPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::confirmPassword()
+         * @static 
+         */ 
+        public static function confirmPassword()
+        {
+                        return \Illuminate\Routing\Router::confirmPassword();
+        }
+                    /**
+         * 
+         *
+         * @see \Laravel\Ui\AuthRouteMethods::emailVerification()
+         * @static 
+         */ 
+        public static function emailVerification()
+        {
+                        return \Illuminate\Routing\Router::emailVerification();
         }
                     /**
          * 
@@ -16179,6 +15557,29 @@
         public static function schemalessAttributes($columnName = 'schemaless_attributes')
         {
                         return \Illuminate\Database\Schema\Blueprint::schemalessAttributes($columnName);
+        }
+         
+    }
+     
+}
+
+    namespace Illuminate\Database\Query { 
+            /**
+     * 
+     *
+     */ 
+        class Builder {
+                    /**
+         * 
+         *
+         * @see \Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::registerMacro()
+         * @param int|null $maxResults
+         * @param int|null $defaultSize
+         * @static 
+         */ 
+        public static function jsonPaginate($maxResults = null, $defaultSize = null)
+        {
+                        return \Illuminate\Database\Query\Builder::jsonPaginate($maxResults, $defaultSize);
         }
          
     }
@@ -16469,7 +15870,7 @@ namespace  {
              * @return \Illuminate\Database\Eloquent\Model|static 
              * @static 
              */ 
-            public static function firstOrCreate($attributes = [], $values = [])
+            public static function firstOrCreate($attributes, $values = [])
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->firstOrCreate($attributes, $values);
@@ -16515,21 +15916,6 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->firstOr($columns, $callback);
-            }
-             
-                /**
-             * Execute the query and get the first result if it's the sole matching record.
-             *
-             * @param array|string $columns
-             * @return \Illuminate\Database\Eloquent\Model 
-             * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-             * @throws \Illuminate\Database\MultipleRecordsFoundException
-             * @static 
-             */ 
-            public static function sole($columns = [])
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->sole($columns);
             }
              
                 /**
@@ -16670,21 +16056,6 @@ namespace  {
             }
              
                 /**
-             * Insert new records or update the existing ones.
-             *
-             * @param array $values
-             * @param array|string $uniqueBy
-             * @param array|null $update
-             * @return int 
-             * @static 
-             */ 
-            public static function upsert($values, $uniqueBy, $update = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->upsert($values, $uniqueBy, $update);
-            }
-             
-                /**
              * Register a replacement for the default delete function.
              *
              * @param \Closure $callback
@@ -16733,19 +16104,6 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->without($relations);
-            }
-             
-                /**
-             * Set the relationships that should be eager loaded while removing any previously added eager loading specifications.
-             *
-             * @param mixed $relations
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function withOnly($relations)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->withOnly($relations);
             }
              
                 /**
@@ -16912,15 +16270,119 @@ namespace  {
             }
              
                 /**
-             * Clone the Eloquent query builder.
+             * Chunk the results of the query.
              *
-             * @return static 
+             * @param int $count
+             * @param callable $callback
+             * @return bool 
              * @static 
              */ 
-            public static function clone()
+            public static function chunk($count, $callback)
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->clone();
+                                return $instance->chunk($count, $callback);
+            }
+             
+                /**
+             * Execute a callback over each item while chunking.
+             *
+             * @param callable $callback
+             * @param int $count
+             * @return bool 
+             * @static 
+             */ 
+            public static function each($callback, $count = 1000)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->each($callback, $count);
+            }
+             
+                /**
+             * Chunk the results of a query by comparing IDs.
+             *
+             * @param int $count
+             * @param callable $callback
+             * @param string|null $column
+             * @param string|null $alias
+             * @return bool 
+             * @static 
+             */ 
+            public static function chunkById($count, $callback, $column = null, $alias = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->chunkById($count, $callback, $column, $alias);
+            }
+             
+                /**
+             * Execute a callback over each item while chunking by ID.
+             *
+             * @param callable $callback
+             * @param int $count
+             * @param string|null $column
+             * @param string|null $alias
+             * @return bool 
+             * @static 
+             */ 
+            public static function eachById($callback, $count = 1000, $column = null, $alias = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->eachById($callback, $count, $column, $alias);
+            }
+             
+                /**
+             * Execute the query and get the first result.
+             *
+             * @param array|string $columns
+             * @return \Illuminate\Database\Eloquent\Model|object|static|null 
+             * @static 
+             */ 
+            public static function first($columns = [])
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->first($columns);
+            }
+             
+                /**
+             * Apply the callback's query changes if the given "value" is true.
+             *
+             * @param mixed $value
+             * @param callable $callback
+             * @param callable|null $default
+             * @return mixed|$this 
+             * @static 
+             */ 
+            public static function when($value, $callback, $default = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->when($value, $callback, $default);
+            }
+             
+                /**
+             * Pass the query to a given callback.
+             *
+             * @param callable $callback
+             * @return \Illuminate\Database\Eloquent\Builder|static 
+             * @static 
+             */ 
+            public static function tap($callback)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->tap($callback);
+            }
+             
+                /**
+             * Apply the callback's query changes if the given "value" is false.
+             *
+             * @param mixed $value
+             * @param callable $callback
+             * @param callable|null $default
+             * @return mixed|$this 
+             * @static 
+             */ 
+            public static function unless($value, $callback, $default = null)
+            {
+                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
+                                return $instance->unless($value, $callback, $default);
             }
              
                 /**
@@ -17047,7 +16509,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query.
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param string $operator
              * @param int $count
@@ -17065,7 +16527,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query with an "or".
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param string $operator
              * @param int $count
@@ -17081,7 +16543,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query.
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param string $boolean
              * @param \Closure|null $callback
@@ -17097,7 +16559,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query with an "or".
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @return \Illuminate\Database\Eloquent\Builder|static 
              * @static 
@@ -17111,7 +16573,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query with where clauses.
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param \Closure|null $callback
              * @param string $operator
@@ -17128,7 +16590,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query with where clauses and an "or".
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param \Closure|null $callback
              * @param string $operator
@@ -17145,7 +16607,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query with where clauses.
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param \Closure|null $callback
              * @return \Illuminate\Database\Eloquent\Builder|static 
@@ -17160,7 +16622,7 @@ namespace  {
                 /**
              * Add a polymorphic relationship count / exists condition to the query with where clauses and an "or".
              *
-             * @param \Illuminate\Database\Eloquent\Relations\MorphTo|string $relation
+             * @param string $relation
              * @param string|array $types
              * @param \Closure|null $callback
              * @return \Illuminate\Database\Eloquent\Builder|static 
@@ -17170,21 +16632,6 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->orWhereDoesntHaveMorph($relation, $types, $callback);
-            }
-             
-                /**
-             * Add subselect queries to include an aggregate value for a relationship.
-             *
-             * @param mixed $relations
-             * @param string $column
-             * @param string $function
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function withAggregate($relations, $column, $function = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->withAggregate($relations, $column, $function);
             }
              
                 /**
@@ -17201,62 +16648,6 @@ namespace  {
             }
              
                 /**
-             * Add subselect queries to include the max of the relation's column.
-             *
-             * @param string|array $relation
-             * @param string $column
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function withMax($relation, $column)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->withMax($relation, $column);
-            }
-             
-                /**
-             * Add subselect queries to include the min of the relation's column.
-             *
-             * @param string|array $relation
-             * @param string $column
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function withMin($relation, $column)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->withMin($relation, $column);
-            }
-             
-                /**
-             * Add subselect queries to include the sum of the relation's column.
-             *
-             * @param string|array $relation
-             * @param string $column
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function withSum($relation, $column)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->withSum($relation, $column);
-            }
-             
-                /**
-             * Add subselect queries to include the average of the relation's column.
-             *
-             * @param string|array $relation
-             * @param string $column
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function withAvg($relation, $column)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->withAvg($relation, $column);
-            }
-             
-                /**
              * Merge the where constraints from another query to the current query.
              *
              * @param \Illuminate\Database\Eloquent\Builder $from
@@ -17267,204 +16658,6 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->mergeConstraintsFrom($from);
-            }
-             
-                /**
-             * Explains the query.
-             *
-             * @return \Illuminate\Support\Collection 
-             * @static 
-             */ 
-            public static function explain()
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->explain();
-            }
-             
-                /**
-             * Chunk the results of the query.
-             *
-             * @param int $count
-             * @param callable $callback
-             * @return bool 
-             * @static 
-             */ 
-            public static function chunk($count, $callback)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->chunk($count, $callback);
-            }
-             
-                /**
-             * Run a map over each item while chunking.
-             *
-             * @param callable $callback
-             * @param int $count
-             * @return \Illuminate\Support\Collection 
-             * @static 
-             */ 
-            public static function chunkMap($callback, $count = 1000)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->chunkMap($callback, $count);
-            }
-             
-                /**
-             * Execute a callback over each item while chunking.
-             *
-             * @param callable $callback
-             * @param int $count
-             * @return bool 
-             * @static 
-             */ 
-            public static function each($callback, $count = 1000)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->each($callback, $count);
-            }
-             
-                /**
-             * Chunk the results of a query by comparing IDs.
-             *
-             * @param int $count
-             * @param callable $callback
-             * @param string|null $column
-             * @param string|null $alias
-             * @return bool 
-             * @static 
-             */ 
-            public static function chunkById($count, $callback, $column = null, $alias = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->chunkById($count, $callback, $column, $alias);
-            }
-             
-                /**
-             * Execute a callback over each item while chunking by ID.
-             *
-             * @param callable $callback
-             * @param int $count
-             * @param string|null $column
-             * @param string|null $alias
-             * @return bool 
-             * @static 
-             */ 
-            public static function eachById($callback, $count = 1000, $column = null, $alias = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->eachById($callback, $count, $column, $alias);
-            }
-             
-                /**
-             * Query lazily, by chunks of the given size.
-             *
-             * @param int $chunkSize
-             * @return \Illuminate\Support\LazyCollection 
-             * @static 
-             */ 
-            public static function lazy($chunkSize = 1000)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->lazy($chunkSize);
-            }
-             
-                /**
-             * Query lazily, by chunking the results of a query by comparing IDs.
-             *
-             * @param int $count
-             * @param string|null $column
-             * @param string|null $alias
-             * @return \Illuminate\Support\LazyCollection 
-             * @static 
-             */ 
-            public static function lazyById($chunkSize = 1000, $column = null, $alias = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->lazyById($chunkSize, $column, $alias);
-            }
-             
-                /**
-             * Execute the query and get the first result.
-             *
-             * @param array|string $columns
-             * @return \Illuminate\Database\Eloquent\Model|object|static|null 
-             * @static 
-             */ 
-            public static function first($columns = [])
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->first($columns);
-            }
-             
-                /**
-             * Execute the query and get the first result if it's the sole matching record.
-             *
-             * @param array|string $columns
-             * @return \Illuminate\Database\Eloquent\Model|object|static|null 
-             * @throws \Illuminate\Database\RecordsNotFoundException
-             * @throws \Illuminate\Database\MultipleRecordsFoundException
-             * @static 
-             */ 
-            public static function baseSole($columns = [])
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->baseSole($columns);
-            }
-             
-                /**
-             * Apply the callback's query changes if the given "value" is true.
-             *
-             * @param mixed $value
-             * @param callable $callback
-             * @param callable|null $default
-             * @return mixed|$this 
-             * @static 
-             */ 
-            public static function when($value, $callback, $default = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->when($value, $callback, $default);
-            }
-             
-                /**
-             * Pass the query to a given callback.
-             *
-             * @param callable $callback
-             * @return \Illuminate\Database\Eloquent\Builder|static 
-             * @static 
-             */ 
-            public static function tap($callback)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->tap($callback);
-            }
-             
-                /**
-             * Apply the callback's query changes if the given "value" is false.
-             *
-             * @param mixed $value
-             * @param callable $callback
-             * @param callable|null $default
-             * @return mixed|$this 
-             * @static 
-             */ 
-            public static function unless($value, $callback, $default = null)
-            {
-                                /** @var \Illuminate\Database\Eloquent\Builder $instance */
-                                return $instance->unless($value, $callback, $default);
-            }
-             
-                /**
-             * 
-             *
-             * @see \Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::registerMacro()
-             * @param int|null $maxResults
-             * @param int|null $defaultSize
-             * @static 
-             */ 
-            public static function jsonPaginate($maxResults = null, $defaultSize = null)
-            {
-                                return \Illuminate\Database\Eloquent\Builder::jsonPaginate($maxResults, $defaultSize);
             }
              
                 /**
@@ -17483,7 +16676,7 @@ namespace  {
                 /**
              * Add a subselect expression to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @param \Closure|$this|string $query
              * @param string $as
              * @return \Illuminate\Database\Query\Builder 
              * @throws \InvalidArgumentException
@@ -17615,7 +16808,7 @@ namespace  {
                 /**
              * Add a subquery join clause to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
              * @param string $as
              * @param \Closure|string $first
              * @param string|null $operator
@@ -17667,7 +16860,7 @@ namespace  {
                 /**
              * Add a subquery left join to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
              * @param string $as
              * @param \Closure|string $first
              * @param string|null $operator
@@ -17716,7 +16909,7 @@ namespace  {
                 /**
              * Add a subquery right join to the query.
              *
-             * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|string $query
+             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
              * @param string $as
              * @param \Closure|string $first
              * @param string|null $operator
@@ -17744,20 +16937,6 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->crossJoin($table, $first, $operator, $second);
-            }
-             
-                /**
-             * Add a subquery cross join to the query.
-             *
-             * @param \Closure|\Illuminate\Database\Query\Builder|string $query
-             * @param string $as
-             * @return \Illuminate\Database\Query\Builder 
-             * @static 
-             */ 
-            public static function crossJoinSub($query, $as)
-            {
-                                /** @var \Illuminate\Database\Query\Builder $instance */
-                                return $instance->crossJoinSub($query, $as);
             }
              
                 /**
@@ -18013,7 +17192,7 @@ namespace  {
                 /**
              * Add a where between statement to the query.
              *
-             * @param string|\Illuminate\Database\Query\Expression $column
+             * @param string $column
              * @param array $values
              * @param string $boolean
              * @param bool $not
@@ -19071,7 +18250,7 @@ namespace  {
             }
              
                 /**
-             * Insert new records into the database.
+             * Insert a new record into the database.
              *
              * @param array $values
              * @return bool 
@@ -19084,7 +18263,7 @@ namespace  {
             }
              
                 /**
-             * Insert new records into the database while ignoring errors.
+             * Insert a new record into the database while ignoring errors.
              *
              * @param array $values
              * @return int 
@@ -19231,19 +18410,6 @@ namespace  {
             }
              
                 /**
-             * Remove all of the expressions from a list of bindings.
-             *
-             * @param array $bindings
-             * @return array 
-             * @static 
-             */ 
-            public static function cleanBindings($bindings)
-            {
-                                /** @var \Illuminate\Database\Query\Builder $instance */
-                                return $instance->cleanBindings($bindings);
-            }
-             
-                /**
              * Get the database query processor instance.
              *
              * @return \Illuminate\Database\Query\Processors\Processor 
@@ -19370,6 +18536,19 @@ namespace  {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->macroCall($method, $parameters);
             }
+             
+                /**
+             * 
+             *
+             * @see \Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::registerMacro()
+             * @param int|null $maxResults
+             * @param int|null $defaultSize
+             * @static 
+             */ 
+            public static function jsonPaginate($maxResults = null, $defaultSize = null)
+            {
+                                return \Illuminate\Database\Query\Builder::jsonPaginate($maxResults, $defaultSize);
+            }
                     }
             class Event extends \Illuminate\Support\Facades\Event {}
             class File extends \Illuminate\Support\Facades\File {}
@@ -19394,7 +18573,7 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Image extends \Intervention\Image\Facades\Image {}
             class AWS extends \Aws\Laravel\AwsFacade {}
-            class Debugbar extends \Barryvdh\Debugbar\Facade {}
+            class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Horizon extends \Laravel\Horizon\Horizon {}
      
@@ -19407,6 +18586,7 @@ namespace {
 use Illuminate\Contracts\Support\DeferringDisplayableValue;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Env;
 use Illuminate\Support\HigherOrderTapProxy;
 use Illuminate\Support\Optional;
@@ -19501,11 +18681,154 @@ if (! function_exists('class_uses_recursive')) {
     }
 }
 
+if (! function_exists('collect')) {
+    /**
+     * Create a collection from the given value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Support\Collection
+     */
+    function collect($value = null)
+    {
+        return new Collection($value);
+    }
+}
+
+if (! function_exists('data_fill')) {
+    /**
+     * Fill in data where it's missing.
+     *
+     * @param  mixed  $target
+     * @param  string|array  $key
+     * @param  mixed  $value
+     * @return mixed
+     */
+    function data_fill(&$target, $key, $value)
+    {
+        return data_set($target, $key, $value, false);
+    }
+}
+
+if (! function_exists('data_get')) {
+    /**
+     * Get an item from an array or object using "dot" notation.
+     *
+     * @param  mixed  $target
+     * @param  string|array|int|null  $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    function data_get($target, $key, $default = null)
+    {
+        if (is_null($key)) {
+            return $target;
+        }
+
+        $key = is_array($key) ? $key : explode('.', $key);
+
+        foreach ($key as $i => $segment) {
+            unset($key[$i]);
+
+            if (is_null($segment)) {
+                return $target;
+            }
+
+            if ($segment === '*') {
+                if ($target instanceof Collection) {
+                    $target = $target->all();
+                } elseif (! is_array($target)) {
+                    return value($default);
+                }
+
+                $result = [];
+
+                foreach ($target as $item) {
+                    $result[] = data_get($item, $key);
+                }
+
+                return in_array('*', $key) ? Arr::collapse($result) : $result;
+            }
+
+            if (Arr::accessible($target) && Arr::exists($target, $segment)) {
+                $target = $target[$segment];
+            } elseif (is_object($target) && isset($target->{$segment})) {
+                $target = $target->{$segment};
+            } else {
+                return value($default);
+            }
+        }
+
+        return $target;
+    }
+}
+
+if (! function_exists('data_set')) {
+    /**
+     * Set an item on an array or object using dot notation.
+     *
+     * @param  mixed  $target
+     * @param  string|array  $key
+     * @param  mixed  $value
+     * @param  bool  $overwrite
+     * @return mixed
+     */
+    function data_set(&$target, $key, $value, $overwrite = true)
+    {
+        $segments = is_array($key) ? $key : explode('.', $key);
+
+        if (($segment = array_shift($segments)) === '*') {
+            if (! Arr::accessible($target)) {
+                $target = [];
+            }
+
+            if ($segments) {
+                foreach ($target as &$inner) {
+                    data_set($inner, $segments, $value, $overwrite);
+                }
+            } elseif ($overwrite) {
+                foreach ($target as &$inner) {
+                    $inner = $value;
+                }
+            }
+        } elseif (Arr::accessible($target)) {
+            if ($segments) {
+                if (! Arr::exists($target, $segment)) {
+                    $target[$segment] = [];
+                }
+
+                data_set($target[$segment], $segments, $value, $overwrite);
+            } elseif ($overwrite || ! Arr::exists($target, $segment)) {
+                $target[$segment] = $value;
+            }
+        } elseif (is_object($target)) {
+            if ($segments) {
+                if (! isset($target->{$segment})) {
+                    $target->{$segment} = [];
+                }
+
+                data_set($target->{$segment}, $segments, $value, $overwrite);
+            } elseif ($overwrite || ! isset($target->{$segment})) {
+                $target->{$segment} = $value;
+            }
+        } else {
+            $target = [];
+
+            if ($segments) {
+                data_set($target[$segment], $segments, $value, $overwrite);
+            } elseif ($overwrite) {
+                $target[$segment] = $value;
+            }
+        }
+
+        return $target;
+    }
+}
+
 if (! function_exists('e')) {
     /**
      * Encode HTML special characters in a string.
      *
-     * @param  \Illuminate\Contracts\Support\DeferringDisplayableValue|\Illuminate\Contracts\Support\Htmlable|string|null  $value
+     * @param  \Illuminate\Contracts\Support\DeferringDisplayableValue|\Illuminate\Contracts\Support\Htmlable|string  $value
      * @param  bool  $doubleEncode
      * @return string
      */
@@ -19519,7 +18842,7 @@ if (! function_exists('e')) {
             return $value->toHtml();
         }
 
-        return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8', $doubleEncode);
+        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8', $doubleEncode);
     }
 }
 
@@ -19550,6 +18873,32 @@ if (! function_exists('filled')) {
     }
 }
 
+if (! function_exists('head')) {
+    /**
+     * Get the first element of an array. Useful for method chaining.
+     *
+     * @param  array  $array
+     * @return mixed
+     */
+    function head($array)
+    {
+        return reset($array);
+    }
+}
+
+if (! function_exists('last')) {
+    /**
+     * Get the last element from an array.
+     *
+     * @param  array  $array
+     * @return mixed
+     */
+    function last($array)
+    {
+        return end($array);
+    }
+}
+
 if (! function_exists('object_get')) {
     /**
      * Get an item from an object using "dot" notation.
@@ -19561,7 +18910,7 @@ if (! function_exists('object_get')) {
      */
     function object_get($object, $key, $default = null)
     {
-        if (is_null($key) || trim($key) === '') {
+        if (is_null($key) || trim($key) == '') {
             return $object;
         }
 
@@ -19620,13 +18969,13 @@ if (! function_exists('retry')) {
      *
      * @param  int  $times
      * @param  callable  $callback
-     * @param  int  $sleepMilliseconds
+     * @param  int  $sleep
      * @param  callable|null  $when
      * @return mixed
      *
      * @throws \Exception
      */
-    function retry($times, callable $callback, $sleepMilliseconds = 0, $when = null)
+    function retry($times, callable $callback, $sleep = 0, $when = null)
     {
         $attempts = 0;
 
@@ -19641,8 +18990,8 @@ if (! function_exists('retry')) {
                 throw $e;
             }
 
-            if ($sleepMilliseconds) {
-                usleep($sleepMilliseconds * 1000);
+            if ($sleep) {
+                usleep($sleep * 1000);
             }
 
             goto beginning;
@@ -19676,19 +19025,15 @@ if (! function_exists('throw_if')) {
      *
      * @param  mixed  $condition
      * @param  \Throwable|string  $exception
-     * @param  mixed  ...$parameters
+     * @param  array  ...$parameters
      * @return mixed
      *
      * @throws \Throwable
      */
-    function throw_if($condition, $exception = 'RuntimeException', ...$parameters)
+    function throw_if($condition, $exception, ...$parameters)
     {
         if ($condition) {
-            if (is_string($exception) && class_exists($exception)) {
-                $exception = new $exception(...$parameters);
-            }
-
-            throw is_string($exception) ? new RuntimeException($exception) : $exception;
+            throw (is_string($exception) ? new $exception(...$parameters) : $exception);
         }
 
         return $condition;
@@ -19701,14 +19046,16 @@ if (! function_exists('throw_unless')) {
      *
      * @param  mixed  $condition
      * @param  \Throwable|string  $exception
-     * @param  mixed  ...$parameters
+     * @param  array  ...$parameters
      * @return mixed
      *
      * @throws \Throwable
      */
-    function throw_unless($condition, $exception = 'RuntimeException', ...$parameters)
+    function throw_unless($condition, $exception, ...$parameters)
     {
-        throw_if(! $condition, $exception, ...$parameters);
+        if (! $condition) {
+            throw (is_string($exception) ? new $exception(...$parameters) : $exception);
+        }
 
         return $condition;
     }
@@ -19723,7 +19070,7 @@ if (! function_exists('trait_uses_recursive')) {
      */
     function trait_uses_recursive($trait)
     {
-        $traits = class_uses($trait) ?: [];
+        $traits = class_uses($trait);
 
         foreach ($traits as $trait) {
             $traits += trait_uses_recursive($trait);
@@ -19753,6 +19100,19 @@ if (! function_exists('transform')) {
         }
 
         return $default;
+    }
+}
+
+if (! function_exists('value')) {
+    /**
+     * Return the default value of the given value.
+     *
+     * @param  mixed  $value
+     * @return mixed
+     */
+    function value($value)
+    {
+        return $value instanceof Closure ? $value() : $value;
     }
 }
 
@@ -19811,20 +19171,6 @@ namespace Illuminate\Support {
 
 namespace App {
     /**
-    * @method \Illuminate\Database\Eloquent\Collection|Asset[]|Asset create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Asset[]|Asset make($attributes = [])
-    */
-    class AssetFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
-}
-namespace App {
-    /**
-    * @method \Illuminate\Database\Eloquent\Collection|Comment[]|Comment create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Comment[]|Comment make($attributes = [])
-    */
-    class CommentFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
-}
-namespace App {
-    /**
     * @method \Illuminate\Database\Eloquent\Collection|FeaturedReleaseDates[]|FeaturedReleaseDates create($attributes = [])
     * @method \Illuminate\Database\Eloquent\Collection|FeaturedReleaseDates[]|FeaturedReleaseDates make($attributes = [])
     */
@@ -19832,31 +19178,10 @@ namespace App {
 }
 namespace App {
     /**
-    * @method \Illuminate\Database\Eloquent\Collection|File[]|File create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|File[]|File make($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|OrderItem[]|OrderItem create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|OrderItem[]|OrderItem make($attributes = [])
     */
-    class FileFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
-}
-namespace App {
-    /**
-    * @method \Illuminate\Database\Eloquent\Collection|Genre[]|Genre create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Genre[]|Genre make($attributes = [])
-    */
-    class GenreFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
-}
-namespace App {
-    /**
-    * @method \Illuminate\Database\Eloquent\Collection|Merch[]|Merch create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Merch[]|Merch make($attributes = [])
-    */
-    class MerchFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
-}
-namespace App {
-    /**
-    * @method \Illuminate\Database\Eloquent\Collection|Message[]|Message create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Message[]|Message make($attributes = [])
-    */
-    class MessageFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+    class OrderItemFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
 }
 namespace App {
     /**
@@ -19867,10 +19192,10 @@ namespace App {
 }
 namespace App {
     /**
-    * @method \Illuminate\Database\Eloquent\Collection|OrderItem[]|OrderItem create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|OrderItem[]|OrderItem make($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Track[]|Track create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Track[]|Track make($attributes = [])
     */
-    class OrderItemFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+    class TrackFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
 }
 namespace App {
     /**
@@ -19888,17 +19213,24 @@ namespace App {
 }
 namespace App {
     /**
-    * @method \Illuminate\Database\Eloquent\Collection|Share[]|Share create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Share[]|Share make($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Comment[]|Comment create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Comment[]|Comment make($attributes = [])
     */
-    class ShareFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+    class CommentFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
 }
 namespace App {
     /**
-    * @method \Illuminate\Database\Eloquent\Collection|Track[]|Track create($attributes = [])
-    * @method \Illuminate\Database\Eloquent\Collection|Track[]|Track make($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Asset[]|Asset create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Asset[]|Asset make($attributes = [])
     */
-    class TrackFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+    class AssetFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+}
+namespace App {
+    /**
+    * @method \Illuminate\Database\Eloquent\Collection|Merch[]|Merch create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Merch[]|Merch make($attributes = [])
+    */
+    class MerchFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
 }
 namespace App {
     /**
@@ -19906,4 +19238,32 @@ namespace App {
     * @method \Illuminate\Database\Eloquent\Collection|User[]|User make($attributes = [])
     */
     class UserFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+}
+namespace App {
+    /**
+    * @method \Illuminate\Database\Eloquent\Collection|Message[]|Message create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Message[]|Message make($attributes = [])
+    */
+    class MessageFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+}
+namespace App {
+    /**
+    * @method \Illuminate\Database\Eloquent\Collection|Share[]|Share create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Share[]|Share make($attributes = [])
+    */
+    class ShareFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+}
+namespace App {
+    /**
+    * @method \Illuminate\Database\Eloquent\Collection|Genre[]|Genre create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|Genre[]|Genre make($attributes = [])
+    */
+    class GenreFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
+}
+namespace App {
+    /**
+    * @method \Illuminate\Database\Eloquent\Collection|File[]|File create($attributes = [])
+    * @method \Illuminate\Database\Eloquent\Collection|File[]|File make($attributes = [])
+    */
+    class FileFactoryBuilder extends \Illuminate\Database\Eloquent\FactoryBuilder {}
 }

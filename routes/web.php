@@ -41,7 +41,7 @@ Route::get('/mail', function () {
     return new \App\Mail\NewAccount($user);
 });
 
-route::get('testses', function(){
+route::get('testses', function () {
     Mail::to(['rory@wearethunderbolt.com', 'henry@wearethunderbolt.com'])->send(new TestAmazonSes('It works!'));
 });
 
@@ -57,6 +57,5 @@ Route::get('/{any?}', function () {
             'tracks_count_this_month',
         ])
         : 'null';
-
     return view('vue', compact('user'));
 })->where('any', '.*');

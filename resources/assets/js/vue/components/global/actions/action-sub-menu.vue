@@ -11,9 +11,9 @@
 </template>
 
 <script>
-    import ActionSubMenu from './action-sub-menu';
+    // import ActionSubMenu from './action-sub-menu';
     export default {
-        name: 'action-sub-menu',
+        // name: 'action-sub-menu',
         props: {
             actionable: { // This is the object e.g. 'track', 'release', 'article'
                 type: Object,
@@ -46,7 +46,7 @@
             }
         },
         components: {
-            ActionSubMenu
+            // ActionSubMenu
         }
     }
 </script>

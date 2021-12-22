@@ -18,7 +18,7 @@
     ),
     'aliases' => 
     array (
-      'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
+      'Debugbar' => 'Barryvdh\\Debugbar\\Facades\\Debugbar',
     ),
   ),
   'barryvdh/laravel-ide-helper' => 
@@ -87,20 +87,6 @@
     'aliases' => 
     array (
       'Horizon' => 'Laravel\\Horizon\\Horizon',
-    ),
-  ),
-  'laravel/legacy-factories' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Illuminate\\Database\\Eloquent\\LegacyFactoryServiceProvider',
-    ),
-  ),
-  'laravel/sail' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Sail\\SailServiceProvider',
     ),
   ),
   'laravel/sanctum' => 

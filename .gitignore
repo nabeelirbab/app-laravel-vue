@@ -53,4 +53,5 @@ Thumbs.db
 /vendor
 .env
 /storage
+/docker
 storage/*.key
