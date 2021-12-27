@@ -34,13 +34,26 @@ Route::get('/releases/tracks/{count?}', function ($count = 15) {
  * {count?} 'all' || integer
  **/
 Route::get('/releases/latest/{filter?}/{count?}', function ($filter = 'release_date', $count = 15) {
-    return Cache::remember('latest_releases:'.$filter.':'.$count, now()->addHour(), function () use ($filter, $count) {
-        return Release::released()
-            ->with('image')
-            ->latest($filter)
-            ->paginate($count);
-    });
-//	return paginateOrAll(Release::statuslive()->latest($filter), $count);
+    return Release::released()
+        ->with(
+            [
+                'image',
+                'image.files',
+                'uploader' => function ($query) {
+                    return $query->select('name', 'id');
+                }
+            ]
+        )
+        ->latest($filter)
+        ->paginate($count);
+    // return Cache::remember('latest_releases:' . $filter . ':' . $count, now()->addHour(), function () use ($filter, $count) {
+
+    //     return Release::released()
+    //         ->with('image')
+    //         ->latest($filter)
+    //         ->paginate($count);
+    // });
+    //	return paginateOrAll(Release::statuslive()->latest($filter), $count);
 });
 
 /**

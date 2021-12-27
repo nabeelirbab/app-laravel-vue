@@ -40,7 +40,7 @@ class Release extends PhaseModel
         'like_count',
         'is_shared',
         'share_count',
-        'uploader_name',
+        // 'uploader_name',
         'is_recent'
     ];
 
@@ -111,7 +111,6 @@ class Release extends PhaseModel
         return $query->whereHas('featuredDates', function ($query) {
             $query->whereDate('featured_date', now()->startOfDay());
         })->get();
-
     }
 
     public function scopeStatusPending($query)
@@ -186,7 +185,7 @@ class Release extends PhaseModel
 
     public function featuredDates()
     {
-        return $this->hasMany('App\FeaturedReleaseDates','release_id');
+        return $this->hasMany('App\FeaturedReleaseDates', 'release_id');
     }
 
     public function isFeatured()
@@ -217,7 +216,8 @@ class Release extends PhaseModel
         return $this->uploader->name;
     }
 
-    public function getIsRecentAttribute() {
+    public function getIsRecentAttribute()
+    {
         return $this->created_at->diffInDays() < 7;
     }
 
