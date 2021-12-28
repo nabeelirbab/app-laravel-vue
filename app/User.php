@@ -69,16 +69,18 @@ class User extends Authenticatable
         'type',
         'account_type',
         // 'follower_count',
-        'avatar',
-        'banner',
+
+        // 'avatar',
+        // 'banner',
+
         //        'all_permissions',
         'tracks_count_this_month',
         //        'is_on_trial',
         'account_verified',
         'interests',
-//        'plays',
+        //        'plays',
         'is_recent',
-//        'stripe_account_id',
+        //        'stripe_account_id',
         //        'on_grace_period',
     ];
 
@@ -132,10 +134,10 @@ class User extends Authenticatable
         }
     }
 
-//    public function getStripeAccountIdAttribute(): bool
-//    {
-//        return (bool) $this->stripe_id;
-//    }
+    //    public function getStripeAccountIdAttribute(): bool
+    //    {
+    //        return (bool) $this->stripe_id;
+    //    }
 
     public function getFullNameAttribute()
     {

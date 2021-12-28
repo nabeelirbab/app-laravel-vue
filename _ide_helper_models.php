@@ -171,7 +171,7 @@ namespace App{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event whereImageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event whereLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Event whereUpdatedAt($value)
+ * @method static \Illuminate\Databnewsase\Eloquent\Builder|\App\Event whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Event whereUserId($value)
  */

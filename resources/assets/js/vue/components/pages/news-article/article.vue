@@ -117,7 +117,7 @@
                 this.$store.commit('news/shareArticle', this.article.id);
             },
             newComment() {
-                this.article.comment_count += 1;
+                this.article.comments_count += 1;
             }
         },
         components: {

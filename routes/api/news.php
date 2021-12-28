@@ -11,8 +11,17 @@ Route::get('/news/category/{category}/{count?}', function ($category, $count = 1
 });
 Route::get('/news/{count?}', function ($count = 10) {
     // return Cache::remember('news:'.$count, now()->addHours(12), function () use ($count) {
-        //wip
-    return News::published()->paginate($count);
+    //wip
+    // return 'asdf';
+    return News::published()
+        ->with([
+            'image',
+            'user' => function ($q) {
+                $q->select('id', 'name', 'first_name', 'last_name');
+            },
+        ])
+        ->withCount('comments', 'likes', 'shares')
+        ->paginate($count);
     // return paginateOrAll(News::published(), $count);
     // });
 });

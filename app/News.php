@@ -23,9 +23,24 @@ class News extends PhaseModel
 
     protected $fillable = ['title', 'content', 'path', 'user_id', 'published_at'];
 
-    protected $with = ['image', 'categories', 'user'];
+    protected $with = [
 
-    protected $appends = ['comment_count', 'is_liked', 'like_count', 'is_shared', 'share_count', 'is_recent'];
+        // 'image',
+        // 'categories',
+        // 'user'
+
+    ];
+
+    protected $appends = [
+
+        // 'comment_count',
+        'is_liked',
+        // 'like_count',
+        'is_shared',
+        // 'share_count',
+        'is_recent'
+
+    ];
 
     protected $dates = [
         'published_at',
@@ -90,7 +105,8 @@ class News extends PhaseModel
         return false;
     }
 
-    public function getIsRecentAttribute() {
+    public function getIsRecentAttribute()
+    {
         return $this->published_at->diffInDays() < 7;
     }
 }

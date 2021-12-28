@@ -38,7 +38,6 @@ Route::get('/releases/latest/{filter?}/{count?}', function ($filter = 'release_d
         ->with(
             [
                 'image',
-                'image.files',
                 'uploader' => function ($query) {
                     return $query->select('name', 'id');
                 }
