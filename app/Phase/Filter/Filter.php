@@ -84,7 +84,8 @@ class Filter
     public function addClassFilter($filterClass)
     {
         $this->items = $this->items->filter(function ($item) use ($filterClass) {
-            if ($item->class == Str::singular($filterClass)) { // Allow pluralised e.g. albums and album will both work
+            if ($item->class == Str::singular($filterClass)) {
+                 // Allow pluralised e.g. albums and album will both work
                 return true;
             }
             return false;

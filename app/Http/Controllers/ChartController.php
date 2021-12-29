@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class ChartController extends Controller
-{
+{   
     protected Chart $chart;
     protected Filter $filter;
     protected array $input;

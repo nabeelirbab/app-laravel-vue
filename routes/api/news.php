@@ -11,13 +11,12 @@ Route::get('/news/category/{category}/{count?}', function ($category, $count = 1
 });
 Route::get('/news/{count?}', function ($count = 10) {
     // return Cache::remember('news:'.$count, now()->addHours(12), function () use ($count) {
-    //wip
-    // return 'asdf';
+    //FIXME: wip
     return News::published()
         ->with([
             'image',
             'user' => function ($q) {
-                $q->select('id', 'name', 'first_name', 'last_name');
+                return $q->select('id', 'name', 'first_name', 'last_name', 'path');
             },
         ])
         ->withCount('comments', 'likes', 'shares')
@@ -28,8 +27,8 @@ Route::get('/news/{count?}', function ($count = 10) {
 
 Route::get('/news/article/{id}', function ($identifier) {
     if (is_numeric($identifier)) {
-        return News::findOrFail($identifier);
+        return News::with('user', 'image')->findOrFail($identifier);
     }
-
+    // FIXME: check all pages for this path
     return News::where('path', $identifier)->first();
 });

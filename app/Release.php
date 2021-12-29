@@ -35,11 +35,11 @@ class Release extends PhaseModel
     ];
 
     protected $appends = [
-        'comment_count',
+        // 'comment_count',
         'is_liked',
-        'like_count',
+        // 'like_count',
         'is_shared',
-        'share_count',
+        // 'share_count',
         // 'uploader_name',
         'is_recent'
     ];
