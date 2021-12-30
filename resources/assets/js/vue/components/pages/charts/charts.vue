@@ -99,7 +99,7 @@ export default {
 	data() {
 		return {
 			loadedAll: false,
-			amount: 12,
+			amount: 10,
 			filters: {
 				classes: [],
 				genres: [],
