@@ -12,16 +12,16 @@
         <div>
             <div class="action" v-if="app.user.loggedin">
                 <comment-button :commentable="actionable" @commented="commented" />
-                <div class="action-count">{{ actionable.comment_count }}</div>
+                <div class="action-count">{{ actionable.comments_count }}</div>
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <share-button :shareable="actionable" @share="shared"></share-button>
-                <div class="action-count">{{ actionable.share_count }}</div>
+                <div class="action-count">{{ actionable.shares_count }}</div>
 
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <like-button :likeable="actionable" @like="liked" @unlike="unliked"></like-button>
-                <div class="action-count">{{ actionable.like_count }}</div>
+                <div class="action-count">{{ actionable.likes_count }}</div>
 
             </div>
             <div class="action" v-if="app.user.loggedin">
@@ -75,13 +75,13 @@
                 'app',
             ]),
             likeText() {
-                return `${this.actionable.like_count} ${this.actionable.like_count == '1' ? 'LIKE' : 'LIKES'}`
+                return `${this.actionable.likes_count} ${this.actionable.likes_count == '1' ? 'LIKE' : 'LIKES'}`
             },
             commentText() {
-                return `${this.actionable.comment_count} ${this.actionable.comment_count == '1' ? 'COMMENT' : 'COMMENTS'}`
+                return `${this.actionable.comments_count} ${this.actionable.comments_count == '1' ? 'COMMENT' : 'COMMENTS'}`
             },
             shareText() {
-                return `${this.actionable.share_count} ${this.actionable.share_count == '1' ? 'SHARE' : 'SHARES'}`
+                return `${this.actionable.shares_count} ${this.actionable.shares_count == '1' ? 'SHARE' : 'SHARES'}`
             },
         },
         methods: {

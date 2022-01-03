@@ -70,7 +70,7 @@ class SocialController extends Controller
 
         $comment = Comment::find($id);
 
-        if($request->user()->id == $comment->user_id) {
+        if ($request->user()->id == $comment->user_id) {
             $comment = $comment->update([
                 'body' => $data['body']
             ]);
@@ -89,7 +89,7 @@ class SocialController extends Controller
 
         $comment = Comment::find($request->id);
 
-        if($request->user()->id == $comment->user_id) {
+        if ($request->user()->id == $comment->user_id) {
             $comment->delete();
 
             return response('comment deleted', 200);
@@ -124,7 +124,6 @@ class SocialController extends Controller
     public function getCommentsForItem($type, $id)
     {
         $commentable = morphToModel($type, $id);
-
-        return $commentable->comments()->orderByDesc('id')->paginate(15);
+        return $commentable->comments()->with('user', 'user.avatar')->orderByDesc('id')->paginate(15);
     }
 }

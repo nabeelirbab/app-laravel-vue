@@ -58,11 +58,11 @@ class UserController extends Controller
     }
 
     /**
-    * delete banner
-    *
-    * 
-    */
-    public function deleteBanner(Request $request) 
+     * delete banner
+     *
+     * 
+     */
+    public function deleteBanner(Request $request)
     {
         $user = $request->user();
         $user->deleteBanner();
@@ -72,10 +72,11 @@ class UserController extends Controller
 
     public function getUser(Request $request, $path = null)
     {
+        // return 'asdfsdfasdfasfasf';
         if ($path !== 'search') {
-            $user =  User::byPath($path)->with(['following'])->withCount('releases')->first();
+            $user =  User::with(['avatar', 'banner'])->byPath($path)->with(['following'])->withCount('releases')->first();
             if ($request->has('app-user') && $request->get('app-user') != -1) {
-                $followable = User::find($request->get('app-user'));
+                $followable = User::with(['avatar', 'banner'])->find($request->get('app-user'));
                 $user->followed = $user->followers->contains($followable);
             } else {
                 $user->followed = false;
@@ -88,7 +89,9 @@ class UserController extends Controller
             return $user;
         }
 
-        return User::where('name', 'LIKE', '%' . $request->get('name') . '%')->withCount('releases')->get();
+        return User::where('name', 'LIKE', '%' . $request->get('name') . '%')
+            ->with(['avatar', 'banner'])
+            ->withCount('releases')->get();
     }
 
     // Unused. Use me!

@@ -19,7 +19,7 @@ Route::get('/genre/{genre}', function (Genre $genre) {
         $query->where('genres.id', $genre->id);
     })->released()
         ->withCount([
-            'comments as comment_count', 'likes as like_count', 'shares as share_count'
+            'comments as comments_count', 'likes as likes_count', 'shares as shares_count'
         ])
         ->with([
             'image',
@@ -34,7 +34,7 @@ Route::get('/genre/{genre}', function (Genre $genre) {
                 $query->select('id', 'name', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
             },
             'tracks.release.uploader' => function ($query) {
-                $query->select('id', 'name');
+                $query->select('id', 'name', 'path');
             },
             'tracks.preview',
         ])->paginate(20);

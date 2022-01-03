@@ -14,21 +14,21 @@ class APIMyMusicController extends Controller
     public function getMyMusic(Request $request)
     {
         $mymusic = collect();
-
+        // return $mymusic;
         foreach ($request->user()->orders->where('status', 'complete')->sortByDesc('created_at') as $order) {
-            $mymusic = $mymusic->merge($order->downloads->groupBy(function($item, $key) {
-                if( isset($item->track->release_id))
-                {
+            return $order->tracks;
+            $mymusic = $mymusic->merge($order->downloads->groupBy(function ($item, $key) {
+                if (isset($item->track->release_id)) {
                     return $item->track->release_id;
                 }
             }));
         }
         // Remove items where the user has reached the download limit
-//        for ($i = 0; $i < count($mymusic); $i++) {
-//            if ($mymusic[$i]->count >= 3) {
-//                $mymusic->forget($i);
-//            }
-//        }
+        //        for ($i = 0; $i < count($mymusic); $i++) {
+        //            if ($mymusic[$i]->count >= 3) {
+        //                $mymusic->forget($i);
+        //            }
+        //        }
 
         return $mymusic;
     }

@@ -16,7 +16,6 @@ class DiscoverController extends Controller
 
     public function get()
     {
-        // TODO: Pagination not working need to remove domain name (app_url)  from  first_page_url, last_page_url and path
         $genres = [];
         if (request()->has('genres')) {
             foreach (request('genres') as $genre) {
@@ -58,7 +57,7 @@ class DiscoverController extends Controller
             ->with([
                 'image',
                 'uploader' => function ($query) {
-                    $query->select('id', 'name', 'first_name', 'last_name');
+                    $query->select('id', 'name', 'first_name', 'last_name', 'path');
                 },
                 'tracks' => function ($query) {
                     // $query->select([
@@ -79,13 +78,13 @@ class DiscoverController extends Controller
                     $query->select('id', 'name', 'created_at', 'class', 'uploaded_by', 'status');
                 },
                 'tracks.release.uploader' => function ($query) {
-                    $query->select('id', 'name');
+                    $query->select('id', 'name', 'path');
                 },
             ])
             ->withCount([
-                'comments as comment_count',
-                'likes as like_count',
-                'shares as share_count'
+                'comments as comments_count',
+                'likes as likes_count',
+                'shares as shares_count'
             ])
             ->orderBy($column, $direction)
             ->paginate(15);

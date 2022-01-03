@@ -21,7 +21,7 @@ class Event extends PhaseModel
 
     protected $with = ['user', 'image'];
 
-    protected $appends = ['is_shared', 'share_count', 'is_recent'];
+    protected $appends = ['is_shared', 'shares_count', 'is_recent'];
 
     public function user()
     {
@@ -47,12 +47,14 @@ class Event extends PhaseModel
         return $this->image;
     }
 
-    public function scopeDateNotNull($query){
+    public function scopeDateNotNull($query)
+    {
         // return $query->where('date', '<>', '');
         return $query->whereNotNull('date');
     }
 
-    public function getIsRecentAttribute() {
+    public function getIsRecentAttribute()
+    {
         return $this->created_at->diffInDays() < 7;
     }
 }

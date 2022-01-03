@@ -31,9 +31,9 @@ export default {
             default: function() {
                 return {
                     title: "",
-                    comment_count: 0,
-                    like_count: 0,
-                    share_count: 0,
+                    comments_count: 0,
+                    likes_count: 0,
+                    shares_count: 0,
                     published_at: null,
                     image: {
                         files: {

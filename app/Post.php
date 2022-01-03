@@ -25,7 +25,7 @@ class Post extends PhaseModel
 
     protected $with = ['user', 'attachment'];
 
-    protected $appends = ['comment_count', 'is_liked', 'like_count', 'is_shared', 'share_count', 'is_recent'];
+    protected $appends = ['comments_count', 'is_liked', 'likes_count', 'is_shared', 'shares_count', 'is_recent'];
 
     public function user()
     {
@@ -47,12 +47,13 @@ class Post extends PhaseModel
         return $query->where('target_id', $user->id);
     }
 
-    public function scopeBodyNotNull($query){
+    public function scopeBodyNotNull($query)
+    {
         return $query->where('body', '<>', '');
     }
 
-    public function getIsRecentAttribute() {
+    public function getIsRecentAttribute()
+    {
         return $this->created_at->diffInDays() < 7;
     }
-
 }

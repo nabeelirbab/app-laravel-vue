@@ -17,12 +17,12 @@ Route::get('/new-music/{count?}', function ($count = 100) {
                 ]);
             },
             'release.uploader' => function ($query) {
-                $query->select('id', 'name');
+                $query->select('id', 'name', 'path');
             },
             'release.image',
         ])
         ->withCount([
-            'comments as comment_count', 'likes as like_count', 'shares as share_count'
+            'comments as comments_count', 'likes as likes_count', 'shares as shares_count'
         ])
         ->where('status', 'approved')
         ->take($count)

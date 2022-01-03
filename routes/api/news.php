@@ -11,7 +11,6 @@ Route::get('/news/category/{category}/{count?}', function ($category, $count = 1
 });
 Route::get('/news/{count?}', function ($count = 10) {
     // return Cache::remember('news:'.$count, now()->addHours(12), function () use ($count) {
-    //FIXME: wip
     return News::published()
         ->with([
             'image',
@@ -19,7 +18,7 @@ Route::get('/news/{count?}', function ($count = 10) {
                 return $q->select('id', 'name', 'first_name', 'last_name', 'path');
             },
         ])
-        ->withCount('comments', 'likes', 'shares')
+        ->withCount('comments as comments_count', 'likes as likes_count', 'shares as shares_count')
         ->paginate($count);
     // return paginateOrAll(News::published(), $count);
     // });
@@ -29,7 +28,7 @@ Route::get('/news/article/{id}', function ($identifier) {
     if (is_numeric($identifier)) {
         return News::with('user', 'image', 'categories')
             ->withCount([
-                'comments as comment_count', 'likes as like_count', 'shares as share_count'
+                'comments as comments_count', 'likes as likes_count', 'shares as shares_count'
             ])->findOrFail($identifier);
     }
     // FIXME: check all pages for this path
@@ -42,11 +41,11 @@ Route::get('/news/article/{id}', function ($identifier) {
                 $q->select('assets.id', 'assets.created_at');
             },
             'user' => function ($query) {
-                $query->select('users.id', 'users.name');
+                $query->select('users.id', 'users.name', 'users.path');
             }
         ])
         ->withCount([
-            'shares as share_count', 'likes as like_count', 'comments as comment_count'
+            'shares as shares_count', 'likes as likes_count', 'comments as comments_count'
         ])
         ->firstOrFail();
 });

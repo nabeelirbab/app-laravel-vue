@@ -48,7 +48,7 @@
     methods: {
       liked() {
         this.item.is_liked = true;
-        this.item.like_count += 1;
+        this.item.like_count +=   1;
       },
       unliked() {
         this.item.is_liked = false;

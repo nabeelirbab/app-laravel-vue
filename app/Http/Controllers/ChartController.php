@@ -86,7 +86,7 @@ class ChartController extends Controller
                 })
                 ->with([
                     'uploader' => function ($query) {
-                        $query->select('id', 'name', 'first_name', 'last_name');
+                        $query->select('id', 'name', 'first_name', 'last_name', 'path');
                     },
                     'image' => function ($query) {
                         $query->select('id', 'created_at');
@@ -102,7 +102,7 @@ class ChartController extends Controller
                         $query->select('id', 'name', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
                     },
                     'tracks.release.uploader' => function ($query) {
-                        $query->select('id', 'name');
+                        $query->select('id', 'name', 'path');
                     },
                     'tracks.preview',
                 ])

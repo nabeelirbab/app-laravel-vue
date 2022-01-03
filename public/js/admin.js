@@ -1650,7 +1650,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     shareArticle: function shareArticle(state, articleid) {
       for (var i = 0; i < state.articles.length; i++) {
         if (state.articles[i].id === articleid) {
-          state.articles[i].share_count += 1;
+          state.articles[i].shares_count += 1;
           state.articles[i].is_shared = true;
         }
       }

@@ -84,7 +84,7 @@ export default {
   methods: {
     liked() {
       this.mutableTrack.is_liked = true;
-      this.mutableTrack.like_count += 1;
+      this.mutableTrack.like_count +=   1;
     },
     unliked() {
       this.mutableTrack.is_liked = false;

@@ -102,7 +102,7 @@
                 });
             },
             commitLike() {
-                this.article.like_count += 1;
+                this.article.like_count +=   1;
                 this.article.is_liked = true;
                 this.$store.commit('news/likeArticle', this.article.id);
             },
@@ -117,7 +117,7 @@
                 this.$store.commit('news/shareArticle', this.article.id);
             },
             newComment() {
-                this.article.comments_count += 1;
+                this.article.comment_count += 1;
             }
         },
         components: {
