@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Release;
-use Illuminate\Http\Request;
 use App\Genre;
+use App\Release;
 use App\Phase\Chart\Chart;
 use App\Phase\Filter\Filter;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -91,37 +91,40 @@ class ChartController extends Controller
                     'image' => function ($query) {
                         $query->select('id', 'created_at');
                     },
-                    'tracks',
+                    'tracks' => function ($query) {
+                        $query->select([
+                            'id', 'name', 'length', 'created_at', 'bpm', 'key', 'preview_id', 'asset_id',
+                            'release_id', 'uploaded_by', 'status', 'slug'
+                        ]);
+                    },
                     'tracks.streamable',
                     'tracks.release' => function ($query) {
-                        $query->select('id', 'name', 'created_at', 'class', 'uploaded_by', 'status');
+                        $query->select('id', 'name', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
                     },
                     'tracks.release.uploader' => function ($query) {
                         $query->select('id', 'name');
                     },
-                    'tracks.artist' => function ($query) {
-                        $query->select('id', 'name');
-                    },
+                    'tracks.preview',
                 ])
                 ->get()
                 ->groupBy('class');
         });
         return $items;
 
-        // start of old query before
-        if (isset($this->input['classes']) && count($this->input['classes'])) {
-            $classVal = $this->input['classes'][0]['val'];
+        // // start of old query before
+        // if (isset($this->input['classes']) && count($this->input['classes'])) {
+        //     $classVal = $this->input['classes'][0]['val'];
 
-            return Cache::remember('charts:' . $classVal . '.' . $count, now()->addHours(12), function () use ($classVal, $count) {
-                return [
-                    $classVal => $this->getForClass($classVal, $count)
-                ];
-            });
-        }
+        //     return Cache::remember('charts:' . $classVal . '.' . $count, now()->addHours(12), function () use ($classVal, $count) {
+        //         return [
+        //             $classVal => $this->getForClass($classVal, $count)
+        //         ];
+        //     });
+        // }
 
-        return Cache::remember('charts:' . $count, now()->addHours(12), function () use ($count) {
-            return $this->getForAllClasses($count);
-        });
+        // return Cache::remember('charts:' . $count, now()->addHours(12), function () use ($count) {
+        //     return $this->getForAllClasses($count);
+        // });
         // end of old query
     }
 

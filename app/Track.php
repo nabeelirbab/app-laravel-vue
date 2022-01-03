@@ -37,11 +37,11 @@ class Track extends PhaseModel
     ];
 
     protected $appends = [
-        'comment_count',
+        // 'comment_count',
         'is_liked',
-        'like_count',
+        // 'like_count',
         'is_shared',
-        'share_count',
+        // 'share_count',
         'is_recent'
     ];
 

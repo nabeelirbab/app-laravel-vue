@@ -25,8 +25,8 @@
                 {{ release.description }}
             </div>
 
-          <div class="tracks" v-if="tracks">
-            <div class="track flex" v-for="(track, index) in this.tracks">
+          <div class="tracks" v-if="release.tracks">
+            <div class="track flex" v-for="(track, index) in release.tracks">
               <div class="flex-1">
                 <div class="track-image">
                   <img v-if="track.image" :src="track.image.files.medium.url" :alt="track.image.alt">
@@ -71,16 +71,16 @@
             }
         },
         created: function() {
-          this.getReleaseTracks();
+        //   this.getReleaseTracks();
         },
         methods: {
-          getReleaseTracks : function()
-          {
-            window.axios.get('/api/release/'+this.release.id+'/tracks').then(response => {
-              let responseData = response.data;
-              this.tracks = responseData.tracks;
-            })
-          }
+        //   getReleaseTracks : function()
+        //   {
+        //     window.axios.get('/api/release/'+this.release.id+'/tracks').then(response => {
+        //       let responseData = response.data;
+        //       this.tracks = responseData.tracks;
+        //     })
+        //   }
         },
         components: {
             Actions,

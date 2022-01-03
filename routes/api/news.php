@@ -27,8 +27,26 @@ Route::get('/news/{count?}', function ($count = 10) {
 
 Route::get('/news/article/{id}', function ($identifier) {
     if (is_numeric($identifier)) {
-        return News::with('user', 'image')->findOrFail($identifier);
+        return News::with('user', 'image', 'categories')
+            ->withCount([
+                'comments as comment_count', 'likes as like_count', 'shares as share_count'
+            ])->findOrFail($identifier);
     }
     // FIXME: check all pages for this path
-    return News::where('path', $identifier)->first();
+    return News::wherePath($identifier)
+        ->with([
+            'categories' => function ($q) {
+                $q->select('categories.id', 'categories.title', 'categories.path');
+            },
+            'image' => function ($q) {
+                $q->select('assets.id', 'assets.created_at');
+            },
+            'user' => function ($query) {
+                $query->select('users.id', 'users.name');
+            }
+        ])
+        ->withCount([
+            'shares as share_count', 'likes as like_count', 'comments as comment_count'
+        ])
+        ->firstOrFail();
 });
