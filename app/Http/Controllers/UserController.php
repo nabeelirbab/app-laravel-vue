@@ -17,6 +17,7 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use App\Phase\ImageManager;
+use App\Release;
 
 class UserController extends Controller
 {
@@ -72,11 +73,16 @@ class UserController extends Controller
 
     public function getUser(Request $request, $path = null)
     {
-        // return 'asdfsdfasdfasfasf';
         if ($path !== 'search') {
-            $user =  User::with(['avatar', 'banner'])->byPath($path)->with(['following'])->withCount('releases')->first();
+            $user =  User::byPath($path)
+                ->with([
+                    'following'
+                ])
+                ->withCount('releases')
+                ->first();
             if ($request->has('app-user') && $request->get('app-user') != -1) {
-                $followable = User::with(['avatar', 'banner'])->find($request->get('app-user'));
+                // return 'ad';
+                $followable = User::find($request->get('app-user'));
                 $user->followed = $user->followers->contains($followable);
             } else {
                 $user->followed = false;
@@ -90,7 +96,9 @@ class UserController extends Controller
         }
 
         return User::where('name', 'LIKE', '%' . $request->get('name') . '%')
-            ->with(['avatar', 'banner'])
+            ->with([
+                'avatar'
+            ])
             ->withCount('releases')->get();
     }
 
@@ -126,12 +134,16 @@ class UserController extends Controller
 
     public function getReleasesForUser($userId)
     {
-        $releases = User::findOrFail($userId)
-            ->releases()
-            ->where('status', 'live') // Only return pulished releases for another user
-            ->with('tracks');
-
-        return paginateOrAll($releases, 15, 'release_date');
+        return Release::where('uploaded_by', $userId)
+            ->where('status', 'live')
+            ->with([
+                'image',
+                'tracks',
+                'tracks.preview',
+            ])
+            ->withCount('shares', 'likes', 'comments')
+            ->latest('release_date')
+            ->paginate(15);
     }
 
     public function getActivityForUser($userID)

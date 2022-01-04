@@ -41,13 +41,24 @@ class FeedController extends Controller
                 $default_limit = 10;
                 $collection = collect([]);
 
-                Release::statuslive()->limit(10)->get()->each(function ($item) use (&$collection) {
+                Release::statuslive()->with([
+                    'image',
+                    'uploader' => function ($query) {
+                        $query->select('id', 'name', 'path');
+                    },
+                ])->withCount('shares', 'comments', 'likes')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-release';
                     $item->type = 'release';
                     $collection->push($item);
                 });
-
-                Track::namenotnull()->limit(10)->get()->each(function ($item) use (&$collection) {
+                Track::namenotnull()->with([
+                    'preview',
+                    'release',
+                    'release.image',
+                    'release.uploader' => function ($query) {
+                        $query->select('id', 'name', 'path');
+                    },
+                ])->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-track';
                     $item->type = 'track';
                     $collection->push($item);
@@ -62,7 +73,7 @@ class FeedController extends Controller
                     }
 
                     if (Auth::user()->can('add events')) {
-                        Event::datenotnull()->limit(7)->get()->each(function ($item) use (&$collection) {
+                        Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
                             $item->component = 'feed-event';
                             $item->type = 'event';
                             $collection->push($item);

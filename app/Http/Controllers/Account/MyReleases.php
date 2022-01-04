@@ -11,7 +11,18 @@ class MyReleases extends Controller
 {
     public function index()
     {
-        return paginateOrAll(Release::where('uploaded_by', Auth::id())->with('tracks', 'uploader'), 15, 'release_date');
+        return Release::where('uploaded_by', auth()->id())
+            ->with([
+                'image',
+                'tracks',
+                'genres',
+                'tracks.preview',
+                'uploader' => function ($query) {
+                    $query->select(['id', 'name', 'path']);
+                }
+            ])
+            ->latest('release_date')
+            ->paginate(10);
     }
 
     public function update(Request $request, $release)

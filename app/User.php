@@ -70,8 +70,8 @@ class User extends Authenticatable
         'account_type',
         // 'follower_count',
 
-        // 'avatar',
-        // 'banner',
+        'avatar',
+        'banner',
 
         //        'all_permissions',
         'tracks_count_this_month',

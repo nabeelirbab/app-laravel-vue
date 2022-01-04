@@ -21,7 +21,11 @@ class Event extends PhaseModel
 
     protected $with = ['user', 'image'];
 
-    protected $appends = ['is_shared', 'shares_count', 'is_recent'];
+    protected $appends = [
+        'is_shared',
+        // 'shares_count',
+        'is_recent'
+    ];
 
     public function user()
     {
