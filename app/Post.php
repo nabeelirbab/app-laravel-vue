@@ -23,9 +23,16 @@ class Post extends PhaseModel
 
     protected $fillable = ['user_id', 'target_id', 'body', 'asset_id'];
 
-    protected $with = ['user', 'attachment'];
+    protected $with = [
+        'user',
+        'attachment'
+    ];
 
-    protected $appends = ['comments_count', 'is_liked', 'likes_count', 'is_shared', 'shares_count', 'is_recent'];
+    protected $appends = [
+        'is_liked',
+        'is_shared',
+        'is_recent'
+    ];
 
     public function user()
     {

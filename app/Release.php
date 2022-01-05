@@ -27,20 +27,10 @@ class Release extends PhaseModel
 
     protected $fillable = ['name', 'description', 'status', 'price', 'class', 'release_date', 'featured', 'uploaded_by', 'royalty_fee'];
 
-    protected $with = [
-        //	    'medium',
-        // 'image',
-        //        'genres',
-        //        'uploader',
-    ];
 
     protected $appends = [
-        // 'comments_count',
         'is_liked',
-        // 'likes_count',
         'is_shared',
-        // 'shares_count',
-        // 'uploader_name',
         'is_recent'
     ];
 

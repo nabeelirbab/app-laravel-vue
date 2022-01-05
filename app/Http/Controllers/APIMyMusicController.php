@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Download;
+use App\Order;
 use Exception;
 use Illuminate\Http\Request;
 
 use App\Track;
+use App\User;
 use Storage;
 use File;
 
@@ -14,15 +17,19 @@ class APIMyMusicController extends Controller
     public function getMyMusic(Request $request)
     {
         $mymusic = collect();
-        // return $mymusic;
-        foreach ($request->user()->orders->where('status', 'complete')->sortByDesc('created_at') as $order) {
-            return $order->tracks;
-            $mymusic = $mymusic->merge($order->downloads->groupBy(function ($item, $key) {
-                if (isset($item->track->release_id)) {
-                    return $item->track->release_id;
-                }
-            }));
-        }
+        $userOrders = Order::where('purchaser_id', $request->user()->id)
+            ->where('status', 'complete')
+            ->orderByDesc('created_at')
+            ->get()->pluck('id');
+        $downloads = Download::whereIn('order_id', $userOrders)
+            ->with([
+                'track',
+                'track.preview',
+                'track.release',
+                'track.release.image',
+            ])
+            ->get()->groupBy('track.release_id');
+        return $downloads;
         // Remove items where the user has reached the download limit
         //        for ($i = 0; $i < count($mymusic); $i++) {
         //            if ($mymusic[$i]->count >= 3) {

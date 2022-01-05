@@ -76,13 +76,12 @@ class UserController extends Controller
         if ($path !== 'search') {
             $user =  User::byPath($path)
                 ->with([
-                    'following'
+                    'following',
                 ])
-                ->withCount('releases')
+                ->withCount(['releases', 'followers as follower_count', 'following as following_count'])
                 ->first();
             if ($request->has('app-user') && $request->get('app-user') != -1) {
-                // return 'ad';
-                $followable = User::find($request->get('app-user'));
+                $followable = User::with('following')->find($request->get('app-user'));
                 $user->followed = $user->followers->contains($followable);
             } else {
                 $user->followed = false;
@@ -99,13 +98,14 @@ class UserController extends Controller
             ->with([
                 'avatar'
             ])
-            ->withCount('releases')->get();
+            ->withCount('releases')
+            ->get();
     }
 
     // Unused. Use me!
     public function getPostsFromUser($userid)
     {
-        return Post::where('user_id', $userid)->orderByDesc('created_at')->get();
+        return Post::where('user_id', $userid)->withCount('comments', 'likes', 'shares')->orderByDesc('created_at')->get();
     }
 
     public function getPostsForUser($userID)

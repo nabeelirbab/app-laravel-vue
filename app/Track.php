@@ -30,18 +30,12 @@ class Track extends PhaseModel
     protected $fillable = ['name', 'length', 'bpm', 'key', 'price', 'image'];
 
     protected $with = [
-        // 'genres',
-        // 'preview',
-        // 'release',
-        // 'streamable'
+        'preview',
     ];
 
     protected $appends = [
-        // 'comments_count',
         'is_liked',
-        // 'likes_count',
         'is_shared',
-        // 'shares_count',
         'is_recent'
     ];
 
