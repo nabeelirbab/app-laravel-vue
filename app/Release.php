@@ -66,7 +66,6 @@ class Release extends PhaseModel
     public function tracks()
     {
         return $this->hasMany('App\Track', 'release_id');
-        // return $this->hasMany('App\Track', 'release_id')->with('artist');
     }
 
     public function genres()

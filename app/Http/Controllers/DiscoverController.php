@@ -59,20 +59,7 @@ class DiscoverController extends Controller
                 'uploader' => function ($query) {
                     $query->select('id', 'name', 'first_name', 'last_name', 'path');
                 },
-                'tracks' => function ($query) {
-                    // $query->select([
-                    //     'id',
-                    //     'name',
-                    //     'length',
-                    //     'bpm',
-                    //     'created_at',
-                    //     'asset_id',
-                    //     'preview_id',
-                    //     'uploaded_by',
-                    //     'release_id',
-                    //     'streamable_id'
-                    // ]);
-                },
+                'tracks',
                 'tracks.preview',
                 'tracks.release' => function ($query) {
                     $query->select('id', 'name', 'created_at', 'class', 'uploaded_by', 'status');
@@ -90,33 +77,6 @@ class DiscoverController extends Controller
             ->paginate(15);
 
         return $release;
-
-        //start of old query
-        $this->filter = new Filter(Release::released()->with('uploader', 'image', 'tracks')->get());
-
-        foreach (request('genres') as $genre) {
-            $this->filter->addGenreFilter(Genre::find($genre['id']));
-        }
-
-        foreach (request('classes') as $class) {
-            $this->filter->addClassFilter($class['val']);
-        }
-
-        foreach (request('filter') as $filter) {
-            $this->filter->addFilterFilter($filter);
-        }
-
-        $bpm = request('bpm');
-        $minbpm = $bpm[0];
-        $maxbpm = $bpm[1];
-
-        $this->filter->addBpmFilter($minbpm, $maxbpm);
-
-        // $this->filter->addKeyFilter(request('keys'));
-
-        return $this->filter->paginate();
-
-        // end of old query
     }
 
     private function getFilterOrderBy($key = '')

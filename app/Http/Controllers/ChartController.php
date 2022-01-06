@@ -110,22 +110,6 @@ class ChartController extends Controller
                 ->groupBy('class');
         });
         return $items;
-
-        // // start of old query before
-        // if (isset($this->input['classes']) && count($this->input['classes'])) {
-        //     $classVal = $this->input['classes'][0]['val'];
-
-        //     return Cache::remember('charts:' . $classVal . '.' . $count, now()->addHours(12), function () use ($classVal, $count) {
-        //         return [
-        //             $classVal => $this->getForClass($classVal, $count)
-        //         ];
-        //     });
-        // }
-
-        // return Cache::remember('charts:' . $count, now()->addHours(12), function () use ($count) {
-        //     return $this->getForAllClasses($count);
-        // });
-        // end of old query
     }
 
     private function getForClass($class, $count = null)
