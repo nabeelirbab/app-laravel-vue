@@ -124,6 +124,13 @@ class SocialController extends Controller
     public function getCommentsForItem($type, $id)
     {
         $commentable = morphToModel($type, $id);
-        return $commentable->comments()->with('user', 'user.avatar')->orderByDesc('id')->paginate(15);
+        return $commentable->comments()
+            ->with([
+                'user' => function ($query) {
+                    $query->select('id', 'name', 'path');
+                },
+            ])
+            ->orderByDesc('id')
+            ->paginate(15);
     }
 }
