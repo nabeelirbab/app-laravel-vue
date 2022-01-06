@@ -15,7 +15,7 @@ class File extends PhaseModel
 {
     protected $fillable = ['asset_id', 'size', 'path', 'mime'];
 
-//    protected $with = ['asset'];
+    //    protected $with = ['asset'];
 
     protected $appends = ['url'];
 
@@ -26,7 +26,7 @@ class File extends PhaseModel
 
     public function getUrlAttribute()
     {
-        return Storage::url($this->path);
+        return $this->tempUrl(5);
     }
 
     public function scopeSize($query, $size)
