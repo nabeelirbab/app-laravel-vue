@@ -102,22 +102,22 @@
                 });
             },
             commitLike() {
-                this.article.like_count += 1;
+                this.article.likes_count += 1;
                 this.article.is_liked = true;
                 this.$store.commit('news/likeArticle', this.article.id);
             },
             commitUnlike() {
-                this.article.like_count -= 1;
+                this.article.likes_count -= 1;
                 this.article.is_liked = false;
                 this.$store.commit('news/unlikeArticle', this.article.id);
             },
             commitShare() {
-                this.article.share_count += 1;
+                this.article.shares_count += 1;
                 this.article.is_shared = true;
                 this.$store.commit('news/shareArticle', this.article.id);
             },
             newComment() {
-                this.article.comment_count += 1;
+                this.article.comments_count += 1;
             }
         },
         components: {

@@ -77,11 +77,11 @@
             },
             liked() {
                 this.thread.is_liked = true;
-                this.thread.like_count += 1;
+                this.thread.likes_count += 1;
             },
             unliked() {
                 this.thread.is_liked = false;
-                this.thread.like_count -= 1;
+                this.thread.likes_count -= 1;
             }
         },
         components: {

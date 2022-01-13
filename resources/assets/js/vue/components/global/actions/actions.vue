@@ -86,10 +86,10 @@
         },
         methods: {
             liked() {
-              this.actionable.like_count++
+              this.actionable.likes_count++
             },
             unliked() {
-              this.actionable.like_count--
+              this.actionable.likes_count--
             },
             shared() {
                 this.$emit('share');

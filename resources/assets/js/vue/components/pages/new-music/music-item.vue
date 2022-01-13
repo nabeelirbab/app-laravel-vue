@@ -84,18 +84,18 @@ export default {
   methods: {
     liked() {
       this.mutableTrack.is_liked = true;
-      this.mutableTrack.like_count += 1;
+      this.mutableTrack.likes_count += 1;
     },
     unliked() {
       this.mutableTrack.is_liked = false;
-      this.mutableTrack.like_count -= 1;
+      this.mutableTrack.likes_count -= 1;
     },
     shared() {
       this.mutableTrack.is_shared = true
-      this.mutableTrack.share_count += 1
+      this.mutableTrack.shares_count += 1
     },
     commented() {
-      this.mutableTrack.comment_count += 1
+      this.mutableTrack.comments_count += 1
     },
   },
   components: {

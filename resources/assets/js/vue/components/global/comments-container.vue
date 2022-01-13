@@ -74,7 +74,7 @@ export default {
         ...data,
       });
       this.$emit("newComment");
-      this.commentable.comment_count += 1;
+      this.commentable.comments_count += 1;
     },
   },
   components: {
