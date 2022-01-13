@@ -183,7 +183,7 @@ export default {
     loadNextPage() {
       this.loadingNextPage = true;
       axios
-        .post("/api/discover" + this.nextPageUrl, this.filters)
+        .post(this.nextPageUrl, this.filters)
         .then((response) => {
           let newResults = [],
             currentResults = this.results;

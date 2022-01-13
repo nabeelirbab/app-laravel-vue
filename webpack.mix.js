@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -36,6 +37,7 @@ mix.webpackConfig({
     )
     .js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/admin.js', 'public/js')
+    .vue()
     .extract([
         'vue', 'axios', 'chart.js', 'epic-spinners', 'js-cookie', 'lodash', 'lost', 'moment', 'showdown',
         'vee-validate', 'vue-js-modal', 'vue-notification', 'vue-progressbar', 'vue-router', 'vuex'

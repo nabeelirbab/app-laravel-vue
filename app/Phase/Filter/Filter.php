@@ -1,4 +1,6 @@
-<?php namespace App\Phase\Filter;
+<?php
+
+namespace App\Phase\Filter;
 
 use App\Genre;
 
@@ -50,8 +52,13 @@ class Filter
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $this->items = $this->items instanceof Collection ? $this->items : Collection::make($this->items);
 
-        return new LengthAwarePaginator(array_values($this->items->forPage($page, $perPage)->toArray()),
-            $this->items->count(), $perPage, $page, $options);
+        return new LengthAwarePaginator(
+            array_values($this->items->forPage($page, $perPage)->toArray()),
+            $this->items->count(),
+            $perPage,
+            $page,
+            $options
+        );
     }
 
     /**
@@ -119,7 +126,6 @@ class Filter
 
 
         return $this;
-
     }
 
     /**
@@ -139,7 +145,6 @@ class Filter
                 }
             }
             return false;
-
         });
         return $this;
     }

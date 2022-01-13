@@ -27,20 +27,10 @@ class Release extends PhaseModel
 
     protected $fillable = ['name', 'description', 'status', 'price', 'class', 'release_date', 'featured', 'uploaded_by', 'royalty_fee'];
 
-    protected $with = [
-        //	    'medium',
-        'image',
-        //        'genres',
-        //        'uploader',
-    ];
 
     protected $appends = [
-        'comment_count',
         'is_liked',
-        'like_count',
         'is_shared',
-        'share_count',
-        'uploader_name',
         'is_recent'
     ];
 
@@ -75,7 +65,7 @@ class Release extends PhaseModel
 
     public function tracks()
     {
-        return $this->hasMany('App\Track', 'release_id')->with('artist');
+        return $this->hasMany('App\Track', 'release_id');
     }
 
     public function genres()
@@ -111,7 +101,6 @@ class Release extends PhaseModel
         return $query->whereHas('featuredDates', function ($query) {
             $query->whereDate('featured_date', now()->startOfDay());
         })->get();
-
     }
 
     public function scopeStatusPending($query)
@@ -186,7 +175,7 @@ class Release extends PhaseModel
 
     public function featuredDates()
     {
-        return $this->hasMany('App\FeaturedReleaseDates','release_id');
+        return $this->hasMany('App\FeaturedReleaseDates', 'release_id');
     }
 
     public function isFeatured()
@@ -217,7 +206,8 @@ class Release extends PhaseModel
         return $this->uploader->name;
     }
 
-    public function getIsRecentAttribute() {
+    public function getIsRecentAttribute()
+    {
         return $this->created_at->diffInDays() < 7;
     }
 

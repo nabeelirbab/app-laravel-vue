@@ -41,43 +41,55 @@ class FeedController extends Controller
                 $default_limit = 10;
                 $collection = collect([]);
 
-                Release::statuslive()->limit(10)->get()->each(function ($item) use (&$collection) {
+                Release::statuslive()->with([
+                    'image',
+                    'uploader' => function ($query) {
+                        $query->select('id', 'name', 'path');
+                    },
+                ])->withCount('shares', 'comments', 'likes')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-release';
                     $item->type = 'release';
                     $collection->push($item);
                 });
-
-                Track::namenotnull()->limit(10)->get()->each(function ($item) use (&$collection) {
+                Track::namenotnull()->with([
+                    'preview',
+                    'release',
+                    'release.image',
+                    'release.uploader' => function ($query) {
+                        $query->select('id', 'name', 'path');
+                    },
+                ])->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-track';
                     $item->type = 'track';
                     $collection->push($item);
                 });
+                if (auth()->check()) {
+                    if (Auth::user()->can('upload videos')) {
+                        Video::published()->limit(8)->get()->each(function ($item) use (&$collection) {
+                            $item->component = 'feed-video';
+                            $item->type = 'video';
+                            $collection->push($item);
+                        });
+                    }
 
-                if (Auth::user()->can('upload videos')) {
-                    Video::published()->limit(8)->get()->each(function ($item) use (&$collection) {
-                        $item->component = 'feed-video';
-                        $item->type = 'video';
-                        $collection->push($item);
-                    });
+                    if (Auth::user()->can('add events')) {
+                        Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
+                            $item->component = 'feed-event';
+                            $item->type = 'event';
+                            $collection->push($item);
+                        });
+                    }
+
+                    if (Auth::user()->can('add merch')) {
+                        Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
+                            $item->component = 'feed-merch';
+                            $item->type = 'merch';
+                            $collection->push($item);
+                        });
+                    }
                 }
 
-                if (Auth::user()->can('add events')) {
-                    Event::datenotnull()->limit(7)->get()->each(function ($item) use (&$collection) {
-                        $item->component = 'feed-event';
-                        $item->type = 'event';
-                        $collection->push($item);
-                    });
-                }
-
-                if (Auth::user()->can('add merch')) {
-                    Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
-                        $item->component = 'feed-merch';
-                        $item->type = 'merch';
-                        $collection->push($item);
-                    });
-                }
-
-                Post::bodynotnull()->limit(7)->get()->each(function ($item) use (&$collection) {
+                Post::bodynotnull()->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-post';
                     $item->type = 'post';
                     $collection->push($item);

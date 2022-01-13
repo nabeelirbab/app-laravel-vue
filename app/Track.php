@@ -29,9 +29,15 @@ class Track extends PhaseModel
 
     protected $fillable = ['name', 'length', 'bpm', 'key', 'price', 'image'];
 
-    protected $with = ['genres', 'preview', 'release', 'streamable'];
+    protected $with = [
+        'preview',
+    ];
 
-    protected $appends = ['comment_count', 'is_liked', 'like_count', 'is_shared', 'share_count', 'is_recent'];
+    protected $appends = [
+        'is_liked',
+        'is_shared',
+        'is_recent'
+    ];
 
     protected $searchable = [
         'columns' => [
@@ -135,7 +141,7 @@ class Track extends PhaseModel
         $trackData = $id3->analyze($file, $file->getSize(), $file->getClientOriginalName());
         $fileFormat = $trackData['fileformat'];
         $fileRandom = Str::random(40);
-        $localPath = Storage::disk('public')->putFileAs('temp/tracks', $file,  $fileRandom. '.' . $fileFormat);
+        $localPath = Storage::disk('public')->putFileAs('temp/tracks', $file,  $fileRandom . '.' . $fileFormat);
         $path = Storage::putFileAs('tracks', $file, $fileRandom . '.' . $fileFormat, 'private');
 
         $this->length = floor($trackData['playtime_seconds']);
@@ -194,7 +200,8 @@ class Track extends PhaseModel
             ->doNotGenerateSlugsOnUpdate();
     }
 
-    public function getIsRecentAttribute() {
+    public function getIsRecentAttribute()
+    {
         return $this->created_at->diffInDays() < 7;
     }
 }

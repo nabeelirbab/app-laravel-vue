@@ -21,8 +21,8 @@ class ThreadPreviewResource extends JsonResource
             'users' => MessageReceiversResource::collection($this->users),
             'type' => $this->type,
             'is_liked' => $this->is_liked,
-            'like_count' => $this->like_count,
-            'read_at'=> $this->pivot->read_at
+            'likes_count' => $this->likes_count,
+            'read_at' => $this->pivot->read_at
         ];
     }
 }

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Download;
+use App\Order;
 use Exception;
 use Illuminate\Http\Request;
 
 use App\Track;
+use App\User;
 use Storage;
 use File;
 
@@ -14,23 +17,29 @@ class APIMyMusicController extends Controller
     public function getMyMusic(Request $request)
     {
         $mymusic = collect();
-
-        foreach ($request->user()->orders->where('status', 'complete')->sortByDesc('created_at') as $order) {
-            $mymusic = $mymusic->merge($order->downloads->groupBy(function($item, $key) {
-                if( isset($item->track->release_id))
-                {
-                    return $item->track->release_id;
-                }
-            }));
-        }
+        $userOrders = Order::where('purchaser_id', $request->user()->id)
+            ->where('status', 'complete')
+            ->orderByDesc('created_at')
+            ->get()->pluck('id');
+        $downloads = Download::whereIn('order_id', $userOrders)
+            ->with([
+                'track',
+                'track.release' => function ($query) {
+                    $query->select('id', 'name', 'slug', 'featured', 'royalty_fee', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
+                },
+                'track.release.uploader' => function ($query) {
+                    $query->select('id', 'name', 'path');
+                },
+                'track.release.image',
+            ])
+            ->get()->groupBy('track.release_id');
+        return $downloads;
         // Remove items where the user has reached the download limit
-//        for ($i = 0; $i < count($mymusic); $i++) {
-//            if ($mymusic[$i]->count >= 3) {
-//                $mymusic->forget($i);
-//            }
-//        }
-
-        return $mymusic;
+        //        for ($i = 0; $i < count($mymusic); $i++) {
+        //            if ($mymusic[$i]->count >= 3) {
+        //                $mymusic->forget($i);
+        //            }
+        //        }
     }
 
     public function downloadTrack(Request $request, $format, $trackid)

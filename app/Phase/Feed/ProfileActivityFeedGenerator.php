@@ -1,4 +1,6 @@
-<?php namespace App\Phase\Feed;
+<?php
+
+namespace App\Phase\Feed;
 
 use App\Post;
 use App\User;
@@ -43,6 +45,7 @@ class ProfileActivityFeedGenerator
     public function getActionsForPostsTargetedAtUser()
     {
         $posts = Post::targetedAt($this->user)
+            ->withCount('comments', 'likes', 'shares')
             ->get();
 
         $postsActions = collect();
