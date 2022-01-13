@@ -99,8 +99,6 @@ return [
     */
 
     'markdown' => [
-        'theme' => 'phase',
-
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
