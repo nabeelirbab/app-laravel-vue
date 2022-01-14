@@ -43,7 +43,7 @@ class ProcessCoverUpload implements ShouldQueue
      */
     public function handle(ImageHandler $handler)
     {
-        $handler->filePath($this->path)
+        $handler->filePath('public/' . $this->path)
             ->directory('covers')
             ->square()
             ->visibility('public')
@@ -52,7 +52,7 @@ class ProcessCoverUpload implements ShouldQueue
             ->large()
             ->medium()
             ->thumb()
-            ->removeLocalFile($this->path);
+            ->removeLocalFile('public/' . $this->path);
 
         $this->model->image_id = $handler->asset->id;
         $this->model->save();
