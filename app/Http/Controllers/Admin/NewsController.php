@@ -117,7 +117,7 @@ class NewsController extends Controller
 
         $post = News::create($request->only(['title', 'path', 'content', 'user_id']));
 
-        if ($data['image']) {
+        if (!empty($data['image'])) {
             $post->saveCoverImage($data['image']);
         }
 
@@ -169,7 +169,7 @@ class NewsController extends Controller
 
         $post->update($request->only(['title', 'path', 'content', 'user_id']));
 
-        if ($data['image']) {
+        if (!empty($data['image'])) {
             $post->saveCoverImage($data['image']);
         }
 
@@ -177,7 +177,7 @@ class NewsController extends Controller
 
         $post->save();
 
-        return back();
+        return redirect('/admin/news')->with("Successfully Updated");
     }
 
     /**

@@ -38,9 +38,11 @@
 				@include('admin.partials.field-error', ['field' => 'user_id'])
 				<select name="user_id" id="user_id" class="form-control">
 					<option value="">Select a User</option>
-					@foreach($users as $user)
-						<option {{ $post->user_id == Auth::id() ? 'selected' : null }} value="{{ $user->id }}">{{ $user->name }}</option>
-					@endforeach
+					@if(!empty($users))
+						@foreach($users as $user)
+							<option {{ $post->user_id == Auth::id() ? 'selected' : null }} value="{{ $user->id }}">{{ $user->name }}</option>
+						@endforeach
+					@endif
 				</select>
 			</div>
 
@@ -48,9 +50,11 @@
 				<label for="categories">Category</label>
 				@include('admin.partials.field-error', ['field' => 'categories'])
 				<select name="categories[]" id="categories" class="form-control" multiple="multiple">
-					@foreach($categories as $category)
-						<option {{ $post->categories->contains($category->id) ? 'selected' : null }} value="{{ $category->id }}">{{ $category->title }}</option>
-					@endforeach
+					@if(!empty($categories))
+						@foreach($categories as $category)
+							<option {{ $post->categories->contains($category->id) ? 'selected' : null }} value="{{ $category->id }}">{{ $category->title }}</option>
+						@endforeach
+					@endif
 				</select>
 			</div>
 
@@ -62,14 +66,16 @@
 
 			<div class="form-group">
 				<label for="published_at">Publish Date</label>
-				<input class="form-control" type="date" name="published_at" value="{{ $post->published_at->format('Y-m-d') }}">
+				<input class="form-control" type="date" name="published_at" value="{{ !empty($post->published_at) ? $post->published_at->format('Y-m-d') : ''}}">
 			</div>
 
 			<div class="form-group">
+				@if(!empty($post->image))
 				<div class="image-preview">
 					<div>Current Image</div>
 					<img src="{{ $post->image->files['thumb']->url }}" alt="{{ $post->image->alt }}" width="150" height="150">
 				</div>
+				@endif
 
 				<label for="image">Upload Image</label>
 				@include('admin.partials.field-error', ['field' => 'image'])

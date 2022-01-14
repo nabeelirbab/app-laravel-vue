@@ -26,9 +26,11 @@
 				@include('admin.partials.field-error', ['field' => 'user_id'])
 				<select name="user_id" id="user_id" class="form-control">
 					<option value="">Select a User</option>
-					@foreach($users as $user)
-						<option {{ Auth::id() == $user->id ? 'selected' : null }} value="{{ $user->id }}">{{ $user->name }}</option>
-					@endforeach
+					@if(!empty($users))
+						@foreach($users as $user)
+							<option {{ Auth::id() == $user->id ? 'selected' : null }} value="{{ $user->id }}">{{ $user->name }}</option>
+						@endforeach
+					@endif
 				</select>
 			</div>
 
@@ -36,9 +38,11 @@
 				<label for="categories">Category</label>
 				@include('admin.partials.field-error', ['field' => 'categories'])
 				<select name="categories[]" id="categories" class="form-control" multiple="multiple">
-					@foreach($categories as $category)
-						<option value="{{ $category->id }}">{{ $category->title }}</option>
-					@endforeach
+					@if(!empty($categories))
+						@foreach($categories as $category)
+							<option value="{{ $category->id }}">{{ $category->title }}</option>
+						@endforeach
+					@endif
 				</select>
 			</div>
 
