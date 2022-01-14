@@ -107,6 +107,6 @@ class News extends PhaseModel
 
     public function getIsRecentAttribute()
     {
-        return $this->published_at->diffInDays() < 7;
+        return ($this->published_at === null) ? false : $this->published_at->diffInDays() < 7;
     }
 }
