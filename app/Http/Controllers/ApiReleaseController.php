@@ -75,7 +75,7 @@ class ApiReleaseController extends Controller
 
         Mail::to($request->user())->send(new ProcessingRelease($request->user(), $release));
 
-        event(new UserUploadedRelease($release));
+        //event(new UserUploadedRelease($release));
 
         return Release::findOrFail($release->id);
     }

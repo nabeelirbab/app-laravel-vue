@@ -6,6 +6,8 @@ use App\Events\SettleFeaturedDateOrderEvent;
 use App\FeaturedReleaseDates;
 use App\Mail\ReleaseApproved;
 use App\Http\Controllers\Controller;
+use App\Events\User\UploadedRelease as UserUploadedRelease;
+use App\Action;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -156,12 +158,19 @@ class ReleaseController extends Controller
         $release = Release::findOrFail($id);
         $release->approve();
 
+        if(Action::where('event_type', 'user_uploaded_release')->where('item_type', 'release')->where("item_id", $id)->count() <= 0) {
+            event(new UserUploadedRelease($release));
+
+            Action::where('event_type', 'user_uploaded_release')->where('item_type', 'release')->where("item_id", $id)->update(['created_by' => $release->uploaded_by]);
+        }
+
         $release->tracks->each->approve();
 
         Mail::to($release->uploader)->send(new ReleaseApproved($release->uploader, $release));
 
         if ($release->isFeatured()) {
             $order = $release->featuredDates->last()->order;
+
 
             if (!now()->greaterThan(Carbon::parse($release->featuredDates->first()->featured_date))) {
                 event(new SettleFeaturedDateOrderEvent($order));
