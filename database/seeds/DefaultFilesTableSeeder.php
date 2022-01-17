@@ -23,14 +23,6 @@ class DefaultFilesTableSeeder extends Seeder
                 'path' => 'previews/preview.mp3',
                 'mime' => 'audio/mp3',
             ],
-            [
-                'created_at' => $now,
-                'updated_at' => $now,
-                'asset_id' => 1,
-                'size' => 'streamable',
-                'path' => 'previews/preview.mp3',
-                'mime' => 'audio/mp3',
-            ],
             // Thunderbolt Avatar
             [
                 'created_at' => $now,
