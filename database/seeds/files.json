@@ -1259,5 +1259,14 @@
     "size": "original",
     "path": "genres/Genre_icon_Trap.png",
     "mime": "image/jpeg"
+  },
+  {
+    "id": 144,
+    "created_at": "2019-01-18 12:38:28",
+    "updated_at": "2019-01-18 12:38:28",
+    "asset_id": 1,
+    "size": "streamable",
+    "path": "previews/preview.mp3",
+    "mime": "audio/mp3"
   }
 ]
