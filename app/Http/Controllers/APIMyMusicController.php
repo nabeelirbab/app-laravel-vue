@@ -31,6 +31,7 @@ class APIMyMusicController extends Controller
                     $query->select('id', 'name', 'path');
                 },
                 'track.release.image',
+                'track.streamable'
             ])
             ->get()->groupBy('track.release_id');
         return $downloads;

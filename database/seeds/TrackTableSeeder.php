@@ -36,6 +36,8 @@ class TrackTableSeeder extends Seeder
                 'release_id' => $release->id,
                 'uploaded_by' => $user->id,
                 'preview_id' => 1,
+                'asset_id' => 1,
+                'streamable_id' => 1,
                 'slug' => $slug,
                 'status' => $faker->randomElement($status),
                 'created_at' => $release->created_at,
