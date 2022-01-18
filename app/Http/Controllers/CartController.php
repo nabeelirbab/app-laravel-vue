@@ -26,7 +26,7 @@ class CartController extends Controller
                     $products[] = Release::with('tracks.artist')->where('id', $item['id'])->first();
                     break;
                 case 'track':
-                    $products[] = Track::find($item['id']);
+                    $products[] = Track::with('artist')->find($item['id']);
                     break;
             }
         }
