@@ -65,11 +65,6 @@ class Release extends PhaseModel
         return $this->belongsTo('App\User', 'uploaded_by');
     }
 
-    public function image()
-    {
-        return $this->belongsTo('App\Asset', 'image_id');
-    }
-
     public function tracks()
     {
         return $this->hasMany('App\Track', 'release_id');
