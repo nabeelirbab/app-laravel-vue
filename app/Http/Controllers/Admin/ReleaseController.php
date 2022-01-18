@@ -158,11 +158,11 @@ class ReleaseController extends Controller
         $release = Release::findOrFail($id);
         $release->approve();
 
-        if(Action::where('event_type', 'user_uploaded_release')->where('item_type', 'release')->where("item_id", $id)->count() <= 0) {
-            event(new UserUploadedRelease($release));
-
-            Action::where('event_type', 'user_uploaded_release')->where('item_type', 'release')->where("item_id", $id)->update(['created_by' => $release->uploaded_by]);
-        }
+        //insert into actions when release is approved
+        event(new UserUploadedRelease($release));
+        //update created_by to the released user 
+        Action::where('event_type', Action::USER_UPLOADED_RELEASE)->where('item_type', 'release')->where("item_id", $id)->update(['created_by' => $release->uploaded_by]);
+        
 
         $release->tracks->each->approve();
 

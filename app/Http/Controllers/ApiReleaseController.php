@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Mail\ProcessingRelease;
 use App\Notifications\NewRelease;
 use Illuminate\Support\Facades\Mail;
-use App\Events\User\UploadedRelease as UserUploadedRelease;
 use App\Rules\Audio;
 use App\Track;
 
@@ -74,8 +73,6 @@ class ApiReleaseController extends Controller
         Notification::notifyFollowers($request->user(), new NewRelease($release));
 
         Mail::to($request->user())->send(new ProcessingRelease($request->user(), $release));
-
-        //event(new UserUploadedRelease($release));
 
         return Release::findOrFail($release->id);
     }
