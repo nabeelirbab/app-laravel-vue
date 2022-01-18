@@ -34,6 +34,8 @@ class Release extends PhaseModel
         'is_recent'
     ];
 
+    protected $with = ['image'];
+
     protected $dates = [
         'release_date',
         'deleted_at',
@@ -61,6 +63,11 @@ class Release extends PhaseModel
     public function uploader()
     {
         return $this->belongsTo('App\User', 'uploaded_by');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo('App\Asset', 'image_id');
     }
 
     public function tracks()
