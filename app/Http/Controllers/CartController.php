@@ -23,7 +23,7 @@ class CartController extends Controller
         foreach ($request->input('items') as $item) {
             switch ($item['type']) {
                 case 'release':
-                    $products[] = Release::with('tracks')->where('id', $item['id'])->first();
+                    $products[] = Release::with('tracks.artist')->where('id', $item['id'])->first();
                     break;
                 case 'track':
                     $products[] = Track::find($item['id']);
