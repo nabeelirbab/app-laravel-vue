@@ -34,8 +34,6 @@ class Release extends PhaseModel
         'is_recent'
     ];
 
-    protected $with = ['image'];
-
     protected $dates = [
         'release_date',
         'deleted_at',
