@@ -163,14 +163,12 @@ class ReleaseController extends Controller
         //update created_by to the released user 
         Action::where('event_type', Action::USER_UPLOADED_RELEASE)->where('item_type', 'release')->where("item_id", $id)->update(['created_by' => $release->uploaded_by]);
         
-
         $release->tracks->each->approve();
 
         Mail::to($release->uploader)->send(new ReleaseApproved($release->uploader, $release));
 
         if ($release->isFeatured()) {
             $order = $release->featuredDates->last()->order;
-
 
             if (!now()->greaterThan(Carbon::parse($release->featuredDates->first()->featured_date))) {
                 event(new SettleFeaturedDateOrderEvent($order));
