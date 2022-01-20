@@ -152,19 +152,7 @@ class UserController extends Controller
 
         $feed = new ProfileActivityFeedGenerator($user);
 
-        $activity = $feed->getActionsForProfile();
-
-        $allActivitiesId = $activity->pluck("item_id");
-
-        $allReleases = \App\Release::with('image')->whereIn("id", $allActivitiesId)->get()->keyBy("id");
-
-        foreach($activity as &$act) {
-            if(isset($act->item->type) && $act->item->type == 'release') {
-                $act->item->image = !empty($allReleases[$act->item->id]->image) ? $allReleases[$act->item->id]->image : null;
-            }
-        }
-
-        return $activity;
+        return $feed->getActionsForProfile();
     }
 
     public function getMerchForUser($userID)
