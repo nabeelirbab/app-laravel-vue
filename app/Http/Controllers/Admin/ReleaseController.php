@@ -6,6 +6,8 @@ use App\Events\SettleFeaturedDateOrderEvent;
 use App\FeaturedReleaseDates;
 use App\Mail\ReleaseApproved;
 use App\Http\Controllers\Controller;
+use App\Events\User\UploadedRelease as UserUploadedRelease;
+use App\Action;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -156,6 +158,11 @@ class ReleaseController extends Controller
         $release = Release::findOrFail($id);
         $release->approve();
 
+        //insert into actions when release is approved
+        event(new UserUploadedRelease($release));
+        //update created_by to the released user 
+        Action::where('event_type', Action::USER_UPLOADED_RELEASE)->where('item_type', 'release')->where("item_id", $id)->update(['created_by' => $release->uploaded_by]);
+        
         $release->tracks->each->approve();
 
         Mail::to($release->uploader)->send(new ReleaseApproved($release->uploader, $release));
