@@ -175,7 +175,7 @@ class User extends Authenticatable
     public function cart_releases()
     {
         return $this->morphedByMany('App\Release', 'cartable')
-            ->with('tracks')
+            ->with('tracks.artist')
             ->withPivot('download_format')
             ->withTimestamps();
     }
