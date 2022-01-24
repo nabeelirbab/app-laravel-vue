@@ -290,4 +290,15 @@ class UserController extends Controller
             'phase_newsletter_email' => 0,
         ]);
     }
+
+    public function unapprove($id)
+    {
+        if (Auth::id() == $id) {
+            return null;
+        }
+
+        $user = User::where('id', $id)->update(['approved_at' => null ]);
+
+        return redirect('/admin/users');
+    }
 }

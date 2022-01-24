@@ -1,9 +1,9 @@
 <td>
-	<span >
+	<span class="text-primary">
 			@if(!$user->approved_at)
-            	<i class="fas fa-check"></i>
+            	<i class='fa-2x fa fa-check-circle'></i>
             @else
-            	<i class="fas fa-close"></i>
+            	<i class="fa-2x fa fa-close-circle"></i>
             @endif
     </span>
 </td>

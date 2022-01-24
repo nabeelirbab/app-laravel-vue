@@ -132,8 +132,11 @@ Route::namespace('Admin')->group(function () {
         Route::get('restore/{id}', 'UserController@restore');
         Route::get('destroy/{id}', 'UserController@destroy');
         Route::get('ban/{id}', 'UserController@ban');
+        Route::get('approve/{id}', 'UserController@approve');
+        Route::get('unapprove/{id}', 'UserController@unapprove');
         Route::post('{type?}', 'UserController@bulkAction');
         Route::get('{type?}/{value?}', 'UserController@index');
+        
     });
 
     Route::prefix('roles')->group(function () {
