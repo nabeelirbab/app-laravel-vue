@@ -82,7 +82,7 @@ Route::get('/release/{release}', function (Release $release) {
     return $release->load('uploader', 'image')->load([
         'tracks' => function ($query) {
             return $query->where('status', 'approved');
-        }
+        }, 'tracks.artist'
     ]);
 });
 
