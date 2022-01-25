@@ -45,6 +45,17 @@
 					<a href="{{ url('/admin/users/delete/' . $partial->id) }}">Bin</a>
                 </span>
             @endif
+            | 
+            
+            @if(!$partial->approved_at)
+            	<a class="text-primary" title="Verify" href="{{ url('/admin/users/approve/' . $partial->id) }}">
+            		<i class=' fa fa-check-circle'></i>
+            	</a>
+            @else
+            	<a class="text-danger" title="Unverify" href="{{ url('/admin/users/unapprove/' . $partial->id) }}">
+            		<i class=" fa fa-times-circle"></i>
+            	</a>
+            @endif
 		@endif
 	</div>
 </td>

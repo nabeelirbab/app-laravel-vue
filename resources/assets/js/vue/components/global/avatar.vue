@@ -11,9 +11,6 @@
     <ph-label v-if="labels.tr" class="tr" size="small" :color="labels.tr.color">
       {{ labels.tr.text }}
     </ph-label>
-    <div class="verified-badge" v-if="verified">
-      <i class="fa fa-shield-alt"></i>
-    </div>
     <div class="is-new-badge" v-if="recent">
       new
     </div>
