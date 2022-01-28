@@ -67,12 +67,12 @@
                 <label for="tracks">Tracks</label>
                 <ul>
                     @foreach($release->tracks as $key => $track)
-                    @if(isset($track->streamable->files))
-                        @php($trackPath = $track->streamable->files->first()->url)
-                    @else
-                        @php($trackPath = null)
-                    @endif
-                        <li>{{ $track->name }} @if($trackPath !== null)
+                        @if(isset($track->streamable->files))
+                            @php($trackPath = $track->streamable->files->first()->url)
+                        @else
+                            @php($trackPath = null)
+                        @endif
+                        <li>{{ $track->name }} <br> @if($trackPath !== null)
                             <audio src="{{ $trackPath  }}" controls="controls" preload="none" style="padding-top:10px;">
                                 Your browser does not support the <code>audio</code> element.
                             </audio>
