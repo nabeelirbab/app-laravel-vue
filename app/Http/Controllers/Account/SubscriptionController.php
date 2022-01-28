@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Mail\AccountDowngraded;
+use App\Mail\Subscription\CancelledUser;
 use App\Plan;
+use App\Subscription;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -52,12 +53,12 @@ class SubscriptionController extends Controller
     {
         $plan = Plan::findOrFail($planid);
         $user = $request->user();
-
+        $subs = Subscription::with('user')->where("user_id", $user->id)->first();
         $subscription = $user->subscription('default', Str::snake($plan->title))->cancel();
 
         $user->syncRoles('artist');
 
-        Mail::to($user->email)->send(new AccountDowngraded($user));
+        Mail::to($user->email)->send(new CancelledUser($subs));
 
         return [
             'success' => true,

@@ -13,24 +13,18 @@
 </table>
 
 @component('mail::subcopy')
-## Hey {{ $user->first_name }}, we have finished verifying your profile! {{ $user->roles->first()->name === 'artist_pro' ? ' - Welcome to the PRO club!' : '' }}
+## Hey {{ $user->first_name }}, we have freezed your profile! 
 
 <ul>
     <li>User type: {{ \Illuminate\Support\Str::title($user->roles->first()->name) }} </li>
-    <li>Status: <span style="color:#a1eee1;font-weight:bold;">Approved</span></li>
+    <li>Status: <span style="color:#a1eee1;font-weight:bold;">Freezed</span></li>
 </ul>
 
-@if ($user->roles->first()->name === 'artist')
-You now have all the benefits of an Artist user, visit our FAQs for further information
-@elseif ($user->roles->first()->name === 'artist_pro')
-You now have all the benefits of an Artist PRO user, visit our FAQs for further information
-@endif
+<br/>
+<br/>
 
-@component('mail::button', ['url' => config('app.url')])
-    User Benefits →
-@endcomponent
+Please contact to administrator if you want to approve your profile
 
-@include('emails.partials.artist-icons')
 
 @endcomponent
 

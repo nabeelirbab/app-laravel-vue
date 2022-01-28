@@ -40,6 +40,6 @@ class CancelledUser extends Mailable
     public function build()
     {
         return $this->markdown('emails.user.subscription.cancelled')
-            ->subject('Your subscription to ' . $this->subscription->subscription_plan->name . ' has been cancelled');
+            ->subject('Your subscription to ' . ucwords(str_replace("_", " ",$this->subscription->stripe_plan)) . ' has been cancelled');
     }
 }
