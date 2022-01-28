@@ -8,7 +8,7 @@ use App\Mail\ReleaseApproved;
 use App\Http\Controllers\Controller;
 use App\Events\User\UploadedRelease as UserUploadedRelease;
 use App\Action;
-
+use App\Genre;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Release;
@@ -124,10 +124,11 @@ class ReleaseController extends Controller
     public function edit($id)
     {
         $release = Release::findOrFail($id);
-
+        $genres = Genre::all();
 
         return view('admin.releases.edit')->with([
             'release' => $release,
+            'genres' => $genres
         ]);
     }
 
@@ -162,7 +163,7 @@ class ReleaseController extends Controller
         event(new UserUploadedRelease($release));
         //update created_by to the released user 
         Action::where('event_type', Action::USER_UPLOADED_RELEASE)->where('item_type', 'release')->where("item_id", $id)->update(['created_by' => $release->uploaded_by]);
-        
+
         $release->tracks->each->approve();
 
         Mail::to($release->uploader)->send(new ReleaseApproved($release->uploader, $release));

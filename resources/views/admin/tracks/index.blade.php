@@ -31,13 +31,13 @@
                     <?php
                     if(isset( $track->streamable->files) )
                     {
-                        $trackPath = $track->streamable->files->first()->path;
+                        $trackPath = $track->streamable->files->first()->url;
                     }else{
                         $trackPath = null;
                     }
                     ?>
                     @if($trackPath !== null)
-                     <audio src="{{ Storage::url($trackPath)  }}" controls="controls" preload="none">
+                     <audio src="{{ $trackPath}}" controls="controls" preload="none">
                             Your browser does not support the <code>audio</code> element.
                      </audio>
                     @endif
