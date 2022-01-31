@@ -48,6 +48,7 @@ class SearchController extends Controller
 
         $tracks = collect(Track::where('status', 'approved')
             ->where('name', 'like', '%' . $validated['term'] . '%')
+            ->with(['release.image'])
             ->get());
 
         $releases = collect(Release::where('status', 'live')
