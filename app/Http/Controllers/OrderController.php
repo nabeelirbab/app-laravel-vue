@@ -41,6 +41,7 @@ class OrderController extends Controller
         }
 
         $this->order = new Order();
+        $this->order->status = 'complete';
         $request->user()->orders()->save($this->order);
         $this->order->save();
 
