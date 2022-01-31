@@ -58,15 +58,20 @@ class CartController extends Controller
         }
         switch ($request->input('type')) {
             case 'release':
-                $release = Release::findOrFail($request->input('id'));
-                if ($release->tracks->count() > 0) { // Users shouldnt be able to buy a release with 0 tracks
+                $release = Release::withCount('tracks')
+                    ->with(['tracks', 'tracks.asset'])
+                    ->findOrFail($request->input('id'));
+                if ($release->tracks_count > 0) { // Users shouldnt be able to buy a release with 0 tracks
                     $request->user()->cart_releases()->save($release, ['download_format' => $request->input('format')]);
                 }
-
                 break;
             case 'track':
-                $track = Track::findOrFail($request->input('id'));
-                $request->user()->cart_tracks()->save($track, ['download_format' => $request->input('format')]);
+                $track = Track::with('asset')->findOrFail($request->input('id'));
+                $size = '';
+                foreach ($track->asset->files as $key => $file) {
+                    $size = $file->size;
+                }
+                $request->user()->cart_tracks()->save($track, ['download_format' => $size ? $size : $request->input('format')]);
                 break;
         }
     }

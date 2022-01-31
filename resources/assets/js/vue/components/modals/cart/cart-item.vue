@@ -11,12 +11,19 @@
             <!-- {{ moment().startOf('day').seconds(length).format('mm:ss') }} -->
         </td>
         <td>
-            <ph-select name="format" title="Format" v-model="format" @input="updateFormat"
+            {{ this.format }}
+            <input
+              type="hidden"
+              name="format"
+              :readonly="true"
+              v-model="this.format"
+            />
+            <!-- <ph-select name="format" title="Format" v-model="format" @input="updateFormat"
                        :options="{
                            mp3: 'MP3',
                            wav: 'WAV + £' + (wav_fee / 100).toFixed(2)
                        }"
-            />
+            /> -->
         </td>
         <td>
             £{{ (($store.getters['cart/getItemPrice'](item)) / 100).toFixed(2) }}
