@@ -50,6 +50,7 @@
                 }
             },
             addToCart() {
+                console.log(this.product);
                 this.$store.dispatch('cart/addItem', this.product);
             },
             removeFromCart() {
