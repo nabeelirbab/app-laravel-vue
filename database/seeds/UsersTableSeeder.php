@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
 				'created_at' => $now,
 				'updated_at' => $now,
                 'stripe_account_id' => '',
-                'stripe_id' => '',
+                'stripe_id' => null,
 			], [
 				'avatar_id' => null,
 				'path' => 'nick',
@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
 				'created_at' => $now,
 				'updated_at' => $now,
                 'stripe_account_id' => '',
-                'stripe_id' => '',
+                'stripe_id' => null,
 			],
 			[
 				'avatar_id' => null,
@@ -87,7 +87,7 @@ class UsersTableSeeder extends Seeder
 				'created_at' => $now,
 				'updated_at' => $now,
                 'stripe_account_id' => '',
-                'stripe_id' => '',
+                'stripe_id' => null,
 			],
 		]);
 	}
