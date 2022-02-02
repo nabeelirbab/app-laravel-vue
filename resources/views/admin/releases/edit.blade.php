@@ -57,10 +57,29 @@
             </div>
             <div class="form-group">
                 <label for="genres">Genres</label>
-                @include('admin.partials.field-error', ['field' => 'genres'])
-                <genre-select :populated="{{ $release->genres }}"></genre-select>
+                <select name="genres[]" id="genres" class="form-control" multiple="multiple">
+                    @foreach($genres as $genre)
+                        <option {{ $release->genres->contains($genre->id) ? 'selected' : null }} value="{{ $genre->id }}">{{ $genre->name }}</option>
+                    @endforeach
+                </select>
             </div>
-
+            <div class="form-group">
+                <label for="tracks">Tracks</label>
+                <ul>
+                    @foreach($release->tracks as $key => $track)
+                        @if(isset($track->streamable->files))
+                            @php($trackPath = $track->streamable->files->first()->url)
+                        @else
+                            @php($trackPath = null)
+                        @endif
+                        <li>{{ $track->name }} <br> @if($trackPath !== null)
+                            <audio src="{{ $trackPath  }}" controls="controls" preload="none" style="padding-top:10px;">
+                                Your browser does not support the <code>audio</code> element.
+                            </audio>
+                        @endif</li>
+                    @endforeach
+                </ul>
+            </div>
             {{--			<div class="form-group">--}}
             {{--				@include('admin.partials.field-error', ['field' => 'price'])--}}
             {{--				<div class="form-check">--}}
@@ -103,3 +122,10 @@
         </form>
     </div>
 @endsection
+@push('scripts')
+    <script>
+      jQuery(function ($) {
+        $('#genres').select2()
+      })
+    </script>
+@endpush
