@@ -54,6 +54,7 @@
                 if(this.product.format) {
                     this.$store.dispatch('cart/addItem', this.product, this.product.format);
                 }else {
+                console.log("else")
                     this.$store.dispatch('cart/addItem', this.product);
                 }
                 
