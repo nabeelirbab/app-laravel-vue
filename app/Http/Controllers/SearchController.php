@@ -52,11 +52,13 @@ class SearchController extends Controller
             ->get());
 
         $releases = collect(Release::where('status', 'live')
-            ->where('name', 'like', '%' . $validated['term'] . '%')
-            ->orWhere('description', 'like', '%' . $validated['term'] . '%')
-            ->orWhereHas('uploader', function ($query) use ($validated) {
-                return $query->where('name', 'like', '%' . $validated['term'] . '%');
-            })->get());
+            ->where(function ($q) use ($validated) {
+                $q->where('name', 'like', '%' . $validated['term'] . '%')
+                ->orWhereHas('uploader', function ($query) use ($validated) {
+                    return $query->where('name', 'like', '%' . $validated['term'] . '%');
+                });
+            })
+            ->get());
 
         $filter = new Filter($releases);
 
