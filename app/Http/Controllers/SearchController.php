@@ -45,20 +45,25 @@ class SearchController extends Controller
                 });
         })->get();
 
-
-        $tracks = collect(Track::where('status', 'approved')
-            ->where('name', 'like', '%' . $validated['term'] . '%')
-            ->with(['release.image'])
-            ->get());
-
-        $releases = collect(Release::where('status', 'live')
+        $releaseQuery = Release::with('uploader')->where('status', 'live')
             ->where(function ($q) use ($validated) {
                 $q->where('name', 'like', '%' . $validated['term'] . '%')
                 ->orWhereHas('uploader', function ($query) use ($validated) {
                     return $query->where('name', 'like', '%' . $validated['term'] . '%');
                 });
-            })
+            });
+
+        $releases = collect($releaseQuery
             ->get());
+
+        $releaseIds = $releaseQuery->pluck("id")->toArray();
+        $tracks = collect(Track::where('status', 'approved')
+            ->where('name', 'like', '%' . $validated['term'] . '%')
+            ->with(['release.image'])
+            ->whereNotIn("release_id", $releaseIds) // if any release already exists in collection , then no need to add tracks within that release into collection
+            ->get());
+
+        
 
         $filter = new Filter($releases);
 
