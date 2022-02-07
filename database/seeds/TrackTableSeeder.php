@@ -20,7 +20,7 @@ class TrackTableSeeder extends Seeder
 
         $releases = Release::all();
 
-        foreach($releases as $release) {
+        foreach ($releases as $release) {
 
             $user = collect(App\User::all())->random(1)->first();
             $name = $faker->sentence(3);
@@ -36,14 +36,13 @@ class TrackTableSeeder extends Seeder
                 'release_id' => $release->id,
                 'uploaded_by' => $user->id,
                 'preview_id' => 1,
-                'asset_id' => 1,
-                'streamable_id' => 1,
+                'asset_id' => 54,
+                'streamable_id' => 53,
                 'slug' => $slug,
                 'status' => $faker->randomElement($status),
                 'created_at' => $release->created_at,
                 'updated_at' => now(),
             ]);
         }
-
     }
 }
