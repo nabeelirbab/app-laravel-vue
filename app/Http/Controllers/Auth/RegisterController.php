@@ -105,32 +105,39 @@ class RegisterController extends Controller
 
         if (!empty($data['newsletter'])) {
             $emailList = EmailList::where('name', 'General')->first();
-            Subscriber::createWithEmail($data['personal']['email'])
-                ->withAttributes([
-                    'first_name' => $data['personal']['firstname'],
-                    'last_name' => $data['personal']['surname']
-                ])
-                ->skipConfirmation()
-                ->subscribeTo($emailList);
-            if ($type === 'pro') {
-                $emailList = EmailList::where('name', 'Artist Pro')->first();
+            if(!empty($emailList)) {
                 Subscriber::createWithEmail($data['personal']['email'])
                     ->withAttributes([
-                        'first_name' => $data['personal']['firstname'],
-                        'last_name' => $data['personal']['surname']
+                    'first_name' => $data['personal']['firstname'],
+                    'last_name' => $data['personal']['surname']
                     ])
                     ->skipConfirmation()
                     ->subscribeTo($emailList);
             }
+            
+            if ($type === 'pro') {
+                $emailList = EmailList::where('name', 'Artist Pro')->first();
+                if(!empty($emailList)) {
+                    Subscriber::createWithEmail($data['personal']['email'])
+                        ->withAttributes([
+                            'first_name' => $data['personal']['firstname'],
+                            'last_name' => $data['personal']['surname']
+                        ])
+                        ->skipConfirmation()
+                        ->subscribeTo($emailList);
+                }
+            }
             if ($type === 'artist') {
                 $emailList = EmailList::where('name', 'Artist')->first();
-                Subscriber::createWithEmail($data['personal']['email'])
-                    ->withAttributes([
-                        'first_name' => $data['personal']['firstname'],
-                        'last_name' => $data['personal']['surname']
-                    ])
-                    ->skipConfirmation()
-                    ->subscribeTo($emailList);
+                if(!empty($emailList)) {
+                    Subscriber::createWithEmail($data['personal']['email'])
+                        ->withAttributes([
+                            'first_name' => $data['personal']['firstname'],
+                            'last_name' => $data['personal']['surname']
+                        ])
+                        ->skipConfirmation()
+                        ->subscribeTo($emailList);
+                }
             }
         }
 
