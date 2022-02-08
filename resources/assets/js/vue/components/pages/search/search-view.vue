@@ -110,7 +110,7 @@ export default {
   watch: {
     vuexSearchTerm: _.debounce(function() {
       this.doSearch();
-    }, 300),
+    }, 500),
     filters: {
       handler: function() {
         this.doSearch();
