@@ -63,7 +63,7 @@ class WebhookController extends Controller
                 });
             }
 
-            if ($order->status !== 'complete') {
+            if ( empty($order->gateway) ) {
                 $order->status = 'complete';
                 $order->gateway = 'stripe';
                 $order->gateway_charge = $payload['data']['object']['id'];

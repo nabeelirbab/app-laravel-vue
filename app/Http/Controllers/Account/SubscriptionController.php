@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\Mail\Subscription\CancelledUser;
+use App\Mail\AccountDowngraded;
+use App\Mail\AccountResumed;
 use App\Plan;
 use App\Subscription;
 use Illuminate\Support\Facades\Mail;
@@ -58,7 +59,7 @@ class SubscriptionController extends Controller
 
         $user->syncRoles('artist');
 
-        Mail::to($user->email)->send(new CancelledUser($subs));
+        Mail::to($user->email)->send(new AccountDowngraded($user));
 
         return [
             'success' => true,
@@ -75,6 +76,7 @@ class SubscriptionController extends Controller
 
         $user->syncRoles('pro');
 
+        Mail::to($user->email)->send(new AccountResumed($user));
         return [
             'success' => true,
             'subscription' => $subscription->refresh(),
