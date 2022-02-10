@@ -119,14 +119,15 @@ class Track extends PhaseModel
 
     public function price($format = 'mp3')
     {
-        switch ($format) {
+        return $this->price;
+        /*switch ($format) {
             case 'mp3':
                 return $this->price;
             case 'wav':
                 return $this->price + setting('wav_fee');
             default:
                 return null;
-        }
+        }*/
     }
 
     public function saveTrackFile($file, $format)

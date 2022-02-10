@@ -79,11 +79,19 @@ Route::get('/releases/{count?}', function ($count = 15) {
  * {id} row id of release
  **/
 Route::get('/release/{release}', function (Release $release) {
-    return $release->load('uploader', 'image')->load([
+    $returnRelease = $release->load('uploader', 'image')->load([
         'tracks' => function ($query) {
             return $query->where('status', 'approved');
-        }, 'tracks.artist'
+        }, 'tracks.artist', 'tracks.asset.files'
     ]);
+
+    foreach($returnRelease->tracks as $i => $track) {
+        $format = isset($track->asset->files['wav']) ? 'wav' : 'mp3';
+        $returnRelease->tracks[$i]->format = $format;
+        $returnRelease->format = $format;
+    }
+
+    return $returnRelease;
 });
 
 /**

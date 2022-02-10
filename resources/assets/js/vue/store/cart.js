@@ -18,6 +18,7 @@ export default {
             state.loading = value;
         },
         addItem(state, item) {
+            
             if(typeof item.format === 'undefined') {
                 item.format = 'mp3';
             }
@@ -41,7 +42,9 @@ export default {
     },
     actions: {
         addItem({ state, commit }, item, format = 'mp3') {
-            item.format = format;
+            if(typeof item.format === 'undefined') {
+                item.format = format;
+            }
             let already = _.find(state.items, (iterable) => {
                 return iterable.id === item.id &&
                     iterable.type === item.type;
@@ -106,15 +109,15 @@ export default {
         getItemPrice: (state) => (item) => {
             for(let i = 0; i < state.items.length; i++) {
                 if(state.items[i] === item) {
-                    let price = state.items[i].price;
+                    /*let price = state.items[i].price;
                     if(state.items[i].format === 'wav') {
                         if(state.items[i].type === 'release') {
                             price += parseInt(store.state.app.settings[2].wav_fee) * state.items[i].tracks.length;
                         } else {
                             price += parseInt(store.state.app.settings[2].wav_fee);
                         }
-                    }
-                    return price;
+                    }*/
+                    return state.items[i].price;
                 }
             }
         },

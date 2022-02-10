@@ -133,14 +133,15 @@ class Release extends PhaseModel
 
     public function price($format = 'mp3')
     {
-        switch ($format) {
+        return $this->price;
+        /*switch ($format) {
             case 'mp3':
                 return $this->price;
             case 'wav':
                 return $this->price + (setting('wav_fee') * count($this->tracks));
             default:
                 return null;
-        }
+        }*/
     }
 
     public function approve()
