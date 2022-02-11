@@ -74,8 +74,9 @@ class WebhookController extends Controller
                     $order->gateway = 'stripe';
                     $order->gateway_charge = $payload['data']['object']['id'];
                     $order->save();
-                    $order->emptyCart();
                     event(new PlacedOrder($order));
+                    
+                    $order->emptyCart();
                 }
             }
 
