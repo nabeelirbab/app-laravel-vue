@@ -47,7 +47,7 @@ class WebhookController extends Controller
                 Log::info("This is not an order ");
                 return $this->successMethod();
             }
-            
+
             $stripeOrderId = $payload['data']['object']['metadata']['order_id'];
             if ($order = Order::find($stripeOrderId)) {
                 $items = $order->items;
@@ -55,11 +55,11 @@ class WebhookController extends Controller
                 if (count($items) > 0) {
                     $items->each(function ($item) use ($order, $payload) {
                         $fee = 1 - ($item->type instanceof Release ? $item->type->royalty_fee : $item->type->release->royalty_fee);
-
-                        if (!is_null($item->seller->stripe_account_id)) {
+                        $amount = $item->price * ($fee ?? 0.8);
+                        if (!is_null($item->seller->stripe_account_id) && $amount > 1) {
                             StripeTransfer::create([
                                 // Defaults to taking a 20% cut
-                                'amount' => $item->price * ($fee ?? 0.8), // NOTE: THIS IS BAD - IT DOESNT ACCOUNT FOR STRIPES FEES (this needs to be fixed when connect is implemented)
+                                'amount' => $amount, // NOTE: THIS IS BAD - IT DOESNT ACCOUNT FOR STRIPES FEES (this needs to be fixed when connect is implemented)
                                 'currency' => 'gbp',
                                 'destination' => $item->seller->stripe_account_id,
                                 'transfer_group' => "Order-{$order->id}",
