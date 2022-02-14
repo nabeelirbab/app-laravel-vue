@@ -31,6 +31,6 @@ class UserFreeze extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.account.freeze');
+        return $this->subject('User Freezed')->markdown('emails.account.freeze');
     }
 }

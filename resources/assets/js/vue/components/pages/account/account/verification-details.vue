@@ -42,14 +42,19 @@
                     additional_document: document.querySelector(`#additional_document`) ? document.querySelector(`#additional_document`).files[0] : null,
                 })
 
-                const verification = {
-                    document: {
-                        front: files.document ? files.document.id : null,
-                    },
-                    additional_document: {
-                        front: files.additional_document ? files.additional_document.id : null,
-                    },
+                var verifycontent = {};
+                if (files.document) {
+                    verifycontent.document = {
+                        front: files.document.id,
+                    }
                 }
+
+                if (files.additional_document) {
+                    verifycontent.additional_document = {
+                        front: files.additional_document.id,
+                    }
+                }
+                const verification = verifycontent;
 
                 const result = await stripe.createToken('account', {
                     account: {

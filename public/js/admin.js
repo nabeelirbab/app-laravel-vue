@@ -1228,7 +1228,10 @@ __webpack_require__.r(__webpack_exports__);
       var state = _ref2.state,
           commit = _ref2.commit;
       var format = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'mp3';
-      item.format = format;
+
+      if (typeof item.format === 'undefined') {
+        item.format = format;
+      }
 
       var already = _.find(state.items, function (iterable) {
         return iterable.id === item.id && iterable.type === item.type;
@@ -1305,17 +1308,15 @@ __webpack_require__.r(__webpack_exports__);
       return function (item) {
         for (var i = 0; i < state.items.length; i++) {
           if (state.items[i] === item) {
-            var price = state.items[i].price;
-
-            if (state.items[i].format === 'wav') {
-              if (state.items[i].type === 'release') {
-                price += parseInt(store__WEBPACK_IMPORTED_MODULE_0__["default"].state.app.settings[2].wav_fee) * state.items[i].tracks.length;
-              } else {
-                price += parseInt(store__WEBPACK_IMPORTED_MODULE_0__["default"].state.app.settings[2].wav_fee);
-              }
-            }
-
-            return price;
+            /*let price = state.items[i].price;
+            if(state.items[i].format === 'wav') {
+                if(state.items[i].type === 'release') {
+                    price += parseInt(store.state.app.settings[2].wav_fee) * state.items[i].tracks.length;
+                } else {
+                    price += parseInt(store.state.app.settings[2].wav_fee);
+                }
+            }*/
+            return state.items[i].price;
           }
         }
       };

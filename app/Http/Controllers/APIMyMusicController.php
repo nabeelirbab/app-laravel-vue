@@ -50,7 +50,7 @@ class APIMyMusicController extends Controller
         if ($download) {
             try {
                 $url = $download->track->asset->files->filter(function ($file) use ($format) {
-                    return $file->size == $format;
+                    return (in_array($format, ['mp3', 'wav'])) ? (in_array($file->size, ['mp3', 'wav'])) : ($file->size == $format);
                 })->first()->tempUrl(10);
 
                 $download->count += 1;

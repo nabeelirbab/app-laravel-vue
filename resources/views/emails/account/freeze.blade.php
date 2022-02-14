@@ -16,7 +16,9 @@
 ## Hey {{ $user->first_name }}, we have freezed your profile! 
 
 <ul>
+    @if( !empty($user->roles) )
     <li>User type: {{ \Illuminate\Support\Str::title($user->roles->first()->name) }} </li>
+    @endif
     <li>Status: <span style="color:#a1eee1;font-weight:bold;">Freezed</span></li>
 </ul>
 

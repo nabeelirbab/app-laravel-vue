@@ -42,38 +42,51 @@ class WebhookController extends Controller
 
     public function handleChargeSucceeded(array $payload)
     {
-        $stripeOrderId = $payload['data']['object']['metadata']['order_id'];
-        if ($order = Order::find($stripeOrderId)) {
-            $items = $order->items;
-
-            if (count($items) > 0) {
-                $items->each(function ($item) use ($order, $payload) {
-                    $fee = 1 - ($item->type instanceof Release ? $item->type->royalty_fee : $item->type->release->royalty_fee);
-
-                    if (!is_null($item->seller->stripe_account_id)) {
-                        StripeTransfer::create([
-                            // Defaults to taking a 20% cut
-                            'amount' => $item->price * ($fee ?? 0.8), // NOTE: THIS IS BAD - IT DOESNT ACCOUNT FOR STRIPES FEES (this needs to be fixed when connect is implemented)
-                            'currency' => 'gbp',
-                            'destination' => $item->seller->stripe_account_id,
-                            'transfer_group' => "Order-{$order->id}",
-                            'source_transaction' => $payload['data']['object']['id'],
-                        ], Cashier::stripeOptions());
-                    }
-                });
+        try{
+            if( !isset($payload['data']['object']['metadata']['order_id']) ) {
+                Log::info("This is not an order ");
+                return $this->successMethod();
             }
 
-            if ($order->status !== 'complete') {
-                $order->status = 'complete';
-                $order->gateway = 'stripe';
-                $order->gateway_charge = $payload['data']['object']['id'];
-                $order->save();
-                $order->emptyCart();
-                event(new PlacedOrder($order));
+            $stripeOrderId = $payload['data']['object']['metadata']['order_id'];
+            if ($order = Order::find($stripeOrderId)) {
+                $items = $order->items;
+
+                if (count($items) > 0) {
+                    $items->each(function ($item) use ($order, $payload) {
+                        $fee = 1 - ($item->type instanceof Release ? $item->type->royalty_fee : $item->type->release->royalty_fee);
+                        $amount = $item->price * ($fee ?? 0.8);
+                        if (!is_null($item->seller->stripe_account_id) && $amount > 1) {
+                            StripeTransfer::create([
+                                // Defaults to taking a 20% cut
+                                'amount' => $amount, // NOTE: THIS IS BAD - IT DOESNT ACCOUNT FOR STRIPES FEES (this needs to be fixed when connect is implemented)
+                                'currency' => 'gbp',
+                                'destination' => $item->seller->stripe_account_id,
+                                'transfer_group' => "Order-{$order->id}",
+                                'source_transaction' => $payload['data']['object']['id'],
+                            ], Cashier::stripeOptions());
+                        }
+                    });
+                }
+
+                if ( empty($order->gateway) ) {
+                    $order->status = 'complete';
+                    $order->gateway = 'stripe';
+                    $order->gateway_charge = $payload['data']['object']['id'];
+                    $order->save();
+                    event(new PlacedOrder($order));
+                    
+                    $order->emptyCart();
+                }
             }
+
+            return $this->successMethod();
+        } catch (Exception $e) {
+            Log::error("WebhookController:handleChargeSucceeded -> " . $e->getMessage()." ". $e->getCode());
         }
+        
 
-        return $this->successMethod();
+        
     }
 
     /**
