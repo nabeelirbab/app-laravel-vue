@@ -131,13 +131,15 @@ export default {
           newsearch: 1
         })
         .then((response) => {
-          this.loading = false;
+          
           if(typeof(response.data.term) != typeof(undefined)) {
             if(response.data.term == this.vuexSearchTerm)
             {
+              this.loading = false;
               this.results = response.data.data;
             }
           } else {
+            this.loading = false;
             this.results = response.data;
           }
           
