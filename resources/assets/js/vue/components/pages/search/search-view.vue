@@ -128,10 +128,19 @@ export default {
           genres: this.filters.genres,
           keys: this.filters.keys,
           bpm: this.filters.bpm,
+          newsearch: 1
         })
         .then((response) => {
           this.loading = false;
-          this.results = response.data;
+          if(typeof(response.data.term) != typeof(undefined)) {
+            if(response.data.term == this.vuexSearchTerm)
+            {
+              this.results = response.data.data;
+            }
+          } else {
+            this.results = response.data;
+          }
+          
         });
     },
   },

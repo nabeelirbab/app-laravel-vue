@@ -99,7 +99,7 @@ class SearchController extends Controller
 
         $chunked = $data->chunk(20);
         if (isset($chunked[$page - 1])) {
-            return $chunked[$page - 1];
+            return ($request->get('newsearch') == 1) ? ['term' => $validated['term'], 'data' => $chunked[$page - 1]] : $chunked[$page - 1];
         } else {
             return [];
         }
