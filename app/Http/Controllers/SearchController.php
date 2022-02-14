@@ -57,10 +57,14 @@ class SearchController extends Controller
             ->get());
 
         $releaseIds = $releaseQuery->pluck("id")->toArray();
+        $releaseNames = $releaseQuery->pluck("name")->toArray();
         $tracks = collect(Track::where('status', 'approved')
             ->where('name', 'like', '%' . $validated['term'] . '%')
             ->with('release.image')
-            ->whereNotIn("release_id", $releaseIds) // if any release already exists in collection , then no need to add tracks within that release into collection
+            ->where( function($query) use($releaseIds, $releaseNames) {
+                $query->whereNotIn("release_id", $releaseIds)
+                ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
+            })
             ->get());
 
         
