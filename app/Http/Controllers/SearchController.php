@@ -62,10 +62,10 @@ class SearchController extends Controller
             ->where('name', 'like', '%' . $validated['term'] . '%')
             ->with('release.image')
             ->whereHas("release")
-            ->where( function($query) use($releaseIds, $releaseNames) {
+            /*->where( function($query) use($releaseIds, $releaseNames) {
                 $query->whereNotIn("release_id", $releaseIds)
                 ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
-            })
+            })*/
             ->get());
 
         
