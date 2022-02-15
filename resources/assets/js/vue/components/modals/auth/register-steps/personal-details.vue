@@ -51,9 +51,10 @@
                                 v-model="data.personal.firstname"
                                 tabindex="2"
                                 :disabled="submitting"
-                                v-validate="'required|username|max:255'"
+                                v-validate="'required|username|max:255|alpha_spaces'"
                                 data-vv-as="first name"
                             />
+                            <br/>
                             <p class="error-message">
                                 {{ errors.first("personal-name") }}
                             </p>
@@ -89,6 +90,7 @@
                                     max: 255,
                                 }"
                                 data-vv-as="password"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("personal-password") }}
@@ -108,9 +110,10 @@
                                 v-model="data.personal.surname"
                                 tabindex="3"
                                 :disabled="submitting"
-                                v-validate="'required|username|max:255'"
+                                v-validate="'required|username|max:255|alpha_spaces'"
                                 data-vv-as="surname"
                             />
+                            <br/>
                             <p class="error-message">
                                 {{ errors.first("personal-surname") }}
                             </p>
@@ -129,6 +132,7 @@
                                 :disabled="submitting"
                                 v-validate="'required|max:255'"
                                 data-vv-as="password confirmation"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{
@@ -158,6 +162,7 @@
                                     v-validate="'required|email|max:255'"
                                     data-vv-as="email address"
                                     ref="email"
+                                    data-vv-validate-on="focusout"
                                 />
                                 <p class="error-message">
                                     {{ errors.first("personal-email") }}
