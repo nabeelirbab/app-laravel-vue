@@ -26,7 +26,8 @@
         data() {
             return {
                 countries: [],
-                selectedcountry: 'GB'
+                selectedcountry: 'GB',
+                oldcountry: 'GB'
             };
         },
         created() {
@@ -41,7 +42,11 @@
         },
         methods : {
             onChange: function(){
-              this.$emit("change", this.selectedcountry);
+                if(this.selectedcountry != this.oldcountry) {
+                    this.$emit("change", this.selectedcountry);
+                    this.oldcountry = this.selectedcountry;
+                }
+              
             }
         },
         components: {}
