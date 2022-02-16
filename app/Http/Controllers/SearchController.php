@@ -45,18 +45,30 @@ class SearchController extends Controller
                 });
         })->get();
 
+        $releaseQuery = Release::with('uploader')->where('status', 'live')
+            ->where(function ($q) use ($validated) {
+                $q->where('name', 'like', '%' . $validated['term'] . '%')
+                ->orWhereHas('uploader', function ($query) use ($validated) {
+                    return $query->where('name', 'like', '%' . $validated['term'] . '%');
+                });
+            });
 
-        $tracks = collect(Track::where('status', 'approved')
-            ->where('name', 'like', '%' . $validated['term'] . '%')
-            ->with(['release.image'])
+        $releases = collect($releaseQuery
             ->get());
 
-        $releases = collect(Release::where('status', 'live')
+        $releaseIds = $releaseQuery->pluck("id")->toArray();
+        $releaseNames = $releaseQuery->pluck("name")->toArray();
+        $tracks = collect(Track::where('status', 'approved')
             ->where('name', 'like', '%' . $validated['term'] . '%')
-            ->orWhere('description', 'like', '%' . $validated['term'] . '%')
-            ->orWhereHas('uploader', function ($query) use ($validated) {
-                return $query->where('name', 'like', '%' . $validated['term'] . '%');
-            })->get());
+            ->with('release.image')
+            ->whereHas("release")
+            ->where( function($query) use($releaseIds, $releaseNames) {
+                $query->whereNotIn("release_id", $releaseIds)
+                ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
+            })
+            ->get());
+
+        
 
         $filter = new Filter($releases);
 
@@ -88,7 +100,7 @@ class SearchController extends Controller
 
         $chunked = $data->chunk(20);
         if (isset($chunked[$page - 1])) {
-            return $chunked[$page - 1];
+            return ($request->get('newsearch') == 1) ? ['term' => !empty($validated['term']) ? $validated['term'] : '', 'data' => $chunked[$page - 1]] : $chunked[$page - 1];
         } else {
             return [];
         }

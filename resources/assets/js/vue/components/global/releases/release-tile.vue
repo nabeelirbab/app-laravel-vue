@@ -19,7 +19,7 @@
         <p class="release-name">
           {{ release.name ? release.name : "release name" }}
         </p>
-        <small class="mt-5 uploaded-by">{{ release.uploader.name }}</small>
+        <small v-if="release.uploader" class="mt-5 uploaded-by">{{ release.uploader.name }}</small>
       </div>
     </router-link>
   </div>

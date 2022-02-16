@@ -1,6 +1,6 @@
 <template>
     <router-link class="track-tile" :to="getRouterObject(track)">
-        <div class="track-tile-image">
+        <div v-if="track.release" class="track-tile-image">
             <avatar :tile="true" :size="size" :src="track.release.image.files.medium.url" :recent="track.is_recent"></avatar>
         </div>
         <div class="track-tile-text">
