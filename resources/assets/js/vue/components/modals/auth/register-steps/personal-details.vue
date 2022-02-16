@@ -51,11 +51,11 @@
                                 v-model="data.personal.firstname"
                                 tabindex="2"
                                 :disabled="submitting"
-                                v-validate="'required|username|max:255|alpha_spaces'"
+                                v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/
+                                 }"
                                 data-vv-as="first name"
                                 data-vv-validate-on="focusout"
                             />
-                            <br/>
                             <p class="error-message">
                                 {{ errors.first("personal-name") }}
                             </p>
@@ -111,11 +111,11 @@
                                 v-model="data.personal.surname"
                                 tabindex="3"
                                 :disabled="submitting"
-                                v-validate="'required|username|max:255|alpha_spaces'"
+                                v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/
+                                 }"
                                 data-vv-as="surname"
                                 data-vv-validate-on="focusout"
                             />
-                            <br/>
                             <p class="error-message">
                                 {{ errors.first("personal-surname") }}
                             </p>
@@ -640,8 +640,10 @@
     .error-message {
         font-size: 12px;
         position: absolute;
-        bottom: -25px;
+        /*bottom: -25px;*/
+        top:35px;
         color: red;
+        clear:both
     }
 
     .register-form-inputs input {
