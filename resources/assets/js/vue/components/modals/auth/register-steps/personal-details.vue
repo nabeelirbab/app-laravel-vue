@@ -493,7 +493,7 @@
                     this.artistGenresString += genres[i].name;
                 }
                 this.$refs.artist_genre_input.value = this.artistGenresString;
-                this.$validator.validate();
+               
             },
             interestGenresChanged(genres) {
                 this.interestGenresString = "";
@@ -502,7 +502,7 @@
                     this.interestGenresString += genres[i].name;
                 }
                 this.$refs.interest_genre_input.value = this.interestGenresString;
-                this.$validator.validate();
+                
             },
             registerUser() {
                 this.submitted = true;
