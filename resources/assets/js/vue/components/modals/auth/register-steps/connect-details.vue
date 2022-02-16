@@ -32,6 +32,7 @@
 							placeholder="Day"
 							v-model="account.individual.dob.day"
 							v-validate="'required|between:1,31'"
+							data-vv-validate-on="blur"
 						/>
 						<input
 							name="month"
@@ -40,6 +41,7 @@
 							placeholder="Month"
 							v-model="account.individual.dob.month"
 							v-validate="'required|between:1,12'"
+							data-vv-validate-on="blur"
 						/>
 						<input
 							name="year"
@@ -49,6 +51,7 @@
 							placeholder="Year"
 							v-model="account.individual.dob.year"
 							v-validate="'required|min_value:1900|max_value:2020'"
+							data-vv-validate-on="blur"
 						/>
 						<span class="error-message flex">
               {{ errors.first("day") || errors.first("month") || errors.first("year") }}
@@ -68,7 +71,7 @@
 				<div class="input">
 					<div>Phone:</div>
 					<div>
-						<input type="text" name="phone" placeholder="+441234567890"  v-model="account.individual.phone" v-validate="{ required: true, regex: /((\+?))\d{10,14}/}" />
+						<input type="text" name="phone" placeholder="+441234567890"  v-model="account.individual.phone" v-validate="{ required: true, regex: /((\+?))\d{10,14}/}" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("phone") }}</span>
 					</div>
 				</div>
@@ -77,17 +80,16 @@
 				<div class="input">
 					<div>Address:</div>
 					<div>
-						<input type="text" name="line1" v-model="account.individual.address.line1" v-validate="'required'" placeholder="Line 1" />
+						<input type="text" name="line1" v-model="account.individual.address.line1" v-validate="'required'" placeholder="Line 1" data-vv-validate-on="blur" />
 						<span class="error-message">
               {{ errors.first("line1") }}
             </span>
-						<input type="text" name="line2" v-model="account.individual.address.line2" placeholder="Line 2" />
-						<input type="text" name="city" v-model="account.individual.address.city" v-validate="'required'" placeholder="City" />
+						<input type="text" name="line2" v-model="account.individual.address.line2" placeholder="Line 2" data-vv-validate-on="blur" />
+						<input type="text" name="city" v-model="account.individual.address.city" v-validate="'required'" placeholder="City" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("city") }}</span>
-						<input type="text" name="state" v-model="account.individual.address.state" placeholder="County" />
-						<input type="text" name="postal_code" v-model="account.individual.address.postal_code" v-validate="'required'" placeholder="Post Code" />
+						<input type="text" name="state" v-model="account.individual.address.state" placeholder="County" data-vv-validate-on="blur" />
+						<input type="text" name="postal_code" v-model="account.individual.address.postal_code" v-validate="'required'" placeholder="Post Code" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
-						<!--<input type="text" name="country" v-model="account.individual.address.country" v-validate="'required'" placeholder="Country" /> -->
 						<country-select
                                @change="artistCountryChanged"
                             />

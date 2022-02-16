@@ -2,37 +2,27 @@
 	<div>
 		
 		<form @submit.prevent="handleForm" id="account-form">
-			<h1>Connect Details</h1>
+			<h1>Verification</h1>
 			<p>The following details are required to provide verification and a method of payment for sales, these can be added later in your account area but must be complete before uploading a release</p>
 
 			<div class="flex">
 				<div class="input">
 					<div>First Name:</div>
 					<div>
-						<input type="text" name="first_name" v-model="account.individual.first_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="first name" />
+						<input type="text" name="first_name" v-model="account.individual.first_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="first name" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("first_name") }}</span>
 					</div>
 				</div>
 				<div class="input">
 					<div>Last Name:</div>
 					<div>
-						<input type="text" name="last_name" v-model="account.individual.last_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="last name" />
+						<input type="text" name="last_name" v-model="account.individual.last_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="last name" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("last_name") }}</span>
 					</div>
 				</div>
 			</div>
 			<div class="flex">
-				<div class="input" style="align-items: center;">
-					<div>Gender:</div>
-					<div>
-						<select name="gender" id="gender" v-model="account.individual.gender" style="width:100%;" v-validate="'required'">
-							<option value="">Gender</option>
-							<option value="male">Male</option>
-							<option value="male">Female</option>
-						</select>
-						<span class="error-message">{{ errors.first("gender") }}</span>
-					</div>
-				</div>
+			
 				<div class="input">
 					<div>DOB:</div>
 					<div class="flex dob-fields" style="flex-direction:column;">
@@ -43,6 +33,7 @@
 							placeholder="Day"
 							v-model="account.individual.dob.day"
 							v-validate="'required|between:1,31'"
+							data-vv-validate-on="blur"
 						/>
 						<input
 							name="month" 
@@ -51,6 +42,7 @@
 							placeholder="Month"
 							v-model="account.individual.dob.month"
 							v-validate="'required|between:1,12'"
+							data-vv-validate-on="blur"
 						/>
 						<input
 							name="year" 
@@ -60,6 +52,7 @@
 							placeholder="Year"
 							v-model="account.individual.dob.year"
 							v-validate="'required|min_value:1900|max_value:2020'"
+							data-vv-validate-on="blur"
 						/>
 						<span class="error-message flex">{{
                             errors.first("day") || errors.first("month") || errors.first("year")
@@ -72,14 +65,14 @@
 				<div class="input">
 					<div>Email:</div>
 					<div>
-						<input type="text" name="email" v-model="account.individual.email" v-validate="'required|email'" />
+						<input type="text" name="email" v-model="account.individual.email" v-validate="'required|email'" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("email") }}</span>
 					</div>
 				</div>
 				<div class="input">
 					<div>Phone:</div>
 					<div>
-						<input type="text" name="phone" placeholder="+441234567890"  v-model="account.individual.phone" v-validate="{ required: true, regex: /((\+44?))\d{11}/}" />
+						<input type="text" name="phone" placeholder="+441234567890"  v-model="account.individual.phone" v-validate="{ required: true, regex: /((\+?))\d{10,14}/}" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("phone") }}</span>
 					</div>
 				</div>
@@ -88,21 +81,23 @@
 				<div class="input">
 					<div>Address:</div>
 					<div>
-						<input type="text" name="line1" v-model="account.individual.address.line1" v-validate="'required'" placeholder="Line 1" />
+						<input type="text" name="line1" v-model="account.individual.address.line1" v-validate="'required'" placeholder="Line 1" data-vv-validate-on="blur" />
 						<span class="error-message">{{
                             errors.first("line1")
                         }}</span>
-						<input type="text" name="line2" v-model="account.individual.address.line2" placeholder="Line 2" />
-						<input type="text" name="city" v-model="account.individual.address.city" v-validate="'required'" placeholder="City" />
+						<input type="text" name="line2" v-model="account.individual.address.line2" placeholder="Line 2" data-vv-validate-on="blur" />
+						<input type="text" name="city" v-model="account.individual.address.city" v-validate="'required'" placeholder="City" data-vv-validate-on="blur" />
 						<span class="error-message">{{
                             errors.first("city")
                         }}</span>
-						<input type="text" name="state" v-model="account.individual.address.state" placeholder="County" />
-						<input type="text" name="postal_code" v-model="account.individual.address.postal_code" v-validate="'required'" placeholder="Post Code" />
+						<input type="text" name="state" v-model="account.individual.address.state" placeholder="County" data-vv-validate-on="blur" />
+						<input type="text" name="postal_code" v-model="account.individual.address.postal_code" v-validate="'required'" placeholder="Post Code" data-vv-validate-on="blur" />
 						<span class="error-message">{{
                             errors.first("postal_code")
                         }}</span>
-						<input type="text" name="country" v-model="account.individual.address.country" v-validate="'required'" placeholder="Country" />
+						<country-select
+                               @change="artistCountryChanged"
+                            />
 						<span class="error-message">{{
                             errors.first("country")
                         }}</span>
@@ -137,7 +132,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import CountrySelect from "../../../modals/upload/country-select";
 export default {
 	name: "connect-details",
 	props:["user"],
@@ -157,7 +152,6 @@ export default {
 						month: "",
 						year: "",
 					},
-					gender: '',
 					email: '',
 					phone: '',
 					address: {
@@ -253,7 +247,15 @@ export default {
 				}
 			});
 		},
+		artistCountryChanged(country) {
+            this.account.individual.address.country = country;
+            this.$validator.validate();
+                
+        },
 	},
+	components: {
+            CountrySelect,
+    },
 };
 </script>
 
