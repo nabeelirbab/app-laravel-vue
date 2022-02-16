@@ -382,6 +382,8 @@
                                 :max="4"
                                 tabindex="16"
                                 :disabled="submitting"
+                                
+                                data-vv-validate-on="blur"
                             />
                             <input
                                 type="hidden"
