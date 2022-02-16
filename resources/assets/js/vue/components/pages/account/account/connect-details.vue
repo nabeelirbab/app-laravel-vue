@@ -9,14 +9,14 @@
 				<div class="input">
 					<div>First Name:</div>
 					<div>
-						<input type="text" name="first_name" v-model="account.individual.first_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="first name" data-vv-validate-on="blur" />
+						<input type="text" name="first_name" v-model="account.individual.first_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="first name"  />
 						<span class="error-message">{{ errors.first("first_name") }}</span>
 					</div>
 				</div>
 				<div class="input">
 					<div>Last Name:</div>
 					<div>
-						<input type="text" name="last_name" v-model="account.individual.last_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="last name" data-vv-validate-on="blur" />
+						<input type="text" name="last_name" v-model="account.individual.last_name" tabindex="1" v-validate="'required|max:255'" data-vv-as="last name"  />
 						<span class="error-message">{{ errors.first("last_name") }}</span>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 				<div class="input">
 					<div>Email:</div>
 					<div>
-						<input type="text" name="email" v-model="account.individual.email" v-validate="'required|email'" data-vv-validate-on="blur" />
+						<input type="text" name="email" v-model="account.individual.email" v-validate="'required|email'"  />
 						<span class="error-message">{{ errors.first("email") }}</span>
 					</div>
 				</div>
