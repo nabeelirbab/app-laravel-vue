@@ -26,13 +26,11 @@
         data() {
             return {
                 countries: [],
-                selectedcountry: 'GB',
-                oldcountry: 'GB'
+                selectedcountry: 'GB'
             };
         },
         created() {
             this.countries = this.initialized;
-            this.$emit("change", this.selectedcountry);
         },
         computed: mapState(["app"]),
         mounted: function() {
@@ -42,11 +40,7 @@
         },
         methods : {
             onChange: function(){
-                if(this.selectedcountry != this.oldcountry) {
-                    this.$emit("change", this.selectedcountry);
-                    this.oldcountry = this.selectedcountry;
-                }
-              
+              this.$emit("change", this.selectedcountry);
             }
         },
         components: {}
