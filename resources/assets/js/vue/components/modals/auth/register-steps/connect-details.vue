@@ -157,7 +157,7 @@ export default {
 						city: '',
 						state: '',
 						postal_code: '',
-						country: '',
+						country: 'GB',
 					},
 				},
 				website: null,
