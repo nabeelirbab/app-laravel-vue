@@ -234,10 +234,9 @@ export default {
 
 							})
 							.then((response) => {
+
 								this.submitting = false;
-								this.$store.commit("app/setTempUser", response.data);
-								this.$modal.hide('modal-auth-register-form');
-								this.$router.push({path: '/login'});
+								this.$emit('finished');
 
 							})
 							.catch((error) => {

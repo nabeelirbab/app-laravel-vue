@@ -53,6 +53,7 @@
                                 :disabled="submitting"
                                 v-validate="'required|username|max:255|alpha_spaces'"
                                 data-vv-as="first name"
+                                data-vv-validate-on="focusout"
                             />
                             <br/>
                             <p class="error-message">
@@ -112,6 +113,7 @@
                                 :disabled="submitting"
                                 v-validate="'required|username|max:255|alpha_spaces'"
                                 data-vv-as="surname"
+                                data-vv-validate-on="focusout"
                             />
                             <br/>
                             <p class="error-message">
@@ -203,6 +205,7 @@
                                 :disabled="submitting"
                                 v-validate="'required|max:20'"
                                 data-vv-as="name"
+                                data-vv-validate-on="focusout"
                             />
                             <p
                                 class="error-message"
@@ -267,6 +270,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max:255, regex: /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/ }"
                                 data-vv-as="website"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-website") }}
@@ -290,6 +294,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?facebook\.com\/[A-z 0-9 _ .]*\/?$/ }"
                                 data-vv-as="Facebook"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-facebook") }}
@@ -309,6 +314,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?(soundcloud\.com|snd\.sc)\/(.*)$/ }"
                                 data-vv-as="Soundcloud"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-soundcloud") }}
@@ -330,6 +336,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /^(http(s)?:\/\/)?(www\.)?(mobile\.)?twitter\.com\/[A-z 0-9 _]{1,15}\/?$/ }"
                                 data-vv-as="Twitter"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-twitter") }}
@@ -349,6 +356,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /(https?:\/\/)?(www\.)?(m\.)?youtube\.com\/(channel|user|c|u)\/[\w-]+/ }"
                                 data-vv-as="Youtube"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-youtube") }}
