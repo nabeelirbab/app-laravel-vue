@@ -169,9 +169,5 @@
             background: white;
         }
     }
-
-    .label.tr {
-        right: 28px !important;
-    }
     
 </style>
