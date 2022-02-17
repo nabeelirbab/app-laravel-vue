@@ -4,7 +4,7 @@
             <avatar
                 :size="130"
                 :src="post.user.avatar.files.thumb.url"
-                :recent="post.is_recent"
+                
             />
         </div>
         <div class="p-item-main">

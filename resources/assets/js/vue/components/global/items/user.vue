@@ -3,7 +3,7 @@
         <div class="p-item-image">
             <avatar :size="130"
                     :src="user.avatar.files.thumb.url"
-                    :recent="user.is_recent"
+                    
             />
         </div>
         <div class="p-item-main">

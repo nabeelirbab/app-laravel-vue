@@ -121,6 +121,15 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
+    public function isAdminUser()
+    {
+        if ($this->hasRole('admin')) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function getAccountTypeAttribute()
     {
         if ($this->hasRole('pro')) {
