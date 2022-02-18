@@ -89,6 +89,9 @@ class UserController extends Controller
             $likes = $user->likes;
             foreach ($likes as $like) {
                 $like->likeable;
+                if($like->likeable == 'news') {
+                    $like->likeable->image;
+                }
             }
 
             return $user;
