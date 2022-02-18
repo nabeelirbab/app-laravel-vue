@@ -17,6 +17,13 @@
                                 {{ post.user.name }}
                             </h1>
                             <div class="post-body">
+
+                                <img
+                                    v-if="post.attachment"
+                                    :src="post.attachment.files.medium.url"
+                                    :alt="post.attachment.alt"
+                                    class="p-post-image"
+                                />
                                 {{ post.body }}
                             </div>
                         </div>
