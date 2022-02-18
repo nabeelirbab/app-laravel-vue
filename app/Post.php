@@ -29,9 +29,9 @@ class Post extends PhaseModel
     ];
 
     protected $appends = [
-        'is_liked',
-        'is_shared',
-        'is_recent'
+        'is_liked', 'like_count', 
+        'is_shared', 'share_count', 
+        'is_recent', 'comment_count'
     ];
 
     public function user()
