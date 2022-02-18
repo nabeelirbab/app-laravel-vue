@@ -8,7 +8,7 @@
                 :src="imageSrc"
                 alt=""
                 :center="false"
-                :recent="item.is_recent"
+                :recent="item.is_recent && (item.type == 'track' || item.type == 'release')"
             />
             <div class="sgi-info">
                 <div class="sgi-title">{{ title }}</div>

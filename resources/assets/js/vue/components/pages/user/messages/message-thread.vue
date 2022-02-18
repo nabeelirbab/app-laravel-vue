@@ -1,7 +1,8 @@
 <template>
     <div class="message-thread">
         <div class="avatar-wrap">
-            <avatar :size="98" :src="getReceiver(thread, 'avatar')" :labels="{tr: { text: 'Admin', color: 'blue' }}"></avatar>
+            <avatar v-if="getReceiverBadge(thread)" :verified="isVerified(thread)"  :size="98" :src="getReceiver(thread, 'avatar')" :labels="{tr: { text: getReceiverBadge(thread), color: 'blue' }}"></avatar>
+            <avatar v-if="!getReceiverBadge(thread)"  :size="98" :src="getReceiver(thread, 'avatar')" ></avatar>
         </div>
         <div class="detail">
             <div class="info-top">
@@ -82,6 +83,25 @@
             unliked() {
                 this.thread.is_liked = false;
                 this.thread.likes_count -= 1;
+            },
+            getReceiverBadge(thread) {
+                user = this.getReceiver(thread);
+                if(user.is_admin) {
+                    return 'Admin';
+                } else if(user.account_type == 'Pro') {
+                    return 'PRO';
+                } else if(user.is_verified) {
+                    return 'Verified';
+                }
+                return false;
+            },
+            isVerified(thread) {
+                user = this.getReceiver(thread);
+                if(user.is_verified) {
+                    return true;
+                }
+
+                return false;
             }
         },
         components: {
@@ -149,4 +169,5 @@
             background: white;
         }
     }
+    
 </style>

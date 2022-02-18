@@ -1,7 +1,7 @@
 <template>
     <router-link class="artist-tile" :to="getRouterObject(user)">
         <div class="artist-tile-image">
-            <avatar :tile="true" :size="size" :src="user.avatar.files.medium.url" :recent="user.is_recent" ></avatar>
+            <avatar :tile="true" :size="size" :src="user.avatar.files.medium.url"  ></avatar>
         </div>
         <div class="artist-tile-text">
             <p class="artist-name">{{ user.name }}</p>

@@ -51,8 +51,10 @@
                                 v-model="data.personal.firstname"
                                 tabindex="2"
                                 :disabled="submitting"
-                                v-validate="'required|username|max:255'"
+                                v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/
+                                 }"
                                 data-vv-as="first name"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("personal-name") }}
@@ -89,6 +91,7 @@
                                     max: 255,
                                 }"
                                 data-vv-as="password"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("personal-password") }}
@@ -108,8 +111,10 @@
                                 v-model="data.personal.surname"
                                 tabindex="3"
                                 :disabled="submitting"
-                                v-validate="'required|username|max:255'"
+                                v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/
+                                 }"
                                 data-vv-as="surname"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("personal-surname") }}
@@ -129,6 +134,7 @@
                                 :disabled="submitting"
                                 v-validate="'required|max:255'"
                                 data-vv-as="password confirmation"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{
@@ -158,6 +164,7 @@
                                     v-validate="'required|email|max:255'"
                                     data-vv-as="email address"
                                     ref="email"
+                                    data-vv-validate-on="focusout"
                                 />
                                 <p class="error-message">
                                     {{ errors.first("personal-email") }}
@@ -198,6 +205,7 @@
                                 :disabled="submitting"
                                 v-validate="'required|max:20'"
                                 data-vv-as="name"
+                                data-vv-validate-on="focusout"
                             />
                             <p
                                 class="error-message"
@@ -219,6 +227,7 @@
                                 :max="4"
                                 tabindex="10"
                                 :disabled="submitting"
+                                data-vv-validate-on="blur"
                             />
                             <input
                                 type="hidden"
@@ -262,6 +271,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max:255, regex: /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/ }"
                                 data-vv-as="website"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-website") }}
@@ -285,6 +295,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?facebook\.com\/[A-z 0-9 _ .]*\/?$/ }"
                                 data-vv-as="Facebook"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-facebook") }}
@@ -304,6 +315,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?(soundcloud\.com|snd\.sc)\/(.*)$/ }"
                                 data-vv-as="Soundcloud"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-soundcloud") }}
@@ -325,6 +337,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /^(http(s)?:\/\/)?(www\.)?(mobile\.)?twitter\.com\/[A-z 0-9 _]{1,15}\/?$/ }"
                                 data-vv-as="Twitter"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-twitter") }}
@@ -344,6 +357,7 @@
                                 :disabled="submitting"
                                 v-validate="{ max: 255, regex: /(https?:\/\/)?(www\.)?(m\.)?youtube\.com\/(channel|user|c|u)\/[\w-]+/ }"
                                 data-vv-as="Youtube"
+                                data-vv-validate-on="focusout"
                             />
                             <p class="error-message">
                                 {{ errors.first("social-youtube") }}
@@ -368,6 +382,8 @@
                                 :max="4"
                                 tabindex="16"
                                 :disabled="submitting"
+                                
+                                data-vv-validate-on="blur"
                             />
                             <input
                                 type="hidden"
@@ -477,7 +493,7 @@
                     this.artistGenresString += genres[i].name;
                 }
                 this.$refs.artist_genre_input.value = this.artistGenresString;
-                this.$validator.validate();
+               
             },
             interestGenresChanged(genres) {
                 this.interestGenresString = "";
@@ -486,7 +502,7 @@
                     this.interestGenresString += genres[i].name;
                 }
                 this.$refs.interest_genre_input.value = this.interestGenresString;
-                this.$validator.validate();
+                
             },
             registerUser() {
                 this.submitted = true;
@@ -627,8 +643,10 @@
     .error-message {
         font-size: 12px;
         position: absolute;
-        bottom: -25px;
+        /*bottom: -25px;*/
+        top:35px;
         color: red;
+        clear:both
     }
 
     .register-form-inputs input {

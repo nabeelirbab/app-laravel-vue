@@ -6,9 +6,10 @@
                 <avatar
                     :size="130"
                     :src="post.user.avatar.files.thumb.url"
-                    :recent="post.is_recent"
+                    
                 />
             </router-link>
+
         </div>
         <div class="p-item-main">
             <div class="p-item-detail">

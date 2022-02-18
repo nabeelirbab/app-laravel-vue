@@ -100,34 +100,7 @@
 
       <ph-button size="medium" @click.native="savePassword" :loading="password.submitting">Save</ph-button>
     </ph-panel>
-    <ph-panel id="audio">
-      <h2>Audio Preferences</h2>
-      <hr />
-      <h3>Default Download Format</h3>
-      <div class="checkbox-container">
-        <label>
-          <input
-            type="radio"
-            name="audio-format"
-            value="mp3"
-            v-model="audio.format"
-          />
-          MP3
-        </label>
-      </div>
-      <div class="checkbox-container">
-        <label>
-          <input
-            type="radio"
-            name="audio-format"
-            value="wav"
-            v-model="audio.format"
-          />
-          WAV
-        </label>
-      </div>
-      <ph-button size="medium" @click.native="saveAudio">Save</ph-button>
-    </ph-panel>
+   
     <billing />
     <subscriptions />
     <manage />

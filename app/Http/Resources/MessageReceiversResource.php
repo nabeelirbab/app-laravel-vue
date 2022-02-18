@@ -17,7 +17,10 @@ class MessageReceiversResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'avatar' => $this->avatar->fileBySize('thumb')->url
+            'avatar' => $this->avatar->fileBySize('thumb')->url,
+            'account_type' => ucwords($this->account_type),
+            'is_admin' => $this->isAdminUser(), 
+            'is_verified' => !empty($this->approved_at)
         ];
     }
 }

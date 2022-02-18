@@ -5,7 +5,7 @@
                 :to="getRouterObject(news)">
             <avatar v-if="news.image" :size="130"
                     :src="news.image.files.original.url"
-                    :recent="news.is_recent"
+                    
             />
             </router-link>
         </div>
