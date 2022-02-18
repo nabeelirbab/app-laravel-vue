@@ -71,6 +71,5 @@ class Action extends PhaseModel
     public function getItemAttribute()
     {
         return morphToModel($this->item_type, $this->item_id);
-        
     }
 }
