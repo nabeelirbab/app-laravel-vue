@@ -46,7 +46,7 @@ class FeedController extends Controller
                     'uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
                     },
-                ])->withCount('shares', 'comments', 'likes')->limit(10)->get()->each(function ($item) use (&$collection) {
+                ])->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-release';
                     $item->type = 'release';
                     $collection->push($item);
