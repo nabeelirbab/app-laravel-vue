@@ -29,7 +29,10 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForProfile()
     {
-        $userActions = $this->user->actions;
+        //$userActions = $this->user->actions;
+        $userActions = Action::/*with(['item' => function($query){
+                $query->withCount('shares', 'comments', 'likes');
+        }])->*/where("created_by", $this->user->id)->get();
 
         return $userActions
             ->merge($this->getActionsForPostsTargetedAtUser())

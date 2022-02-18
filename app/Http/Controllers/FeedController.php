@@ -46,7 +46,7 @@ class FeedController extends Controller
                     'uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
                     },
-                ])->limit(10)->get()->each(function ($item) use (&$collection) {
+                ])->withCount('shares', 'comments', 'likes')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-release';
                     $item->type = 'release';
                     $collection->push($item);
@@ -89,7 +89,7 @@ class FeedController extends Controller
                     }
                 }
 
-                Post::bodynotnull()->limit(7)->get()->each(function ($item) use (&$collection) {
+                Post::bodynotnull()->withCount('shares', 'comments', 'likes')->limit(7)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-post';
                     $item->type = 'post';
                     $collection->push($item);

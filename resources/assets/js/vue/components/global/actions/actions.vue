@@ -10,19 +10,16 @@
                         </span>
                     </span>
                 </router-link>
-                <div v-if="actionable.comment_count >= 0" class="action-count">{{ actionable.comment_count }}</div>
-                <div v-else-if="actionable.comments_count >= 0" class="action-count">{{ actionable.comments_count }}</div>
+                <div v-if="actionable.comments_count >= 0" class="action-count">{{ actionable.comments_count }}</div>
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <share-button :shareable="actionable" @share="shared"></share-button>
                 <div v-if="actionable.shares_count >= 0" class="action-count">{{ actionable.shares_count }}</div>
-                <div v-else-if="actionable.share_count >= 0" class="action-count">{{ actionable.share_count }}</div>
 
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <like-button :likeable="actionable" @like="liked" @unlike="unliked"></like-button>
                 <div v-if="actionable.likes_count >= 0" class="action-count">{{ actionable.likes_count }}</div>
-                <div v-else-if="actionable.like_count >= 0" class="action-count">{{ actionable.like_count }}</div>
 
             </div>
             <div class="action" v-if="app.user.loggedin">
