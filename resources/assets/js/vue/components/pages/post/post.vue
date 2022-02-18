@@ -16,7 +16,7 @@
                             <h1>
                                 {{ post.user.name }}
                             </h1>
-                            <div class="post-body">
+                            <div v-if="post.attachment" class="post-body">
 
                                 <img
                                     v-if="post.attachment"
@@ -24,6 +24,9 @@
                                     :alt="post.attachment.alt"
                                     class="p-post-image"
                                 />
+                            </div>
+                            <div class="post-body">
+
                                 {{ post.body }}
                             </div>
                         </div>
