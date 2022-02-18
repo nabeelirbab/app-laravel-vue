@@ -70,13 +70,6 @@ class Action extends PhaseModel
 
     public function getItemAttribute()
     {
-        if( in_array($this->item_type, ['release', 'post']) ) {
-            return morphToModel($this->item_type, $this->item_id)->withCount([
-                'comments as comments_count',
-                'likes as likes_count',
-                'shares as shares_count'
-            ]);
-        }
         return morphToModel($this->item_type, $this->item_id);
         
     }

@@ -1,14 +1,5 @@
 <template>
     <div class="actions">
-        <!-- <div>
-            <div>
-                {{ commentText }}
-            </div>
-            <div>
-                {{ likeText }}
-            </div>
-            <div>{{ shareText }}</div>
-        </div> -->
         <div>
             <div class="action" v-if="app.user.loggedin">
                 <router-link
