@@ -32,7 +32,7 @@ class Release extends PhaseModel
     protected $appends = [
         'is_liked',
         'is_shared',
-        'is_recent',
+        'is_recent'
     ];
 
     protected $dates = [

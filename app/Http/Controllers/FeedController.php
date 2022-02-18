@@ -89,7 +89,7 @@ class FeedController extends Controller
                     }
                 }
 
-                Post::bodynotnull()->withCount('shares', 'comments', 'likes')->limit(7)->get()->each(function ($item) use (&$collection) {
+                Post::bodynotnull()->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-post';
                     $item->type = 'post';
                     $collection->push($item);
