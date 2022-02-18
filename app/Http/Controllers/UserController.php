@@ -76,7 +76,7 @@ class UserController extends Controller
         if ($path !== 'search') {
             $user =  User::byPath($path)
                 ->with([
-                    'following.image',
+                    'following',
                 ])
                 ->withCount(['releases', 'followers as follower_count', 'following as following_count'])
                 ->first();
