@@ -76,12 +76,12 @@ class UserController extends Controller
         if ($path !== 'search') {
             $user =  User::byPath($path)
                 ->with([
-                    'following',
+                    'following.image',
                 ])
                 ->withCount(['releases', 'followers as follower_count', 'following as following_count'])
                 ->first();
             if ($request->has('app-user') && $request->get('app-user') != -1) {
-                $followable = User::with('following.image')->find($request->get('app-user'));
+                $followable = User::with('following')->find($request->get('app-user'));
                 $user->followed = $user->followers->contains($followable);
             } else {
                 $user->followed = false;
