@@ -15,7 +15,6 @@
         <close-icon @click.native="$modal.hide('modal-cart')"></close-icon>
       </div>
       <div class="modal-content">
-        <h1 class="no-top">My Cart</h1>
         <p v-if="cart.loading">
           <spinner
             :size="50"

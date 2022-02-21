@@ -14,13 +14,15 @@
         <ph-button
           v-if="$can('create releases')"
           @click.native="showUpload"
-          :style="!app.user.stripe_account_id ? 'opacity:0.5;' : null"
-          :disabled="!app.user.stripe_account_id ? 'disabled' : null"
+          :style="!app.user.stripe_account_id || !app.user.approved_at ? 'opacity:0.5;' : null"
+          :disabled="!app.user.stripe_account_id || !app.user.approved_at ? 'disabled' : null"
         >
           Upload
           <template v-if="!app.user.stripe_account_id || !app.user.approved_at" slot="tooltip">
-            <p>Complete verification in your account section</p>
+            <p v-if="!app.user.stripe_account_id" >Complete verification in your account section</p>
+            <p v-if="app.user.stripe_account_id && !app.user.approved_at" >Please wait until admin aprove your account.</p>
           </template>
+
           <template v-else-if="app.user.tracks_count_this_month >= free_release_limit" slot="tooltip">
             <p>Upload restriction reached: upgrade to receive unlimited uploads</p>
           </template>

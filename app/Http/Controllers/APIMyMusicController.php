@@ -33,8 +33,10 @@ class APIMyMusicController extends Controller
                 'track.release.image',
                 'track.streamable'
             ])
-            ->get()->groupBy('track.release_id');
-        return $downloads;
+            ->orderByDesc("order_id")
+            ->get()->groupBy('track.release_id')->sortByDesc('order_id');
+
+        return array_values($downloads->toArray());
         // Remove items where the user has reached the download limit
         //        for ($i = 0; $i < count($mymusic); $i++) {
         //            if ($mymusic[$i]->count >= 3) {

@@ -70,6 +70,9 @@ class Action extends PhaseModel
 
     public function getItemAttribute()
     {
+        if( in_array($this->item_type, ['release', 'post']) ) {
+            return Relation::morphMap()[$this->item_type]::withCount('shares', 'comments', 'likes')->find($this->item_id);
+        }
         return morphToModel($this->item_type, $this->item_id);
     }
 }

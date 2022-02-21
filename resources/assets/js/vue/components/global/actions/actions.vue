@@ -1,34 +1,29 @@
 <template>
     <div class="actions">
-        <!-- <div>
-            <div>
-                {{ commentText }}
-            </div>
-            <div>
-                {{ likeText }}
-            </div>
-            <div>{{ shareText }}</div>
-        </div> -->
         <div>
             <div class="action" v-if="app.user.loggedin">
-                <comment-button :commentable="actionable" @commented="commented" />
-                <div class="action-count">{{ actionable.comments_count }}</div>
+                <router-link
+                        :to="getRouterObject(actionable)" >
+                    <span class="comment-button" v-if="app.user.loggedin" title="Comment" >
+                        <span>
+                            <i class="fa fa-comment-alt"></i>
+                        </span>
+                    </span>
+                </router-link>
+                <div v-if="actionable.comments_count >= 0" class="action-count">{{ actionable.comments_count }}</div>
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <share-button :shareable="actionable" @share="shared"></share-button>
-                <div class="action-count">{{ actionable.shares_count }}</div>
+                <div v-if="actionable.shares_count >= 0" class="action-count">{{ actionable.shares_count }}</div>
 
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <like-button :likeable="actionable" @like="liked" @unlike="unliked"></like-button>
-                <div class="action-count">{{ actionable.likes_count }}</div>
+                <div v-if="actionable.likes_count >= 0" class="action-count">{{ actionable.likes_count }}</div>
 
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <report-button :reportable="actionable" @report="reported"></report-button>
-            </div>
-            <div class="action">
-                <info-button :infoable="actionable"></info-button>
             </div>
             <div class="action">
                 <action-menu v-if="actionable.type === 'track' && download" :actionable="actionable" :download="download"></action-menu>
@@ -46,7 +41,6 @@
     import ShareButton from './share-button';
     import ReportButton from './report-button';
     import LikeButton from './like-button';
-    import InfoButton from './info-button';
     import ActionMenu from './action-menu';
     import {SocialEvents} from "../../../event-bus";
 
@@ -115,7 +109,6 @@
             CommentButton,
             ShareButton,
             LikeButton,
-            InfoButton,
             ActionMenu,
             ReportButton
         }

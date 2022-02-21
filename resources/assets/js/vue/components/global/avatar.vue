@@ -8,9 +8,13 @@
       {{ labels.tl.text }}
     </ph-label>
     <img :src="src" :alt="alt" :class="{ tile: tile }" />
-    <ph-label v-if="labels.tr" class="tr" size="small" :color="labels.tr.color">
+    <ph-label v-if="labels.tr && labels.tr.text != 'Verified'" class="tr" size="small" :color="labels.tr.color" >
       {{ labels.tr.text }}
     </ph-label>
+
+    <label v-if="verified" class="tr-verified" size="small" >
+      <span class='verified-tick'  ><img src='/img/tick.jpg' style='height:25px;width:25px;'/></span>
+    </label>
     <div class="is-new-badge" v-if="recent">
       new
     </div>
@@ -113,7 +117,13 @@ img {
     left: -12px;
   }
   &.tr {
-    right: -12px;
+    left: 29px;
+  }
+
+  &.tr-verified {
+    left: 23px;
+    top: 78px;
+    color: #5198e9;
   }
 }
 .verified-badge {
@@ -123,4 +133,11 @@ img {
   color: $color-2;
   font-size: 35px;
 }
+
+.tr-verified{
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+}
+
 </style>

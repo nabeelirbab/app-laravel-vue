@@ -13,6 +13,10 @@ class MarketplaceController extends Controller
         $user = User::find($request->user_id);
 
         $user->createAccount($request);
+        if($request->phone) {
+            $user->phone = $request->phone;
+            $user->save();
+        }
 
         return $user;
     }

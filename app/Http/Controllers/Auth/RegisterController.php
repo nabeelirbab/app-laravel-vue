@@ -89,15 +89,16 @@ class RegisterController extends Controller
             $user->save();
         }
 
-        if ($type === 'pro') {
-            $user->createAsStripeCustomer([
-                'name' => $data['personal']['firstname'] . ' ' . $data['personal']['surname'],
-            ]);
-            $user->trial_ends_at = now()->addDays(30);
+        if ($type === 'pro' || $type == 'artist') {
 
-            $genreIDs = collect($data['artist']['genres'])->map(function ($item) {
-                return $item['id'];
-            });
+            if($type == 'pro') {
+                $user->createAsStripeCustomer([
+                    'name' => $data['personal']['firstname'] . ' ' . $data['personal']['surname'],
+                ]);
+                $user->trial_ends_at = now()->addDays(30);
+            }
+            
+            $genreIDs = collect($data['artist']['genres'])->pluck('id');
 
             $user->genres()->sync($genreIDs->all());
             $user->save();
