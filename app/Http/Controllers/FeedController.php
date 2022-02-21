@@ -51,7 +51,7 @@ class FeedController extends Controller
                     $item->type = 'release';
                     $collection->push($item);
                 });
-                Track::namenotnull()->with([
+                Track::namenotnull()->isApproved()->with([
                     'preview',
                     'release',
                     'release.image',
