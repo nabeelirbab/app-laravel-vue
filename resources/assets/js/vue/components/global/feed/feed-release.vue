@@ -40,8 +40,7 @@
     data() {
       return {
         imgUrl:
-          "https://phase-website.s3.eu-west-2.amazonaws.com/" +
-          this.item.image.files.thumb.path,
+          this.item.image.files.medium.url,
         hovered: null
       };
     },
