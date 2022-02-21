@@ -1147,7 +1147,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       return state.user.events;
     },
     releasesHasAnotherPage: function releasesHasAnotherPage(state) {
-      if (state.user.releases.last_page === 1) return true;
       return state.user.releases.current_page < state.user.releases.last_page;
     },
     getUser: function getUser(state) {

@@ -23,7 +23,7 @@ class News extends PhaseModel
 
     protected $fillable = ['title', 'content', 'path', 'user_id', 'published_at'];
 
-    protected $with = [
+    protected $with = ['image'
 
         // 'image',
         // 'categories',

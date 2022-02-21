@@ -70,7 +70,7 @@ export default {
                     break;
 
                 case "post":
-                    return "#";
+                    return "/post/" + this.item.id;
                     break;
 
                 case "release":
@@ -100,7 +100,7 @@ export default {
                     break;
 
                 case "news":
-                    return this.item.image.files.original.url;
+                    return (this.item.image) ? this.item.image.files.original.url : null;
                     break;
 
                 case "post":
