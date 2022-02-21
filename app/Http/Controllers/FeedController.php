@@ -58,7 +58,9 @@ class FeedController extends Controller
                     'release.uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
                     },
-                ])->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
+                ])->whereHas('release', function($query) {
+                    $query->statuslive();
+                })->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-track';
                     $item->type = 'track';
                     $collection->push($item);
