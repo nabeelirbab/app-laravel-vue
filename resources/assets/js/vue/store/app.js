@@ -420,7 +420,6 @@ export default {
             return state.user.events
         },
         releasesHasAnotherPage: (state) => {
-            if (state.user.releases.last_page === 1) return true;
             return (
               state.user.releases.current_page < state.user.releases.last_page
             );

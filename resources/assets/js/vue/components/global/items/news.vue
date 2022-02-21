@@ -1,15 +1,21 @@
 <template>
     <div class="p-item">
         <div class="p-item-image">
-            <avatar :size="130"
+            <router-link
+                :to="getRouterObject(news)">
+            <avatar v-if="news.image" :size="130"
                     :src="news.image.files.original.url"
                     
             />
+            </router-link>
         </div>
         <div class="p-item-main">
             <div class="p-item-detail">
                 <div class="p-item-title">
-                    <span>{{ news.title }}</span>
+                    <router-link
+                    :to="getRouterObject(news)">
+                        <span>{{ news.title }}</span>
+                    </router-link>
                 </div>
             </div>
             <div class="release-description">

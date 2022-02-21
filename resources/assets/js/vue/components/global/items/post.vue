@@ -1,11 +1,15 @@
 <template>
     <div class="p-item">
         <div class="p-item-image">
-            <avatar
-                :size="130"
-                :src="post.user.avatar.files.thumb.url"
-                
-            />
+            <router-link
+                :to="getRouterObject(post)">
+                <avatar
+                    :size="130"
+                    :src="post.user.avatar.files.thumb.url"
+                    
+                />
+            </router-link>
+
         </div>
         <div class="p-item-main">
             <div class="p-item-detail">
@@ -20,7 +24,10 @@
                     :alt="post.attachment.alt"
                     class="p-post-image"
                 />
+                <router-link
+                :to="getRouterObject(post)">
                 {{ postBody }}
+                </router-link>
             </div>
             <div class="p-item-meta">
                 <actions :actionable="post" :id="id"></actions>
