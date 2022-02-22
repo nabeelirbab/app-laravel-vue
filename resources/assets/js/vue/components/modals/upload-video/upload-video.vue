@@ -5,7 +5,7 @@
                 <close-icon class="float-right" @click.native="close"></close-icon>
             </div>
             <div class="modal-content">
-                <h2>Upload Video</h2>
+                <h2 class="text-center">Upload Video</h2>
                 <div v-show="!resumable || (resumable && !resumable.isUploading() && !uploadComplete)">
                     <h3>First, browse for your video or drag it into the zone below:</h3>
                     <uploader
@@ -208,5 +208,8 @@
         font-size: 12px;
         color: red;
         margin-top: 3px;
+    }
+    .text-center {
+        text-align: center;
     }
 </style>

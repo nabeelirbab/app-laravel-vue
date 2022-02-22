@@ -232,7 +232,7 @@
                     v-model="currentTrack.bpm"
                     :value.sync="currentTrack.bpm"
                     :key="1"
-                    v-validate="'required'"
+                    v-validate="'required|between:40,250'"
                   />
                   <span class="error-message">{{ errors.first('bpm') }}</span>
                 </td>
