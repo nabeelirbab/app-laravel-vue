@@ -11,7 +11,7 @@
       <div class="sidebar-group-title">
         <span>
           <i class="fa fa-user"></i>
-          {{ mutableUser.followers.length }}
+          {{ mutableUser.follower_count ?  mutableUser.follower_count : 0 }}
         </span>
         <span>
           <i class="fa fa-music"></i>
