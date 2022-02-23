@@ -211,5 +211,6 @@
     }
     .text-center {
         text-align: center;
+        display: block !important;
     }
 </style>
