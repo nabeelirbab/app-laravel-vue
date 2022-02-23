@@ -5,7 +5,7 @@
                 <close-icon class="float-right" @click.native="close"></close-icon>
             </div>
             <div class="modal-content">
-                <h2 class="text-center">Upload Video</h2>
+                <h2 >Upload Video</h2>
                 <div v-show="!resumable || (resumable && !resumable.isUploading() && !uploadComplete)">
                     <h3>First, browse for your video or drag it into the zone below:</h3>
                     <uploader
@@ -69,7 +69,7 @@
                             After your video is finished uploading and processing it will be available to view!
                         </p>
                     </ph-panel>
-                    <ph-button size="large" @click.native="close">
+                    <ph-button class="text-center" size="large" @click.native="close">
                         Done
                     </ph-button>
                 </div>
