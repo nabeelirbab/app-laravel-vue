@@ -21,7 +21,7 @@ class MarketplaceController extends Controller
 
             return $user;
         } catch(\Exception $e) {
-            return ['status' => 'error', 'message' => $e->getMessage() ];
+            return response()->json(['message' => $e->getMessage()], 500);
         }
         
     }
