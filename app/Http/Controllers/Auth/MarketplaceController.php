@@ -20,7 +20,7 @@ class MarketplaceController extends Controller
             }
 
             return $user;
-        } catch(\ApiErrorException $e) {
+        } catch(\Exception $e) {
             return ['status' => 'error', 'message' => $e->getMessage() ];
         }
         
