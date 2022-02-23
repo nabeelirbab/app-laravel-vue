@@ -10,15 +10,20 @@ class MarketplaceController extends Controller
 {
     public function store(Request $request)
     {
-        $user = User::find($request->user_id);
+        try{
+            $user = User::find($request->user_id);
 
-        $user->createAccount($request);
-        if($request->phone) {
-            $user->phone = $request->phone;
-            $user->save();
+            $user->createAccount($request);
+            if($request->phone) {
+                $user->phone = $request->phone;
+                $user->save();
+            }
+
+            return $user;
+        } catch(Exception $e) {
+            return ['status' => 'error', 'message' => $e->getMessage(), 'code' => $e->getCode() ];
         }
-
-        return $user;
+        
     }
 
     public function update(Request $request)
