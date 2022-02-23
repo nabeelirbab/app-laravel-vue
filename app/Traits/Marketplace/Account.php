@@ -15,7 +15,6 @@ trait Account
 
     public function createAccount($data)
     {
-        
         $account = StripeAccount::create([
             'country' => !empty($data['country']) ? $data['country'] : 'GB',
             'type' => 'custom',
