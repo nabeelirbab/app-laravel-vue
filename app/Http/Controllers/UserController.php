@@ -342,4 +342,17 @@ class UserController extends Controller
         //delete user
         $user->forceDelete();
     }
+
+    public function verifyEmailAddress($id = null, $key = '')
+    {
+        $user = User::where("activation_token", $key)->find($id);
+        if(empty($user)) {
+            abort(404);
+        }
+
+        $user->activation_token = '';
+        $user->status = 'active';
+        $user->save();
+        
+    }
 }

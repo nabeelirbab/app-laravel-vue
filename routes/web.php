@@ -59,3 +59,6 @@ Route::get('/{any?}', function () {
         : 'null';
     return view('vue', compact('user'));
 })->where('any', '.*');
+
+
+Route::get('/user/verify-email/{id}/{token}', 'UserController@verifyEmailAddress')->name('user.verifyemail');

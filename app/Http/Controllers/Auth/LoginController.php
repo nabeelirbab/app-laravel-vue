@@ -28,7 +28,24 @@ class LoginController extends Controller
         $guestCart = $this->request->input('guestCart');
 
         if (Auth::attempt($credentials, $remember)) {
-            Log::info(Auth::user());
+            $authUser = Auth::user();
+            if(! $authUser->isActive() || $user->isBanned() ) {
+                $returnMessage = "Your account is not active";
+                if( $authUser->isBanned() ) {
+                    $returnMessage = "Your account is banned. Please contact admin.";
+                } else if( $authUser->isFrozen() ) {
+                    $returnMessage = "Your account is frozen. Please contact admin.";
+                } else if( $authUser->isAwaiting() ) {
+                    $returnMessage = "Your account is not active. Please activate using the link in your email."
+                }
+
+                return [
+                        'success' => false,
+                        'deactivated' => true,
+                        'message' => $returnMessage
+                    ];
+            }
+            Log::info($authUser);
 
             if (!is_null($guestCart)) {
                 auth()->user()->syncGuestCart($guestCart);
