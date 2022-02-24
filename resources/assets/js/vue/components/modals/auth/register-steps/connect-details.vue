@@ -231,7 +231,8 @@ export default {
 								account_token: this.accountToken,
 								user_id: this.tempUser.id,
 								website: this.account.website,
-								phone: this.account.individual.phone
+								phone: this.account.individual.phone,
+								country: this.account.individual.address.country
 
 
 							})

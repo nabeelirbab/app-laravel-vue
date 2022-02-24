@@ -92,7 +92,8 @@
                 <span class="error-message">{{ errors.first("class") }}</span>
               </td>
             </tr>
-            <tr>
+            <!--
+            <tr >
               <td colspan="2">
                 <label>
                   <input
@@ -108,7 +109,7 @@
                 />
               </td>
             </tr>
-            <tr>
+            <tr >
               <td colspan="2">
                 <label>
                   <input
@@ -134,7 +135,7 @@
                   platform the exclusive benefit will be removed, <a href="/help" target="_blank">please read the FAQ</a>
                 </p>
               </td>
-            </tr>
+            </tr> -->
             <tr class="responsive-class">
               <td>Release Date*</td>
               <td class="date-selects">
@@ -232,7 +233,7 @@
                     v-model="currentTrack.bpm"
                     :value.sync="currentTrack.bpm"
                     :key="1"
-                    v-validate="'required'"
+                    v-validate="'required|between:40,250'"
                   />
                   <span class="error-message">{{ errors.first('bpm') }}</span>
                 </td>
