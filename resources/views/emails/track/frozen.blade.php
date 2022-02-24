@@ -18,11 +18,9 @@
 @component('mail::button', ['url' => config('app.url').'/account/releases'])
     My Releases →
 @endcomponent
-<br/>
 <p style="text-align: center;">
  phase reserves the right and has a duty to freeze any content potentially in breach whilst it is investigated. You will receive an update once this process is complete.
 </p>
-<br/>
 <p style="text-align: center;">
 <strong>Please review our copyright policy <a href="{{ config('app.url').'/terms' }}">HERE</a>,for futher help on copyright visit our Help & Support center <a href="{{ config('app.url').'/help' }}">HERE</a></strong>
 </p>
