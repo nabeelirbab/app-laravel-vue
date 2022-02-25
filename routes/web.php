@@ -61,5 +61,3 @@ Route::get('/{any?}', function () {
         : 'null';
     return view('vue', compact('user'));
 })->where('any', '.*');
-
-
