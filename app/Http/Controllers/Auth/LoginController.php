@@ -29,14 +29,14 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $authUser = Auth::user();
-            if(! $authUser->isActive() || $user->isBanned() ) {
+            if(! $authUser->isActive() || $authUser->isBanned() ) {
                 $returnMessage = "Your account is not active";
                 if( $authUser->isBanned() ) {
                     $returnMessage = "Your account is banned. Please contact admin.";
                 } else if( $authUser->isFrozen() ) {
                     $returnMessage = "Your account is frozen. Please contact admin.";
                 } else if( $authUser->isAwaiting() ) {
-                    $returnMessage = "Your account is not active. Please activate using the link in your email."
+                    $returnMessage = "Your account is not active. Please activate using the link in your email.";
                 }
 
                 return [
