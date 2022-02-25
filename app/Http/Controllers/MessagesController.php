@@ -44,7 +44,10 @@ class MessagesController extends Controller
     public function getThreadMessages(Request $request, $threadid)
     {
         $thread = Thread::findOrFail($threadid);
-        return $thread->messages()->orderByDesc('created_at');
+        return $thread->messages()
+        ->whereHas('view', function($query) {
+            $query->where("view", 1)->where("user_id", auth()->id());
+        })->orderByDesc('created_at');
         // if($request->user()->can('view', $thread)) {
         //     return $thread->messages()->orderByDesc('created_at');
         // } else {
@@ -67,8 +70,8 @@ class MessagesController extends Controller
 
         //get message receiver
         $receiver = $thread->users->where('id','!=',auth()->id())->first();
-
-
+        // save message views
+        $message->saveViews($receiver->id);
         //mark thread unread for receiver
         $receiver->threads()->updateExistingPivot($threadid, ['read_at'=>null]);
         // broadcast(new ThreadEvent($thread->id, new MessageResource($message)));
@@ -98,6 +101,9 @@ class MessagesController extends Controller
         $thread->messages()->saveMany([
                 $message
         ]);
+
+        // save message views
+        $message->saveViews($request->get('receiver'));
 
         //get message sender
         $sender = User::find($request->get('sender'));
@@ -139,4 +145,11 @@ class MessagesController extends Controller
     //         return $message;
     //     }
     // }
+
+    function removeMessage($id = null)
+    {
+        $flag = Message::find($id)->hideMessage();
+
+        return ['status' => 'success', 'message' => "Message hidden successfully"];
+    }
 }

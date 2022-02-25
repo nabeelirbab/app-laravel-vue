@@ -14,7 +14,16 @@
                         <div class="message-body">
                             {{ message.body }}
                         </div>
+                        <div class="message-time">
+                            <small>{{ moment(message.date).calendar() }}</small>
+                        </div>
+                        <div class="actions">
+                            <div class="action">
+                                <delete-button :deleteable="message" ></delete-button>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <div class="thread-respond">
@@ -30,6 +39,7 @@
 </template>
 
 <script>
+    import DeleteButton from 'global/actions/delete-button';
     import SidebarGroup from 'global/sidebar-group';
     import { mapActions, mapState } from 'vuex';
     import store from 'store';
@@ -37,7 +47,7 @@
     import { MessageEvents } from '../../../event-bus';
     
     export default {
-        components: { SidebarGroup, AddText },
+        components: { SidebarGroup, AddText, DeleteButton },
 
         computed: {
             ...mapState('messenger', [
@@ -48,7 +58,11 @@
                 'user'
             ])
         },
-
+        data () {
+            return {
+                moment: window.moment,
+            }
+        },
         mounted() {
             MessageEvents.$on('newMessage', (data) => {this.appendNewMessage(data)});
         },
@@ -56,6 +70,16 @@
         created() {
             const id = this.$route.params.threadid;
             this.getCurrentThread(id);
+
+            MessageEvents.$on("message-removed", () => {
+              this.getCurrentThread(id);
+
+              this.$notify({
+                group: "main",
+                type: "success",
+                title: "Message removed",
+              });
+            });
         }, 
 
         watch: {
@@ -196,5 +220,24 @@
     }
     .message-body {
         line-height: 130%;
+    }
+
+    .message-time {
+        line-height: 30px;
+        font-size: 11px;
+        
+    }
+
+    .actions {
+            width: 30%;
+            font-size: 11px;
+            font-weight: bold;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            .action {
+                padding: 0 8px 0 0;
+            }
     }
 </style>

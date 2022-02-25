@@ -31,7 +31,7 @@
 <script>
 import { mapState } from "vuex";
 import CloseIcon from "global/close-icon";
-import { UserEvents, ModalEvents } from "events";
+import { UserEvents, ModalEvents, MessageEvents } from "events";
 
 export default {
   data() {
@@ -62,6 +62,9 @@ export default {
         case "event":
           return "Are you sure you want to delete this event?";
           break;
+        case "message":
+          return "Are you sure you want to delete this message?";
+          break;
         default:
           "Are you sure ?";
           break;
@@ -90,6 +93,15 @@ export default {
             .post(`/api/event/${this.deleteable.id}/delete`)
             .then((response) => {
               ModalEvents.$emit("event-created");
+              this.$modal.hide("modal-delete-confirm");
+              this.submitting = false;
+            });
+          break;
+        case "message":
+          axios
+            .post(`/api/message/remove/${this.deleteable.id}`)
+            .then((response) => {
+              MessageEvents.$emit("message-removed");
               this.$modal.hide("modal-delete-confirm");
               this.submitting = false;
             });

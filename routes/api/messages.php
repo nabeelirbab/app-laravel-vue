@@ -9,3 +9,5 @@ Route::get('/thread/markread/{threadid}', 'MessagesController@markThreadRead');
 
 Route::post('/thread', 'MessagesController@newThread');
 Route::post('/thread/{threadid}/reply', 'MessagesController@replyToThread');
+
+Route::post('/message/remove/{id}', 'MessagesController@removeMessage');
