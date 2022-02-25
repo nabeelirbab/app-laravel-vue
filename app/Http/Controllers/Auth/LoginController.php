@@ -39,6 +39,7 @@ class LoginController extends Controller
                     $returnMessage = "Your account is not active. Please activate using the link in your email.";
                 }
 
+                Auth::logout();
                 return [
                         'success' => false,
                         'deactivated' => true,

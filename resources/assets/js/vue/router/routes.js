@@ -76,7 +76,7 @@ import Reset from '../components/modals/auth/reset';
 
 import PageFailedPayment from '../components/pages/failed-payment'
 
-import EmailVerified from '../components/pages/email-verified'
+import PageEmailVerified from '../components/pages/email-verified'
 
 /**
  * Define aliases so the string representations of the components can be converted into the actual components objects
@@ -140,7 +140,7 @@ let aliases = {
 
     'Page': Page,
 
-    'EmailVerified': EmailVerified,
+    'PageEmailVerified': PageEmailVerified,
 };
 
 /**
@@ -172,6 +172,11 @@ routes.push(
         }
     },
     {
+        name: 'emailVerified',
+        path: '/email-verified',
+        component: PageEmailVerified
+    },
+    {
        path: '*',
        component: Page404,
     },
@@ -179,11 +184,6 @@ routes.push(
         path: 'passwordReset',
         path: '/password/change',
         component: Reset
-    },
-    {
-        path: 'emailVerified',
-        path: '/user/email-verified',
-        component: EmailVerified
     }
 )
 

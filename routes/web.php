@@ -45,6 +45,8 @@ route::get('testses', function () {
     Mail::to(['rory@wearethunderbolt.com', 'henry@wearethunderbolt.com'])->send(new TestAmazonSes('It works!'));
 });
 
+Route::get('/user/verify-email/{id}/{token}', 'UserController@verifyEmailAddress')->name('user.verifyemail');
+
 Route::get('/{any?}', function () {
     app('debugbar')->disable();
     $user = Auth::check()
@@ -61,4 +63,3 @@ Route::get('/{any?}', function () {
 })->where('any', '.*');
 
 
-Route::get('/user/verify-email/{id}/{token}', 'UserController@verifyEmailAddress')->name('user.verifyemail');

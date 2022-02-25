@@ -1,7 +1,9 @@
 <template>
   <div class="page-content-padded">
     <div class="page-main">
-      <div class="alert alert-success">{{message}}</div>
+      <div class="alert alert-success">{{message}}
+        <span v-if="!app.user.loggedin">Please <a href="#" @click="$modal.show('modal-auth-login')" class="text-white">Login</a> to Access.</span>
+      </div>
     </div>
   </div>
 </template>
@@ -9,19 +11,17 @@
 <script>
 
 import Vue from "vue";
-
+import { mapState } from "vuex";
 export default {
   name: "email-verified",
 
   data() {
     return {
-      message: 'Email validated successfully. Please login to access',
+      message: 'Email verified successfully.',
     }
   },
 
-  computed: {
-    
-  },
+  computed: mapState(["app"]),
 
   mounted() {
   },
@@ -37,6 +37,9 @@ export default {
 .alert-success {
   background: green;
   color: #fff;
-  padding: 5px;
+  padding: 10px;
+}
+.text-white {
+  color: #fff;
 }
 </style>

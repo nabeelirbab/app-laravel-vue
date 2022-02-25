@@ -353,6 +353,8 @@ class UserController extends Controller
         $user->activation_token = '';
         $user->status = 'active';
         $user->save();
+
+        return redirect('/email-verified');
         
     }
 }
