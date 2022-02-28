@@ -37,6 +37,7 @@
     import ShareButton from './share-button';
     import ReportButton from './report-button';
     import LikeButton from './like-button';
+    import InfoButton from './info-button';
     import ActionMenu from './action-menu';
     import {SocialEvents} from "../../../event-bus";
 
@@ -104,6 +105,7 @@
         components: {
             CommentButton,
             ShareButton,
+            InfoButton,
             LikeButton,
             ActionMenu,
             ReportButton

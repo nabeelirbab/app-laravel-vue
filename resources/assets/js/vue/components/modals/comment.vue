@@ -21,7 +21,7 @@
                         />
                     </div> -->
           <div v-if="commentable && commentable.type === 'news'">
-            <h2 >News</h2>
+            <h2>News</h2>
             <h3>{{ commentable.title }}</h3>
             <div>{{ commentable.content }}</div>
           </div>
@@ -32,19 +32,17 @@
             <h2>{{ commentable.name }}</h2>
             <p>{{ commentable.description }}</p>
           </div>
-          <div
-            v-else-if="commentable"
-            class="release-content"
-          >
-            <h2>{{ commentable.name }}</h2>
-            <p>{{ commentable.description }}</p>
-          </div>
         </div>
+        
         <add-text
           type="comment"
           :addTextAble="commentable"
           @success="onCommentAdded"
         />
+        <div v-if="commentable" class="comments">
+            <h2>Comments</h2>
+            <comment-lists :commentable="commentable" />
+        </div>
       </div>
     </div>
   </modal>
@@ -56,12 +54,14 @@ import Avatar from "global/avatar";
 import AddText from "global/add-text/add-text";
 import { SocialEvents } from "events";
 import { UserEvents } from "events";
+import CommentLists from "global/comment-lists";
 
 export default {
   components: {
     CloseIcon,
     AddText,
     Avatar,
+    CommentLists
   },
 
   data() {

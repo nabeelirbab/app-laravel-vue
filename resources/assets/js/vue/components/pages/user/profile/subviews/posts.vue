@@ -9,7 +9,7 @@
         <feed-action v-for="post in posts"
                      :action="post"
                      :this-user="mutableUser"
-                     :key="post.id" />
+                     :key="post.id" :commentable="commentable" />
     </div>
 </template>
 
@@ -24,6 +24,7 @@
             return {
                 loadingPosts: false,
                 posts: [],
+                commentable: true,
             }
         },
         created: function() {
