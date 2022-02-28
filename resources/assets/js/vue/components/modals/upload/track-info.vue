@@ -104,6 +104,7 @@
 									:value.sync="currentTrack.bpm"
 									:key="currentTrackNumber"
 									v-validate="'required|between:40,250'"
+									min="40" max="250"
 								/>
 								<span class="error-message">{{ errors.first('bpm') }}</span>
 							</td>
