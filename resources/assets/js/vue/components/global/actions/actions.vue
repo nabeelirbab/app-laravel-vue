@@ -2,14 +2,7 @@
     <div class="actions">
         <div>
             <div class="action" v-if="app.user.loggedin">
-                <router-link
-                        :to="getRouterObject(actionable)" >
-                    <span class="comment-button" v-if="app.user.loggedin" title="Comment" >
-                        <span>
-                            <i class="fa fa-comment-alt"></i>
-                        </span>
-                    </span>
-                </router-link>
+                <comment-button :commentable="actionable" @commented="commented" />
                 <div v-if="actionable.comments_count >= 0" class="action-count">{{ actionable.comments_count }}</div>
             </div>
             <div class="action" v-if="app.user.loggedin">
@@ -24,6 +17,9 @@
             </div>
             <div class="action" v-if="app.user.loggedin">
                 <report-button :reportable="actionable" @report="reported"></report-button>
+            </div>
+            <div class="action">
+                <info-button :infoable="actionable"></info-button>
             </div>
             <div class="action">
                 <action-menu v-if="actionable.type === 'track' && download" :actionable="actionable" :download="download"></action-menu>
