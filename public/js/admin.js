@@ -902,7 +902,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
             guest: false
           }
         }, {
-          title: "Private Messages",
+          title: "Messages",
           to: "/user/messages",
           only: {
             authenticated: true,
