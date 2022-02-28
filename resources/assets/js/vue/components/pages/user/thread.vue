@@ -14,13 +14,13 @@
                         <div class="message-body">
                             {{ message.body }}
                         </div>
-                        <div class="message-time">
-                            <small>{{ moment(message.date).calendar() }}</small>
-                        </div>
                         <div class="actions">
                             <div class="action">
                                 <delete-button :deleteable="message" ></delete-button>
                             </div>
+                        </div>
+                        <div class="message-time">
+                            <small>{{ moment(message.date).calendar() }}</small>
                         </div>
                     </div>
                     
@@ -224,8 +224,23 @@
 
     .message-time {
         line-height: 30px;
-        font-size: 11px;
-        
+        font-size: 9px;
+        color: #a5a5a5;
+        width: 180px
+    }
+
+    .mine .message-time {
+        float: left;
+        position: relative;
+        left: -15px;
+        top: -16px;
+    }
+
+    .not-mine .message-time {
+        float: right;
+        position: relative;
+        right: -15px;
+        top: -16px;
     }
 
     .actions {

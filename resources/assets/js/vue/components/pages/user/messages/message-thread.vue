@@ -6,7 +6,7 @@
         </div>
         <div class="detail">
             <div class="info-top">
-                {{ getReceiver(thread, 'name') }} <small>{{ moment(thread.last_message.date.date).calendar() }}</small>
+                {{ getReceiver(thread, 'name') }} <small>{{ moment(thread.last_message.date).calendar() }}</small>
             </div>
             <div class="message">
                 {{ thread.last_message.body }}
