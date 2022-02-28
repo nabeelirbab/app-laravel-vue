@@ -205,4 +205,9 @@ class Track extends PhaseModel
     {
         return $this->created_at->diffInDays() < 7;
     }
+
+    public function scopeIsApproved($query) 
+    {
+        return $query->where('status', 'approved');
+    }
 }

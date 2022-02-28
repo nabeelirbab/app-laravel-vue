@@ -159,7 +159,7 @@ export default {
                         only: { authenticated: true, guest: false }
                     },
                     {
-                        title: "Private Messages",
+                        title: "Messages",
                         to: "/user/messages",
                         only: { authenticated: true, guest: false }
                     },
