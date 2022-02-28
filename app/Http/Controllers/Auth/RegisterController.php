@@ -74,6 +74,10 @@ class RegisterController extends Controller
             'path' => $type === 'standard' ? $data['personal']['username'] : $data['artist']['username'],
             'password' => $data['personal']['password'],
         ]);
+        $user->status = 'awaiting';
+        // random string with current timestamp for activation token
+        $randomString = time() . substr( str_shuffle( "0123456789abcdefghijklmnopqrstvwxyz" ), 0, 15);
+        $user->activation_token = $randomString;
         $user->save();
 
         if ($type !== 'standard') {

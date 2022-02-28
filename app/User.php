@@ -449,6 +449,16 @@ class User extends Authenticatable
         return $this->status === 'frozen';
     }
 
+    public function isAwaiting()
+    {
+        return $this->status === 'awaiting';
+    }
+
+    public function isActive()
+    {
+        return $this->status === 'active';
+    }
+
     public function isBanned()
     {
         return $this->banned_at;

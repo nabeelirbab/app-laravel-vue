@@ -76,6 +76,8 @@ import Reset from '../components/modals/auth/reset';
 
 import PageFailedPayment from '../components/pages/failed-payment'
 
+import PageEmailVerified from '../components/pages/email-verified'
+
 /**
  * Define aliases so the string representations of the components can be converted into the actual components objects
  */
@@ -137,6 +139,8 @@ let aliases = {
     'PageFailedPayment': PageFailedPayment,
 
     'Page': Page,
+
+    'PageEmailVerified': PageEmailVerified,
 };
 
 /**
@@ -166,6 +170,11 @@ routes.push(
         meta: {
             noAuth: true
         }
+    },
+    {
+        name: 'emailVerified',
+        path: '/email-verified',
+        component: PageEmailVerified
     },
     {
        path: '*',
