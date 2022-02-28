@@ -51,14 +51,16 @@ class FeedController extends Controller
                     $item->type = 'release';
                     $collection->push($item);
                 });
-                Track::namenotnull()->with([
+                Track::namenotnull()->isApproved()->with([
                     'preview',
                     'release',
                     'release.image',
                     'release.uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
                     },
-                ])->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
+                ])->whereHas('release', function($query) {
+                    $query->statuslive();
+                })->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-track';
                     $item->type = 'track';
                     $collection->push($item);

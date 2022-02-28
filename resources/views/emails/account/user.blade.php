@@ -26,7 +26,7 @@ Hey {{ $user->first_name }}, we are excited for you to be part of the community!
 </ul>
 
 <br/>
-@component('mail::button', ['url' => config('app.url'),'style' => 'font-size:16px;color:#666666;display:inline-block;background:#EFEFEF;border-radius:25px;text-align:center;padding:8px 8px 8px 8px']) Please verify your email address → 
+@component('mail::button', ['url' => config('app.url').'/user/verify-email/'.$user->id.'/'.$user->activation_token,'style' => 'font-size:16px;color:#666666;display:inline-block;background:#EFEFEF;border-radius:25px;text-align:center;padding:8px 8px 8px 8px']) Please verify your email address → 
 @endcomponent
 
 @if ($user->roles->first()->name === 'artist' || $user->roles->first()->name === 'artist_pro')

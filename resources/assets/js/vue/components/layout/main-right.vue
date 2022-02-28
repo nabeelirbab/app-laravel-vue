@@ -50,7 +50,7 @@
                         </li>
                         <li @click="dropdown = false">
                             <router-link to="/user/messages">
-                                Private Messages
+                                Messages
                             </router-link>
                         </li>
                         <hr />

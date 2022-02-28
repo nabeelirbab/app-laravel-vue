@@ -53,7 +53,7 @@
           Your registration was successful!
         </h2>
         <p>
-          Please check your email for account activation instructions.
+          Account verification email sent.Please check your email for account activation instructions.
         </p>
         <div class="flex justify-center" style="padding: 20px 0;">
           <ph-button size="large" @click.native.prevent="showLoginModal">
