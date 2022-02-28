@@ -21,12 +21,19 @@
                         />
                     </div> -->
           <div v-if="commentable && commentable.type === 'news'">
-            <h2>News</h2>
+            <h2 >News</h2>
             <h3>{{ commentable.title }}</h3>
             <div>{{ commentable.content }}</div>
           </div>
           <div
             v-else-if="commentable && commentable.type === 'release'"
+            class="release-content"
+          >
+            <h2>{{ commentable.name }}</h2>
+            <p>{{ commentable.description }}</p>
+          </div>
+          <div
+            v-else-if="commentable"
             class="release-content"
           >
             <h2>{{ commentable.name }}</h2>
