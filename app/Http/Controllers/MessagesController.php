@@ -19,7 +19,8 @@ class MessagesController extends Controller
     public function threads()
     {
         if (auth()->check()) {
-            $threads = auth()->user()->threads;
+            $threads = auth()->user()->threads
+                        ->sortByDesc('id');
 
             return ThreadPreviewResource::collection($threads);
         }
