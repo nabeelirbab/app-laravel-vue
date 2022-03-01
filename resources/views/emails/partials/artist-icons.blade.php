@@ -1,4 +1,4 @@
-<table style="background-color:#F6F6F6;width:700px;padding-bottom:20px;border-bottom:solid;border-width:1px;border-color:#485FFF;margin-bottom:20px">
+<table style="background-color:#F6F6F6;width:100%;padding-bottom:20px;border-bottom:solid;border-width:1px;border-color:#485FFF;margin-bottom:20px">
     <tr style="border=solid">
         <td class="grid-icons">
             <p style="text-align:center;color:#666666">Build your profile<p>
