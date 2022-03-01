@@ -40,11 +40,12 @@
           @success="onCommentAdded"
         />
         <div  class="comments">
-            <div class="" v-show="!showcomment">
-                <button @click="showComments()" class="btn btn-default">Show Comments</button>
+            <div class="text-center" >
+                <button v-show="!showcomment" @click="showComments()" class="button">Show Comments</button>
+                <button v-show="showcomment" @click="hideComments()" class="button">Hide Comments</button>
             </div>
             <div v-show="showcomment" class="">
-              <button @click="hideComments()" class="btn btn-default">Hide Comments</button>
+              
               <h2>Comments</h2>
               <comment-lists :commentable="commentable" />
             </div>
@@ -117,5 +118,9 @@ export default {
 
 .release-content {
   margin-left: 20px;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>

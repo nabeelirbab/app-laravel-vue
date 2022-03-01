@@ -40,6 +40,7 @@
     import InfoButton from './info-button';
     import ActionMenu from './action-menu';
     import {SocialEvents} from "../../../event-bus";
+    import { UserEvents } from "events";
 
     export default {
         props: {
@@ -65,6 +66,10 @@
         
             SocialEvents.$on("commented", () => {
               this.actionable.comments_count++;
+            });
+
+            UserEvents.$on("comment-deleted", () => {
+              this.actionable.comments_count--;
             });
 
         },
