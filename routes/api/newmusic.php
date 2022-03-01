@@ -21,6 +21,9 @@ Route::get('/new-music/{count?}', function ($count = 100) {
             },
             'release.image',
         ])
+        ->whereHas('release', function($query) {
+                    $query->statuslive();
+            })
         ->withCount([
             'comments as comments_count', 'likes as likes_count', 'shares as shares_count'
         ])
