@@ -36,7 +36,6 @@ export default {
 
     UserEvents.$on("comment-deleted", () => {
       this.loadComments();
-
       this.$notify({
         group: "main",
         type: "success",

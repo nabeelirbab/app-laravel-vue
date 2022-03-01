@@ -47,7 +47,12 @@ export default {
       );
     },
   },
-  created: function () {},
+  created: function () {
+    UserEvents.$on("comment-deleted", () => {
+      this.data.comments_count--;
+    });
+
+  },
   methods: {
     moment: function (dateString) {
       return moment(dateString);

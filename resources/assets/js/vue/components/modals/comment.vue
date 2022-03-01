@@ -39,9 +39,15 @@
           :addTextAble="commentable"
           @success="onCommentAdded"
         />
-        <div v-if="commentable" class="comments">
-            <h2>Comments</h2>
-            <comment-lists :commentable="commentable" />
+        <div  class="comments">
+            <div class="" v-show="!showcomment">
+                <button @click="showComments()" class="btn btn-default">Show Comments</button>
+            </div>
+            <div v-show="showcomment" class="">
+              <button @click="hideComments()" class="btn btn-default">Hide Comments</button>
+              <h2>Comments</h2>
+              <comment-lists :commentable="commentable" />
+            </div>
         </div>
       </div>
     </div>
@@ -66,7 +72,8 @@ export default {
 
   data() {
     return {
-      commentable: null,
+      showcomment: false,
+      commentable: null
     };
   },
 
@@ -88,6 +95,14 @@ export default {
       });
       this.onHide();
     },
+
+    showComments() {
+      this.showcomment = true;
+    },
+
+    hideComments() {
+      this.showcomment = false;
+    }
   },
 };
 </script>

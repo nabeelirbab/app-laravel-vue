@@ -61,6 +61,13 @@
 
             }
         },
+        created: function () {
+        
+            SocialEvents.$on("commented", () => {
+              this.actionable.comments_count++;
+            });
+
+        },
         computed: {
             ...mapState([
                 'app',
