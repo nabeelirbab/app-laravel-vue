@@ -4,6 +4,7 @@
       v-for="comment in comments"
       :key="comment.id"
       :data="comment"
+      :newcomment="true"
     ></comment>
     <div class="no-comments" v-if="!comments.length">
       <span v-show="commentsLoaded">

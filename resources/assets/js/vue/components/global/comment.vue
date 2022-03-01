@@ -13,7 +13,8 @@
         </div>
       </div>
       <div class="comment-acitons">
-        <div class="comment-message" v-html="bodyHtml"></div>
+        <div v-if="!newcomment" class="comment-message" v-html="bodyHtml"></div>
+        <div v-if="newcomment" class="comment-message" v-html="bodyNewHtml"></div>
         <div class="comment-actions">
           <report-button :reportable="data" hidden />
           <delete-button :deleteable="data" hidden v-if="this.app.user.id == data.user_id"/>
@@ -46,11 +47,12 @@ export default {
         this.filter.clean(this.data.body)
       );
     },
+    bodyNewHtml() {
+      return this.filter.clean(this.data.body)
+    }
   },
   created: function () {
-    UserEvents.$on("comment-deleted", () => {
-      this.data.comments_count--;
-    });
+   
 
   },
   methods: {
