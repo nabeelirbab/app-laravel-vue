@@ -35,7 +35,7 @@ import DeleteButton from "./actions/delete-button";
 import EditCommentButton from "./actions/edit-comment-button";
 
 export default {
-  props: ["data"],
+  props: ["data", 'newcomment'],
   data() {
     return {};
   },
