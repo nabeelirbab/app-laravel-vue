@@ -159,7 +159,7 @@ class ReleaseController extends Controller
         $release->update($validated);
         $release->genres()->sync($genres);
 
-        return redirect()->back();
+        return redirect('/admin/releases/live');
     }
 
     public function approve($id)
