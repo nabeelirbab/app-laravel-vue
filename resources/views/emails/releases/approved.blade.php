@@ -13,7 +13,7 @@
 </table>
 
 @component('mail::subcopy')
-Hey {{ $user->first_name }}, we have finished processing your release and it has been approved to go live on phase!<br><br>Your release will be going live on it will go live on the date & time is has been scheduled for.
+Hey {{ $user->first_name }}, we have finished processing your release and it has been approved to go live on phase!<br><br>Your release will be going live on <b>{{ date("F d, Y", strtotime($release->release_date)) }}</b>
 <br/>
 
 @component('mail::button', ['url' => config('app.url').'/account/releases'])
