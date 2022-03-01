@@ -79,6 +79,7 @@
                 type: "success",
                 title: "Message removed",
               });
+              return true;
             });
         }, 
 
