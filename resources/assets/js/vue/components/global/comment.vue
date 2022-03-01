@@ -14,7 +14,7 @@
       </div>
       <div class="comment-acitons">
         <div v-if="!newcomment" class="comment-message" v-html="bodyHtml"></div>
-        <div v-if="newcomment" class="comment-message" >{{ bodyNewHtml }}</div>
+        <div v-if="newcomment" class="comment-message" >{{ data.body }}</div>
         <div class="comment-actions">
           <report-button :reportable="data" hidden />
           <delete-button :deleteable="data" hidden v-if="this.app.user.id == data.user_id"/>
@@ -46,9 +46,6 @@ export default {
       return new showdown.Converter().makeHtml(
         this.filter.clean(this.data.body)
       );
-    },
-    bodyNewHtml() {
-      return this.filter.clean(this.data.body)
     }
   },
   created: function () {
