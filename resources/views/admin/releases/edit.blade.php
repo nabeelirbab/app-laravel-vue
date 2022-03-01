@@ -10,9 +10,6 @@
             @method('patch')
             @csrf
 
-            @if($errors->any())
-                {!! implode('', $errors->all('<div>:message</div>')) !!}
-            @endif
             <div class="form-group">
                 <label for="name">Name</label>
                 @include('admin.partials.field-error', ['field' => 'name'])
