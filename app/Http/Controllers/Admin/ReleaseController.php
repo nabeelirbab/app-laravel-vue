@@ -141,15 +141,23 @@ class ReleaseController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'price' => 'required|integer',
-            'featured' => 'required|boolean',
-            'royalty_fee' => 'required|integer|min:0|max:100'
+            'royalty_fee' => 'required|integer|min:0|max:100',
+            'release_date' => 'required',
+            'genres' => 'nullable',
+            'class' => 'required'
         ]);
 
-        Release::findOrFail($id)->update($validated);
+        $genres = $validated['genres'];
+        unset($validated['genres']);
+
+        $release = Release::findOrFail($id);
+        $release->update($validated);
+        $release->genres()->sync($genres);
 
         return back();
     }

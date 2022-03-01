@@ -10,6 +10,9 @@
             @method('patch')
             @csrf
 
+            @if($errors->any())
+                {!! implode('', $errors->all('<div>:message</div>')) !!}
+            @endif
             <div class="form-group">
                 <label for="name">Name</label>
                 @include('admin.partials.field-error', ['field' => 'name'])
@@ -45,8 +48,8 @@
             <div class="form-group">
                 <label for="release-date">Release Date</label>
                 @include('admin.partials.field-error', ['field' => 'release_date'])
-                <input type="text" class="form-control" name="release-date" id="release-date"
-                       value="{{ $release->release_date }}">
+                <input type="date" class="form-control" name="release_date" id="release-date"
+                       value="{{ date('Y-m-d', strtotime($release->release_date)) }}">
             </div>
 
             <div class="form-group">
