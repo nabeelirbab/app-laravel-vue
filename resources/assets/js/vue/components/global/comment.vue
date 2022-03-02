@@ -33,18 +33,8 @@ import Avatar from "./avatar";
 import ReportButton from "./actions/report-button";
 import DeleteButton from "./actions/delete-button";
 import EditCommentButton from "./actions/edit-comment-button";
-import FilterMethods from "./filters/filter-methods";
 export default {
-
   props: ["data", 'newcomment'],
-  mixins: [FilterMethods],
-  filters: {
-    clean(value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.replace(/;/g, "");
-    },
-  },
   data() {
     return {};
   },
@@ -52,8 +42,11 @@ export default {
     ...mapState(["app"]),
 
     bodyHtml() {
-      return new showdown.Converter().makeHtml(
+      /*return new showdown.Converter().makeHtml(
         this.filters.clean(this.data.body)
+      );*/
+      return new showdown.Converter().makeHtml(
+        this.data.body
       );
     }
   },
