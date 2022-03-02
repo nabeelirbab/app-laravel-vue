@@ -154,7 +154,6 @@ class ReleaseController extends Controller
 
         $genres = $validated['genres'];
         unset($validated['genres']);
-
         $release = Release::findOrFail($id);
         $release->update($validated);
         $release->genres()->sync($genres);
