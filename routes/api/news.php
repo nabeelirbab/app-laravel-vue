@@ -14,6 +14,7 @@ Route::get('/news/category/{category}/{count?}', function ($category, $count = 1
             },
         ])
         ->withCount('comments as comments_count', 'likes as likes_count', 'shares as shares_count')
+        ->orderByDesc("id")
         ->paginate($count);
     return $articles;
     // return paginateOrAll($articles, $count);
@@ -28,6 +29,7 @@ Route::get('/news/{count?}', function ($count = 10) {
             },
         ])
         ->withCount('comments as comments_count', 'likes as likes_count', 'shares as shares_count')
+        ->orderByDesc("id")
         ->paginate($count);
     // return paginateOrAll(News::published(), $count);
     // });
