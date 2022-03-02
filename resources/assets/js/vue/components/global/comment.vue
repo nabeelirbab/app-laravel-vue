@@ -13,7 +13,8 @@
         </div>
       </div>
       <div class="comment-acitons">
-        <div class="comment-message" v-html="bodyHtml"></div>
+        <div v-if="!newcomment" class="comment-message" v-html="bodyHtml"></div>
+        <div v-if="newcomment" class="comment-message" >{{ data.body }}</div>
         <div class="comment-actions">
           <report-button :reportable="data" hidden />
           <delete-button :deleteable="data" hidden v-if="this.app.user.id == data.user_id"/>
@@ -34,7 +35,7 @@ import DeleteButton from "./actions/delete-button";
 import EditCommentButton from "./actions/edit-comment-button";
 
 export default {
-  props: ["data"],
+  props: ["data", 'newcomment'],
   data() {
     return {};
   },
@@ -45,9 +46,12 @@ export default {
       return new showdown.Converter().makeHtml(
         this.filter.clean(this.data.body)
       );
-    },
+    }
   },
-  created: function () {},
+  created: function () {
+   
+
+  },
   methods: {
     moment: function (dateString) {
       return moment(dateString);
