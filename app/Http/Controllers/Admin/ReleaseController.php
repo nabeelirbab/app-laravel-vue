@@ -125,10 +125,12 @@ class ReleaseController extends Controller
     {
         $release = Release::findOrFail($id);
         $genres = Genre::all();
+        $allClass = \App\Phase\ReleaseClass::all();
 
         return view('admin.releases.edit')->with([
             'release' => $release,
-            'genres' => $genres
+            'genres' => $genres,
+            'allClass' => $allClass
         ]);
     }
 
