@@ -51,7 +51,7 @@ export default {
 
     bodyHtml() {
       return new showdown.Converter().makeHtml(
-        this.filter.clean(this.data.body)
+        this.filters.clean(this.data.body)
       );
     },
   },
