@@ -61,7 +61,9 @@ class SearchController extends Controller
         $tracks = collect(Track::where('status', 'approved')
             ->where('name', 'like', '%' . $validated['term'] . '%')
             ->with('release.image')
-            ->whereHas("release")
+            ->whereHas('release', function($query) {
+                    $query->statuslive();
+            })
             ->where( function($query) use($releaseIds, $releaseNames) {
                 $query->whereNotIn("release_id", $releaseIds)
                 ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
