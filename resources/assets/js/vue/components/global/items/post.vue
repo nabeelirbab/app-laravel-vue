@@ -43,6 +43,7 @@
     import Actions from 'global/actions/actions';
     import ActionMenu from 'global/actions/action-menu';
     import Avatar from 'global/avatar';
+    import FilterMethods from "../filters/filter-methods";
 
     export default {
         props: {
@@ -55,6 +56,14 @@
               default: null,
           }
         },
+        mixins: [FilterMethods],
+        filters: {
+            clean(value) {
+              if (!value) return "";
+              value = value.toString();
+              return value.replace(/;/g, "");
+            },
+        },
         data () {
             return {
                 moment: window.moment,
@@ -63,7 +72,7 @@
         computed: {
           postBody() {
               if(this.post.body){
-                return this.filter.clean(this.post.body)
+                return this.filters.clean(this.post.body)
               }else{
                   return '';
               }
