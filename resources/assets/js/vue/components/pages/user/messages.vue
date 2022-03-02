@@ -9,7 +9,7 @@
             <add-text v-if="composing" type="newMessage" @success="fetchThreads"></add-text>
             <ph-button size="large" @click.native="composing = true" v-else>New Message</ph-button>
             <div class="user-messages-container">
-                <message-thread v-for="thread in threads" :key="thread.id" :thread="thread"></message-thread>
+                <message-thread v-if="thread.last_message" v-for="thread in threads" :key="thread.id" :thread="thread"></message-thread>
             </div>
         </div>
 <!--         
