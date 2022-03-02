@@ -18,7 +18,7 @@ class FAQCategoryController extends Controller
 
     public function index()
     {
-        $faqsCategories = FaqCategory::all();
+        $faqsCategories = FaqCategory::withCount('faqs')->get();
         return view('admin.faqs-categories.index', compact('faqsCategories'));
     }
 
