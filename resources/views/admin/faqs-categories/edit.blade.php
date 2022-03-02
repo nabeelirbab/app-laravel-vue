@@ -31,7 +31,7 @@
 						</select>
 					</div>
 					<div class="col-sm-3">
-						<div id="icon-view-div"><i class="{{ $categories->icon }} fa-2x" ></i></div>
+						<div id="icon-view-div"><i class="{{ $categories->icon }} fa-1.5x" ></i></div>
 					</div>
 				</div>
 				
@@ -45,7 +45,7 @@
 				<input type="number" class="form-control" name="sort_id" id="sort_id" value="{{$categories->sort_id}}">
 			</div>
 
-			<input type="submit" class="btn btn-sm btn-outline-secondary" value="Create">
+			<input type="submit" class="btn btn-sm btn-outline-secondary" value="Update">
 		</form>
 	</div>
 
@@ -58,7 +58,7 @@
 			
 			$('#category-icon').on("change", function() {
 				var icon = $(this).val();
-				$("#icon-view-div").html("<i class='"+icon+" fa-2x' ></i>");
+				$("#icon-view-div").html("<i class='"+icon+" fa-1.5x' ></i>");
 			})
 		})
 </script>

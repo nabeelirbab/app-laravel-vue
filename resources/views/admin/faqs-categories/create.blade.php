@@ -29,7 +29,7 @@
 						</select>
 					</div>
 					<div class="col-sm-3">
-						<div id="icon-view-div"><i class="{{ $allIcons[0] }} fa-2x" ></i></div>
+						<div id="icon-view-div"><i class="{{ $allIcons[0] }} fa-1.5x" ></i></div>
 					</div>
 				</div>
 			</div>
@@ -52,7 +52,7 @@
 			
 			$('#category-icon').on("change", function() {
 				var icon = $(this).val();
-				$("#icon-view-div").html("<i class='"+icon+" fa-2x' ></i>");
+				$("#icon-view-div").html("<i class='"+icon+" fa-1.5x' ></i>");
 			})
 		})
 </script>
