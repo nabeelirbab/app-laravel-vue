@@ -25,7 +25,8 @@ class FAQCategoryController extends Controller
     public function create()
     {
         $faqsCategories = FaqCategory::all();
-        return view('admin.faqs-categories.create', compact('faqsCategories'));
+        $allIcons = \App\Phase\FaqCategoryIcon::all();
+        return view('admin.faqs-categories.create', compact('faqsCategories', 'allIcons'));
     }
 
     public function store(Request $request)
@@ -44,7 +45,8 @@ class FAQCategoryController extends Controller
     public function edit($id)
     {
         $categories = FaqCategory::find($id);
-        return view('admin.faqs-categories.edit', compact('faq', 'categories'));
+        $allIcons = \App\Phase\FaqCategoryIcon::all();
+        return view('admin.faqs-categories.edit', compact('categories', 'allIcons'));
     }
 
     public function update(Request $request, $id)
