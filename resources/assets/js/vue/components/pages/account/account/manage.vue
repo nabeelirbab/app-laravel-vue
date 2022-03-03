@@ -135,8 +135,7 @@
                             title: 'Successfully downgrade account',
                         });
                         this.downgrading = false;
-                        this.app.user.roles[0].name = 'standard';
-                    })
+                    }).finally(()=>location.reload())
             },
         },
         components: {
