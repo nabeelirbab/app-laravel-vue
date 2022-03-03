@@ -32,21 +32,26 @@ class ProfileActivityFeedGenerator
         $userActions = $this->user->actions;
         $posts = $this->getActionsForPostsTargetedAtUser();
         //print_r($posts);die();
-        /*$returnDatas = collect();
+        $returnDatas = [];
         foreach($userActions as $act) {
-            $returnDatas->push($act);
+            $returnDatas[] = $act;
         }
 
         foreach($posts as $post) {
-            $returnDatas->push($post);
+            $returnDatas[] = $act;
+            //$returnDatas->push($post);
         }
 
-        return $returnDatas->sortByDesc("created_at");*///->values();
+        usort($returnDatas, function ($item1, $item2) {
+            return $item2['created_at'] <=> $item1['created_at'];
+        });
+        return $returnDatas;
+        //return $returnDatas->sortByDesc("created_at")->values();
         
-       return $userActions
+       /* return $userActions
             ->merge($posts)
             ->sortByDesc('created_at')
-            ->values();
+            ->values();*/
     }
 
     /**
@@ -56,7 +61,7 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForPostsTargetedAtUser()
     {
-        $posts = Post::targetedAt($this->user)
+        /*$posts = Post::targetedAt($this->user)
             ->withCount('comments', 'likes', 'shares')
             ->get();
 
@@ -67,12 +72,12 @@ class ProfileActivityFeedGenerator
                 ->first();
 
             $postsActions->push($postAction);
-        }
+        }*/
 
-        /*$postIds = Post::targetedAt($this->user)->get()->pluck("id");
+        $postIds = Post::targetedAt($this->user)->get()->pluck("id");
         $postsActions = Action::where('item_type', 'post')
                 ->whereIn('item_id', $postIds)
-                ->get();*/
+                ->get();
         return $postsActions;
     }
 }
