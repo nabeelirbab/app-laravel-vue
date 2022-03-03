@@ -44,7 +44,7 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForPostsTargetedAtUser()
     {
-        $posts = Post::targetedAt($this->user)
+        /*$posts = Post::targetedAt($this->user)
             ->withCount('comments', 'likes', 'shares')
             ->get();
 
@@ -55,7 +55,12 @@ class ProfileActivityFeedGenerator
                 ->first();
 
             $postsActions->push($postAction);
-        }
+        }*/
+
+        $postIds = Post::targetedAt($this->user)->get()->pluck("id");
+        $postsActions = Action::where('item_type', 'post')
+                ->whereIn('item_id', $postIds)
+                ->get();
         return $postsActions;
     }
 }
