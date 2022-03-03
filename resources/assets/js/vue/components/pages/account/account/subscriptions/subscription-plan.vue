@@ -13,19 +13,29 @@
             <strong>£{{ (plan.price).toFixed(2) }}</strong>
         </div>
         <div class="plan-subscribe">
-            <ph-button v-if="button === 'start_trial'" size="medium" @click.native="subscribe" :loading="loading">
+            <ph-button v-if="button === 'start_trial'" size="medium" @click.native="subscribe" :loading="loading"
+            :disabled="app.user.roles[0].name !== 'artist'"
+            >
                 Start Trial
             </ph-button>
-            <ph-button v-else-if="button === 'cancel'" size="medium" @click.native="unsubscribe" :loading="loading">
+            <ph-button v-else-if="button === 'cancel'" size="medium" @click.native="unsubscribe" :loading="loading"
+            :disabled="app.user.roles[0].name !== 'artist'"
+            >
                 Cancel
             </ph-button>
-            <ph-button v-else-if="button === 'resume'" size="medium" @click.native="resume" :loading="loading">
+            <ph-button v-else-if="button === 'resume'" size="medium" @click.native="resume" :loading="loading"
+            :disabled="app.user.roles[0].name !== 'artist'"
+            >
                 Resume
             </ph-button>
-            <ph-button v-else-if="button === 'restart'" size="medium" @click.native="restart" :loading="loading">
+            <ph-button v-else-if="button === 'restart'" size="medium" @click.native="restart" :loading="loading"
+            :disabled="app.user.roles[0].name !== 'artist'"
+            >
                 Restart
             </ph-button>
-            <ph-button v-else-if="button === 'add_card'" size="medium" @click.native="addCard" :loading="loading">
+            <ph-button v-else-if="button === 'add_card'" size="medium" @click.native="addCard" :loading="loading"
+            :disabled="app.user.roles[0].name !== 'artist'"
+            >
                 Add Card
             </ph-button>
         </div>
