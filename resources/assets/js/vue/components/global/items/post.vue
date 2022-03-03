@@ -64,7 +64,6 @@
         computed: {
           postBody() {
               if(this.post.body){
-                /*return this.filters.clean(this.post.body)*/
                 return this.post.body
               }else{
                   return '';
