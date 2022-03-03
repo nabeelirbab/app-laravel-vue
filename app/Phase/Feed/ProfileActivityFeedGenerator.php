@@ -29,12 +29,23 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForProfile()
     {
-        $userActions = $this->user->actions;
+
+        /*$userActions = $this->user->actions;
 
         return $userActions
             ->merge($this->getActionsForPostsTargetedAtUser())
             ->sortByDesc('created_at')
-            ->values();
+            ->values();*/
+
+        $postIds = Post::targetedAt($this->user)->get()->pluck("id");
+        $actions = Action::where("created_by", $this->user->id)
+        ->orWhere( function($query) use ($postIds) {
+            $query->whereIn("item_id", $postIds)
+            ->where("item_type", 'post');
+        })->orderByDesc('created_at')->get();
+
+        return $actions;
+        
     }
 
     /**
