@@ -132,9 +132,10 @@
                         this.$notify({
                             group: 'main',
                             type: 'success',
-                            title: 'Successfully upgraded account',
+                            title: 'Successfully downgrade account',
                         });
-                        this.downgrading = false
+                        this.downgrading = false;
+                        this.app.user.roles[0].name = 'standard';
                     })
             },
         },

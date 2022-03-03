@@ -14,27 +14,27 @@
         </div>
         <div class="plan-subscribe">
             <ph-button v-if="button === 'start_trial'" size="medium" @click.native="subscribe" :loading="loading"
-            :disabled="app.user.roles[0].name !== 'artist'"
+            :disabled="disabledbtn"
             >
                 Start Trial
             </ph-button>
             <ph-button v-else-if="button === 'cancel'" size="medium" @click.native="unsubscribe" :loading="loading"
-            :disabled="app.user.roles[0].name !== 'artist'"
+            :disabled="disabledbtn"
             >
                 Cancel
             </ph-button>
             <ph-button v-else-if="button === 'resume'" size="medium" @click.native="resume" :loading="loading"
-            :disabled="app.user.roles[0].name !== 'artist'"
+            :disabled="disabledbtn"
             >
                 Resume
             </ph-button>
             <ph-button v-else-if="button === 'restart'" size="medium" @click.native="restart" :loading="loading"
-            :disabled="app.user.roles[0].name !== 'artist'"
+            :disabled="disabledbtn"
             >
                 Restart
             </ph-button>
             <ph-button v-else-if="button === 'add_card'" size="medium" @click.native="addCard" :loading="loading"
-            :disabled="app.user.roles[0].name !== 'artist'"
+            :disabled="disabledbtn"
             >
                 Add Card
             </ph-button>
@@ -131,6 +131,9 @@
           return 'start_trial'
         }
       },
+      disabledbtn: function() {
+        return (this.app.user.roles[0].name !== 'artist')
+      }
     },
     methods: {
       subscribe() {
