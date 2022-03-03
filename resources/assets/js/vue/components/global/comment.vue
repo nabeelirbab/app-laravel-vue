@@ -42,9 +42,6 @@ export default {
     ...mapState(["app"]),
 
     bodyHtml() {
-      /*return new showdown.Converter().makeHtml(
-        this.filters.clean(this.data.body)
-      );*/
       return new showdown.Converter().makeHtml(
         this.data.body
       );
