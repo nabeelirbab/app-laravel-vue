@@ -137,6 +137,13 @@
     },
     methods: {
       subscribe() {
+        if( this.disabledbtn ) {
+            Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: 'You cannot subscribe.',
+            })
+        }
         this.loading = true
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/subscribe').then(response => {
           this.loading = false
@@ -178,6 +185,13 @@
         this.localSubscription = subscription
       },
       resume() {
+        if( this.disabledbtn ) {
+            Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: 'You cannot resume.',
+            })
+        }
         this.loading = true
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/resume').then(response => {
           this.loading = false
