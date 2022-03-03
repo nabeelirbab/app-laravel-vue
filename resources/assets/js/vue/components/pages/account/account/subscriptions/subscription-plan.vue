@@ -143,6 +143,7 @@
               type: 'error',
               title: 'You cannot subscribe.',
             })
+            return false
         }
         this.loading = true
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/subscribe').then(response => {
@@ -191,6 +192,7 @@
               type: 'error',
               title: 'You cannot resume.',
             })
+            return false
         }
         this.loading = true
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/resume').then(response => {
