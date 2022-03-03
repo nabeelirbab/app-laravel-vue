@@ -132,7 +132,7 @@
         }
       },
       disabledbtn: function() {
-        return (this.app.user.roles[0].name !== 'artist')
+        return (this.app.user.roles[0].name !== 'artist' && this.app.user.roles[0].name !== 'pro' )
       }
     },
     methods: {
