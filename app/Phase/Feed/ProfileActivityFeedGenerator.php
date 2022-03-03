@@ -45,7 +45,7 @@ class ProfileActivityFeedGenerator
         
        return $userActions
             ->merge($posts)
-            ->sortByDesc('created_at')
+            //->sortByDesc('created_at')
             ->values();
     }
 
