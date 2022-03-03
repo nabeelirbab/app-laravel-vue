@@ -30,11 +30,23 @@ class ProfileActivityFeedGenerator
     public function getActionsForProfile()
     {
         $userActions = $this->user->actions;
+        $posts = $this->getActionsForPostsTargetedAtUser();
+        //print_r($posts);die();
+        $returnDatas = collect();
+        foreach($userActions as $act) {
+            $returnDatas->push($act);
+        }
 
-        return $userActions
-            ->merge($this->getActionsForPostsTargetedAtUser())
+        foreach($posts as $post) {
+            $returnDatas->push($post);
+        }
+
+        return $returnDatas->sortByDesc("created_at")->values();
+        
+       /* return $userActions
+            ->merge($posts)
             ->sortByDesc('created_at')
-            ->values();
+            ->values();*/
     }
 
     /**
