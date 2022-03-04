@@ -416,7 +416,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="flex justify-center">
             <ph-button
                 size="large"
                 :loading="submitting"

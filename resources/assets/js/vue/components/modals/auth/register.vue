@@ -49,10 +49,10 @@
         </form>
       </div>
       <div class="modal-content" v-else>
-        <h2>
+        <h2 class="flex justify-center">
           Your registration was successful!
         </h2>
-        <p>
+        <p class="flex justify-center">
           Account verification email sent.Please check your email for account activation instructions.
         </p>
         <div class="flex justify-center" style="padding: 20px 0;">
