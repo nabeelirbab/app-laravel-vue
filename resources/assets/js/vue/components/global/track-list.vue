@@ -27,7 +27,7 @@
                    (320kbps)
                 </td>
                 <td @click="trackClicked($event, track)">
-                    <span v-for="(genre, index) in release.genres" :key="index">{{ genre.name }}<span v-if="release.genres[index + 1]">, </span></span>
+                    <span v-if="release" v-for="(genre, index) in release.genres" :key="index">{{ genre.name }}<span v-if="release.genres[index + 1]">, </span></span>
                 </td>
                 <td v-html="$store.getters['app/getKeyByKey'](track.key).name" @click="trackClicked($event, track)">
 
@@ -56,6 +56,9 @@
             tracks: {
                 type: Array,
                 required: true,
+            },
+            release: {
+                type: Array,
             }
         },
         data () {
