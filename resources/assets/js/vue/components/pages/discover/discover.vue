@@ -246,7 +246,7 @@ export default {
 }
 
 .section-title {
-  padding-top: 5px;
+  padding-top: 8px;
 }
 
 .discover {
