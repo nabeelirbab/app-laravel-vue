@@ -58,7 +58,7 @@
                 required: true,
             },
             release: {
-                type: Array,
+                type: Object,
             }
         },
         data () {
