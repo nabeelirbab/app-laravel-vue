@@ -15,6 +15,6 @@ Route::get('/tracks/{count?}', function ($count = 15) {
 
 Route::get('/track/{track}', function (Track $track) {
 	return $track->load([
-		'preview', 'release', 'release.uploader', 'release.image'
+		'preview', 'release', 'release.uploader', 'release.image', 'release.genres'
 	]);
 });
