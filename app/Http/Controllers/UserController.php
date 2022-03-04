@@ -146,13 +146,15 @@ class UserController extends Controller
             ->paginate(15);
     }
 
-    public function getActivityForUser($userID)
+    public function getActivityForUser($userID, Request $request)
     {
         $user = User::findOrFail($userID);
 
         $feed = new ProfileActivityFeedGenerator($user);
 
-        return $feed->getActionsForProfile();
+        $from = $request->get("from", 0);
+        $to = $request->get("to", 0);
+        return $feed->getActionsForProfile($from, $to);
     }
 
     public function getMerchForUser($userID)

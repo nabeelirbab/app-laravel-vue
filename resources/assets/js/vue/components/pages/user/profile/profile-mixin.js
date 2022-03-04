@@ -42,11 +42,30 @@ export default {
                 this.mutableUser.follower_count -= 1;
             }
         },
-        fetchActivity() {
+        fetchActivity(from = 0, to = 0) {
+            if(from == 0) {
+                this.activity = [];
+            }
             this.loadingActivity = true;
-            this.activity = [];
-            axios.get('/api/user/' + this.user.id + '/activity').then(response => {
-                this.activity = response.data;
+            
+            var extraparam = '';
+            if(from == 0 && to == 0 ) {
+                to = 10;
+            }
+            if(from > 0 || to > 0) {
+                extraparam = '?from='+from+'&to='+to;
+            }
+            axios.get('/api/user/' + this.user.id + '/activity'+extraparam).then(response => {
+                if(from == 0) {
+                    this.activity = response.data;
+                    this.fetchActivity(10, 0);
+                } else {
+                    for(let i = 0; i < response.data.length; i++) {
+                        this.activity.push(response.data[i]);
+                    }
+                    
+                }
+                
             }).finally(() => {
                 this.loadingActivity = false;
             });

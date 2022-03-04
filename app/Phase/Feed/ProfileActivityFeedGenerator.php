@@ -27,15 +27,25 @@ class ProfileActivityFeedGenerator
      *
      * @return mixed
      */
-    public function getActionsForProfile()
+    public function getActionsForProfile($from = 0, $to = 0)
     {
         //\DB::enableQueryLog();
         $postIds = Post::targetedAt($this->user)->get()->pluck("id");
-        $actions = Action::where("created_by", $this->user->id)
+        $actionQuery = Action::where("created_by", $this->user->id)
         ->orWhere( function($query) use ($postIds) {
             $query->whereIn("item_id", $postIds)
             ->where("item_type", 'post');
-        })->orderByDesc('created_at')->get()->toArray();
+        })->orderByDesc('created_at');
+
+        if($from > 0 || $to > 0) {
+            if($from > 0 && $to <= 0) {
+                $to = $actionQuery->count() - $from;
+            }
+            $actions = $actionQuery->skip($from)->take($to)->get()->toArray();
+        } else {
+            $actions = $actionQuery->get()->toArray();
+        }
+        
 
         echo json_encode($actions);
         die();
