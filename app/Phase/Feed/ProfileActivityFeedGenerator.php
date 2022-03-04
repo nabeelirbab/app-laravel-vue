@@ -44,7 +44,7 @@ class ProfileActivityFeedGenerator
         ->orWhere( function($query) use ($postIds) {
             $query->whereIn("item_id", $postIds)
             ->where("item_type", 'post');
-        })->orderByDesc('created_at')->get();
+        })->orderByDesc('created_at')->skip(0)->take(10)->get();
 
         echo json_encode($actions);
         die();
