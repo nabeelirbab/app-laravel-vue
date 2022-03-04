@@ -3,22 +3,22 @@
     <filter-container>
       <genre-filter v-model="filters.genres">
         <div class="section-wrapper">
-          <span class="section-number">1</span>
-          <h2>Choose your interest</h2>
+          <h4 class="section-number">1</h4>
+          <h3 class="section-title">Choose your interest</h3>
         </div>
       </genre-filter>
 
       <class-filter v-model="filters.classes" :single="true">
         <div class="section-wrapper">
-          <span class="section-number">2</span>
-          <h2>Select a Class</h2>
+          <h4 class="section-number">2</h4>
+          <h3 class="section-title">Select a Class</h3>
         </div>
       </class-filter>
 
       <filter-filter v-model="filters.filter" :single="true">
         <div class="section-wrapper">
-          <span class="section-number">3</span>
-          <h2>Select a Filter</h2>
+          <h4 class="section-number">3</h4>
+          <h3 class="section-title">Select a Filter</h3>
         </div>
       </filter-filter>
 
@@ -218,9 +218,9 @@ export default {
   display: flex;
   align-items: flex-start;
   .section-number {
-    margin-right: 10px;
-    min-width: 20px;
-    height: 20px;
+    margin-right: 5px;
+    min-width: 15px;
+    height: 15px;
     padding: 10px;
     border-radius: 50%;
     background-color: #0039ff;
@@ -243,6 +243,10 @@ export default {
   .bpm-values {
     margin: 30px 0;
   }
+}
+
+.section-title {
+  padding-top: 5px;
 }
 
 .discover {
