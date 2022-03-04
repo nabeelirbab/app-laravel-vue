@@ -79,7 +79,7 @@ Route::get('/releases/{count?}', function ($count = 15) {
  * {id} row id of release
  **/
 Route::get('/release/{release}', function (Release $release) {
-    $returnRelease = $release->load('uploader', 'image')->load([
+    $returnRelease = $release->load('uploader', 'image', 'genres')->load([
         'tracks' => function ($query) {
             return $query->where('status', 'approved');
         }, 'tracks.artist', 'tracks.asset.files'
