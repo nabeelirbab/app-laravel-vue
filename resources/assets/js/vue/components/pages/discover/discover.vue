@@ -23,7 +23,7 @@
       </filter-filter>
 
       <div class="bpm-filter">
-        <h2>BPM</h2>
+        <h3>BPM</h3>
         <p class="bpm-values">{{ sliderValue[0] + " > " + sliderValue[1] }}</p>
         <div :style="noFiltersSelected ? 'opacity:0.5' : 'opacity:1;'">
           <vue-slider
