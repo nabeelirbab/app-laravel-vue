@@ -38,16 +38,14 @@ class ProfileActivityFeedGenerator
             ->sortByDesc('created_at')
             ->values();*/
 
-        \DB::enableQueryLog();
 
         $postIds = Post::targetedAt($this->user)->get()->pluck("id");
         $actions = Action::where("created_by", $this->user->id)
         ->orWhere( function($query) use ($postIds) {
             $query->whereIn("item_id", $postIds)
             ->where("item_type", 'post');
-        })->orderByDesc('created_at')->get()->toArray();
+        })->orderByDesc('created_at')->get();
 
-        dd(\DB::getQueryLog());
         echo json_encode($actions);
         die();
 
