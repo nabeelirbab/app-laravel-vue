@@ -524,12 +524,12 @@ export default {
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/subscribe').then(response => {
           this.loading = false
           if (response.data.success) {
-            this.localSubscription = response.data.subscription
             Vue.notify({
               group: 'main',
               type: 'success',
               title: 'Subscription successful.',
             })
+            location.reload();
           } else {
 
             Vue.notify({
