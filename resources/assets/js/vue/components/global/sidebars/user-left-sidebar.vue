@@ -34,9 +34,9 @@
             ></share-button>
           </span>
 
-          <a target="_blank" :href="`mailto:${mutableUser.email}`">
+          <router-link :to="{ path: '/user/messages/'+user.path}">
             <i class="fa fa-envelope"></i>
-          </a>
+          </router-link>
         </div>
       </div>
       <div class="sidebar-group-content user-bio">

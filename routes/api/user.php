@@ -18,6 +18,12 @@ Route::prefix('user')->group(function () {
             ->get();
     });
 
+    Route::get('search-by-path', function (Request $request) {
+        return User::select('id', 'name')
+            ->where('path', 'LIKE', $request->get("id"))
+            ->first();
+    });
+
     Route::post('track', 'TrackPlayController');
 
     Route::get('follow/{targetid}', 'UserController@follow')->middleware('auth');

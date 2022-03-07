@@ -34,6 +34,7 @@
 <script>
     import Avatar from 'global/avatar';
     export default {
+        props: ["userid"],
         data () {
             return {
                 searchTerm: '',
@@ -42,6 +43,17 @@
                 showList: false,
                 arrowCounter: -1,
             }
+        },
+        created: function () {
+            if(this.userid) {
+                axios.get('/api/user/search-by-path?id=' + this.userid).then((response) => {
+                    this.selectedUser = response.data;
+                    this.showList = false;
+                    this.searchTerm = '';
+                    this.$emit('selected', this.selectedUser);
+                })
+            }
+            
         },
         methods: {
             input() {
