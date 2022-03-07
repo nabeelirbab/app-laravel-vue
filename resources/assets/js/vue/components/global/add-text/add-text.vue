@@ -13,6 +13,7 @@
         <div class="action-name">
           <recipient-select
             ref="recipientSelector"
+            :userid="userid"
             v-if="type === 'newMessage'"
             @selected="setReceiver($event)"
             @unselected="clearReceiver($event)"
@@ -113,6 +114,9 @@ export default {
       type: Object,
       required: false,
       //default: function() { return {} },
+    },
+    userid : {
+      type: String
     },
     thread: {
       // Required only if type is 'message'

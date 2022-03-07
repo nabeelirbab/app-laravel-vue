@@ -172,6 +172,11 @@ routes.push(
         }
     },
     {
+        name: 'PageUserMessagesProfile',
+        path: '/user/messages/:userid',
+        component: PageUserMessages
+    },
+    {
         name: 'emailVerified',
         path: '/email-verified',
         component: PageEmailVerified
