@@ -27,7 +27,7 @@
           >
             Sorry, you have reached your upload limit, you will be able to upload again on {{nextUploadDate}} or upgrade to PRO for unlimited uploads
             <br/><br/>
-            <ph-button size="medium" color="blue" width="100%"
+            <ph-button size="medium" color="blue" width="100%" :loading="loading"
           @click.native="upgradeToPro()"
         >Upgrade</ph-button> 
           </p>
