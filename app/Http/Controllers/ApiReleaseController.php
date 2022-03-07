@@ -28,8 +28,9 @@ class ApiReleaseController extends Controller
             return response('Your account is currently frozen, so can not uploaded any new content.', 403);
         }
 
-        if ($user->tracksCountThisMonth() > config('app.free_release_limit') && !$user->can('create unlimited releases')) {
-            return response('You have already uploaded your track limit for this month', 422);
+        if ($user->tracksCountThisMonth() > config('app.free_release_limit')
+        && !$user->hasRole('pro') && !$user->hasRole('admin')) {
+            return response('Sorry, you have reached your upload limit, you will be able to upload again on '.date("M 1,Y", strtotime("next month")).' or upgrade to PRO for unlimited uploads', 422);
         }
 
         $data = $request->validate([
