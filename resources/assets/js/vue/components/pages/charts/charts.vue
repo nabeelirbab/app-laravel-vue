@@ -15,7 +15,7 @@
 						<div class="chart-result" v-for="(album, index) in results.album" :key="index">
 							<release-tile :release="album" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.album || !results.album.length">
+						<div class="not-found-div" v-if="!results.album || !results.album.length">
 							No Albums Found
 						</div>
 					</div>
@@ -29,7 +29,7 @@
 						<div class="chart-result" v-for="(single, index) in results.single" :key="index">
 							<release-tile :release="single" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.single || !results.single.length">
+						<div class="not-found-div" v-if="!results.single || !results.single.length">
 							No Singles Found
 						</div>
 					</div>
@@ -43,7 +43,7 @@
 						<div class="chart-result" v-for="(ep, index) in results.ep">
 							<release-tile :release="ep" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.ep || !results.ep.length">
+						<div class="not-found-div" v-if="!results.ep || !results.ep.length">
 							No EP's Found
 						</div>
 					</div>
@@ -57,7 +57,7 @@
 						<div class="chart-result" v-for="(compilation, index) in results.compilation" :key="index">
 							<release-tile :release="compilation" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.compilation || !results.compilation.length">
+						<div class="not-found-div" v-if="!results.compilation || !results.compilation.length">
 							No Compilations Found
 						</div>
 					</div>
@@ -71,7 +71,7 @@
 						<div class="chart-result" v-for="(sample, index) in results.sample" :key="index">
 							<release-tile :release="sample" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.sample || !results.sample.length">
+						<div class="not-found-div" v-if="!results.sample || !results.sample.length">
 							No Sample Packs Found
 						</div>
 					</div>
@@ -173,7 +173,7 @@ export default {
 		padding: 0 20px;
 
 		.charts-section {
-			margin: 30px 0;
+			margin: 40px 0;
 			.header {
 				margin-bottom: 20px;
 				align-items: flex-start;
@@ -194,6 +194,11 @@ export default {
 				grid-gap: 10px;
 			}
 		}
+	}
+
+	.not-found-div {
+		width: 800px;
+		text-align: center;
 	}
 }
 </style>
