@@ -73,32 +73,38 @@ class SearchController extends Controller
         
 
         $filter = new Filter($releases);
+        $trackfilter = new Filter($tracks);
 
         if (collect($validated['genres'])->isNotEmpty()) {
             foreach ($validated['genres'] as $genre) {
-                $filter->addGenreFilter(Genre::find($genre['id']));
+                $genreDetails = Genre::find($genre['id']);
+                $filter->addGenreFilter($genreDetails);
+                $trackfilter->addGenreFilter($genreDetails);
             }
         }
 
         if (collect($validated['classes'])->isNotEmpty()) {
             foreach ($validated['classes'] as $class) {
                 $filter->addClassFilter($class['val']);
+                $trackfilter->addClassFilter($class['val']);
             }
         }
 
         if (collect($validated['bpm'])->isNotEmpty()) {
             $filter->addBpmFilter($validated['bpm'][0], $validated['bpm'][1]);
+            $trackfilter->addBpmFilter($validated['bpm'][0], $validated['bpm'][1]);
         }
 
         if (collect($validated['keys'])->isNotEmpty()) {
             $filter->addKeyFilter($validated['keys']);
+            $trackfilter->addKeyFilter($validated['keys']);
         }
 
         $data = collect();
 
         if ($validated['term']) $data = $data->merge($users);
 
-        $data = $data->merge($tracks)->merge($filter->get());
+        $data = $data->merge($trackfilter->get())->merge($filter->get());
 
         $chunked = $data->chunk(20);
         if (isset($chunked[$page - 1])) {
