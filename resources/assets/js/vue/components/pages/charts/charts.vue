@@ -132,8 +132,15 @@ export default {
 	methods: {
 		fetchCharts() {
 			this.loadedAll = false;
+			this.filters.newsearch = 1;
 			axios.post(`/api/charts/${this.amount}`, this.filters).then((response) => {
-				this.results = response.data;
+				if(response.data.filters) {
+					if(JSON.stringify(response.data.filters) === JSON.stringify(this.filters)) {
+						this.results = response.data.returndata;
+					}
+				}else{
+					this.results = response.data;
+				}
 				this.loadedAll = true;
 			});
 		},
