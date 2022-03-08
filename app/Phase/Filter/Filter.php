@@ -71,7 +71,8 @@ class Filter
     public function addGenreFilter(Genre $filterGenre)
     {
         $this->items = $this->items->filter(function ($item) use ($filterGenre) {
-            foreach ($item->genres as $genre) {
+            $genreLists = (isset($item->release->genres)) ? $item->release->genres : $item->genres;
+            foreach ($genreLists as $genre) {
                 if ($genre->id == $filterGenre->id) {
                     return true;
                 }
