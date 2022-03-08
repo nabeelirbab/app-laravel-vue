@@ -39,9 +39,7 @@ class SearchController extends Controller
         $users = User::whereHas('roles', function ($q) use ($validated) {
             $q->whereIn('roles.name', ['pro', 'artist', 'admin', 'standard'])
                 ->where(function ($q) use ($validated) {
-                    $q->where('users.name', 'like', '%' . $validated['term'] . '%')
-                        ->orWhere('users.first_name', 'like', '%' . $validated['term'] . '%')
-                        ->orWhere('users.last_name', 'like', '%' . $validated['term'] . '%');
+                    $q->where('users.name', 'like', '%' . $validated['term'] . '%');
                 });
         })->get();
 
