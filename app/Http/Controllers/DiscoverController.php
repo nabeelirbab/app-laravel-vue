@@ -78,11 +78,12 @@ class DiscoverController extends Controller
 
         return request()->has('newsearch') ?
         ['returndata' => $release, 'filters' => [
-            'genres' => request("genres"),
-            'bpm' => request('bpm'),
             'classes' => request('classes'),
+            'genres' => request("genres"),
             'filter' => request('filter'),
-            'keys' => request("keys")
+            'bpm' => request('bpm'),
+            'keys' => request("keys"),
+            'newsearch' => 1
         ]]
          : $release;
     }
