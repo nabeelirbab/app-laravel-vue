@@ -25,7 +25,7 @@
               !isPro
             "
           >
-            Sorry, you have reached your upload limit, you will be able to upload again on {{nextUploadDate}} or upgrade to PRO for unlimited uploads
+            Sorry, you have reached your upload limit, you will be able to upload again on {{nextUploadDate}} <br/> or upgrade to PRO for unlimited uploads
             <br/><br/>
             <ph-button size="medium" color="blue" width="100%" :loading="loading"
           @click.native="upgradeToPro()"
@@ -730,5 +730,6 @@ h1 {
 
 .upload-error {
   padding: 10px;
+  text-align: center;
 }
 </style>
