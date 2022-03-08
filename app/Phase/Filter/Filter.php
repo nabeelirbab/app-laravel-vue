@@ -92,7 +92,8 @@ class Filter
     public function addClassFilter($filterClass)
     {
         $this->items = $this->items->filter(function ($item) use ($filterClass) {
-            if ($item->class == Str::singular($filterClass)) { // Allow pluralised e.g. albums and album will both work
+            $className = isset($item->release->class) ? $item->release->class : $item->class;
+            if ($className == Str::singular($filterClass)) { // Allow pluralised e.g. albums and album will both work
                 return true;
             }
             return false;
@@ -110,22 +111,18 @@ class Filter
      */
     public function addKeyFilter($filterKey)
     {
-        // $this->items = $this->items->filter(function($item) use ($filterKey) {
-        //     if($item->key == $filterKey) {
-        //         return true;
-        //     }
-
-        //     return true;
-        // });
-
-        // $tracks = Track::all();
-        $filterKey = collect($filterKey)->flatten();
-
-        if (count($filterKey) > 0) {
-            $this->items = $this->items->whereIn('key', $filterKey);
+        
+        $filterKey = collect($filterKey);
+        $keyValues = [];
+        foreach($filterKey as $key) {
+            $keyValues[] = $key['val'];
         }
-
-
+        $this->items = $this->items->filter(function ($item) use ($keyValues) {
+           if(in_array($item->key, $keyValues)) {
+                return true;
+            } 
+            return false;
+        })->values();
         return $this;
     }
 
@@ -140,11 +137,18 @@ class Filter
     {
 
         $this->items = $this->items->filter(function ($item) use ($minbpm, $maxbpm) {
-            foreach ($item->tracks as $track) {
-                if ($track->bpm >= $minbpm && $track->bpm <= $maxbpm) {
+            if(isset($item->bpm)) {
+                if ($item->bpm >= $minbpm && $item->bpm <= $maxbpm) {
                     return true;
                 }
+            } else {
+                foreach ($item->tracks as $track) {
+                    if ($track->bpm >= $minbpm && $track->bpm <= $maxbpm) {
+                        return true;
+                    }
+                }
             }
+            
             return false;
         });
         return $this;
