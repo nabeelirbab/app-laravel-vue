@@ -18,7 +18,7 @@
           {{ mutableUser.releases_count ? mutableUser.releases_count : 0 }}
         </span>
       </div>
-      <div class="sidebar-group-subtitle" v-if="!isMe">
+      <div class="sidebar-group-subtitle" v-if="!isMe && isLogin">
         <div style="display: flex; align-items: center">
           <follow-action
             :user="mutableUser"
@@ -107,6 +107,9 @@ export default {
     isMe: function () {
       return this.user.id === this.$store.state.app.user.id;
     },
+    isLogin: function() {
+      return this.$store.state.app.user.loggedin;
+    }
   },
   created() {
     this.fetchEvents();
