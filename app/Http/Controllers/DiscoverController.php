@@ -76,7 +76,16 @@ class DiscoverController extends Controller
             ->orderBy($column, $direction)
             ->paginate(15);
 
-        return $release;
+        return request()->has('newsearch') ?
+        ['returndata' => $release, 'filters' => [
+            'classes' => request('classes'),
+            'genres' => request("genres"),
+            'filter' => request('filter'),
+            'bpm' => request('bpm'),
+            'keys' => request("keys"),
+            'newsearch' => 1
+        ]]
+         : $release;
     }
 
     private function getFilterOrderBy($key = '')

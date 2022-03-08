@@ -167,12 +167,22 @@ export default {
       this.results = null;
       this.loading = true;
       this.filters.bpm = this.sliderValue;
+      this.filters.newsearch = 1;
 
       axios
         .post("/api/discover", this.filters)
         .then((response) => {
-          this.results = response.data.data;
-          this.nextPageUrl = response.data.next_page_url;
+          if(typeof(response.data.filters) != typeof(undefined)) {
+            if (JSON.stringify(response.data.filters) === JSON.stringify(this.filters)) {
+              this.results = response.data.returndata.data;
+              this.nextPageUrl = response.data.returndata.next_page_url;
+            }
+            
+          } else {
+            this.results = response.data.data;
+            this.nextPageUrl = response.data.next_page_url;
+          }
+          
           this.loading = false;
         })
         .catch((error) => {

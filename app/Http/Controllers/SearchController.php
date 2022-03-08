@@ -102,7 +102,15 @@ class SearchController extends Controller
 
         $chunked = $data->chunk(20);
         if (isset($chunked[$page - 1])) {
-            return ($request->get('newsearch') == 1) ? ['term' => !empty($validated['term']) ? $validated['term'] : '', 'data' => $chunked[$page - 1]] : $chunked[$page - 1];
+            return ($request->get('newsearch') == 1) ? [
+                'term' => !empty($validated['term']) ? $validated['term'] : '',
+                'genres' => !empty($validated['genres']) ? $validated['genres'] : [],
+                'classes' => !empty($validated['classes']) ? $validated['classes'] : [],
+                'bpm' => !empty($validated['bpm']) ? $validated['bpm'] : [],
+                'keys' => !empty($validated['keys']) ? $validated['keys'] : [],
+                'data' => $chunked[$page - 1]
+                ]
+            : $chunked[$page - 1];
         } else {
             return [];
         }
