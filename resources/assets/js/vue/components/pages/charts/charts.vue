@@ -36,7 +36,7 @@
 				</div>
 				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'ep')">
 					<div class="header flex justify-between">
-						<h2>Top Top EPs</h2>
+						<h2>Top EPs/LPs</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('ep')">See more >></a>
 					</div>
 					<div class="chart-row">
