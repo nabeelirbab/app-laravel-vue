@@ -24,7 +24,7 @@
                 <td  @click="trackClicked($event, track)">
                    <span v-if="track.format" >{{ track.format }} </span>
                    <span v-if="!track.format" >WAV, MP3</span>
-                   (320kbps)
+                   
                 </td>
                 <td @click="trackClicked($event, track)">
                     <span v-for="(genre, index) in track.genres" :key="index">{{ genre.name }}<span v-if="track.genres[index + 1]">, </span></span>
