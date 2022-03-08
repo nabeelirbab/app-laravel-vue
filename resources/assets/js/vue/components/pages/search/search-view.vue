@@ -139,9 +139,6 @@ export default {
             var validKeys = this.checkTwoArrays(this.filters.keys, response.data.keys);
             var validBpm = this.checkTwoArrays(this.filters.bpm, response.data.bpm);
 
-            console.log("Genres :: "+validGenres+" && classes :: "+validClasses
-            +" && keys :: "+validKeys+" && bpm :: "+validBpm);
-
             if(response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm)
             {
               this.loading = false;
