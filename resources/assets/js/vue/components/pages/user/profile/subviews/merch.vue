@@ -14,7 +14,7 @@
         :item="merch"
         :key="merch.id" />
     </div>
-    <div v-else class="not-found">
+    <div v-if="!merches.length && !loadingMerch" class="not-found">
       Merchandise not found
     </div>
   </div>

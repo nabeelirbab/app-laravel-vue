@@ -14,7 +14,7 @@
                 :item="event"
                 :key="event.id" />
         </div>
-        <div v-else class="not-found">
+        <div v-if="!events.length && !loadingEvents" class="not-found">
             Events not found
         </div>
     </div>

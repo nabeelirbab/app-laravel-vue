@@ -11,7 +11,7 @@
     <div v-if="videos.length">
       <item v-for="video in videos" :item="video" :key="video.id" />
     </div>
-    <div v-else class="not-found">
+    <div v-if="!videos.length && !loadingVideos" class="not-found">
       Videos not found
     </div>
     <div>
