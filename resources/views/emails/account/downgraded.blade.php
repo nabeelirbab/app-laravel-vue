@@ -20,7 +20,6 @@
     <li>Status: <span style="color:#a1eee1;font-weight:bold;">Approved</span></li>
 </ul>
 
-<h5 style="color:#666666;padding-bottom:20px;margin-bottom:20px">We are in the process of verifying your profile and will update you once this is finished, until then you can access Phase as a standard user.</h5>
 
 @include('emails.partials.artist-icons')
 

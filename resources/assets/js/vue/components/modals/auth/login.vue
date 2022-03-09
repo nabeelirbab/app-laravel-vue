@@ -48,14 +48,15 @@
                 <div class="modal-content">
                     <div v-if="deActivatedUser">
                         <p class="centered-text" style="margin: 1em 0;">
-                            Your account is currently deactivated, click reactivate and try to login again.
+                            Your account is currently deactivated, Please contact admin.
                         </p>
 
+                        <!--
                         <div class="centered-text">
                             <ph-button type="button" size="medium" :loading="loading" @click.native="reactivate">
                                 Reactivate Account
                             </ph-button>
-                        </div>
+                        </div> -->
                     </div>
                     <div v-if="bannedUser">
                         <p class="centered-text" style="margin: 1em 0;">
@@ -154,7 +155,12 @@
 
               location.reload()
             } else {
-              if (response.data.deactivated) {
+              if(response.data.message) {
+                this.bag.add({
+                  field: 'auth',
+                  msg: response.data.message,
+                })
+              } else if (response.data.deactivated) {
                 this.deActivatedUser = true
               } else if (response.data.banned) {
                 this.bannedUser = true
