@@ -1,5 +1,5 @@
 <template>
-    <modal name="modal-upload-video" :maxWidth="600" height="auto" @before-close="maybeReset" scrollable adaptive>
+    <modal name="modal-upload-video" :maxWidth="600" height="auto" @before-close="maybeReset" scrollable adaptive @before-open="beforeOpen">
         <div class="modal modal-upload-video">
             <div class="modal-header">
                 <close-icon class="float-right" @click.native="close"></close-icon>
@@ -83,7 +83,6 @@
     import Uploader from './uploader';
 
     export default {
-        props: ['user'],
         data () {
             return {
                 resumable: null,
@@ -94,7 +93,8 @@
                 details: {
                     title: '',
                     description: '',
-                }
+                },
+                user: null
             }
         },
         computed: {
@@ -112,6 +112,11 @@
 
         },
         methods: {
+            beforeOpen({ params }) {
+                if(params.user) {
+                    this.user = params.user;
+                }
+            },
             createVideo() {
                 var data = {};
                 if(this.user && this.user.id) {
