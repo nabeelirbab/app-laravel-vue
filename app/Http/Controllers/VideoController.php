@@ -81,15 +81,15 @@ class VideoController extends Controller
             'description' => 'required|string'
         ]);
         $video = Video::findOrFail($videoID);
-        if ($video->user->id == $request->user()->id) {
+        //if ($video->user->id == $request->user()->id) {
             $video->fill([
                 'title' => $data['title'],
                 'description' => $data['description'],
             ])->save();
             return $video;
-        } else {
+        /*} else {
             abort(403);
-        }
+        }*/
     }
 
     /**
