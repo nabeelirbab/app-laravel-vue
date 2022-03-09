@@ -31,7 +31,7 @@ class ProfileActivityFeedGenerator
     public function getActionsForProfile()
     {
         
-        $userActions = $this->user->actions
+        $userActions = Action::where("created_by", $this->user->id)
         ->whereNotIn("event_type", $this->invalidTypes)->get();
 
         return $userActions
