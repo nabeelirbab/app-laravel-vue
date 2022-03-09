@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ph-button @click.native="$modal.show('modal-upload-video');" size="medium">Add Video</ph-button>
+    <ph-button v-if="isPro" @click.native="$modal.show('modal-upload-video');" size="medium">Add Video</ph-button>
     <spinner
       style="margin: 3em auto;"
       :animation-duration="1000"
@@ -10,6 +10,9 @@
     />
     <div v-if="videos.length">
       <item v-for="video in videos" :item="video" :key="video.id" />
+    </div>
+    <div v-else class="not-found">
+      Videos not found
     </div>
     <div>
         
@@ -28,6 +31,11 @@ export default {
       loadingVideos: false,
       videos: [],
     };
+  },
+  computed: {
+    isPro: function() {
+      return (this.user.account_type === 'pro' || this.user.account_type === 'admin')
+    }
   },
   created: function () {
     this.fetchVideos();
@@ -54,4 +62,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .not-found {
+    text-align: center;
+    margin-top: 10px;
+  }
 </style>
