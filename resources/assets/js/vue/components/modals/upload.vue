@@ -7,31 +7,29 @@
       </div>
 
       <div class="modal-content">
-        <div v-if="mode !== 'upload'" class="modal-content__header">
-          <h1 class="centered-text modal-content__heading">Upload a new release</h1>
-          <p class="centered-text upload-info">You can upload in either WAV or Mp3</p>
+        <div v-if="isValidUpload" >
+          <div v-if="mode !== 'upload'" class="modal-content__header">
+            <h1 class="centered-text modal-content__heading">Upload a new release</h1>
+            <p class="centered-text upload-info">You can upload in either WAV or Mp3</p>
+          </div>
+
+          <upload-progress
+            :upload="upload"
+            v-else
+          />
         </div>
 
-        <upload-progress
-          :upload="upload"
-          v-else
-        />
-
-        <div class="upload-main" v-if="mode !== 'upload'">
-          <p
-            class="upload-error"
-            v-if="
-              app.user.tracks_count_this_month >= free_release_limit &&
-              !isPro
-            "
-          >
+        <div class="upload-error" v-if="!isValidUpload">
             Sorry, you have reached your upload limit, you will be able to upload again on {{nextUploadDate}} <br/><br/> or upgrade to PRO for unlimited uploads
             <br/><br/>
             <ph-button size="medium" color="blue" width="100%" :loading="loading"
-          @click.native="upgradeToPro()"
-        >Upgrade</ph-button> 
-          </p>
-          <div class="upload-main" v-else>
+            @click.native="upgradeToPro()"
+            >Upgrade</ph-button> 
+        </div>
+
+        <div class="upload-main" v-if="mode !== 'upload' && isValidUpload">
+          
+          <div class="upload-main" >
             <div class="upload-nav" v-if="cover.class !== 'single'">
               <div class="draggable-container">
                 <div
@@ -183,6 +181,9 @@ export default {
       var date = new Date();
       var firstDay = new Date(date.getFullYear(), date.getMonth()+1, 1);
       return firstDay.toLocaleString('en-us', { month: 'short' })+" 1,"+firstDay.getFullYear();
+    },
+    isValidUpload() {
+      return (this.app.user.tracks_count_this_month < this.free_release_limit) || this.isPro;
     }
   },
   watch: {
@@ -729,8 +730,9 @@ h1 {
 }
 
 .upload-error {
-  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
   text-align: center;
-  padding-left: 20%;
+  margin-bottom: 40px;
 }
 </style>
