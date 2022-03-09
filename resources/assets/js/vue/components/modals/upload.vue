@@ -7,17 +7,15 @@
       </div>
 
       <div class="modal-content">
-        <div v-if="isValidUpload" >
-          <div v-if="mode !== 'upload'" class="modal-content__header">
-            <h1 class="centered-text modal-content__heading">Upload a new release</h1>
-            <p class="centered-text upload-info">You can upload in either WAV or Mp3</p>
-          </div>
+        <div v-if="mode !== 'upload'" class="modal-content__header">
+          <h1 class="centered-text modal-content__heading">Upload a new release</h1>
+          <p class="centered-text upload-info">You can upload in either WAV or Mp3</p>
+        </div>
 
-          <upload-progress
+        <upload-progress
             :upload="upload"
             v-else
           />
-        </div>
 
         <div class="upload-error" v-if="!isValidUpload">
             Sorry, you have reached your upload limit, you will be able to upload again on {{nextUploadDate}} <br/><br/> or upgrade to PRO for unlimited uploads
@@ -730,9 +728,10 @@ h1 {
 }
 
 .upload-error {
-  margin-top: 20px;
+  margin-top: 10px;
   width: 100%;
   text-align: center;
   margin-bottom: 40px;
+  padding: 5px
 }
 </style>
