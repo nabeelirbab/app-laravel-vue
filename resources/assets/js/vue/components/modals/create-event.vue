@@ -78,7 +78,6 @@
     import { ModalEvents } from '../../event-bus'
 
     export default {
-        props: ['user'],
         data () {
             return {
                 data: {
@@ -87,6 +86,7 @@
                     location: '',
                     url: '',
                     date: '',
+                    user: null
                 },
                 submitting: false,
                 datePicker: {
@@ -105,8 +105,10 @@
 
         },
         methods: {
-            beforeOpen (event) {
-
+            beforeOpen ({ params }) {
+                if(params.user) {
+                    this.user = params.user;
+                }
             },
             submit() {
                 this.$validator.validateAll().then(passes => {

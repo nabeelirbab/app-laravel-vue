@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ph-button v-if="isPro" @click.native="$modal.show('modal-create-merch', {user: user})" size="medium">
+    <ph-button v-if="isPro" @click.native="showMerchCreateModal" size="medium">
       Add Merch
     </ph-button>
     <spinner style="margin: 3em auto;"
@@ -49,6 +49,9 @@ export default {
     });
   },
   methods: {
+    showMerchCreateModal() {
+       this.$modal.show('modal-create-merch', { user: this.user });
+    },
     fetchMerch() {
       this.loadingMerch = true;
       axios.get('/api/user/' + this.user.id + '/merch').then(response => {

@@ -69,7 +69,6 @@ import ImageSelect from "global/image-select";
 import { UserEvents } from "events";
 
 export default {
-	props: ['user'],
 	data() {
 		return {
 			data: {
@@ -83,6 +82,7 @@ export default {
 					},
 				],
 				validationErrors: "",
+				user: null
 			},
 			shopOptions: [
 				{
@@ -112,7 +112,11 @@ export default {
 	created: function() {},
 	mounted: function() {},
 	methods: {
-		beforeOpen(event) {},
+		beforeOpen({ params }) {
+			if(params.user) {
+                this.user = params.user;
+            }
+		},
 		submit() {
 			this.$validator.validateAll().then((passes) => {
 				if (!passes) return;

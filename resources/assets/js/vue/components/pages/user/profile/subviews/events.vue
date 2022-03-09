@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ph-button v-if="isPro" @click.native="$modal.show('modal-create-event', {user: user})" size="medium">
+        <ph-button v-if="isPro" @click.native="showEventCreateModal" size="medium">
             Add Event
         </ph-button>
         <spinner style="margin: 3em auto;"
@@ -47,6 +47,9 @@
             ModalEvents.$on('event-created', this.fetchEvents)
         },
         methods: {
+            showEventCreateModal() {
+                this.$modal.show('modal-create-event', { user: this.user });
+            },
             fetchEvents() {
                 this.loadingEvents = true;
                 axios.get('/api/user/' + this.user.id + '/events').then(response => {
