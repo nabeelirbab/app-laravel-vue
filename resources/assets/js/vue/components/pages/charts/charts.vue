@@ -212,8 +212,9 @@ export default {
 	}
 
 	.not-found-div {
-		width: 800px;
-		text-align: center;
+		position: fixed;
+    	width: 60%;
+    	text-align: center;
 	}
 }
 </style>
