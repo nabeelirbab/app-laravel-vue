@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ph-button @click.native="$modal.show('modal-create-merch')" size="medium">
+    <ph-button v-if="isPro" @click.native="$modal.show('modal-create-merch')" size="medium">
       Add Merch
     </ph-button>
     <spinner style="margin: 3em auto;"
@@ -9,9 +9,14 @@
       color="black"
       v-show="loadingMerch"
     />
-    <item v-for="merch in merches"
-      :item="merch"
-      :key="merch.id" />
+    <div v-if="merches.length">
+      <item v-for="merch in merches"
+        :item="merch"
+        :key="merch.id" />
+    </div>
+    <div v-else class="not-found">
+      Merchandise not found
+    </div>
   </div>
 </template>
 
@@ -26,6 +31,11 @@ export default {
     return {
       loadingMerch: false,
       merches: [],
+    }
+  },
+  computed: {
+    isPro: function() {
+      return (this.user.account_type === 'pro' || this.user.account_type === 'admin')
     }
   },
   created: function() {
@@ -53,3 +63,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .not-found {
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
