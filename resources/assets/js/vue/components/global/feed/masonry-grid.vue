@@ -13,17 +13,17 @@
               <input type="radio" v-model="selectedCategory" value="track">Tracks
             </label>
           </li>
-          <li v-if="$can('upload videos')">
+          <li 
             <label v-bind:class="[selectedCategory === 'video' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="video">Videos
             </label>
           </li>
-          <li v-if="$can('add events')">
+          <li >
             <label v-bind:class="[selectedCategory === 'event' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="event">Events
             </label>
           </li>
-          <li v-if="$can('add merch')">
+          <li >
             <label v-bind:class="[selectedCategory === 'merch' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="merch">Merch
             </label>
