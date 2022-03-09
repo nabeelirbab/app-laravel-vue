@@ -78,6 +78,7 @@
     import { ModalEvents } from '../../event-bus'
 
     export default {
+        props: ['user'],
         data () {
             return {
                 data: {
@@ -96,6 +97,7 @@
                 }
             }
         },
+
         created: function() {
 
         },
@@ -115,6 +117,9 @@
                     data.append('location', this.data.location);
                     data.append('url', this.data.url);
                     data.append('date', this.data.date);
+                    if(this.user && this.user.id) {
+                        data.append("userid", this.user.id);
+                    }
 
                     this.submitting = true;
                     axios.post('/api/user/events/add', data).then(response => {

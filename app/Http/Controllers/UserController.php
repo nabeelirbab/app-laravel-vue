@@ -227,7 +227,7 @@ class UserController extends Controller
             ->storeThumb();
 
         $event = Event::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
             'image_id' => $manager->asset->id,
             'name' => $data['name'],
             'location' => $data['location'],

@@ -27,7 +27,7 @@ class VideoController extends Controller
     public function createVideo(Request $request)
     {
         $video = Video::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
         ]);
         $video->refresh();
         session()->put('uploading_video_id', $video->id);

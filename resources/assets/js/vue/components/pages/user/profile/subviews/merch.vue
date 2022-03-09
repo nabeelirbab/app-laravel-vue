@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ph-button v-if="isPro" @click.native="$modal.show('modal-create-merch')" size="medium">
+    <ph-button v-if="isPro" @click.native="$modal.show('modal-create-merch', {user: user})" size="medium">
       Add Merch
     </ph-button>
     <spinner style="margin: 3em auto;"
