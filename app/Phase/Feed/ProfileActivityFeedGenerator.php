@@ -16,6 +16,7 @@ use App\Action;
 class ProfileActivityFeedGenerator
 {
     protected $user;
+    private $invalidTypes = ['user_placed_order', 'user_submitted_report'];
 
     public function __construct(User $user)
     {
@@ -27,40 +28,16 @@ class ProfileActivityFeedGenerator
      *
      * @return mixed
      */
-    public function getActionsForProfile($from = 0, $to = 0)
+    public function getActionsForProfile()
     {
-
-
-        /*$userActions = $this->user->actions;
+        
+        $userActions = Action::where("created_by", $this->user->id)
+        ->whereNotIn("event_type", $this->invalidTypes)->get();
 
         return $userActions
             ->merge($this->getActionsForPostsTargetedAtUser())
             ->sortByDesc('created_at')
-            ->values();*/
-
-
-        $postIds = Post::targetedAt($this->user)->get()->pluck("id");
-        $actionQuery = Action::where("created_by", $this->user->id)
-        ->orWhere( function($query) use ($postIds) {
-            $query->whereIn("item_id", $postIds)
-            ->where("item_type", 'post');
-        })->orderByDesc('created_at');
-
-        if($from > 0 || $to > 0) {
-            if($from > 0 && $to <= 0) {
-                $to = $actionQuery->count() - $from;
-            }
-            $actions = $actionQuery->skip($from)->take($to)->get()->toArray();
-        } else {
-            $actions = $actionQuery->get()->toArray();
-        }
-        
-
-        echo json_encode($actions);
-        die();
-
-        //
-        
+            ->values();
         
     }
 
@@ -71,18 +48,18 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForPostsTargetedAtUser()
     {
-        $posts = Post::targetedAt($this->user)
-            ->withCount('comments', 'likes', 'shares')
-            ->get();
+        $postIds = Post::targetedAt($this->user)
+            ->pluck('id')->toArray();
 
-        $postsActions = collect();
-        foreach ($posts as $post) {
-            $postAction = Action::where('item_type', 'post')
-                ->where('item_id', $post->id)
-                ->first();
+        //$postsActions = collect();
+        $postsActions = Action::where('item_type', 'post')
+                ->whereIn('item_id', $postIds)
+                ->get();
 
+        /*foreach($postActionLists as $postAction) {
             $postsActions->push($postAction);
-        }
+        }*/
+
         return $postsActions;
     }
 }
