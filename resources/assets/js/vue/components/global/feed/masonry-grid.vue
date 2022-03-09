@@ -13,7 +13,7 @@
               <input type="radio" v-model="selectedCategory" value="track">Tracks
             </label>
           </li>
-          <li 
+          <li >
             <label v-bind:class="[selectedCategory === 'video' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="video">Videos
             </label>
