@@ -212,9 +212,16 @@ export default {
 	}
 
 	.not-found-div {
-		position: fixed;
-    	width: 60%;
+		width: 800px;
     	text-align: center;
+    	
+		@media (max-width: 750px) {
+			width: 600px;
+		}
+
+		@media (max-width: 400px) {
+			width: 300px;
+		}
 	}
 }
 </style>
