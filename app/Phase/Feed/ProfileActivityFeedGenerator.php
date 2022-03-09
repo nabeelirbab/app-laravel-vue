@@ -16,6 +16,7 @@ use App\Action;
 class ProfileActivityFeedGenerator
 {
     protected $user;
+    private $invalidTypes = ['user_placed_order', 'user_submitted_report'];
 
     public function __construct(User $user)
     {
@@ -29,7 +30,9 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForProfile()
     {
-        $userActions = $this->user->actions;
+        
+        $userActions = $this->user->actions
+        ->whereNotIn("event_type", $this->invalidTypes)->get();
 
         return $userActions
             ->merge($this->getActionsForPostsTargetedAtUser())
@@ -44,18 +47,18 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForPostsTargetedAtUser()
     {
-        $posts = Post::targetedAt($this->user)
-            ->withCount('comments', 'likes', 'shares')
-            ->get();
+        $postIds = Post::targetedAt($this->user)
+            ->pluck('id')->toArray();
 
-        $postsActions = collect();
-        foreach ($posts as $post) {
-            $postAction = Action::where('item_type', 'post')
-                ->where('item_id', $post->id)
-                ->first();
+        //$postsActions = collect();
+        $postsActions = Action::where('item_type', 'post')
+                ->whereIn('item_id', $postIds)
+                ->get();
 
+        /*foreach($postActionLists as $postAction) {
             $postsActions->push($postAction);
-        }
+        }*/
+
         return $postsActions;
     }
 }
