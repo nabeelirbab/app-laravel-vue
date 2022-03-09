@@ -14,7 +14,7 @@
         :item="merch"
         :key="merch.id" />
     </div>
-    <div v-else class="not-found">
+    <div v-if="!merches.length && !loadingMerch" class="not-found">
       Merchandise not found
     </div>
   </div>
@@ -35,8 +35,11 @@ export default {
   },
   computed: {
     isPro: function() {
-      return (this.user.account_type === 'pro' || this.user.account_type === 'admin')
-    }
+      return (this.app.user.account_type === 'pro' || this.app.user.account_type === 'admin')
+    },
+    ...mapState([
+                'app'
+              ])
   },
   created: function() {
     this.fetchMerch();

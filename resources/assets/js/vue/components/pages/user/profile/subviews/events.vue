@@ -14,7 +14,7 @@
                 :item="event"
                 :key="event.id" />
         </div>
-        <div v-else class="not-found">
+        <div v-if="!events.length && !loadingEvents" class="not-found">
             Events not found
         </div>
     </div>
@@ -35,8 +35,11 @@
         },
         computed: {
             isPro: function() {
-              return (this.user.account_type === 'pro' || this.user.account_type === 'admin')
-            }
+              return (this.app.user.account_type === 'pro' || this.app.user.account_type === 'admin')
+            },
+            ...mapState([
+                'app'
+              ])
         },
         created: function() {
             this.fetchEvents();
