@@ -83,6 +83,7 @@
     import Uploader from './uploader';
 
     export default {
+        props: ['user'],
         data () {
             return {
                 resumable: null,
@@ -112,7 +113,11 @@
         },
         methods: {
             createVideo() {
-                axios.post('/api/video/create').then(response => {
+                var data = {};
+                if(this.user && this.user.id) {
+                    data.userid = this.user.id;
+                }
+                axios.post('/api/video/create', data).then(response => {
                     this.videoModel = response.data;
                 });
             },

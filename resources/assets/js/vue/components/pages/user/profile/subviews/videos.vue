@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ph-button v-if="isPro" @click.native="$modal.show('modal-upload-video');" size="medium">Add Video</ph-button>
+    <ph-button v-if="isPro" @click.native="$modal.show('modal-upload-video', {user: user});" size="medium">Add Video</ph-button>
     <spinner
       style="margin: 3em auto;"
       :animation-duration="1000"

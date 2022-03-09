@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ph-button v-if="isPro" @click.native="$modal.show('modal-create-event')" size="medium">
+        <ph-button v-if="isPro" @click.native="$modal.show('modal-create-event', {user: user})" size="medium">
             Add Event
         </ph-button>
         <spinner style="margin: 3em auto;"

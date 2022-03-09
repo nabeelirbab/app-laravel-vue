@@ -69,6 +69,7 @@ import ImageSelect from "global/image-select";
 import { UserEvents } from "events";
 
 export default {
+	props: ['user'],
 	data() {
 		return {
 			data: {
@@ -123,6 +124,9 @@ export default {
 					data.append(`links[${index}][shop]`, link.shop);
 					data.append(`links[${index}][link]`, link.link);
 				});
+				if(this.user && this.user.id) {
+					data.append("userid", this.user.id);
+				}
 
 				this.submitting = true;
 				axios
