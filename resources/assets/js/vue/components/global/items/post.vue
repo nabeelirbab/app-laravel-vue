@@ -13,7 +13,7 @@
                 <div class="p-item-detail">
                     {{ postBody }}
                 </div>
-                <div class="p-post-text" v-if="post.attachment">
+                <div class="p-post-text p-post-attachment" v-if="post.attachment">
                     <img
                             v-if="post.attachment"
                             :src="post.attachment.files.medium.url"
@@ -83,6 +83,9 @@
         align-items: flex-start;
         flex-direction: column;
         margin-bottom: 2em;
+    }
+    .p-post-attachment {
+        margin-top: 8px;
     }
     .p-item-title {
         font-size: 19px;
