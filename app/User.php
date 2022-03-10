@@ -132,12 +132,12 @@ class User extends Authenticatable
 
     public function getAccountTypeAttribute()
     {
-        if ($this->hasRole('pro')) {
+        if ($this->hasRole('admin')) {
+            return 'admin';
+        } elseif ($this->hasRole('pro')) {
             return 'pro';
         } elseif ($this->hasRole('artist')) {
             return 'artist';
-        } elseif ($this->hasRole('admin')) {
-            return 'admin';
         } else {
             return 'standard';
         }
