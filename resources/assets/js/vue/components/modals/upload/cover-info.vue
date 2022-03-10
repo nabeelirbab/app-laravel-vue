@@ -387,7 +387,7 @@ export default {
                         });
           
           track.file = null;
-          Vue.delete(this.currentTrack, file);
+          this.$refs.fileInput.value=null;
           
         } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
           this.$notify({
@@ -397,7 +397,7 @@ export default {
                         });
           
           track.file = null;
-          Vue.delete(this.currentTrack, file);
+          this.$refs.fileInput.value=null;
         } else {
           track.file = files[0];
         }
