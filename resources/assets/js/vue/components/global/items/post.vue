@@ -14,7 +14,7 @@
                     {{ postBody }}
                 </div>
                 <div class="p-post-text" v-if="post.attachment">
-                    <a :href="'//' + websiteUrl" target="_blank">
+                    <a :href="'//' + post.attachment.files.medium.url" target="_blank">
                         <img
                             v-if="post.attachment"
                             :src="post.attachment.files.medium.url"
