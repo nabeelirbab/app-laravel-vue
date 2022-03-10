@@ -80,6 +80,7 @@
         align-items: flex-start;
         flex-direction: column;
         margin-bottom: 2em;
+        margin-top: 5px;
     }
     .p-item-title {
         font-size: 19px;
