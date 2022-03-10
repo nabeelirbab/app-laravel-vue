@@ -100,6 +100,7 @@ import { RadarSpinner as Spinner } from "epic-spinners";
 import Avatar from "global/avatar";
 import PhButton from "global/ph-button";
 import RecipientSelect from "./recipient-select";
+import Vue from "vue";
 
 export default {
   props: {
@@ -210,21 +211,12 @@ export default {
         this.previewUrl = URL.createObjectURL(file);
         this.attachment = file;
       }else{
-        this.$snotify.html(`
-          <div class="snotifyToast__body" style='text-align:center;'>
-            <div style='padding-top: 25px;'>
-            <img src='/img/warning.svg' style='height:16px;width:16px;'/>
-            <b style='font-size:18px;'>Only Jpeg and Png are allowed</b>
-            </div>
-          </div>
-           `, {
-          timeout: 3000,
-          type:'error',
-          position:'centerTop',
-          showProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: true,
-        });
+
+        Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: 'Only Jpeg and Png are allowed',
+            })
       }
       
     },
