@@ -161,7 +161,7 @@
 
 <script>
 import PriceRange from "global/price-range";
-
+import Vue from 'vue'
 export default {
 	name: "track-info",
 
@@ -233,20 +233,23 @@ export default {
                             type: 'error',
                             title: 'File must be mp3',
                         });
-          this.currentTrack.file = null;
           track.file = null;
-          return false;
+          Vue.delete(this.currentTrack, file);
+          
         } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
           this.$notify({
                             group: 'main',
                             type: 'error',
                             title: 'File must be wav',
                         });
-          this.currentTrack.file = null;
+          
           track.file = null;
-          return false;
+          Vue.delete(this.currentTrack, file);
+          
+        } else {
+        	track.file = files[0];
         }
-				track.file = files[0];
+				
 			}
 		},
 
