@@ -161,7 +161,7 @@
 
 <script>
 import PriceRange from "global/price-range";
-import Vue from 'vue'
+
 export default {
 	name: "track-info",
 
