@@ -44,9 +44,5 @@
 </script>
 
 <style lang="scss" scoped>
-.account-type {
-    margin: 40px 0;
-    font-weight: bold;
-    text-transform: capitalize;
-}
+
 </style>

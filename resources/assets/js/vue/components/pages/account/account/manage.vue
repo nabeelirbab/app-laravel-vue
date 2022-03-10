@@ -2,6 +2,9 @@
     <ph-panel id="manage">
         <h2>Manage Account</h2>
         <hr>
+        <div>
+            <h3 class="account-type">Account Type - {{app.user.account_type}}</h3>
+        </div>
         <p>
             Deactivate or delete your account permanently.
         </p>
@@ -32,6 +35,7 @@
                 Deactivate Account
             </ph-button>
         </div>
+        
 
         <delete-modal></delete-modal>
         <deactivate-modal></deactivate-modal>
@@ -150,5 +154,11 @@
 <style lang="scss" scoped>
     p {
         margin: 10px 0;
+    }
+
+    .account-type {
+        margin: 20px 0;
+        font-weight: bold;
+        text-transform: capitalize;
     }
 </style>
