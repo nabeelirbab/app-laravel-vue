@@ -94,6 +94,6 @@
         color: white;
     }
     .router-link-active {
-        text-decoration-color: #9eefe1;
+        text-decoration-color: #9eefe1 !important;
     }
 </style>
