@@ -18,7 +18,7 @@
             <div class="action" v-if="app.user.loggedin">
                 <report-button :reportable="actionable" @report="reported"></report-button>
             </div>
-            <div class="action">
+            <div v-if="actionable.type != 'post'" class="action">
                 <info-button :infoable="actionable"></info-button>
             </div>
             <div class="action">

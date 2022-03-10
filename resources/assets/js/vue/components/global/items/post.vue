@@ -18,15 +18,17 @@
                     {{ postBody }}
                 </router-link>
             </div>
-            <div class="p-post-text">
-                
-                <img
-                    v-if="post.attachment"
-                    :src="post.attachment.files.medium.url"
-                    :alt="post.attachment.alt"
-                    class="p-post-image"
-                />
-                
+            <div class="p-post-text" v-if="post.attachment">
+                <router-link
+                    :to="getRouterObject(post)">
+                    <img
+                        v-if="post.attachment"
+                        :src="post.attachment.files.medium.url"
+                        :alt="post.attachment.alt"
+                        class="p-post-image"
+                    />
+                </router-link>
+
             </div>
             <div class="p-item-meta">
                 <actions :actionable="post" :id="id"></actions>
