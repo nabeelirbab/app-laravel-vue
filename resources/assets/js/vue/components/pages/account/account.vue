@@ -5,8 +5,6 @@
             <sidebar-group title="My Albums" :view-all="true" :items="[]"></sidebar-group>
         </aside> -->
         <div class="page-main">
-            <h1>{{ pageTitle }}</h1>
-            <h2 class="account-type">Account Type - {{app.user.account_type}}</h2>
             <account-menu active="account"></account-menu>
             <transition mode="out-in">
                 <router-view></router-view>
