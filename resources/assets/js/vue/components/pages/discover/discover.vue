@@ -255,6 +255,7 @@ export default {
 
   .discover-results {
     padding: 0 20px;
+    width: 100%;
 
     .discover-section {
       margin: 30px 0;

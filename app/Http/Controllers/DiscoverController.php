@@ -16,6 +16,11 @@ class DiscoverController extends Controller
 
     public function get()
     {
+        $perpage = 25;
+        $page = request("page");
+        if($page > 1) {
+            $perpage = 15;
+        }
         $genres = [];
         if (request()->has('genres')) {
             foreach (request('genres') as $genre) {
@@ -74,7 +79,7 @@ class DiscoverController extends Controller
                 'shares as shares_count'
             ])
             ->orderBy($column, $direction)
-            ->paginate(15);
+            ->paginate($perpage);
 
         return $release;
     }
