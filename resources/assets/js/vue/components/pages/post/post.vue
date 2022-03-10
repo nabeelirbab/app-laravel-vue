@@ -13,9 +13,13 @@
                 <div class="item-info">
                     <div class="item-info-upper">
                         <div class="item-info-upper-left">
-                            <h1>
+                           <!-- <h1>
                                 {{ post.user.name }}
-                            </h1>
+                            </h1> -->
+                            <div class="post-body">
+
+                                {{ post.body }}
+                            </div>
                             <div v-if="post.attachment" class="post-body">
 
                                 <img
@@ -25,10 +29,7 @@
                                     class="p-post-image"
                                 />
                             </div>
-                            <div class="post-body">
-
-                                {{ post.body }}
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

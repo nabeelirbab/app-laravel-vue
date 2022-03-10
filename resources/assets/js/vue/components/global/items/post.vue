@@ -12,21 +12,20 @@
 
         </div>
         <div class="p-item-main">
-            <div class="p-item-detail">
-                <div class="p-item-title">
-                    <span>{{ post.user.name }}</span>
-                </div>
-            </div>
             <div class="p-post-text">
-                <img
-                    v-if="post.attachment"
-                    :src="post.attachment.files.medium.url"
-                    :alt="post.attachment.alt"
-                    class="p-post-image"
-                />
                 <router-link
                 :to="getRouterObject(post)">
-                {{ postBody }}
+                <div class="post-body">
+                    {{ postBody }}
+                </div>
+                <div v-if="post.attachment" class="post-body">
+                    <img
+                        v-if="post.attachment"
+                        :src="post.attachment.files.medium.url"
+                        :alt="post.attachment.alt"
+                        class="p-post-image"
+                    />
+                </div>
                 </router-link>
             </div>
             <div class="p-item-meta">
