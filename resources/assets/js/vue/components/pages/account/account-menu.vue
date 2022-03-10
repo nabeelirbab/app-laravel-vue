@@ -93,4 +93,7 @@
     .white a {
         color: white;
     }
+    .router-link-active {
+        text-decoration-color: #9eefe1;
+    }
 </style>
