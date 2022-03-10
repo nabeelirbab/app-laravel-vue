@@ -4,7 +4,7 @@
             <sidebar-group title="My Tracks" :view-all="true" :items="[]"></sidebar-group>
             <sidebar-group title="My Albums" :view-all="true" :items="[]"></sidebar-group>
         </aside> -->
-        <div class="page-main">
+        <div v-if="app.user.loggedin" class="page-main">
             <h1>{{ pageTitle }}</h1>
             <h2 class="account-type">Account Type - {{app.user.account_type}}</h2>
             <account-menu active="account"></account-menu>
@@ -33,6 +33,9 @@
             }
         },
         created: function() {
+            if(!this.app.user.loggedin) {
+                this.$router.push({path: '/login'});
+            }
             UserEvents.$on('updateTitle', title => this.pageTitle = title)
         },
         components: {
