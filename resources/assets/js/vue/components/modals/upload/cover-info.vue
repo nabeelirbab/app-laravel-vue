@@ -303,7 +303,7 @@ import GenreSelect from "./genre-select";
 import ImageSelect from "global/image-select";
 import PriceRange from "global/price-range";
 import FeaturedSpotPicker from "./featured-spot-picker";
-import Vue from 'vue';
+
 export default {
   name: "cover-info",
 
