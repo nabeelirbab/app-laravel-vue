@@ -303,7 +303,7 @@ import GenreSelect from "./genre-select";
 import ImageSelect from "global/image-select";
 import PriceRange from "global/price-range";
 import FeaturedSpotPicker from "./featured-spot-picker";
-
+import Vue from 'vue';
 export default {
   name: "cover-info",
 
@@ -385,20 +385,23 @@ export default {
                             type: 'error',
                             title: 'File must be mp3',
                         });
-          this.currentTrack.file = null;
+          
           track.file = null;
-          return false;
+          Vue.delete(this.currentTrack, file);
+          
         } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
           this.$notify({
                             group: 'main',
                             type: 'error',
                             title: 'File must be wav',
                         });
-          this.currentTrack.file = null;
+          
           track.file = null;
-          return false;
+          Vue.delete(this.currentTrack, file);
+        } else {
+          track.file = files[0];
         }
-				track.file = files[0];
+				
 			}
 		},
 
