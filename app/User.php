@@ -136,6 +136,8 @@ class User extends Authenticatable
             return 'pro';
         } elseif ($this->hasRole('artist')) {
             return 'artist';
+        } elseif ($this->hasRole('admin')) {
+            return 'admin';
         } else {
             return 'standard';
         }
