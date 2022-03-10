@@ -13,15 +13,12 @@
                     {{ postBody }}
                 </div>
                 <div class="p-post-text" v-if="post.attachment">
-                    <router-link
-                        :to="post.attachment.files.medium.url" target= '_blank' >
-                        <img
+                    <img
                             v-if="post.attachment"
                             :src="post.attachment.files.medium.url"
                             :alt="post.attachment.alt"
                             class="p-post-image"
                         />
-                    </router-link>
                 </div>
             </div>
             <div class="p-item-meta">
