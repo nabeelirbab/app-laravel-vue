@@ -1,32 +1,28 @@
 <template>
     <div class="p-item">
         <div class="p-item-image">
-            <router-link
-                :to="getRouterObject(post)">
                 <avatar
                     :size="130"
                     :src="post.user.avatar.files.thumb.url"
                     
                 />
-            </router-link>
-
         </div>
         <div class="p-item-main">
             <div class="p-post-text">
-                <router-link
-                :to="getRouterObject(post)">
-                <div class="post-body">
+                <div class="p-item-detail">
                     {{ postBody }}
                 </div>
-                <div v-if="post.attachment" class="post-body">
-                    <img
-                        v-if="post.attachment"
-                        :src="post.attachment.files.medium.url"
-                        :alt="post.attachment.alt"
-                        class="p-post-image"
-                    />
+                <div class="p-post-text" v-if="post.attachment">
+                    <router-link
+                        :to="post.attachment.files.medium.url" target= '_blank' >
+                        <img
+                            v-if="post.attachment"
+                            :src="post.attachment.files.medium.url"
+                            :alt="post.attachment.alt"
+                            class="p-post-image"
+                        />
+                    </router-link>
                 </div>
-                </router-link>
             </div>
             <div class="p-item-meta">
                 <actions :actionable="post" :id="id"></actions>
