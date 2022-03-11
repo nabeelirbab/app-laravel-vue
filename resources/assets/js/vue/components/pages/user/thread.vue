@@ -71,6 +71,7 @@
             const id = this.$route.params.threadid;
             this.getCurrentThread(id);
 
+
             MessageEvents.$on("message-removed", () => {
               this.getCurrentThread(id);
 
@@ -81,6 +82,10 @@
               });
               return true;
             });
+
+            if(!this.app.user.loggedin) {
+                this.$router.push({path: '/login'});
+            }
         }, 
 
         watch: {
