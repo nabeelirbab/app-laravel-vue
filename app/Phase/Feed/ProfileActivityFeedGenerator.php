@@ -16,7 +16,8 @@ use App\Action;
 class ProfileActivityFeedGenerator
 {
     protected $user;
-
+    private $invalidTypes = ['user_placed_order', 'user_submitted_report'];
+    
     public function __construct(User $user)
     {
         $this->user = $user;
@@ -29,12 +30,44 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForProfile()
     {
-        $userActions = $this->user->actions;
-
-        return $userActions
-            ->merge($this->getActionsForPostsTargetedAtUser())
-            ->sortByDesc('created_at')
+        $postIds = Post::targetedAt($this->user)
+            ->pluck('id')->toArray();
+        $returnUserActions = Action::whereNotIn("event_type", $this->invalidTypes)
+        ->where( function($query) use( $postIds) {
+            $query->where("created_by", $this->user->id)
+            ->orWhere( function($q) use( $postIds) {
+                $q->where('item_type', 'post')
+                ->whereIn('item_id', $postIds);
+            });
+        })->get()->sortByDesc('created_at')
             ->values();
+        $relatedIds = [];
+
+        foreach($returnUserActions as &$action) {
+            if(!isset($relatedIds[$action->item_type])) {
+                $relatedIds[$action->item_type] = [];
+            }
+            $relatedIds[$action->item_type][] = $action->item_id;
+        }
+
+        $relatedItems = [];
+        $relatedItems['release'] = (isset($relatedIds['release']) && !empty($relatedIds['release'])) ? \App\Release::whereIn("id", $relatedIds['release'])
+        ->get()->keyBy('id') : [];
+        $relatedItems['event'] = (isset($relatedIds['event']) && !empty($relatedIds['event'])) ? \App\Event::whereIn("id", $relatedIds['event'])
+        ->get()->keyBy('id') : [];
+        $relatedItems['merch'] = (isset($relatedIds['merch']) && !empty($relatedIds['merch'])) ? \App\Merch::whereIn("id", $relatedIds['merch'])
+        ->get()->keyBy('id') : [];
+        $relatedItems['user'] = (isset($relatedIds['user']) && !empty($relatedIds['user'])) ? User::whereIn("id", $relatedIds['user'])
+        ->get()->keyBy('id') : [];
+        $relatedItems['post'] = (isset($relatedIds['post']) && !empty($relatedIds['post'])) ? Post::whereIn("id", $relatedIds['post'])
+        ->get()->keyBy('id') : [];
+        $relatedItems['share'] = (isset($relatedIds['share']) && !empty($relatedIds['share'])) ? \App\Share::whereIn("id", $relatedIds['share'])
+        ->get()->keyBy('id') : [];
+
+        foreach($returnUserActions as &$action) {
+            $action->item = isset($relatedItems[$action->item_type][$action->item_id]) ? $relatedItems[$action->item_type][$action->item_id] : null; 
+        }
+        return $returnUserActions;
     }
 
     /**
@@ -44,18 +77,12 @@ class ProfileActivityFeedGenerator
      */
     public function getActionsForPostsTargetedAtUser()
     {
-        $posts = Post::targetedAt($this->user)
-            ->withCount('comments', 'likes', 'shares')
-            ->get();
+        $postIds = Post::targetedAt($this->user)
+            ->pluck('id')->toArray();
 
-        $postsActions = collect();
-        foreach ($posts as $post) {
-            $postAction = Action::where('item_type', 'post')
-                ->where('item_id', $post->id)
-                ->first();
-
-            $postsActions->push($postAction);
-        }
+        $postsActions = Action::where('item_type', 'post')
+                ->whereIn('item_id', $postIds)
+                ->get();
         return $postsActions;
     }
 }

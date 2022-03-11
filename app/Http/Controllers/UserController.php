@@ -201,7 +201,7 @@ class UserController extends Controller
         $action = Action::where('item_type', 'post')
             ->where('item_id', $post->id)
             ->first();
-
+        $action->item = $action->item;
         return [
             'success' => true,
             'action' => $action
