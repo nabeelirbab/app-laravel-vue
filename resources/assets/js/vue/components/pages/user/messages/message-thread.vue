@@ -50,6 +50,11 @@
                 moment: window.moment,
             }
         },
+        created: function() {
+            if(!this.app.user.loggedin) {
+                this.$router.push({path: '/login'});
+            }
+        },
         computed: {
             otherUser: function() {
                 if(this.$store.state.app.user.id === this.thread.sender.id) {

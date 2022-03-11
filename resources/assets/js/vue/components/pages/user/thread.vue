@@ -56,6 +56,10 @@
         created() {
             const id = this.$route.params.threadid;
             this.getCurrentThread(id);
+
+            if(!this.app.user.loggedin) {
+                this.$router.push({path: '/login'});
+            }
         }, 
 
         watch: {
