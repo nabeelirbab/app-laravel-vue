@@ -44,7 +44,8 @@
                 'currentThread'
             ]),
 
-            ...mapState('app', [
+            ...mapState([
+                'app',
                 'user'
             ])
         },

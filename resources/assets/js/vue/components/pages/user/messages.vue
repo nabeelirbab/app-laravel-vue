@@ -4,7 +4,7 @@
             <sidebar-group title="Notifications" :view-all="true" :items="[]"></sidebar-group>
         </aside> -->
         
-        <div class="page-main">
+        <div v-if="app.user.loggedin" class="page-main">
             <h1 class="no-top">My Messages</h1>
             <add-text v-if="composing" type="newMessage" @success="fetchThreads"></add-text>
             <ph-button size="large" @click.native="composing = true" v-else>New Message</ph-button>
@@ -36,9 +36,9 @@
         },
 
         computed: {
-            ...mapState('app', 'messenger', {
+            ...mapState(['app', 'messenger', {
                 threads: state => state.threads
-            })
+            }])
         },
 
         beforeRouteEnter (to, from, next) {
