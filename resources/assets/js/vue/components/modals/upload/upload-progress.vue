@@ -1,12 +1,5 @@
 <template>
   <div>
-    <spinner
-      style="margin: 3em auto"
-      :animation-duration="1000"
-      :size="60"
-      :color="variables.colors.color2"
-      v-if="upload.progress < 100"
-    />
     <div class="upload-progress">
       <div class="progress-outer">
         <div
