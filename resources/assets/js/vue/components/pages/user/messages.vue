@@ -37,7 +37,7 @@
         },
 
         computed: {
-            ...mapState('messenger', {
+            ...mapState('app', 'messenger', {
                 threads: state => state.threads
             })
         },
@@ -47,9 +47,11 @@
               next();
             });
           },
-        // created: function() {
-        //     this.fetchThreads();
-        // },
+        created: function() {
+            if(!this.app.user.loggedin) {
+                this.$router.push({path: '/login'});
+            }
+        },
         methods: {
             fetchThreads() {
                 store.dispatch('messenger/fetchThreads').then(() => {
