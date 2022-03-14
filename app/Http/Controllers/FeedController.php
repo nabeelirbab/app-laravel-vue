@@ -37,11 +37,6 @@ class FeedController extends Controller
 
         try {
 
-            if (Cache::has($cache_token)) {
-                $cached_result = Cache::get($cache_token);
-                return ['data' => $cached_result];
-            }
-            
            // $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
               
                 $default_limit = 10;
@@ -91,8 +86,6 @@ class FeedController extends Controller
                 // We have a flat array with each item assigned a frontend component.
                // return $collection;
            // });
-
-            Cache::put($cache_token, $collection, now()->addMinutes(30));
 
             return ['data' => $collection];
         } catch (\Exception $e) {
