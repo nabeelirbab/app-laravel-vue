@@ -46,7 +46,6 @@ class ProfileActivityFeedGenerator
             $start = $request->get("start", 0);
             $perpage = 20;
             $totalActions = $returnUserActionQuery->count();
-            //echo $totalActions;die();
             $returnUserActions = $returnUserActionQuery->skip($start)->take($perpage)->get()->values();
 
             if( $totalActions > ($start + $perpage) ) {
