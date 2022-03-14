@@ -114,8 +114,8 @@ class FeedController extends Controller
     function mergeArrays(&$collection = [], $object = [], $component = '', $type = '')
     {
         foreach($object as $ob) {
-            $ob->component = '';
-            $ob->type = '';
+            $ob->component = $component;
+            $ob->type = $type;
             $collection[] = $ob;
         }
     }
