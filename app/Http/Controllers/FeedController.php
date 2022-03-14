@@ -88,9 +88,6 @@ class FeedController extends Controller
 
                 $this->mergeArrays($collection, $posts, 'feed-post', 'post');
 
-                $genres = Genre::namenotnull()->take(8)->get();
-                
-                $this->mergeArrays($collection, $genres, 'feed-genre', 'genre');
 
                 //                Playlist::namenotnull()->limit(7)->get()->each( function( $item ) use ( &$collection ) {
                 //                    $item->component = 'feed-playlist';
