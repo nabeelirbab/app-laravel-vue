@@ -42,14 +42,34 @@ export default {
                 this.mutableUser.follower_count -= 1;
             }
         },
-        fetchActivity() {
-            this.activity = [];
-            this.loadingActivity = true;
+        fetchActivity(start = 0) {
+            if(typeof(start) == undefined) {
+                start = 0;
+            }
             
-            axios.get('/api/user/' + this.user.id + '/activity').then(response => {
-                this.activity = response.data;
+            if(start == 0) {
+               this.loadingActivity = true;
+               this.activity = []; 
+            } else {
+                this.loadingNextPage = true;
+            }
+            
+            axios.get('/api/user/' + this.user.id + '/activity?newsearch=1&start='+start).then(response => {
+                if(response.data.returndata) {
+                    if(start == 0) {
+                        this.activity = response.data.returndata;
+                    } else {
+                        this.activity = this.activity.concat(response.data.returndata);
+                    }
+                    
+                    this.nextStart = response.data.next_start;
+                } else {
+                    this.activity = response.data;
+                }
+                
             }).finally(() => {
                 this.loadingActivity = false;
+                this.loadingNextPage = false;
             });
         }
     }
