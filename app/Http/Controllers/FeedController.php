@@ -37,7 +37,7 @@ class FeedController extends Controller
         try {
 
 
-            //$cached_result = Cache::remember($cache_token, $cache_seconds, function () {
+            $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
 
                 $default_limit = 10;
                // $collection = collect([]);
@@ -85,7 +85,7 @@ class FeedController extends Controller
 
                 // We have a flat array with each item assigned a frontend component.
                 return ['data' => $collection];
-            //});
+            });
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 422);
