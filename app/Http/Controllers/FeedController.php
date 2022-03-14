@@ -31,12 +31,13 @@ class FeedController extends Controller
     public function index()
     {
         // 6 hours
-        $cache_seconds = now()->addMinutes(30);
+        //$cache_seconds = now()->addMinutes(30);
+        $cache_seconds = 30;
         $cache_token = 'feed';
 
         try {
 
-            //$cached_result = Cache::remember($cache_token, $cache_seconds, function () {
+            $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
 
                 $default_limit = 10;
                // $collection = collect([]);
@@ -90,8 +91,10 @@ class FeedController extends Controller
                 // TODO - Charts.
 
                 // We have a flat array with each item assigned a frontend component.
-                return ['data' => $collection];
-            //});
+                return $collection;
+            });
+
+            return $cached_result;
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 422);
