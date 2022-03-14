@@ -44,7 +44,7 @@ class ProfileActivityFeedGenerator
 
         if($request->newsearch == 1) {
             $start = $request->get("start", 0);
-            $perpage = 20;
+            $perpage = 10;
             $totalActions = $returnUserActionQuery->count();
             $returnUserActions = $returnUserActionQuery->skip($start)->take($perpage)->get()->values();
 
