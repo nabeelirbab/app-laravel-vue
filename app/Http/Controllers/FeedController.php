@@ -36,9 +36,14 @@ class FeedController extends Controller
         $cache_token = 'feed';
 
         try {
-
-            $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
-
+            
+            if (Cache::has($cache_token)) {
+                $cached_result = Cache::get($cache_token);
+                return ['data' => $cached_result];
+            }
+            
+           // $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
+              
                 $default_limit = 10;
                // $collection = collect([]);
                 $collection = [];
@@ -91,10 +96,12 @@ class FeedController extends Controller
                 // TODO - Charts.
 
                 // We have a flat array with each item assigned a frontend component.
-                return $collection;
-            });
+               // return $collection;
+           // });
 
-            return ['data' => $cached_result];
+            Cache::put($cache_token, $collection, now()->addMinutes(30));
+
+            return ['data' => $collection];
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 422);
