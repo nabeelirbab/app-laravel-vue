@@ -84,7 +84,7 @@ class FeedController extends Controller
                 // TODO - Charts.
 
                 // We have a flat array with each item assigned a frontend component.
-                return ['data' => $collection];
+                return $collection;
             });
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
