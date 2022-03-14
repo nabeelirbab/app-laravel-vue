@@ -36,31 +36,23 @@ class FeedController extends Controller
 
         try {
 
-           // $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
+            $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
 
                 $default_limit = 10;
                 $collection = collect([]);
                 //$collection = [];
 
                 $releases = Release::statuslive()->with([
-                    'image',
-                    'uploader' => function ($query) {
-                        $query->select('id', 'name', 'path');
-                    },
+                    'image'
                 ])->withCount('shares', 'comments', 'likes')
                 ->take(10)->get();
                 $this->mergeArrays($collection, $releases, 'feed-release', 'release');
                 
                 $tracks = Track::namenotnull()->isApproved()->with([
-                    'preview',
-                    'release',
                     'release.image',
-                    'release.uploader' => function ($query) {
-                        $query->select('id', 'name', 'path');
-                    },
                 ])->whereHas('release', function($query) {
                     $query->statuslive();
-                })->with('asset')->take(10)->get();
+                })->take(10)->get();
                 $this->mergeArrays($collection, $tracks, 'feed-track', 'track');
                 
                 if (auth()->check()) {
@@ -99,7 +91,7 @@ class FeedController extends Controller
 
                 // We have a flat array with each item assigned a frontend component.
                 return $collection;
-           // });
+            });
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 422);
