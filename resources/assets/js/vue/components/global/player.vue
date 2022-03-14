@@ -63,7 +63,7 @@
                     </span>
                 </div>
             </div>
-            <div class="details" v-if="track.release.uploader">
+            <div class="details" v-if="track.release && track.release.uploader">
                 {{ track.release.uploader.name }} - {{ track.name }}
             </div>
             <div class="details" v-else >
@@ -94,7 +94,7 @@
                     <report-button :reportable="track" />
                 </div>
             </div>
-            <div class="details" v-if="track.release.uploader">
+            <div class="details" v-if="track.release && track.release.uploader">
                 {{ track.release.uploader.name }} - {{ track.name }}
             </div>
             <div class="details" v-else >
