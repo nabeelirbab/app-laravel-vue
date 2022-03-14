@@ -94,7 +94,7 @@ class FeedController extends Controller
                 return $collection;
             });
 
-            return $cached_result;
+            return ['data' => $cached_result];
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 422);
