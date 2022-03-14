@@ -50,7 +50,7 @@ class FeedController extends Controller
                 
                 $tracks = Track::namenotnull()->isApproved()->with([
                     'release.image',
-                ])->with('asset')->whereHas('release', function($query) {
+                ])->whereHas('release', function($query) {
                     $query->statuslive();
                 })->take(10)->get();
                 $this->mergeArrays($collection, $tracks, 'feed-track', 'track');
