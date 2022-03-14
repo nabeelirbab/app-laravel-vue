@@ -28,19 +28,38 @@ class ProfileActivityFeedGenerator
      *
      * @return mixed
      */
-    public function getActionsForProfile()
+    public function getActionsForProfile($request)
     {
         $postIds = Post::targetedAt($this->user)
             ->pluck('id')->toArray();
-        $returnUserActions = Action::whereNotIn("event_type", $this->invalidTypes)
+
+        $returnUserActionQuery = Action::whereNotIn("event_type", $this->invalidTypes)
         ->where( function($query) use( $postIds) {
             $query->where("created_by", $this->user->id)
             ->orWhere( function($q) use( $postIds) {
                 $q->where('item_type', 'post')
                 ->whereIn('item_id', $postIds);
             });
-        })->get()->sortByDesc('created_at')
-            ->values();
+        })->orderByDesc('created_at');
+
+        if($request->newsearch == 1) {
+            $start = $request->get("start", 0);
+            $perpage = 20;
+            $totalActions = $returnUserActionQuery->count();
+            //echo $totalActions;die();
+            $returnUserActions = $returnUserActionQuery->skip($start)->take($perpage)->get()->values();
+
+            if( $totalActions > ($start + $perpage) ) {
+                $nextStart = ($start + $perpage);
+            } else {
+                $nextStart = false;
+            }
+
+        } else {
+            $returnUserActions = $returnUserActionQuery->get()->values();
+        }
+
+        
         $relatedIds = [];
 
         foreach($returnUserActions as &$action) {
@@ -66,6 +85,9 @@ class ProfileActivityFeedGenerator
 
         foreach($returnUserActions as &$action) {
             $action->item = isset($relatedItems[$action->item_type][$action->item_id]) ? $relatedItems[$action->item_type][$action->item_id] : null; 
+        }
+        if($request->newsearch == 1) {
+           return ['next_start' => $nextStart, 'returndata' => $returnUserActions ]; 
         }
         return $returnUserActions;
     }
