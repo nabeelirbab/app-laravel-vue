@@ -39,8 +39,8 @@ class FeedController extends Controller
            // $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
 
                 $default_limit = 10;
-                //$collection = collect([]);
-                $collection = [];
+                $collection = collect([]);
+                //$collection = [];
 
                 $releases = Release::statuslive()->with([
                     'image',
@@ -113,7 +113,7 @@ class FeedController extends Controller
         foreach($object as $ob) {
             $ob->component = $component;
             $ob->type = $type;
-            $collection[] = $ob;
+            $collection->push($ob);
         }
     }
 
