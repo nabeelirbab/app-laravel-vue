@@ -49,11 +49,18 @@ class FeedController extends Controller
                 ->take(10)->get();
                 $this->mergeArrays($collection, $releases, 'feed-release', 'release');
                 
-                $tracks = Track::namenotnull()->isApproved()->with([
-                    'release.image',
-                ])->whereHas('release', function($query) {
-                    $query->statuslive();
-                })->take(10)->get();
+                $releaseIds = $releases->map(function($item) {
+                    return $item['id'];
+                  });
+                $releaseWithIds = [];
+                foreach($releases as $rl) {
+                    $releaseWithIds[$rl->id] = $rl;
+                }
+                $tracks = Track::namenotnull()->isApproved()
+                ->whereIn('release_id', $releaseIds)->take(10)->get();
+                foreach($tracks as &$tr) {
+                    $tr->release = isset($releaseWithIds[$tr->release_id]) ? $releaseWithIds[$tr->release_id] : null;
+                }
                 $this->mergeArrays($collection, $tracks, 'feed-track', 'track');
                 
                 if (auth()->check()) {
