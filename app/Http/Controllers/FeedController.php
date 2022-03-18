@@ -69,7 +69,8 @@ class FeedController extends Controller
                     
                 }
 
-                $posts = Post::bodynotnull()->withCount(['comments', 'likes', 'shares'])->take(7)->get();
+                $posts = DB::table('posts')->where('body', '<>', '')->take(7)->get();
+                //$posts = Post::bodynotnull()->take(7)->get();
                
 
                 $this->mergeArrays($collection, $posts, 'feed-post', 'post');
