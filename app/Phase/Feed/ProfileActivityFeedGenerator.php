@@ -46,7 +46,7 @@ class ProfileActivityFeedGenerator
             $start = $request->get("start", 0);
             $perpage = 10;
             $totalActions = $returnUserActionQuery->count();
-            $returnUserActions = $returnUserActionQuery->skip($start)->take($perpage)->get()->values();
+            $returnUserActions = $returnUserActionQuery->skip($start)->take($perpage)->get();
 
             if( $totalActions > ($start + $perpage) ) {
                 $nextStart = ($start + $perpage);
@@ -55,7 +55,7 @@ class ProfileActivityFeedGenerator
             }
 
         } else {
-            $returnUserActions = $returnUserActionQuery->get()->values();
+            $returnUserActions = $returnUserActionQuery->get();
         }
 
         
@@ -82,8 +82,8 @@ class ProfileActivityFeedGenerator
         $relatedItems['share'] = (isset($relatedIds['share']) && !empty($relatedIds['share'])) ? \App\Share::whereIn("id", $relatedIds['share'])
         ->get()->keyBy('id') : [];
 
-        foreach($returnUserActions as &$action) {
-            $action->item = isset($relatedItems[$action->item_type][$action->item_id]) ? $relatedItems[$action->item_type][$action->item_id] : null; 
+        foreach($returnUserActions as $key => $action) {
+            $returnUserActions[$key]->item = isset($relatedItems[$action->item_type][$action->item_id]) ? $relatedItems[$action->item_type][$action->item_id] : null; 
         }
         if($request->newsearch == 1) {
            return ['next_start' => $nextStart, 'returndata' => $returnUserActions ]; 
