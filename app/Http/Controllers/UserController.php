@@ -79,9 +79,10 @@ class UserController extends Controller
                     'following',
                 ])
                 ->withCount(['releases', 'followers as follower_count', 'following as following_count'])
+                ->with('banner')->with('interests')
                 ->first();
             if ($request->has('app-user') && $request->get('app-user') != -1) {
-                $followable = User::with('following')->find($request->get('app-user'));
+                $followable = User::with('following')->with('banner')->with('interests')->find($request->get('app-user'));
                 $user->followed = $user->followers->contains($followable);
             } else {
                 $user->followed = false;
