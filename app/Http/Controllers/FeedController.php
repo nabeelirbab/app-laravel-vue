@@ -69,7 +69,7 @@ class FeedController extends Controller
                     
                 }
 
-                $posts = DB::table('posts')->where('body', '<>', '')->take(7)->get();
+                $posts = \DB::table('posts')->where('body', '<>', '')->take(7)->get();
                 //$posts = Post::bodynotnull()->take(7)->get();
                
 
