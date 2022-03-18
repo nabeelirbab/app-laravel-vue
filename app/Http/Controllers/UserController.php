@@ -92,6 +92,7 @@ class UserController extends Controller
                 $like->likeable;
             }
             $user->banner = $user->banner;
+            $user->interests = $user->interests;
 
             return $user;
         }
