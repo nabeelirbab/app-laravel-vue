@@ -23,7 +23,7 @@ class Genre extends PhaseModel
 
     protected $hidden = ['image_id'];
 
-    protected $with = ['image'];
+    //protected $with = ['image'];
 
     protected $searchable = [
         'columns' => [
