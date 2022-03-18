@@ -19,7 +19,7 @@ class Event extends PhaseModel
 
     protected $guarded = [];
 
-    protected $with = ['user', 'image'];
+    protected $with = [/*'user',*/ 'image'];
 
     protected $appends = [
         'is_shared',
