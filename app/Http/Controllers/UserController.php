@@ -98,7 +98,7 @@ class UserController extends Controller
         return User::where('name', 'LIKE', '%' . $request->get('name') . '%')
             ->with([
                 'avatar'
-            ])
+            ])->with('banner')->with('interests')
             ->withCount('releases')
             ->get();
     }
