@@ -18,7 +18,7 @@
           <i class="fa fa-fw fa-map-marker-alt"></i> {{ event.location }}
         </div>
       </div>
-      <div v-if="app.user.id === event.user.id">
+      <div v-if="app.user.id === event.created_by">
         <a
           href=""
           @click.prevent="$modal.show('modal-update-event', { event: event })"
