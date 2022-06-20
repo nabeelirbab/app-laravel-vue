@@ -44,21 +44,16 @@ export default {
 @import "~styles/helpers/_variables.scss";
 
 .only-music-bar {
-  height: 50px;
-  background: $color-grey;
+  height: 0px;
+  width: auto;
+  background-color: hsla(0, 0%, 0%, 0);
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  @media (max-width: 1024px) {
-    height: auto;
-    flex-direction: column;
-    // padding-top: 2em;
-    padding: 20px 0;
-  }
-  &.hidden {
-    display: none;
-  }
+  padding-top: 25px;
+}
+.player .controls {
+  background: #fff !important;
 }
 .user-bar-main {
   justify-content: space-between;
