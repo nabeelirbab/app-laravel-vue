@@ -11,6 +11,7 @@
                     <uploader
                             @upload-start="uploadStart"
                             @upload-success="uploadSuccess"
+                            @upload-cancel="uploadCancel"
                     />
                 </div>
                 <div class="upload-details" v-if="resumable">
@@ -30,6 +31,8 @@
                             {{ uploadedSize }}MB / {{ fileSize }}MB ({{ Math.floor(resumable.progress() * 100) }}%)
                         </div>
                     </div>
+
+                    <close-icon class="float-right" @click.native="resumable.cancel()"></close-icon>
                 </div>
                 <form v-if="resumable && !saved">
                     <h3>Now, provide some information about your video:</h3>
@@ -56,6 +59,8 @@
                             <td></td>
                             <td>
                                 <ph-button @click.prevent.native="save" :loading="saving" :disabled="videoModel === null">Save</ph-button>
+
+                                <ph-button @click.prevent.native="close"  :disabled="saving">Cancel</ph-button>
                             </td>
                         </tr>
                     </table>
@@ -158,8 +163,11 @@
                 };
             },
             close() {
-                this.maybeReset()
+                this.reset()
                 this.$modal.hide('modal-upload-video');
+            },
+            uploadCancel() {
+                this.reset()
             }
         },
         components: {
