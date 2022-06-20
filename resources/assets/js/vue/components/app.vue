@@ -22,6 +22,7 @@
               @slideoutToggle="mobileSlideoutActivte = !mobileSlideoutActivte"
           />
           <user-bar v-if="app.user.loggedin || $route.path !== '/'"/>
+          <only-music-bar v-if="!app.user.loggedin && $route.path === '/'"/>
           <!-- <transition-group mode="out-in" style="flex: 1"> -->
           <search-view v-if="search.visible" key="search-view"/>
           <router-view v-show="!search.visible" key="router-view"/>
@@ -57,6 +58,7 @@ import SlideoutMenu from "./layout/slideout-menu";
 import MobileSlideoutMenu from "./layout/mobile-slideout-menu.vue";
 import TopBar from "./layout/top-bar";
 import UserBar from "./layout/user-bar";
+import OnlyMusicBar from "./layout/only-music-bar";
 import SearchView from "./pages/search/search-view";
 import MainLeft from "./layout/main-left";
 import MainRight from "./layout/main-right";
