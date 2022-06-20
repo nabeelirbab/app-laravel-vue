@@ -83,6 +83,7 @@ export default {
     MainRight,
     MainFooter,
     MobileSlideoutMenu,
+    OnlyMusicBar
   },
   computed: {
     ...mapState(["search", "messenger", "app"]),

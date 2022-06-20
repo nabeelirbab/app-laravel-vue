@@ -1,5 +1,5 @@
 <template>
-  <div class="user-bar">
+  <div class="only-music-bar">
     <div class="user-bar-player" v-show="$store.state.player.status.set">
       <player></player>
     </div>
@@ -43,7 +43,7 @@ export default {
 <style lang="scss" scoped>
 @import "~styles/helpers/_variables.scss";
 
-.user-bar {
+.only-music-bar {
   height: 50px;
   background: $color-grey;
   display: flex;
