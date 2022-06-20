@@ -221,7 +221,10 @@ export default {
     .search-results-grid {
       margin-top: 20px;
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
+      @media (max-width: 1500px) {
+        grid-template-columns: repeat(6, 1fr);
+      }
       @media (max-width: 900px) {
         grid-template-columns: repeat(3, 1fr);
       }
