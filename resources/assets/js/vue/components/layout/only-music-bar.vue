@@ -50,7 +50,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 25px;
+  z-index: 1000;
 }
 .player .controls {
   background: #fff !important;
