@@ -49,7 +49,7 @@ export default {
   background-color: hsla(0, 0%, 0%, 0);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 .player .controls {
   background: #fff !important;
