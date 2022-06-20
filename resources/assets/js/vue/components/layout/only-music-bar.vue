@@ -1,7 +1,7 @@
 <template>
   <div class="only-music-bar">
     <div class="user-bar-player" v-show="$store.state.player.status.set">
-      <player></player>
+      <player-for-search></player-for-search>
     </div>
   </div>
 </template>
@@ -11,11 +11,11 @@ import { mapState } from "vuex";
 import store from "store";
 import { PlayerEvents } from "events";
 
-import Player from "global/player";
+import PlayerForSearch from "./player-for-search";
 
 export default {
   components: {
-    Player
+    PlayerForSearch
   },
 
   data() {
@@ -50,7 +50,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1000;
 }
 .player .controls {
   background: #fff !important;
