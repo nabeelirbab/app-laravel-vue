@@ -299,6 +299,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import GenreSelect from "./genre-select";
 import ImageSelect from "global/image-select";
 import PriceRange from "global/price-range";
