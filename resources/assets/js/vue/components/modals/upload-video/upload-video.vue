@@ -18,6 +18,7 @@
                     <h3 v-show="resumable.isUploading()">
                         <i class="fa fa-spinner fa-spin"></i> Uploading <em>{{ resumable.files[0].fileName }}</em>
                     </h3>
+                    <ph-button v-show="resumable.isUploading()"   @click.native="resumable.cancel()">Cancel</ph-button>
                     <h3 v-show="uploadComplete">
                         <i class="fa fa-check-circle"></i> Upload Complete
                     </h3>
@@ -32,7 +33,6 @@
                         </div>
                     </div>
 
-                    <close-icon class="float-right" @click.native="resumable.cancel()"></close-icon>
                 </div>
                 <form v-if="resumable && !saved">
                     <h3>Now, provide some information about your video:</h3>
