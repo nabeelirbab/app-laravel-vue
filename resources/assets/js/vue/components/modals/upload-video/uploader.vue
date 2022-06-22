@@ -27,7 +27,7 @@
                 withCredentials: true,
                 fileType: ['mp4'],
                 testChunks: false,
-                maxFileSize: 500,
+                maxFileSize: 500 * 1024 * 1024,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
                     'X-Requested-With': 'XMLHttpRequest',
