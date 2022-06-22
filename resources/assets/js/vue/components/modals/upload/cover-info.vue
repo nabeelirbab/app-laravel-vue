@@ -247,7 +247,7 @@
                 <price-range
                   :min="isSingle ? getSingleTrackPriceFrom() : getAlbumPriceFrom()"
                   :max="isSingle ? getSingleTrackPriceTo() : getAlbumPriceTo()"
-                  :step="isSingle ? 1 : 100"
+                  :step="1"
                   :value.sync="cover.price"
                   v-validate="'required'"
                   name="price"
@@ -331,6 +331,8 @@ export default {
   },
 
   computed: {
+    ...mapState(["app"]),
+
     classes: function() {
       const storeClasses = this.$store.state.app.classes;
       let obj = {};
