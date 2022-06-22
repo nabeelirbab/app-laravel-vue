@@ -17,7 +17,8 @@ export default {
         page: {},
         feed: [],
         plans: [],
-        pricePerFeaturedSlot: ""
+        pricePerFeaturedSlot: "",
+        priceRangesForTrack: []
     },
     mutations: {
         setNavigation(state, data) {
@@ -91,6 +92,9 @@ export default {
         },
         setPrice(state, price) {
             state.pricePerFeaturedSlot = price;
+        },
+        setPriceRanges(state, price) {
+            state.priceRangesForTrack = price;
         },
         removeUserReleaseFromState(state, release) {
             state.user.removeRelease(release);
@@ -336,6 +340,14 @@ export default {
         fetchPricePerFeaturedSlot({ commit, state }) {
             axios.get("/api/price-per-featured-slot").then((response) => {
                 commit("setPrice", response.data);
+            })
+            .catch(e => {
+                return;
+            });
+        },
+        fetchPriceRangesForTrack({ commit, state }) {
+            axios.get("/api/price-ranges-for-tracks").then((response) => {
+                commit("setPriceRanges", response.data);
             })
             .catch(e => {
                 return;

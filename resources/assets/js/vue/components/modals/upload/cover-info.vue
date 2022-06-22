@@ -245,8 +245,8 @@
               <td style="vertical-align: middle;">Price*</td>
               <td>
                 <price-range
-                  :min="isSingle ? 50 : 300"
-                  :max="isSingle ? 300 : 3000"
+                  :min="isSingle ? getSingleTrackPriceFrom() : getAlbumPriceFrom()"
+                  :max="isSingle ? getSingleTrackPriceTo() : getAlbumPriceTo()"
                   :step="isSingle ? 1 : 100"
                   :value.sync="cover.price"
                   v-validate="'required'"
@@ -419,6 +419,20 @@ export default {
     },
     isDisabled(item) {
       return item === "single" && this.trackCount > 1;
+    },
+
+    getSingleTrackPriceFrom() {
+        return (this.app.priceRangesForTrack.single_track_price_from) ? this.app.priceRangesForTrack.single_track_price_from : 50;
+    },
+    getSingleTrackPriceTo() {
+        return (this.app.priceRangesForTrack.single_track_price_to) ? this.app.priceRangesForTrack.single_track_price_to : 300;
+    },
+
+    getAlbumPriceFrom() {
+        return (this.app.priceRangesForTrack.album_price_from) ? this.app.priceRangesForTrack.album_price_from : 300;
+    },
+    getAlbumPriceTo() {
+        return (this.app.priceRangesForTrack.album_price_to) ? this.app.priceRangesForTrack.album_price_to : 3000;
     },
   },
 

@@ -41,7 +41,12 @@ class SettingsController extends Controller
             'tax_rate' => 'required|numeric|min:0|max:1',
             'purchase_approval_threshold' => 'required|numeric|min:0',
             'banned_words' => 'required|string|max:255',
-            'featured_spot_price' => 'required|numeric|min:0'
+            'featured_spot_price' => 'required|numeric|min:0',
+
+            'single_track_price_from' => 'required|numeric|min:0|lt:single_track_price_to',
+            'single_track_price_to' => 'required|numeric|min:0|gt:single_track_price_from',
+            'album_price_from' => 'required|numeric|min:0|lt:album_price_to',
+            'album_price_to' => 'required|numeric|min:0|gt:album_price_from'
         ]);
 
         foreach ($validated as $key => $value) {
