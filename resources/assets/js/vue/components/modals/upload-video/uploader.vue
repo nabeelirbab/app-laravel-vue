@@ -26,7 +26,7 @@
                 target: '/api/video/upload',
                 withCredentials: true,
                 fileType: ['mp4'],
-                testChunks: true,
+                testChunks: false,
                 maxFileSize: 500 * 1024 * 1024,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
