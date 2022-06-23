@@ -7,7 +7,7 @@
                 out in order to sell on phase.</p>
 
             <div>
-                <label for="document">Add Document</label><span>*</span>
+                <label for="document">Add Document</label>
                 <input @change="uploadOnChange" type="file" id="document" name="document" accept=".jpeg,.jpg,.png">
                 <small class="filename">{{documentName}}</small>
             </div>
@@ -157,7 +157,6 @@
         }
         p{
             line-height: 1.2;
-            // max-width: 805px;
             margin-bottom: 30px;
         }
         label{
