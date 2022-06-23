@@ -3,18 +3,19 @@
         <h1>Verification Details</h1>
 
         <div>
-            <p>The following details are required to provide verification and a method of payment for sales, these can
-                be added later in your account area but must be complete before uploading a release</p>
+            <p>These documents are required to verify your identity, these are necessary checks that have to be carried
+                out in order to sell on phase.</p>
 
             <div>
-                <label for="document">Add Document</label>
+                <label for="document">Add Document</label><span>*</span>
                 <input @change="uploadOnChange" type="file" id="document" name="document" accept=".jpeg,.jpg,.png">
                 <small class="filename">{{documentName}}</small>
             </div>
 
             <div>
                 <label for="additional_document">Additional document</label>
-                <input @change="uploadOnChange2" type="file" id="additional_document" name="additional_document" accept=".jpeg,.jpg,.png">
+                <input @change="uploadOnChange2" type="file" id="additional_document" name="additional_document"
+                    accept=".jpeg,.jpg,.png">
                 <small class="filename">{{addDocumentName}}</small>
             </div>
 
@@ -33,8 +34,8 @@
         data() {
             return {
                 loading: false,
-                documentName: '',
-                addDocumentName: '',
+                documentName: 'jpeg* jpg* png*',
+                addDocumentName: 'jpeg* jpg* png*',
             }
         },
 
@@ -178,7 +179,7 @@
         small{
             font-size: 11px;
             padding: 0 5px;
-            color: #0000ff;
+            color: #ff1d1d;
         }
     }
 }
