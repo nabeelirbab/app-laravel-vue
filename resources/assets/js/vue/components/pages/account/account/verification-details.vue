@@ -157,7 +157,7 @@
         }
         p{
             line-height: 1.2;
-            max-width: 805px;
+            // max-width: 805px;
             margin-bottom: 30px;
         }
         label{
