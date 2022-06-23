@@ -60,7 +60,7 @@ export default {
       this.$notify({
         group: "main",
         type: "success",
-        title: "Comment updated",
+        title: "<img src='/img/success.gif' alt='succescs'>",
       });
 
       UserEvents.$emit('comment-updated');

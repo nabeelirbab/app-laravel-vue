@@ -132,7 +132,7 @@
             Vue.notify({
               group: 'main',
               type: 'success',
-              title: 'Subscription successful.',
+              title: '<img src="/img/success.gif" alt="success">',
             })
           } else {
             Vue.notify({
@@ -154,7 +154,7 @@
             Vue.notify({
               group: 'main',
               type: 'success',
-              title: 'Subscription canceled successfully.',
+              title: '<img src="/img/success.gif" alt="success">',
             })
           }
         }).finally(response => {
@@ -173,7 +173,7 @@
             Vue.notify({
               group: 'main',
               type: 'success',
-              title: 'Subscription resumed.',
+              title: '<img src="/img/success.gif" alt="success">',
             })
           }
         }).finally(response => {

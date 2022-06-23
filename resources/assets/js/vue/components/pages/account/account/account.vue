@@ -161,7 +161,7 @@ export default {
             this.$notify({
               group: "main",
               type: "success",
-              title: "Successfully saved email preferences",
+              title: "<img src='/img/success.gif' alt='success'>",
             });
           });
         }
@@ -178,7 +178,7 @@ export default {
               this.$notify({
                 group: "main",
                 type: "success",
-                title: "Successfully updated password",
+                title: "<img src='/img/success.gif' alt='success'>",
               });
               this.resetForms();
               this.password.submitting = false;

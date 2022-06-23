@@ -77,7 +77,7 @@ export default {
       this.$notify({
         group: "main",
         type: "success",
-        title: "Comment added",
+        title: "<img src='/img/success.gif' alt='succescs'>",
       });
       this.onHide();
     },

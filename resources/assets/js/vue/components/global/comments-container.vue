@@ -46,7 +46,7 @@ export default {
       this.$notify({
         group: "main",
         type: "success",
-        title: "Comment deleted",
+        title: "<img src='/img/success.gif' alt='succescs'>",
       });
     });
     UserEvents.$on("comment-updated", () => {

@@ -187,7 +187,7 @@ export default {
               this.$notify({
                 group: "main",
                 type: "success",
-                title: "Successfully updated info",
+                title: "<img src='/img/success.gif' alt='success'>",
               });
             })
             .catch((err) => {
