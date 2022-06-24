@@ -7,11 +7,11 @@
             <div class="modal-content">
                 <h2>Downgrade Account</h2>
                 <p>
-                    After downgrade all of your music will be withdrawn from sale.Are you sure you want to downgrade to standard ?.
+                    After downgrade all of your music will be withdrawn from sale. Are you sure you want to downgrade to standard ?.
                 </p>
                     
                 <div class="save-button">
-                    <ph-button size="large" @click.native="downgradeConfirmAccount" :loading="submitting">Delete</ph-button>
+                    <ph-button size="large" @click.native="downgradeConfirmAccount" :loading="submitting">Downgrade</ph-button>
                     <ph-button size="large" @click.native="$modal.hide('modal-downgrade')" >Cancel</ph-button>
                 </div>
             </div>
