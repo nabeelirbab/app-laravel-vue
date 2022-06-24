@@ -46,7 +46,7 @@
       <div class="lower">
         <div class="img-preview-remove" v-if="previewUrl" >
           <a title="Remove Image"
-          @click="removeAttachment"><i class="fa fa-times text-danger"></i></a>
+          @click="removeAttachment"><i style="color: #FF0000;" class="fa fa-times text-danger"></i></a>
         </div>
         <img
           :src="previewUrl"
