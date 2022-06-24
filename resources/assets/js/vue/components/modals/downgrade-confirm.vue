@@ -42,6 +42,7 @@
         },
         methods: {
             downgradeConfirmAccount() {
+                    this.submitting = true;
                     axios.post('/api/account/downgrade', {user_id: this.app.user})
                     .then(response => {
                         this.$store.commit('app/setUser', response.data)
@@ -50,7 +51,7 @@
                             type: 'success',
                             title: 'Successfully downgrade account',
                         });
-                        this.downgrading = false;
+                        this.submitting = false;
                     }).finally(()=>location.reload())
             }
         },
