@@ -151,7 +151,7 @@
         },
         components: {
             'delete-modal':DeleteModal,
-            'modal-downgrade':DowngradeModal,
+            'downgrade-modal':DowngradeModal,
             'deactivate-modal':DeactivateModal,
             'connect-details':ConnectDetails,
             'verification-details':VerificationDetails,
