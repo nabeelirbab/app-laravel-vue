@@ -11,7 +11,7 @@
         
         <div>
             <ph-button
-                    v-if="app.user.roles[0].name === 'artist'"
+                    v-if="app.user.roles[0].name !== 'standard'"
                     style="margin-bottom: 5px;"
                     size="medium"
                     @click.native="downgradeAccount"
@@ -39,6 +39,7 @@
 
         <delete-modal></delete-modal>
         <deactivate-modal></deactivate-modal>
+        <downgrade-modal></downgrade-modal>
         <modal
             name="modal-account-reg-form"
             @before-open="beforeOpen"
@@ -73,6 +74,7 @@
 
 <script>
     import DeleteModal from './../../../modals/delete'; 
+    import DowngradeModal from './../../../modals/downgrade-confirm';
     import DeactivateModal from './../../../modals/deactivate';
     import ConnectDetails from './connect-details';
     import VerificationDetails from './verification-details';
@@ -129,21 +131,27 @@
                     }).finally(()=>location.reload())
             },
             downgradeAccount() {
-                this.downgrading = true
-                axios.post('/api/account/downgrade', {user_id: this.app.user})
-                    .then(response => {
-                        this.$store.commit('app/setUser', response.data)
-                        this.$notify({
-                            group: 'main',
-                            type: 'success',
-                            title: 'Successfully downgrade account',
-                        });
-                        this.downgrading = false;
-                    }).finally(()=>location.reload())
+                if (this.app.user.roles[0].name != 'artist') {
+                    this.$modal.show('modal-downgrade');
+                } else {
+                    this.downgrading = true
+                    axios.post('/api/account/downgrade', {user_id: this.app.user})
+                        .then(response => {
+                            this.$store.commit('app/setUser', response.data)
+                            this.$notify({
+                                group: 'main',
+                                type: 'success',
+                                title: 'Successfully downgrade account',
+                            });
+                            this.downgrading = false;
+                        }).finally(()=>location.reload())
+                }
+                
             },
         },
         components: {
             'delete-modal':DeleteModal,
+            'modal-downgrade':DowngradeModal,
             'deactivate-modal':DeactivateModal,
             'connect-details':ConnectDetails,
             'verification-details':VerificationDetails,
