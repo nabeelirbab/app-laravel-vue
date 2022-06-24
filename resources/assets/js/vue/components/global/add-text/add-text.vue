@@ -46,7 +46,7 @@
       <div class="lower">
         <div class="img-preview-remove" v-if="previewUrl" >
           <a title="Remove Image"
-          @click="removeAttachment"><i class="fa fa-times"></i></a>
+          @click="removeAttachment"><i class="fa fa-times text-danger"></i></a>
         </div>
         <img
           :src="previewUrl"
@@ -399,10 +399,12 @@ export default {
 
   .img-preview-remove {
     float: right;
-    margin-left: 65px;
+    margin-left: 75px;
+    margin-bottom: 105px;
     position: absolute;
-    background: #FF0000;
+    color: #FF0000;
     cursor: pointer;
+    display: block;
   }
 
   .upper {
