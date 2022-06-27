@@ -1,22 +1,26 @@
 <template>
-    <div>
+    <div class="verify-details">
         <h1>Verification Details</h1>
 
         <div>
-            <p>The following details are required to provide verification and a method of payment for sales, these can
-                be added later in your account area but must be complete before uploading a release</p>
+            <p>These documents are required to verify your identity, these are necessary checks that have to be carried
+                out in order to sell on phase.</p>
 
             <div>
-                <label for="document">Document</label>
-                <input type="file" id="document" name="document" accept=".jpeg,.jpg,.png">
+                <label for="document">Add Document</label>
+                <input @change="uploadOnChange" type="file" id="document" name="document" accept=".jpeg,.jpg,.png">
+                <small class="filename">{{documentName}}</small>
             </div>
 
             <div>
                 <label for="additional_document">Additional document</label>
-                <input type="file" id="additional_document" name="additional_document" accept=".jpeg,.jpg,.png">
+                <input @change="uploadOnChange2" type="file" id="additional_document" name="additional_document"
+                    accept=".jpeg,.jpg,.png">
+                <small class="filename">{{addDocumentName}}</small>
             </div>
 
             <ph-button @click.native="submitForm" :loading="loading">Upload</ph-button>
+            <ph-button @click.native="skip">Skip</ph-button>
         </div>
     </div>
 </template>
@@ -30,6 +34,8 @@
         data() {
             return {
                 loading: false,
+                documentName: 'jpeg* jpg* png*',
+                addDocumentName: 'jpeg* jpg* png*',
             }
         },
 
@@ -120,10 +126,60 @@
                     return await fileResult.json()
                 }
             },
+
+            async skip() {
+                this.$emit('finished')
+                this.loading = false
+            },
+
+            async uploadOnChange(event) {
+                var fileData = event.target.files[0];
+                var filename = fileData.name;
+                this.documentName = filename;
+            },
+            async uploadOnChange2(event) {
+                var fileData = event.target.files[0];
+                var filename = fileData.name;
+                this.addDocumentName = filename;
+            }
         }
     }
 </script>
 
 <style lang="scss" scoped>
-
+.verify-details{
+    h1{
+        font-size: 30px !important;
+    }
+    &>div{
+        div{
+            margin-bottom: 10px;
+        }
+        p{
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+        label{
+            cursor: pointer;
+            display: inline-block;
+            background: none;
+            border-radius: 999px;
+            outline: none;
+            font-size: 10px;
+            padding: 7px 12px;
+            letter-spacing: 1px;
+            border: 1px solid #3300ff;
+            color: #3300ff;
+            text-align: center;
+        }
+        input[type="file"]{
+            display: none;
+        }
+        small{
+            font-size: 11px;
+            padding: 0 5px;
+            color: #ff1d1d;
+        }
+    }
+}
 </style>

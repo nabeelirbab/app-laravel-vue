@@ -80,6 +80,11 @@
 
     .v--modal {
         margin: 20px 0;
+        padding: 3em;
+        @media(max-width: 767px) {
+            padding: 2em;
+            left: 0 !important;
+        }
     }
 
     .modal {
@@ -88,9 +93,9 @@
 
         font-family: $font-comfortaa;
 
-        .modal-logo {
-            padding-top: 3em;
-        }
+        // .modal-logo {
+        //     padding-top: 3em;
+        // }
     }
 
     .modal-header {

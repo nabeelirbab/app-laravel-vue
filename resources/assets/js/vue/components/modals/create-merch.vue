@@ -141,7 +141,7 @@ export default {
 						this.$notify({
 							group: "main",
 							type: "success",
-							title: "Merch created successfully",
+							title: "<img src='/img/success.gif' alt='succescs'>",
 						});
 					})
 					.catch((error) => {

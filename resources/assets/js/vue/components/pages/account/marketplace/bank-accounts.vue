@@ -100,7 +100,7 @@
                     this.$notify({
                         group: 'main',
                         type: 'success',
-                        title: 'Successfully removed bank account',
+                        title: '<img src="/img/success.gif" alt="success">',
                     });
                     this.getBankAccounts()
                 })
@@ -112,7 +112,7 @@
                     this.$notify({
                         group: 'main',
                         type: 'success',
-                        title: 'Successfully changed default bank account',
+                        title: '<img src="/img/success.gif" alt="success">',
                     });
                     this.getBankAccounts()
                 })
@@ -140,7 +140,7 @@
                         this.$notify({
                             group: 'main',
                             type: 'success',
-                            title: 'Successfully added bank account',
+                            title: '<img src="/img/success.gif" alt="success">',
                         });
                         this.getBankAccounts()
                         this.$emit("bank_updated");

@@ -304,7 +304,7 @@
                                     Vue.$notify({
                                         group: "main",
                                         type: "success",
-                                        title: `Account ${method}d.`,
+                                        title: "<img src='/img/success.gif' alt='success'>",
                                     });
                                 })
                                 .catch((error) => {

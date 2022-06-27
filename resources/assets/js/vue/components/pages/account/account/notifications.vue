@@ -133,7 +133,7 @@
                     this.$notify({
                         group: 'main',
                         type: 'success',
-                        title: 'Sucessfully saved notification settings',
+                        title: "<img src='/img/success.gif' alt='success'>",
                     });
                 }).catch(() => {
                     this.$notify({
