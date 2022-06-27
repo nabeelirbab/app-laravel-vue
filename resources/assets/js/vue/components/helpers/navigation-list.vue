@@ -28,7 +28,7 @@ export default {
             required: true
         },
         menu: {
-            type: string,
+            type: String,
             required: false
         }
     },
