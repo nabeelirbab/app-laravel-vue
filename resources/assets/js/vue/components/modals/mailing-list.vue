@@ -51,7 +51,7 @@
                 this.$notify({
                   group: 'main',
                   type: 'success',
-                  title: response.data.message,
+                  title: '<img src="/img/success.gif" alt="success">',
                 });
 
                 this.email = ''

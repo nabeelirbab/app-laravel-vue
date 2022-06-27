@@ -122,7 +122,7 @@
                         this.$notify({
                             group: 'main',
                             type: 'success',
-                            title: 'Event created successfully',
+                            title: '<img src="/img/success.gif" alt="success">',
                         });
                     }).finally(() => {
                         this.submitting = false;

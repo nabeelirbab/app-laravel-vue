@@ -201,7 +201,7 @@
               Vue.notify({
                 group: 'main',
                 type: 'success',
-                title: 'Payment complete.',
+                title: '<img src="/img/success.gif" alt="success">',
               })
               this.loading = false
               this.complete = true
@@ -211,7 +211,7 @@
           Vue.notify({
             group: 'main',
             type: 'success',
-            title: 'Payment complete.',
+            title: '<img src="/img/success.gif" alt="success">',
           })
           this.loading = false
           this.complete = true

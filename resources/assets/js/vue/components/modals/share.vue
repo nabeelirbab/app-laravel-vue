@@ -53,7 +53,7 @@
                     this.$notify({
                         group: 'main',
                         type: 'success',
-                        title: 'Sucessfully shared!',
+                        title: '<img src="/img/success.gif" alt="success">',
                     });
                 }).finally(() => {
                     this.submitting = false;

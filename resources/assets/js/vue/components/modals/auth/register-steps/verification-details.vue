@@ -76,7 +76,7 @@
                         this.$notify({
                             group: 'main',
                             type: 'success',
-                            title: 'Successfully uploaded document',
+                            title: '<img src="/img/success.gif" alt="success">',
                         })
                         this.$emit('document_uploaded')
                         this.$emit('finished')

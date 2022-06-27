@@ -105,7 +105,7 @@ export default {
             Vue.notify({
               group: 'main',
               type: 'success',
-              title: 'Payment successful.',
+              title: '<img src="/img/success.gif" alt="success">',
             })
             this.loading = false
             this.complete = true
