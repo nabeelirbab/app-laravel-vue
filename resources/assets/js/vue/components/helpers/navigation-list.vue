@@ -9,6 +9,11 @@
                 <router-link class="navigation-list__item" to="#" @click.prevent.native="$modal.show(item.modal)">{{ item.title }}</router-link>
             </span>
         </li>
+        <li v-if="$store.state.app.user.roles[0].name == 'admin'">
+            <span>
+            <a href="/admin">Admin</a>
+            </span>
+        </li>
     </ul>
 </template>
 
