@@ -31,10 +31,10 @@
         </main>
         <aside
             class="main-right"
-            v-if="app.user.loggedin || search.visible"
+            v-if="search.visible"
             :class="{ searching: search.visible }"
         >
-          <main-right/>
+        
         </aside>
       </div>
       <main-footer/>
@@ -61,7 +61,6 @@ import UserBar from "./layout/user-bar";
 import OnlyMusicBar from "./layout/only-music-bar";
 import SearchView from "./pages/search/search-view";
 import MainLeft from "./layout/main-left";
-import MainRight from "./layout/main-right";
 import MainFooter from "./layout/main-footer";
 import {MessageEvents} from "../event-bus";
 
@@ -80,7 +79,6 @@ export default {
     UserBar,
     SearchView,
     MainLeft,
-    MainRight,
     MainFooter,
     MobileSlideoutMenu,
     OnlyMusicBar
