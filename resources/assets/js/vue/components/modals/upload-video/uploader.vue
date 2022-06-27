@@ -28,7 +28,7 @@
                 fileType: ['mp4'],
                 testChunks: false,
                 maxFileSize: 500 * 1024 * 1024,
-                chunkSize: 100 * 1024 * 1024, // 100MB
+                chunkSize: 1.5 * 1024 * 1024, // 100MB
                 simultaneousUploads: 2,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
