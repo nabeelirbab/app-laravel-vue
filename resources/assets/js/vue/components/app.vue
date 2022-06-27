@@ -29,13 +29,7 @@
           <!-- </transition-group> -->
           <vue-progress-bar/>
         </main>
-        <aside
-            class="main-right"
-            v-if="search.visible"
-            :class="{ searching: search.visible }"
-        >
         
-        </aside>
       </div>
       <main-footer/>
 
