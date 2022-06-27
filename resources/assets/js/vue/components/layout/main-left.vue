@@ -7,7 +7,7 @@
         </div>
 
         <nav class="main-nav">
-            <navigation-list :items="navigation.main_menu" :menu="main_menu" />
+            <navigation-list :items="navigation.main_menu" :menu="'main_menu'" />
         </nav>
     </div>
 </template>
