@@ -29,7 +29,7 @@
                 testChunks: false,
                 maxFileSize: 500 * 1024 * 1024,
                 chunkSize: 1 * 1024 * 1024, // 1MB
-                simultaneousUploads: 2,
+                simultaneousUploads: 10,
                 forceChunkSize: true,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
