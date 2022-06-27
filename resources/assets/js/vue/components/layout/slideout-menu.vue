@@ -8,6 +8,7 @@
             <navigation-list
                 @menuClicked="toggle"
                 :items="navigation.slideout_menu"
+                :menu="'slideout_menu'" 
             />
 
             <div v-if="$store.state.app.user.loggedIn">
