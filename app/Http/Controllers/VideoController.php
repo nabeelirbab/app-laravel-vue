@@ -9,6 +9,8 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+
 use App\Events\User\UploadedVideo;
 
 use App\Phase\VideoTranscoder;
@@ -46,8 +48,11 @@ class VideoController extends Controller
      * @throws UploadMissingFileException
      *
      */
-    public function uploadFile(Request $request, FileReceiver $receiver)
+    public function uploadFile(Request $request)
     {
+        // create the file receiver
+        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
+
         // check if the upload is success, throw exception or return response you need
         if ($receiver->isUploaded() === false) {
             throw new UploadMissingFileException();
