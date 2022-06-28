@@ -422,8 +422,8 @@
                         </div>
                         <div>
                             <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
-                            <p class="error-message">
-                                {{ errors.first("recaptcha") }}
+                            <p v-if="captchaValidationError" class="error-message">
+                                {{ captchaValidationError }}
                             </p>
                         </div>
                     </div>
@@ -466,6 +466,7 @@
                 artistGenresString: "",
                 interestGenresString: "",
                 validationErrors: "",
+                captchaValidationError: "",
                 submitting: false,
                 submitted: false, // If a submission was attempted
                 data: {
@@ -539,6 +540,7 @@
                     if (passes) {
                         this.validationErrors = "";
                         this.submitting = true;
+                        this.captchaValidationError = '';
                         axios
                             .post(
                                 "/api/auth/register/" +
@@ -561,6 +563,10 @@
                                 this.submitting = false;
                                 this.validationErrors =
                                     error.response.data.errors;
+
+                               if (this.validationErrors.recaptcha) {
+                                    this.captchaValidationError = this.validationErrors.recaptcha[0];
+                               }
                             });
                     }
                 });
