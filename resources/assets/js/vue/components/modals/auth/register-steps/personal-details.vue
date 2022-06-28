@@ -423,11 +423,12 @@
                         <div>
                             <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
                             
+                            <p v-if="captchaValidationError" class="error-message" style="padding-top:40px;">
+                                {{ captchaValidationError }}
+                            </p>
                         </div>
                     </div>
-                    <p v-if="captchaValidationError" class="error-message">
-                        {{ captchaValidationError }}
-                    </p>
+                    
                 </div>
             </div>
         </div>
@@ -531,7 +532,8 @@
                 this.submitted = true;
                 this.$validator.validate().then((passes) => {
                     if (!this.hasValidSocial && this.selectedPlan.title !== 'Standard') return;
-
+                    this.validateReCaptcha();
+                    
                     const transferCart = this.$route.query.transferCart;
                     let guestCart = null;
                     if (transferCart === 'true') {
@@ -581,6 +583,13 @@
             captchaExpired() {
                 this.data.recaptcha = '';
 
+            },
+
+            validateReCaptcha() {
+                if (! this.data.recaptcha) {
+                    this.captchaValidationError = 'The recaptcha field is required.';
+                    return false;
+                }
             }
             
         },
