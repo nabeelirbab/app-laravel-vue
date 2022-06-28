@@ -422,11 +422,12 @@
                         </div>
                         <div>
                             <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
-                            <p v-if="captchaValidationError" class="error-message">
-                                {{ captchaValidationError }}
-                            </p>
+                            
                         </div>
                     </div>
+                    <p v-if="captchaValidationError" class="error-message">
+                        {{ captchaValidationError }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -579,7 +580,7 @@
 
             captchaExpired() {
                 this.data.recaptcha = '';
-                
+
             }
             
         },
