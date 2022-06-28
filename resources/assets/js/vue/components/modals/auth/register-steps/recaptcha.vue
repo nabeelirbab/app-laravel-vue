@@ -10,6 +10,7 @@
 
 <script>
 import { VueRecaptcha } from 'vue-recaptcha';
+import {mapState} from "vuex";
   export default {
     name: "recaptcha",
     components: { VueRecaptcha },
