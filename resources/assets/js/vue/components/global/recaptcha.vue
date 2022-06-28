@@ -24,7 +24,6 @@ import {mapState} from "vuex";
     },
     methods: {
       onCaptchaVerified: function (recaptchaToken) {
-      console.log("validate on recaptcha 27 "+ recaptchaToken);
           this.validateCaptcha = true;
           this.$emit("onvalidateCaptcha", recaptchaToken);
       },

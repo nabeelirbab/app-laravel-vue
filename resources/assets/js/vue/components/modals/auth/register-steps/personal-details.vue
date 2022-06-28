@@ -567,7 +567,6 @@
             },
 
             onCaptchaValidated(captcha) {
-            console.log("validate on personal details "+ captcha);
                 this.data.recaptcha = captcha;
             }
             
