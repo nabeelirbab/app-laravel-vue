@@ -45,14 +45,5 @@
 <script src="/js/vendor.js"></script>
 <script src="/js/app.js"></script>
 
-
-<!-- Make sure you load the vue-demi first -->
-<script src="https://unpkg.com/vue-demi@0.12.1/lib/index.iife.js"></script>
-
-<!-- Then load vue-recaptcha -->
-<script src="https://unpkg.com/vue-recaptcha@^2/dist/vue-recaptcha.js"></script>
-<!-- Minify -->
-<script src="https://unpkg.com/vue-recaptcha@^2/dist/vue-recaptcha.min.js"></script>
-
 </body>
 </html>

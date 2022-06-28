@@ -425,8 +425,7 @@
                             type="invisible"
                             @verify="onCaptchaVerified"
                             @expired="onCaptchaExpired"
-                          >
-                        </vue-recaptcha>
+                           />
                     </div>
                 </div>
             </div>
@@ -445,8 +444,8 @@
 </template>
 
 <script>
+    
     import GenreSelect from "../../upload/genre-select";
-    import VueRecaptcha from 'vue-recaptcha';
     import Cookies from 'js-cookie';
 
     export default {
@@ -491,6 +490,7 @@
                         genres: [],
                     },
                     newsletter: false,
+                    recaptcha: ''
                 },
             };
         },
@@ -580,7 +580,7 @@
         },
 
         components: {
-            GenreSelect, VueRecaptcha 
+            GenreSelect
         },
     };
 </script>

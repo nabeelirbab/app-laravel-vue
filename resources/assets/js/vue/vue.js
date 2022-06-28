@@ -9,6 +9,7 @@ import "flatpickr/dist/flatpickr.css";
 import "vue-snotify/styles/material.css";
 import VCalendar from "v-calendar";
 import Tooltip from 'vue-directive-tooltip';
+import VueRecaptcha from "vue-recaptcha";
 import 'vue-directive-tooltip/dist/vueDirectiveTooltip.css';
 
 
@@ -16,6 +17,7 @@ require("vue-social-sharing");
 require("../vee-validate/vee-validate");
 Vue.use(Tooltip);
 Vue.use(Snotify);
+Vue.use(VueRecaptcha);
 Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueProgressBar, {
