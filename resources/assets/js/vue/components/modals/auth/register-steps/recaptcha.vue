@@ -32,6 +32,9 @@ import {mapState} from "vuex";
           this.$refs.recaptcha.reset();
       },
       getSiteKey: function () {
+      console.log("Key :: "+ this.app.captchaCredentials.key);
+      console.log(this.app.captchaCredentials);
+
           return this.app.captchaCredentials.key;
       }
   }
