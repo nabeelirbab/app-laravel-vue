@@ -1,6 +1,6 @@
 <template>
   <vue-recaptcha
-    sitekey="siteKey"
+    sitekey="getSiteKey()"
     :loadRecaptchaScript="true"
     ref="recaptcha"
     @verify="onCaptchaVerified"
@@ -16,8 +16,7 @@ import {mapState} from "vuex";
     components: { VueRecaptcha },
     data() {
       return {
-          recaptcha: '',
-          siteKey: this.getSiteKey()
+          recaptcha: ''
       }
     },
     computed: {
