@@ -445,7 +445,10 @@
 
 <script>
     
+
+    import VueRecaptcha from "vue-recaptcha";
     import GenreSelect from "../../upload/genre-select";
+
     import Cookies from 'js-cookie';
 
     export default {
@@ -580,7 +583,7 @@
         },
 
         components: {
-            GenreSelect
+            GenreSelect, VueRecaptcha
         },
     };
 </script>
