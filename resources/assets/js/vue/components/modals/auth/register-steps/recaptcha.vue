@@ -17,7 +17,7 @@ import {mapState} from "vuex";
     data() {
       return {
           recaptcha: '',
-          siteKey: this.app.pricePerFeaturedSlot.key
+          siteKey: this.getSiteKey()
       }
     },
     computed: {
@@ -31,6 +31,9 @@ import {mapState} from "vuex";
       onCaptchaExpired: function () {
           this.$refs.recaptcha.reset();
       },
+      getSiteKey: function () {
+          return this.app.captchaCredentials.key;
+      }
   }
 };
 </script>
