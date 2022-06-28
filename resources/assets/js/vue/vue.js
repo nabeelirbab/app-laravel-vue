@@ -17,7 +17,7 @@ require("vue-social-sharing");
 require("../vee-validate/vee-validate");
 Vue.use(Tooltip);
 Vue.use(Snotify);
-Vue.use(VueRecaptcha);
+//Vue.use(VueRecaptcha);
 Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueProgressBar, {
