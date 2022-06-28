@@ -29,6 +29,7 @@ import {mapState} from "vuex";
       },
       onCaptchaExpired: function () {
           this.$refs.recaptcha.reset();
+          this.$emit("onExpiredCaptcha");
       },
       getSiteKey: function () {
           return this.app.captchaCredentials.key;

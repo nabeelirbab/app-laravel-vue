@@ -421,7 +421,7 @@
                         <div>
                         </div>
                         <div>
-                            <recaptcha @onvalidateCaptcha="onCaptchaValidated" />
+                            <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
                             <p class="error-message">
                                 {{ errors.first("recaptcha") }}
                             </p>
@@ -554,7 +554,7 @@
                                     "app/setTempUser",
                                     response.data
                                 );
-                                this.data.recaptcha = '';
+                                this.captchaExpired();
                                 this.$emit("next-step");
                             })
                             .catch((error) => {
@@ -568,6 +568,10 @@
 
             onCaptchaValidated(captcha) {
                 this.data.recaptcha = captcha;
+            },
+
+            captchaExpired() {
+                this.data.recaptcha = '';
             }
             
         },
