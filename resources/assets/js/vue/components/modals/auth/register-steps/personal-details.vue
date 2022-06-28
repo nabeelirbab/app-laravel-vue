@@ -421,7 +421,10 @@
                         <div>
                         </div>
                         <div>
-                            <recaptcha />
+                            <recaptcha @onvalidateCaptcha="onCaptchaValidated" />
+                            <p class="error-message">
+                                {{ errors.first("recaptcha") }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -443,7 +446,7 @@
 <script>
     
 
-    import Recaptcha from "./recaptcha";
+    import Recaptcha from "../../../global/recaptcha";
     import GenreSelect from "../../upload/genre-select";
 
     import Cookies from 'js-cookie';
@@ -490,6 +493,7 @@
                         genres: [],
                     },
                     newsletter: false,
+                    recaptcha: ''
                     
                 },
             };
@@ -562,6 +566,10 @@
                     }
                 });
             },
+
+            onCaptchaValidated(captcha) {
+                this.recaptcha = captcha;
+            }
             
         },
 

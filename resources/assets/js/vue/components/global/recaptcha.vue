@@ -24,16 +24,13 @@ import {mapState} from "vuex";
     },
     methods: {
       onCaptchaVerified: function (recaptchaToken) {
-          this.form.recaptcha = recaptchaToken
           this.validateCaptcha = true
+          this.$emit("onvalidateCaptcha", recaptchaToken);
       },
       onCaptchaExpired: function () {
           this.$refs.recaptcha.reset();
       },
       getSiteKey: function () {
-      console.log("Key :: "+ this.app.captchaCredentials.key);
-      console.log(this.app.captchaCredentials);
-
           return this.app.captchaCredentials.key;
       }
   }
