@@ -574,10 +574,12 @@
 
             onCaptchaValidated(captcha) {
                 this.data.recaptcha = captcha;
+                this.captchaValidationError = '';
             },
 
             captchaExpired() {
                 this.data.recaptcha = '';
+                
             }
             
         },
