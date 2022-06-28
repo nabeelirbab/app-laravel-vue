@@ -554,8 +554,7 @@
                                     "app/setTempUser",
                                     response.data
                                 );
-
-                                this.onCaptchaExpired();
+                                this.data.recaptcha = '';
                                 this.$emit("next-step");
                             })
                             .catch((error) => {
