@@ -147,6 +147,7 @@ export default {
     this.$store.dispatch("app/fetchPlans");
     this.$store.dispatch("app/fetchPricePerFeaturedSlot");
     this.$store.dispatch("app/fetchPriceRangesForTrack");
+    this.$store.dispatch("app/fetchCaptchaCredentials");
     this.$store.dispatch("cart/load");
 
     if (window.user) {

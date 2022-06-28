@@ -414,6 +414,22 @@
                     </div>
                 </div>
             </div>
+
+            <div class="register-form-inputs">
+                <div class="full-width">
+                    <div class="input">
+                        <div>
+                        </div>
+                        <div>
+                            <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
+                            
+                        </div>
+                    </div>
+                    <p v-if="captchaValidationError" class="error-message">
+                        {{ captchaValidationError }}
+                    </p>
+                </div>
+            </div>
         </div>
 
         <div class="flex justify-center">
@@ -429,7 +445,11 @@
 </template>
 
 <script>
+    
+
+    import Recaptcha from "../../../global/recaptcha";
     import GenreSelect from "../../upload/genre-select";
+
     import Cookies from 'js-cookie';
 
     export default {
@@ -447,6 +467,7 @@
                 artistGenresString: "",
                 interestGenresString: "",
                 validationErrors: "",
+                captchaValidationError: "",
                 submitting: false,
                 submitted: false, // If a submission was attempted
                 data: {
@@ -474,6 +495,8 @@
                         genres: [],
                     },
                     newsletter: false,
+                    recaptcha: ''
+                    
                 },
             };
         },
@@ -518,6 +541,7 @@
                     if (passes) {
                         this.validationErrors = "";
                         this.submitting = true;
+                        this.captchaValidationError = '';
                         axios
                             .post(
                                 "/api/auth/register/" +
@@ -533,16 +557,32 @@
                                     "app/setTempUser",
                                     response.data
                                 );
+                                this.captchaExpired();
                                 this.$emit("next-step");
                             })
                             .catch((error) => {
                                 this.submitting = false;
                                 this.validationErrors =
                                     error.response.data.errors;
+
+                               if (this.validationErrors.recaptcha) {
+                                    this.captchaValidationError = this.validationErrors.recaptcha[0];
+                               }
                             });
                     }
                 });
             },
+
+            onCaptchaValidated(captcha) {
+                this.data.recaptcha = captcha;
+                this.captchaValidationError = '';
+            },
+
+            captchaExpired() {
+                this.data.recaptcha = '';
+
+            }
+            
         },
 
         filters: {
@@ -554,7 +594,7 @@
         },
 
         components: {
-            GenreSelect,
+            GenreSelect, Recaptcha
         },
     };
 </script>

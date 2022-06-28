@@ -98,6 +98,8 @@ class User extends Authenticatable
         ],
     ];
 
+    protected $guarded = [];
+
     public function featuredOrders(): HasMany
     {
         return $this->hasMany(FeaturedOrder::class);
