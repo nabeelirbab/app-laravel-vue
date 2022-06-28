@@ -9,7 +9,7 @@
                 <router-link class="navigation-list__item" to="#" @click.prevent.native="$modal.show(item.modal)">{{ item.title }}</router-link>
             </span>
         </li>
-        <li v-if="menu == 'slideout_menu' && $store.state.app.user.roles[0].name == 'admin'">
+        <li v-if="menu == 'slideout_menu' && ifAdmin()">
             <span>
             <a href="/admin">Admin</a>
             </span>
@@ -95,7 +95,14 @@ export default {
             }
 
             return false
-        }
+        },
+
+        ifAdmin() {
+            if(! this.app.user.loggedin) {
+                return false;
+            }
+            return (this.app.user.roles[0].name == 'admin');
+        },
     }
 }
 </script>
