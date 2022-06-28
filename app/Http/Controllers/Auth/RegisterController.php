@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Mailcoach\Models\Tag;
 use App\Http\Controllers\Controller;
+use App\Rules\Recaptcha;
 use Spatie\Mailcoach\Models\EmailList;
 use Spatie\Mailcoach\Models\Subscriber;
 
@@ -48,11 +49,13 @@ class RegisterController extends Controller
         ],
     ];
 
-    public function register(Request $request, $type)
+    public function register(Request $request, $type, Recaptcha $recaptcha)
     {
         if (!in_array($type, $this->types)) {
             throw new \Exception('membership type not valid');
         }
+
+        $this->rules['all']['recaptcha'] = ['required', $recaptcha];
 
         $validated = $request->validate(
             array_merge(
@@ -76,7 +79,7 @@ class RegisterController extends Controller
         ]);
         $user->status = 'awaiting';
         // random string with current timestamp for activation token
-        $randomString = time() . substr( str_shuffle( "0123456789abcdefghijklmnopqrstvwxyz" ), 0, 15);
+        $randomString = time() . substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 15);
         $user->activation_token = $randomString;
         $user->save();
 
@@ -95,13 +98,13 @@ class RegisterController extends Controller
 
         if ($type === 'pro' || $type == 'artist') {
 
-            if($type == 'pro') {
+            if ($type == 'pro') {
                 $user->createAsStripeCustomer([
                     'name' => $data['personal']['firstname'] . ' ' . $data['personal']['surname'],
                 ]);
                 $user->trial_ends_at = now()->addDays(30);
             }
-            
+
             $genreIDs = collect($data['artist']['genres'])->pluck('id');
 
             $user->genres()->sync($genreIDs->all());
@@ -110,19 +113,19 @@ class RegisterController extends Controller
 
         if (!empty($data['newsletter'])) {
             $emailList = EmailList::where('name', 'General')->first();
-            if(!empty($emailList)) {
+            if (!empty($emailList)) {
                 Subscriber::createWithEmail($data['personal']['email'])
                     ->withAttributes([
-                    'first_name' => $data['personal']['firstname'],
-                    'last_name' => $data['personal']['surname']
+                        'first_name' => $data['personal']['firstname'],
+                        'last_name' => $data['personal']['surname']
                     ])
                     ->skipConfirmation()
                     ->subscribeTo($emailList);
             }
-            
+
             if ($type === 'pro') {
                 $emailList = EmailList::where('name', 'Artist Pro')->first();
-                if(!empty($emailList)) {
+                if (!empty($emailList)) {
                     Subscriber::createWithEmail($data['personal']['email'])
                         ->withAttributes([
                             'first_name' => $data['personal']['firstname'],
@@ -134,7 +137,7 @@ class RegisterController extends Controller
             }
             if ($type === 'artist') {
                 $emailList = EmailList::where('name', 'Artist')->first();
-                if(!empty($emailList)) {
+                if (!empty($emailList)) {
                     Subscriber::createWithEmail($data['personal']['email'])
                         ->withAttributes([
                             'first_name' => $data['personal']['firstname'],

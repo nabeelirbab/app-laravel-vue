@@ -18,7 +18,8 @@ export default {
         feed: [],
         plans: [],
         pricePerFeaturedSlot: "",
-        priceRangesForTrack: []
+        priceRangesForTrack: [],
+        captchaCredentials: []
     },
     mutations: {
         setNavigation(state, data) {
@@ -104,7 +105,10 @@ export default {
         },
         incrementTrackCount(state) {
             state.user.incrementTrackCount();
-        }
+        },
+        setCaptchaCredentials(state, credentials) {
+            state.captchaCredentials = credentials;
+        },
     },
 
     actions: {
@@ -348,6 +352,14 @@ export default {
         fetchPriceRangesForTrack({ commit, state }) {
             axios.get("/api/price-ranges-for-tracks").then((response) => {
                 commit("setPriceRanges", response.data);
+            })
+            .catch(e => {
+                return;
+            });
+        },
+        fetchCaptchaCredentials({ commit, state }) {
+            axios.get("/api/fetch-captcha-credentials").then((response) => {
+                commit("setCaptchaCredentials", response.data);
             })
             .catch(e => {
                 return;

@@ -66,3 +66,7 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
         Route::get('/', 'InvoicesController@index');
     });
 });
+
+Route::get('fetch-captcha-credentials', function () {
+    return config("services.recaptcha");
+});
