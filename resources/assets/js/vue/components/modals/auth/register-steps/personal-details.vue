@@ -418,14 +418,7 @@
             <div class="register-form-inputs">
                 <div class="full-width">
                     <div class="input">
-                        <vue-recaptcha
-                            sitekey="6LfbwqYgAAAAAJ24zMoVgNNQD63TG5RvtmK-Q_T9"
-                            :loadRecaptchaScript="true"
-                            ref="recaptcha"
-                            type="invisible"
-                            @verify="onCaptchaVerified"
-                            @expired="onCaptchaExpired"
-                           />
+                        
                     </div>
                 </div>
             </div>
@@ -446,7 +439,7 @@
 <script>
     
 
-    import VueRecaptcha from "vue-recaptcha";
+    import Recaptcha from "./recaptcha";
     import GenreSelect from "../../upload/genre-select";
 
     import Cookies from 'js-cookie';
@@ -493,7 +486,7 @@
                         genres: [],
                     },
                     newsletter: false,
-                    recaptcha: ''
+                    
                 },
             };
         },
@@ -565,13 +558,7 @@
                     }
                 });
             },
-            onCaptchaVerified: function (recaptchaToken) {
-              this.form.recaptcha = recaptchaToken
-              this.validateCaptcha = true
-            },
-            onCaptchaExpired: function () {
-              this.$refs.recaptcha.reset();
-            },
+            
         },
 
         filters: {
@@ -583,7 +570,7 @@
         },
 
         components: {
-            GenreSelect, VueRecaptcha
+            GenreSelect, Recaptcha
         },
     };
 </script>
