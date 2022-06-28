@@ -45,6 +45,7 @@
     "vue-directive-tooltip": "^1.6.3",
     "vue-loader": "^15.9.8",
     "vue-range-slider": "^0.6.0",
+    "vue-recaptcha": "^2.0.2",
     "vue-slider-component": "^3.0.43",
     "vue-snotify": "^3.2.1",
     "vue-social-sharing": "^2.4.2",
