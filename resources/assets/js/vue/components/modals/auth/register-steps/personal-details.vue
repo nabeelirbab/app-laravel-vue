@@ -569,7 +569,7 @@
 
             onCaptchaValidated(captcha) {
             console.log("validate on personal details "+ captcha);
-                this.recaptcha = captcha;
+                this.data.recaptcha = captcha;
             }
             
         },
