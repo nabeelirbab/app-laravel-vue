@@ -418,7 +418,11 @@
             <div class="register-form-inputs">
                 <div class="full-width">
                     <div class="input">
-                        <recaptcha />
+                        <div>
+                        </div>
+                        <div>
+                            <recaptcha />
+                        </div>
                     </div>
                 </div>
             </div>
