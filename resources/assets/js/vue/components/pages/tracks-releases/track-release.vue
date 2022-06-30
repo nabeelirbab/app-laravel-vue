@@ -58,7 +58,21 @@
                                             >,
                                         </span></span
                                     ></span
-                                ><br />
+                                >
+
+                                <span v-if="track"
+                                    >in
+                                    <span
+                                        v-for="(genre, index) in track.release.genres"
+                                        class="item"
+                                        >{{ genre.name
+                                        }}<span v-if="track.release.genres[index + 1]"
+                                            >,
+                                        </span>
+                                    </span>
+                                </span>
+
+                                <br />
                                 <span v-if="release">
                                     Uploaded by
                                     <router-link
@@ -125,7 +139,7 @@
             </div>
             <div class="metadata" v-if="release">
                 <h2>Tracks</h2>
-                <track-list :tracks="release.tracks" />
+                <track-list :tracks="release.tracks" :release="release" />
             </div>
             <div class="metadata" v-if="track">
                 <h2>Track Info</h2>
@@ -154,9 +168,9 @@
                             "
                         ></td>
                         <td>
-                            <span v-for="(genre, index) in item.genres"
+                            <span v-for="(genre, index) in track.release.genres"
                                 >{{ genre.name
-                                }}<span v-if="item.genres[index + 1]"
+                                }}<span v-if="track.release.genres[index + 1]"
                                     >,
                                 </span></span
                             >

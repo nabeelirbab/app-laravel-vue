@@ -52,6 +52,11 @@
                     user: this.$store.state.app.user.id,
                     track: this.track,
                 })
+            } else {
+                axios.post('/api/user/track', {
+                    user: this.track.uploaded_by,
+                    track: this.track,
+                })
             }
           PlayerEvents.$emit('setTrack', {
             track: this.track,

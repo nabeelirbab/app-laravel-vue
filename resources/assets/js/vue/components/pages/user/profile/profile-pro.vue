@@ -33,7 +33,7 @@
           </div>
           <div class="pro-hero-info-actions">
             <follow-action
-              v-if="!isMe"
+              v-if="!isMe && isLogin"
               :user="mutableUser"
               @update="followStatusUpdated"
             />
@@ -91,6 +91,9 @@ export default {
         ? this.user.banner.files.large.url
         : null;
     },
+    isLogin: function() {
+      return this.$store.state.app.user.loggedin;
+    }
   },
   methods: {
     showChangeBannerModal() {

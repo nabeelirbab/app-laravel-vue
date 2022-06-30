@@ -40,7 +40,10 @@ class Chart
     {
         switch ($this->type) {
             case 'Track':
-                $items = Track::where('status', 'approved')->get();
+                $items = Track::where('status', 'approved')
+                ->whereHas('release', function ($query) {
+                        $query->released();
+                })->get();
                 break;
             case 'Release':
                 $items = Release::released()->with('uploader', 'image', 'tracks')->get();

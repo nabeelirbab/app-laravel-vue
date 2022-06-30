@@ -5,10 +5,10 @@
             <avatar v-if="!getReceiverBadge(thread)"  :size="98" :src="getReceiver(thread, 'avatar')" ></avatar>
         </div>
         <div class="detail">
-            <div class="info-top">
-                {{ getReceiver(thread, 'name') }} <small>{{ moment(thread.last_message.date.date).calendar() }}</small>
+            <div v-if="thread.last_message" class="info-top">
+                {{ getReceiver(thread, 'name') }} <small>{{ moment(thread.last_message.date).calendar() }}</small>
             </div>
-            <div class="message">
+            <div v-if="thread.last_message" class="message">
                 {{ thread.last_message.body }}
             </div>
             <div class="actions">
@@ -48,6 +48,11 @@
         data () {
             return {
                 moment: window.moment,
+            }
+        },
+        created: function() {
+            if(!this.app.user.loggedin) {
+                this.$router.push({path: '/login'});
             }
         },
         computed: {

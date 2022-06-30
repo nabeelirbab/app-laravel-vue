@@ -3,27 +3,27 @@
     <filter-container>
       <genre-filter v-model="filters.genres">
         <div class="section-wrapper">
-          <span class="section-number">1</span>
-          <h2>Choose your interest</h2>
+          <h4 class="section-number">1</h4>
+          <h3 class="section-title">Choose your interest</h3>
         </div>
       </genre-filter>
 
       <class-filter v-model="filters.classes" :single="true">
         <div class="section-wrapper">
-          <span class="section-number">2</span>
-          <h2>Select a Class</h2>
+          <h4 class="section-number">2</h4>
+          <h3 class="section-title">Select a Class</h3>
         </div>
       </class-filter>
 
       <filter-filter v-model="filters.filter" :single="true">
         <div class="section-wrapper">
-          <span class="section-number">3</span>
-          <h2>Select a Filter</h2>
+          <h4 class="section-number">3</h4>
+          <h3 class="section-title">Select a Filter</h3>
         </div>
       </filter-filter>
 
       <div class="bpm-filter">
-        <h2>BPM</h2>
+        <h3>BPM</h3>
         <p class="bpm-values">{{ sliderValue[0] + " > " + sliderValue[1] }}</p>
         <div :style="noFiltersSelected ? 'opacity:0.5' : 'opacity:1;'">
           <vue-slider
@@ -167,12 +167,22 @@ export default {
       this.results = null;
       this.loading = true;
       this.filters.bpm = this.sliderValue;
+      this.filters.newsearch = 1;
 
       axios
         .post("/api/discover", this.filters)
         .then((response) => {
-          this.results = response.data.data;
-          this.nextPageUrl = response.data.next_page_url;
+          if(typeof(response.data.filters) != typeof(undefined)) {
+            if (JSON.stringify(response.data.filters) === JSON.stringify(this.filters)) {
+              this.results = response.data.returndata.data;
+              this.nextPageUrl = response.data.returndata.next_page_url;
+            }
+            
+          } else {
+            this.results = response.data.data;
+            this.nextPageUrl = response.data.next_page_url;
+          }
+          
           this.loading = false;
         })
         .catch((error) => {
@@ -218,9 +228,9 @@ export default {
   display: flex;
   align-items: flex-start;
   .section-number {
-    margin-right: 10px;
-    min-width: 20px;
-    height: 20px;
+    margin-right: 5px;
+    min-width: 15px;
+    height: 15px;
     padding: 10px;
     border-radius: 50%;
     background-color: #0039ff;
@@ -245,6 +255,10 @@ export default {
   }
 }
 
+.section-title {
+  padding-top: 8px;
+}
+
 .discover {
   display: flex;
   align-items: flex-start;
@@ -255,6 +269,7 @@ export default {
 
   .discover-results {
     padding: 0 20px;
+    width: 100%;
 
     .discover-section {
       margin: 30px 0;

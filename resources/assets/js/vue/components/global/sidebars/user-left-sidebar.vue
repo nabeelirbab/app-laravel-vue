@@ -18,7 +18,7 @@
           {{ mutableUser.releases_count ? mutableUser.releases_count : 0 }}
         </span>
       </div>
-      <div class="sidebar-group-subtitle" v-if="!isMe">
+      <div class="sidebar-group-subtitle" v-if="!isMe && isLogin">
         <div style="display: flex; align-items: center">
           <follow-action
             :user="mutableUser"
@@ -34,9 +34,9 @@
             ></share-button>
           </span>
 
-          <a target="_blank" :href="`mailto:${mutableUser.email}`">
+          <router-link :to="{ path: '/user/messages/'+user.path}">
             <i class="fa fa-envelope"></i>
-          </a>
+          </router-link>
         </div>
       </div>
       <div class="sidebar-group-content user-bio">
@@ -107,6 +107,9 @@ export default {
     isMe: function () {
       return this.user.id === this.$store.state.app.user.id;
     },
+    isLogin: function() {
+      return this.$store.state.app.user.loggedin;
+    }
   },
   created() {
     this.fetchEvents();

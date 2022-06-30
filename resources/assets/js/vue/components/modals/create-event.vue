@@ -86,6 +86,7 @@
                     location: '',
                     url: '',
                     date: '',
+                    user: null
                 },
                 submitting: false,
                 datePicker: {
@@ -96,6 +97,7 @@
                 }
             }
         },
+
         created: function() {
 
         },
@@ -103,8 +105,10 @@
 
         },
         methods: {
-            beforeOpen (event) {
-
+            beforeOpen ({ params }) {
+                if(params.user) {
+                    this.user = params.user;
+                }
             },
             submit() {
                 this.$validator.validateAll().then(passes => {
@@ -115,6 +119,9 @@
                     data.append('location', this.data.location);
                     data.append('url', this.data.url);
                     data.append('date', this.data.date);
+                    if(this.user && this.user.id) {
+                        data.append("userid", this.user.id);
+                    }
 
                     this.submitting = true;
                     axios.post('/api/user/events/add', data).then(response => {

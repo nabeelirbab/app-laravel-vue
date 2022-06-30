@@ -63,8 +63,11 @@
                     </span>
                 </div>
             </div>
-            <div class="details" v-if="track.release">
+            <div class="details" v-if="track.release && track.release.uploader">
                 {{ track.release.uploader.name }} - {{ track.name }}
+            </div>
+            <div class="details" v-else >
+                {{ track.name }}
             </div>
             <div class="progress"
                  @click="progressClick"
@@ -91,8 +94,11 @@
                     <report-button :reportable="track" />
                 </div>
             </div>
-            <div class="details">
+            <div class="details" v-if="track.release && track.release.uploader">
                 {{ track.release.uploader.name }} - {{ track.name }}
+            </div>
+            <div class="details" v-else >
+                {{ track.name }}
             </div>
             <div>
                 <avatar :src="track.release.image.files.medium.url" :size="250" :tile="true" :center="false" />

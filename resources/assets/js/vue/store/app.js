@@ -17,7 +17,9 @@ export default {
         page: {},
         feed: [],
         plans: [],
-        pricePerFeaturedSlot: ""
+        pricePerFeaturedSlot: "",
+        priceRangesForTrack: [],
+        captchaCredentials: []
     },
     mutations: {
         setNavigation(state, data) {
@@ -92,6 +94,9 @@ export default {
         setPrice(state, price) {
             state.pricePerFeaturedSlot = price;
         },
+        setPriceRanges(state, price) {
+            state.priceRangesForTrack = price;
+        },
         removeUserReleaseFromState(state, release) {
             state.user.removeRelease(release);
         },
@@ -100,7 +105,10 @@ export default {
         },
         incrementTrackCount(state) {
             state.user.incrementTrackCount();
-        }
+        },
+        setCaptchaCredentials(state, credentials) {
+            state.captchaCredentials = credentials;
+        },
     },
 
     actions: {
@@ -336,6 +344,22 @@ export default {
         fetchPricePerFeaturedSlot({ commit, state }) {
             axios.get("/api/price-per-featured-slot").then((response) => {
                 commit("setPrice", response.data);
+            })
+            .catch(e => {
+                return;
+            });
+        },
+        fetchPriceRangesForTrack({ commit, state }) {
+            axios.get("/api/price-ranges-for-tracks").then((response) => {
+                commit("setPriceRanges", response.data);
+            })
+            .catch(e => {
+                return;
+            });
+        },
+        fetchCaptchaCredentials({ commit, state }) {
+            axios.get("/api/fetch-captcha-credentials").then((response) => {
+                commit("setCaptchaCredentials", response.data);
             })
             .catch(e => {
                 return;

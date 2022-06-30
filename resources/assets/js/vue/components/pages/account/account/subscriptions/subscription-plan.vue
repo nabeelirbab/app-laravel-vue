@@ -13,19 +13,29 @@
             <strong>£{{ (plan.price).toFixed(2) }}</strong>
         </div>
         <div class="plan-subscribe">
-            <ph-button v-if="button === 'start_trial'" size="medium" @click.native="subscribe" :loading="loading">
+            <ph-button v-if="button === 'start_trial'" size="medium" @click.native="subscribe" :loading="loading"
+            :disabled="disabledbtn"
+            >
                 Start Trial
             </ph-button>
-            <ph-button v-else-if="button === 'cancel'" size="medium" @click.native="unsubscribe" :loading="loading">
+            <ph-button v-else-if="button === 'cancel'" size="medium" @click.native="unsubscribe" :loading="loading"
+            :disabled="disabledbtn"
+            >
                 Cancel
             </ph-button>
-            <ph-button v-else-if="button === 'resume'" size="medium" @click.native="resume" :loading="loading">
+            <ph-button v-else-if="button === 'resume'" size="medium" @click.native="resume" :loading="loading"
+            :disabled="disabledbtn"
+            >
                 Resume
             </ph-button>
-            <ph-button v-else-if="button === 'restart'" size="medium" @click.native="restart" :loading="loading">
+            <ph-button v-else-if="button === 'restart'" size="medium" @click.native="restart" :loading="loading"
+            :disabled="disabledbtn"
+            >
                 Restart
             </ph-button>
-            <ph-button v-else-if="button === 'add_card'" size="medium" @click.native="addCard" :loading="loading">
+            <ph-button v-else-if="button === 'add_card'" size="medium" @click.native="addCard" :loading="loading"
+            :disabled="disabledbtn"
+            >
                 Add Card
             </ph-button>
         </div>
@@ -121,9 +131,20 @@
           return 'start_trial'
         }
       },
+      disabledbtn: function() {
+        return (this.app.user.roles[0].name !== 'artist' && this.app.user.roles[0].name !== 'pro' )
+      }
     },
     methods: {
       subscribe() {
+        if( this.disabledbtn ) {
+            Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: 'You cannot subscribe.',
+            })
+            return false
+        }
         this.loading = true
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/subscribe').then(response => {
           this.loading = false
@@ -165,6 +186,14 @@
         this.localSubscription = subscription
       },
       resume() {
+        if( this.disabledbtn ) {
+            Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: 'You cannot resume.',
+            })
+            return false
+        }
         this.loading = true
         axios.get('/api/account/subscription/plan/' + this.plan.id + '/resume').then(response => {
           this.loading = false

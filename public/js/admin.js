@@ -751,7 +751,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     page: {},
     feed: [],
     plans: [],
-    pricePerFeaturedSlot: ""
+    pricePerFeaturedSlot: "",
+    priceRangesForTrack: [],
+    captchaCredentials: []
   },
   mutations: {
     setNavigation: function setNavigation(state, data) {
@@ -831,6 +833,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     setPrice: function setPrice(state, price) {
       state.pricePerFeaturedSlot = price;
     },
+    setPriceRanges: function setPriceRanges(state, price) {
+      state.priceRangesForTrack = price;
+    },
     removeUserReleaseFromState: function removeUserReleaseFromState(state, release) {
       state.user.removeRelease(release);
     },
@@ -839,6 +844,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     incrementTrackCount: function incrementTrackCount(state) {
       state.user.incrementTrackCount();
+    },
+    setCaptchaCredentials: function setCaptchaCredentials(state, credentials) {
+      state.captchaCredentials = credentials;
     }
   },
   actions: {
@@ -1070,10 +1078,28 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         return;
       });
     },
-    fetchUsersReleases: function fetchUsersReleases(_ref8) {
+    fetchPriceRangesForTrack: function fetchPriceRangesForTrack(_ref8) {
       var commit = _ref8.commit,
-          state = _ref8.state,
-          getters = _ref8.getters;
+          state = _ref8.state;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/price-ranges-for-tracks").then(function (response) {
+        commit("setPriceRanges", response.data);
+      })["catch"](function (e) {
+        return;
+      });
+    },
+    fetchCaptchaCredentials: function fetchCaptchaCredentials(_ref9) {
+      var commit = _ref9.commit,
+          state = _ref9.state;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/fetch-captcha-credentials").then(function (response) {
+        commit("setCaptchaCredentials", response.data);
+      })["catch"](function (e) {
+        return;
+      });
+    },
+    fetchUsersReleases: function fetchUsersReleases(_ref10) {
+      var commit = _ref10.commit,
+          state = _ref10.state,
+          getters = _ref10.getters;
       if (!getters.releasesHasAnotherPage) return;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/account/releases/mine/?page=".concat(state.user.releases.current_page + 1)).then(function (response) {
@@ -1084,21 +1110,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
       });
     },
-    fetchUsersEvents: function fetchUsersEvents(_ref9) {
-      var commit = _ref9.commit,
-          state = _ref9.state;
+    fetchUsersEvents: function fetchUsersEvents(_ref11) {
+      var commit = _ref11.commit,
+          state = _ref11.state;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/event/".concat(state.user.id, "/list")).then(function (response) {
         commit("setUserEvents", response.data);
       });
     },
-    removeUserRelease: function removeUserRelease(_ref10, release) {
-      var commit = _ref10.commit;
+    removeUserRelease: function removeUserRelease(_ref12, release) {
+      var commit = _ref12.commit;
       axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/account/releases/mine/delete/".concat(release.id)).then(function (response) {
         commit("removeUserReleaseFromState", release);
       });
     },
-    updateUserRelease: function updateUserRelease(_ref11, data) {
-      var commit = _ref11.commit;
+    updateUserRelease: function updateUserRelease(_ref13, data) {
+      var commit = _ref13.commit;
       axios__WEBPACK_IMPORTED_MODULE_0___default().patch("/api/account/releases/mine/".concat(data.release.id), {
         status: data.status
       }).then(function (response) {

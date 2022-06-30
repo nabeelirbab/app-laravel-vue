@@ -13,21 +13,21 @@
         </div>
 
         <upload-progress
-          :upload="upload"
-          v-else
-        />
+            :upload="upload"
+            v-else
+          />
 
-        <div class="upload-main" v-if="mode !== 'upload'">
-          <p
-            class="upload-info"
-            v-if="
-              app.user.tracks_count_this_month >= 3 &&
-              !$can('create unlimited releases')
-            "
-          >
-            You have already uploaded your track limit this month
-          </p>
-          <div class="upload-main" v-else>
+        <div class="upload-error" v-if="!isValidUpload">
+            Sorry, you have reached your upload limit, you will be able to upload again on {{nextUploadDate}}, or upgrade to PRO for unlimited uploads
+            <br/><br/>
+            <ph-button size="medium" color="blue" width="100%" :loading="loading"
+            @click.native="upgradeToPro()"
+            >Upgrade</ph-button> 
+        </div>
+
+        <div class="upload-main" v-if="mode !== 'upload' && isValidUpload">
+          
+          <div class="upload-main" >
             <div class="upload-nav" v-if="cover.class !== 'single'">
               <div class="draggable-container">
                 <div
@@ -111,6 +111,7 @@ import CloseIcon from "global/close-icon";
 import Logo from "global/logo";
 import { mapState } from "vuex";
 import UploadProgress from './upload/upload-progress';
+import Vue from 'vue';
 
 export default {
   data() {
@@ -149,6 +150,9 @@ export default {
         enableTime: true,
       },
       maxTracks: false,
+      free_release_limit: window.free_release_limit,
+      plan: [],
+      loading: false,
     };
   },
   computed: {
@@ -168,6 +172,17 @@ export default {
           !this.$can("create unlimited releases"))
       );
     },
+    isPro() {
+      return (this.app.user.account_type === 'pro' || this.app.user.account_type == 'admin')
+    },
+    nextUploadDate() {
+      var date = new Date();
+      var firstDay = new Date(date.getFullYear(), date.getMonth()+1, 1);
+      return firstDay.toLocaleString('en-us', { month: 'short' })+" 1,"+firstDay.getFullYear();
+    },
+    isValidUpload() {
+      return (this.app.user.tracks_count_this_month < this.free_release_limit) || this.isPro;
+    }
   },
   watch: {
     'cover.class': function (v) {
@@ -182,6 +197,13 @@ export default {
   },
   created: function () {
     this.editCover();
+
+    if(this.app.user.tracks_count_this_month >= this.free_release_limit &&
+      !this.isPro) {
+        axios.get('/api/account/subscription/plans').then(response => {
+          this.plan = response.data[0];
+        })
+    }
   },
   mounted: function () {
     ModalEvents.$on("resetUploadData", this.resetUploadState);
@@ -494,6 +516,32 @@ export default {
       this.resetUploadState();
       this.$modal.hide("modal-upload");
     },
+
+    /* function to upgrade to pro*/
+    upgradeToPro() {
+        this.loading = true
+        axios.get('/api/account/subscription/plan/' + this.plan.id + '/subscribe').then(response => {
+          this.loading = false
+          if (response.data.success) {
+            Vue.notify({
+              group: 'main',
+              type: 'success',
+              title: 'Subscription successful.',
+            })
+            location.reload();
+          } else {
+
+            Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: response.data.message,
+            });
+            window.location.href = '/account';
+          }
+        }).finally(response => {
+          this.loading = false
+        })
+      },
   },
   components: {
     ImageSelect,
@@ -677,5 +725,13 @@ h1 {
   @media (max-width: 414px) {
     font-size: 34px !important;
   }
+}
+
+.upload-error {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 5px
 }
 </style>

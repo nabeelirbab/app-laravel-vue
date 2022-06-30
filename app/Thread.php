@@ -48,12 +48,20 @@ class Thread extends PhaseModel
 
     public function getLastMessageAttribute()
     {
-        return $this->messages->last();
+        return $this->messages->filter(
+            fn ($message) => $message->views
+            ->filter(fn ($views) => ($views->view == 1 && $views->user_id == auth()->id()) ) 
+            ->count()
+        )->last();
     }
 
     public function getFirstMessageAttribute()
     {
-        return $this->messages->first();
+        return $this->messages->filter(
+        fn ($message) => $message->views
+            ->filter(fn ($views) => ($views->view == 1 && $views->user_id == auth()->id())) 
+            ->count()
+        )->first();
     }
 
     public function scopeByUserId($query, $id = null)

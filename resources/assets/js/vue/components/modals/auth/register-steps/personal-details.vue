@@ -414,9 +414,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="register-form-inputs">
+                <div class="full-width">
+                    <div class="input">
+                        <div>
+                        </div>
+                        <div>
+                            <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
+                            
+                            <p v-if="captchaValidationError" class="error-message" style="padding-top:40px;">
+                                {{ captchaValidationError }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
 
-        <div>
+        <div class="flex justify-center">
             <ph-button
                 size="large"
                 :loading="submitting"
@@ -429,7 +446,11 @@
 </template>
 
 <script>
+    
+
+    import Recaptcha from "../../../global/recaptcha";
     import GenreSelect from "../../upload/genre-select";
+
     import Cookies from 'js-cookie';
 
     export default {
@@ -447,6 +468,7 @@
                 artistGenresString: "",
                 interestGenresString: "",
                 validationErrors: "",
+                captchaValidationError: "",
                 submitting: false,
                 submitted: false, // If a submission was attempted
                 data: {
@@ -474,6 +496,8 @@
                         genres: [],
                     },
                     newsletter: false,
+                    recaptcha: ''
+                    
                 },
             };
         },
@@ -508,7 +532,8 @@
                 this.submitted = true;
                 this.$validator.validate().then((passes) => {
                     if (!this.hasValidSocial && this.selectedPlan.title !== 'Standard') return;
-
+                    this.validateReCaptcha();
+                    
                     const transferCart = this.$route.query.transferCart;
                     let guestCart = null;
                     if (transferCart === 'true') {
@@ -518,6 +543,7 @@
                     if (passes) {
                         this.validationErrors = "";
                         this.submitting = true;
+                        this.captchaValidationError = '';
                         axios
                             .post(
                                 "/api/auth/register/" +
@@ -533,16 +559,39 @@
                                     "app/setTempUser",
                                     response.data
                                 );
+                                this.captchaExpired();
                                 this.$emit("next-step");
                             })
                             .catch((error) => {
                                 this.submitting = false;
                                 this.validationErrors =
                                     error.response.data.errors;
+
+                               if (this.validationErrors.recaptcha) {
+                                    this.captchaValidationError = this.validationErrors.recaptcha[0];
+                               }
                             });
                     }
                 });
             },
+
+            onCaptchaValidated(captcha) {
+                this.data.recaptcha = captcha;
+                this.captchaValidationError = '';
+            },
+
+            captchaExpired() {
+                this.data.recaptcha = '';
+
+            },
+
+            validateReCaptcha() {
+                if (! this.data.recaptcha) {
+                    this.captchaValidationError = 'The recaptcha field is required.';
+                    return false;
+                }
+            }
+            
         },
 
         filters: {
@@ -554,7 +603,7 @@
         },
 
         components: {
-            GenreSelect,
+            GenreSelect, Recaptcha
         },
     };
 </script>

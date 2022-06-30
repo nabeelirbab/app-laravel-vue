@@ -39,9 +39,7 @@ class SearchController extends Controller
         $users = User::whereHas('roles', function ($q) use ($validated) {
             $q->whereIn('roles.name', ['pro', 'artist', 'admin', 'standard'])
                 ->where(function ($q) use ($validated) {
-                    $q->where('users.name', 'like', '%' . $validated['term'] . '%')
-                        ->orWhere('users.first_name', 'like', '%' . $validated['term'] . '%')
-                        ->orWhere('users.last_name', 'like', '%' . $validated['term'] . '%');
+                    $q->where('users.name', 'like', '%' . $validated['term'] . '%');
                 });
         })->get();
 
@@ -61,7 +59,9 @@ class SearchController extends Controller
         $tracks = collect(Track::where('status', 'approved')
             ->where('name', 'like', '%' . $validated['term'] . '%')
             ->with('release.image')
-            ->whereHas("release")
+            ->whereHas('release', function($query) {
+                    $query->statuslive();
+            })
             ->where( function($query) use($releaseIds, $releaseNames) {
                 $query->whereNotIn("release_id", $releaseIds)
                 ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
@@ -71,36 +71,50 @@ class SearchController extends Controller
         
 
         $filter = new Filter($releases);
+        $trackfilter = new Filter($tracks);
 
         if (collect($validated['genres'])->isNotEmpty()) {
             foreach ($validated['genres'] as $genre) {
-                $filter->addGenreFilter(Genre::find($genre['id']));
+                $genreDetails = Genre::find($genre['id']);
+                $filter->addGenreFilter($genreDetails);
+                $trackfilter->addGenreFilter($genreDetails);
             }
         }
 
         if (collect($validated['classes'])->isNotEmpty()) {
             foreach ($validated['classes'] as $class) {
                 $filter->addClassFilter($class['val']);
+                $trackfilter->addClassFilter($class['val']);
             }
         }
 
         if (collect($validated['bpm'])->isNotEmpty()) {
             $filter->addBpmFilter($validated['bpm'][0], $validated['bpm'][1]);
+            $trackfilter->addBpmFilter($validated['bpm'][0], $validated['bpm'][1]);
         }
 
         if (collect($validated['keys'])->isNotEmpty()) {
             $filter->addKeyFilter($validated['keys']);
+            $trackfilter->addKeyFilter($validated['keys']);
         }
 
         $data = collect();
 
         if ($validated['term']) $data = $data->merge($users);
 
-        $data = $data->merge($tracks)->merge($filter->get());
+        $data = $data->merge($trackfilter->get())->merge($filter->get());
 
         $chunked = $data->chunk(20);
         if (isset($chunked[$page - 1])) {
-            return ($request->get('newsearch') == 1) ? ['term' => !empty($validated['term']) ? $validated['term'] : '', 'data' => $chunked[$page - 1]] : $chunked[$page - 1];
+            return ($request->get('newsearch') == 1) ? [
+                'term' => !empty($validated['term']) ? $validated['term'] : '',
+                'genres' => !empty($validated['genres']) ? $validated['genres'] : [],
+                'classes' => !empty($validated['classes']) ? $validated['classes'] : [],
+                'bpm' => !empty($validated['bpm']) ? $validated['bpm'] : [],
+                'keys' => !empty($validated['keys']) ? $validated['keys'] : [],
+                'data' => $chunked[$page - 1]
+                ]
+            : $chunked[$page - 1];
         } else {
             return [];
         }

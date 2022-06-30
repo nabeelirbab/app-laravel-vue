@@ -245,9 +245,9 @@
               <td style="vertical-align: middle;">Price*</td>
               <td>
                 <price-range
-                  :min="isSingle ? 50 : 300"
-                  :max="isSingle ? 300 : 3000"
-                  :step="isSingle ? 1 : 100"
+                  :min="isSingle ? getSingleTrackPriceFrom() : getAlbumPriceFrom()"
+                  :max="isSingle ? getSingleTrackPriceTo() : getAlbumPriceTo()"
+                  :step="1"
                   :value.sync="cover.price"
                   v-validate="'required'"
                   name="price"
@@ -299,6 +299,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import GenreSelect from "./genre-select";
 import ImageSelect from "global/image-select";
 import PriceRange from "global/price-range";
@@ -331,6 +333,8 @@ export default {
   },
 
   computed: {
+    ...mapState(["app"]),
+
     classes: function() {
       const storeClasses = this.$store.state.app.classes;
       let obj = {};
@@ -378,7 +382,30 @@ export default {
     setTrackFile: function(event, track) {
 			const { files } = event.target;
 			if (files && files[0]) {
-				track.file = files[0];
+        var filename = files[0].name;
+        if(this.currentTrack.format == 'mp3' && !filename.match(/mp3.*/)) {
+          this.$notify({
+                            group: 'main',
+                            type: 'error',
+                            title: 'File must be mp3',
+                        });
+          
+          track.file = null;
+          this.$refs.fileInput.value=null;
+          
+        } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
+          this.$notify({
+                            group: 'main',
+                            type: 'error',
+                            title: 'File must be wav',
+                        });
+          
+          track.file = null;
+          this.$refs.fileInput.value=null;
+        } else {
+          track.file = files[0];
+        }
+				
 			}
 		},
 
@@ -396,6 +423,20 @@ export default {
     },
     isDisabled(item) {
       return item === "single" && this.trackCount > 1;
+    },
+
+    getSingleTrackPriceFrom() {
+        return (this.app.priceRangesForTrack.single_track_price_from) ? this.app.priceRangesForTrack.single_track_price_from : 50;
+    },
+    getSingleTrackPriceTo() {
+        return (this.app.priceRangesForTrack.single_track_price_to) ? this.app.priceRangesForTrack.single_track_price_to : 300;
+    },
+
+    getAlbumPriceFrom() {
+        return (this.app.priceRangesForTrack.album_price_from) ? this.app.priceRangesForTrack.album_price_from : 300;
+    },
+    getAlbumPriceTo() {
+        return (this.app.priceRangesForTrack.album_price_to) ? this.app.priceRangesForTrack.album_price_to : 3000;
     },
   },
 

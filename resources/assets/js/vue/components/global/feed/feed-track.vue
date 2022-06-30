@@ -15,10 +15,6 @@
                         <span>{{ item.release.name }}</span>
                     </li>
                     <li>
-                        Artist:
-                        <span>{{ item.release.uploader.name }}</span>
-                    </li>
-                    <li>
                         BPM:
                         <span>{{ item.bpm }}</span>
                     </li>

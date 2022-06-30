@@ -70,12 +70,12 @@ class User extends Authenticatable
         'account_type',
         // 'follower_count',
         'avatar',
-        'banner',
+        //'banner',
         //        'all_permissions',
         'tracks_count_this_month',
         //        'is_on_trial',
         'account_verified',
-        'interests',
+       // 'interests',
         //        'plays',
         'is_recent',
         //        'stripe_account_id',
@@ -97,6 +97,8 @@ class User extends Authenticatable
             'users.email' => 10,
         ],
     ];
+
+    protected $guarded = [];
 
     public function featuredOrders(): HasMany
     {
@@ -132,7 +134,9 @@ class User extends Authenticatable
 
     public function getAccountTypeAttribute()
     {
-        if ($this->hasRole('pro')) {
+        if ($this->hasRole('admin')) {
+            return 'admin';
+        } elseif ($this->hasRole('pro')) {
             return 'pro';
         } elseif ($this->hasRole('artist')) {
             return 'artist';

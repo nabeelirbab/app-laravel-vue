@@ -79,9 +79,10 @@ class UserController extends Controller
                     'following',
                 ])
                 ->withCount(['releases', 'followers as follower_count', 'following as following_count'])
+                ->with('interests')
                 ->first();
             if ($request->has('app-user') && $request->get('app-user') != -1) {
-                $followable = User::with('following')->find($request->get('app-user'));
+                $followable = User::with('following')->with('interests')->find($request->get('app-user'));
                 $user->followed = $user->followers->contains($followable);
             } else {
                 $user->followed = false;
@@ -90,6 +91,8 @@ class UserController extends Controller
             foreach ($likes as $like) {
                 $like->likeable;
             }
+            $user->banner = $user->banner;
+            $user->interests = $user->interests;
 
             return $user;
         }
@@ -97,7 +100,7 @@ class UserController extends Controller
         return User::where('name', 'LIKE', '%' . $request->get('name') . '%')
             ->with([
                 'avatar'
-            ])
+            ])->with('interests')
             ->withCount('releases')
             ->get();
     }
@@ -146,13 +149,14 @@ class UserController extends Controller
             ->paginate(15);
     }
 
-    public function getActivityForUser($userID)
+    public function getActivityForUser($userID, Request $request)
     {
         $user = User::findOrFail($userID);
 
         $feed = new ProfileActivityFeedGenerator($user);
+        
+        return $feed->getActionsForProfile($request);
 
-        return $feed->getActionsForProfile();
     }
 
     public function getMerchForUser($userID)
@@ -201,7 +205,7 @@ class UserController extends Controller
         $action = Action::where('item_type', 'post')
             ->where('item_id', $post->id)
             ->first();
-
+        $action->item = $action->item;
         return [
             'success' => true,
             'action' => $action
@@ -227,7 +231,7 @@ class UserController extends Controller
             ->storeThumb();
 
         $event = Event::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
             'image_id' => $manager->asset->id,
             'name' => $data['name'],
             'location' => $data['location'],

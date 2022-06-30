@@ -4,11 +4,6 @@
       <form action="#" method="GET" name="gridfilter" class="w-full gridfilter clearboth mx-0 px-0">
         <ul class="gridfilter_list list-unstyled list-inline float-left">
           <li>
-            <label v-bind:class="[selectedCategory === 'all' ? 'active' : '']">
-              <input type="radio" v-model="selectedCategory" value="all">All
-            </label>
-          </li>
-          <li>
             <label v-bind:class="[selectedCategory === 'release' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="release">Releases
             </label>
@@ -18,17 +13,17 @@
               <input type="radio" v-model="selectedCategory" value="track">Tracks
             </label>
           </li>
-          <li v-if="$can('upload videos')">
+          <li >
             <label v-bind:class="[selectedCategory === 'video' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="video">Videos
             </label>
           </li>
-          <li v-if="$can('add events')">
+          <li >
             <label v-bind:class="[selectedCategory === 'event' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="event">Events
             </label>
           </li>
-          <li v-if="$can('add merch')">
+          <li >
             <label v-bind:class="[selectedCategory === 'merch' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="merch">Merch
             </label>
@@ -38,11 +33,7 @@
               <input type="radio" v-model="selectedCategory" value="post">Posts
             </label>
           </li>
-          <li>
-            <label v-bind:class="[selectedCategory === 'genre' ? 'active' : '']">
-              <input type="radio" v-model="selectedCategory" value="genre">Genres
-            </label>
-          </li>
+          
 <!--          <li>-->
 <!--            <label v-bind:class="[selectedCategory === 'playlist' ? 'active' : '']">-->
 <!--              <input type="radio" v-model="selectedCategory" value="playlist">Playlists-->
@@ -89,7 +80,7 @@
     },
     data() {
       return {
-        selectedCategory: "all",
+        selectedCategory: "release",
         requiresRefresh: false,
         gridLoaded: false
       };

@@ -82,6 +82,7 @@ export default {
 					},
 				],
 				validationErrors: "",
+				user: null
 			},
 			shopOptions: [
 				{
@@ -111,7 +112,11 @@ export default {
 	created: function() {},
 	mounted: function() {},
 	methods: {
-		beforeOpen(event) {},
+		beforeOpen({ params }) {
+			if(params.user) {
+                this.user = params.user;
+            }
+		},
 		submit() {
 			this.$validator.validateAll().then((passes) => {
 				if (!passes) return;
@@ -123,6 +128,9 @@ export default {
 					data.append(`links[${index}][shop]`, link.shop);
 					data.append(`links[${index}][link]`, link.link);
 				});
+				if(this.user && this.user.id) {
+					data.append("userid", this.user.id);
+				}
 
 				this.submitting = true;
 				axios

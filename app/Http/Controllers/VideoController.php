@@ -9,6 +9,8 @@ use Pion\Laravel\ChunkUpload\Exceptions\UploadMissingFileException;
 use Pion\Laravel\ChunkUpload\Handler\AbstractHandler;
 use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+
 use App\Events\User\UploadedVideo;
 
 use App\Phase\VideoTranscoder;
@@ -27,7 +29,7 @@ class VideoController extends Controller
     public function createVideo(Request $request)
     {
         $video = Video::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
         ]);
         $video->refresh();
         session()->put('uploading_video_id', $video->id);
@@ -46,14 +48,19 @@ class VideoController extends Controller
      * @throws UploadMissingFileException
      *
      */
-    public function uploadFile(Request $request, FileReceiver $receiver)
+    public function uploadFile(Request $request)
     {
+        // create the file receiver
+        $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
+
         // check if the upload is success, throw exception or return response you need
         if ($receiver->isUploaded() === false) {
             throw new UploadMissingFileException();
         }
         // receive the file
         $save = $receiver->receive();
+        \Log::info(json_encode($save->handler()));
+        //sleep(2);
         // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
             // save the file and return any response you need
@@ -81,15 +88,15 @@ class VideoController extends Controller
             'description' => 'required|string'
         ]);
         $video = Video::findOrFail($videoID);
-        if ($video->user->id == $request->user()->id) {
+        //if ($video->user->id == $request->user()->id) {
             $video->fill([
                 'title' => $data['title'],
                 'description' => $data['description'],
             ])->save();
             return $video;
-        } else {
+        /*} else {
             abort(403);
-        }
+        }*/
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>
-    <modal name="modal-upload-video" :maxWidth="600" height="auto" @before-close="maybeReset" scrollable adaptive>
+    <modal name="modal-upload-video" :maxWidth="600" height="auto" @before-close="maybeReset" scrollable adaptive @before-open="beforeOpen">
         <div class="modal modal-upload-video">
             <div class="modal-header">
                 <close-icon class="float-right" @click.native="close"></close-icon>
@@ -11,12 +11,14 @@
                     <uploader
                             @upload-start="uploadStart"
                             @upload-success="uploadSuccess"
+                            @upload-cancel="uploadCancel"
                     />
                 </div>
                 <div class="upload-details" v-if="resumable">
                     <h3 v-show="resumable.isUploading()">
                         <i class="fa fa-spinner fa-spin"></i> Uploading <em>{{ resumable.files[0].fileName }}</em>
                     </h3>
+                    <ph-button v-show="resumable.isUploading()"   @click.native="resumable.cancel()">Cancel</ph-button>
                     <h3 v-show="uploadComplete">
                         <i class="fa fa-check-circle"></i> Upload Complete
                     </h3>
@@ -30,6 +32,7 @@
                             {{ uploadedSize }}MB / {{ fileSize }}MB ({{ Math.floor(resumable.progress() * 100) }}%)
                         </div>
                     </div>
+
                 </div>
                 <form v-if="resumable && !saved">
                     <h3>Now, provide some information about your video:</h3>
@@ -56,6 +59,8 @@
                             <td></td>
                             <td>
                                 <ph-button @click.prevent.native="save" :loading="saving" :disabled="videoModel === null">Save</ph-button>
+
+                                <ph-button @click.prevent.native="close"  :disabled="saving">Cancel</ph-button>
                             </td>
                         </tr>
                     </table>
@@ -93,7 +98,8 @@
                 details: {
                     title: '',
                     description: '',
-                }
+                },
+                user: null
             }
         },
         computed: {
@@ -111,8 +117,17 @@
 
         },
         methods: {
+            beforeOpen({ params }) {
+                if(params.user) {
+                    this.user = params.user;
+                }
+            },
             createVideo() {
-                axios.post('/api/video/create').then(response => {
+                var data = {};
+                if(this.user && this.user.id) {
+                    data.userid = this.user.id;
+                }
+                axios.post('/api/video/create', data).then(response => {
                     this.videoModel = response.data;
                 });
             },
@@ -148,8 +163,11 @@
                 };
             },
             close() {
-                this.maybeReset()
+                this.reset()
                 this.$modal.hide('modal-upload-video');
+            },
+            uploadCancel() {
+                this.reset()
             }
         },
         components: {

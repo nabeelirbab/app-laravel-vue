@@ -13,6 +13,7 @@
         <div class="action-name">
           <recipient-select
             ref="recipientSelector"
+            :userid="userid"
             v-if="type === 'newMessage'"
             @selected="setReceiver($event)"
             @unselected="clearReceiver($event)"
@@ -43,10 +44,13 @@
         </div>
       </div>
       <div class="lower">
+        <div class="img-preview-remove" v-if="previewUrl" >
+          <a title="Remove Image"
+          @click="removeAttachment"><i style="color: #FF0000;" class="fa fa-times text-danger"></i></a>
+        </div>
         <img
           :src="previewUrl"
           class="image-preview"
-          @click="removeAttachment"
           v-if="previewUrl"
         />
 
@@ -100,6 +104,7 @@ import { RadarSpinner as Spinner } from "epic-spinners";
 import Avatar from "global/avatar";
 import PhButton from "global/ph-button";
 import RecipientSelect from "./recipient-select";
+import Vue from "vue";
 
 export default {
   props: {
@@ -113,6 +118,9 @@ export default {
       type: Object,
       required: false,
       //default: function() { return {} },
+    },
+    userid : {
+      type: String
     },
     thread: {
       // Required only if type is 'message'
@@ -210,21 +218,12 @@ export default {
         this.previewUrl = URL.createObjectURL(file);
         this.attachment = file;
       }else{
-        this.$snotify.html(`
-          <div class="snotifyToast__body" style='text-align:center;'>
-            <div style='padding-top: 25px;'>
-            <img src='/img/warning.svg' style='height:16px;width:16px;'/>
-            <b style='font-size:18px;'>Only Jpeg and Png are allowed</b>
-            </div>
-          </div>
-           `, {
-          timeout: 3000,
-          type:'error',
-          position:'centerTop',
-          showProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: true,
-        });
+
+        Vue.notify({
+              group: 'main',
+              type: 'error',
+              title: 'Only Jpeg and Png are allowed',
+            })
       }
       
     },
@@ -396,7 +395,16 @@ export default {
     height: 75px;
     width: 75px;
     object-fit: cover;
+  }
+
+  .img-preview-remove {
+    float: right;
+    margin-left: 75px;
+    margin-bottom: 105px;
+    position: absolute;
+    color: #FF0000;
     cursor: pointer;
+    display: block;
   }
 
   .upper {

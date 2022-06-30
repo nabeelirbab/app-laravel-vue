@@ -42,5 +42,10 @@ return [
         'public_key' => env('BRAINTREE_PUBLIC_KEY'),
         'private_key' => env('BRAINTREE_PRIVATE_KEY'),
     ],
+    
+    'recaptcha' => [
+        'key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
+        'secret' => env('GOOGLE_RECAPTCHA_SECRET_KEY')
+    ]
 
 ];

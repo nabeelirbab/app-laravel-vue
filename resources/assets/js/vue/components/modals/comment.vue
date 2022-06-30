@@ -33,11 +33,23 @@
             <p>{{ commentable.description }}</p>
           </div>
         </div>
+        
         <add-text
           type="comment"
           :addTextAble="commentable"
           @success="onCommentAdded"
         />
+        <div  class="comments">
+            <div class="text-center" >
+                <button v-show="!showcomment" @click="showComments()" class="button">Show Comments</button>
+                <button v-show="showcomment" @click="hideComments()" class="button">Hide Comments</button>
+            </div>
+            <div v-show="showcomment" class="">
+              
+              <h2>Comments</h2>
+              <comment-lists :commentable="commentable" />
+            </div>
+        </div>
       </div>
     </div>
   </modal>
@@ -49,17 +61,20 @@ import Avatar from "global/avatar";
 import AddText from "global/add-text/add-text";
 import { SocialEvents } from "events";
 import { UserEvents } from "events";
+import CommentLists from "global/comment-lists";
 
 export default {
   components: {
     CloseIcon,
     AddText,
     Avatar,
+    CommentLists
   },
 
   data() {
     return {
-      commentable: null,
+      showcomment: false,
+      commentable: null
     };
   },
 
@@ -81,6 +96,14 @@ export default {
       });
       this.onHide();
     },
+
+    showComments() {
+      this.showcomment = true;
+    },
+
+    hideComments() {
+      this.showcomment = false;
+    }
   },
 };
 </script>
@@ -95,5 +118,9 @@ export default {
 
 .release-content {
   margin-left: 20px;
+}
+
+.text-center {
+  text-align: center;
 }
 </style>

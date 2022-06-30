@@ -133,7 +133,13 @@ export default {
         .then((response) => {
           
           if(typeof(response.data.term) != typeof(undefined)) {
-            if(response.data.term == this.vuexSearchTerm)
+
+            var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
+            var validClasses = this.checkTwoArrays(this.filters.classes, response.data.classes);
+            var validKeys = this.checkTwoArrays(this.filters.keys, response.data.keys);
+            var validBpm = this.checkTwoArrays(this.filters.bpm, response.data.bpm);
+
+            if(response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm)
             {
               this.loading = false;
               this.results = response.data.data;
@@ -145,6 +151,19 @@ export default {
           
         });
     },
+
+    checkTwoArrays(arr1, arr2) {
+      if (arr1.length != arr2.length) { return false; }
+      if(arr1.length == 0 && arr2.length == 0) { return true; }
+      for (let i = 0; i < arr1.length; i++) {
+        if (JSON.stringify(arr1[i]) === JSON.stringify(arr2[i])) {
+          continue;
+        } else {
+          return false;
+        }
+      }
+      return true;
+    }
   },
   components: {
     PhButton,
@@ -202,7 +221,10 @@ export default {
     .search-results-grid {
       margin-top: 20px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(8, 1fr);
+      @media (max-width: 1500px) {
+        grid-template-columns: repeat(6, 1fr);
+      }
       @media (max-width: 900px) {
         grid-template-columns: repeat(3, 1fr);
       }

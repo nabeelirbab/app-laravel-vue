@@ -1,33 +1,27 @@
 <template>
     <div class="p-item">
         <div class="p-item-image">
-            <router-link
-                :to="getRouterObject(post)">
                 <avatar
                     :size="130"
                     :src="post.user.avatar.files.thumb.url"
                     
                 />
-            </router-link>
-
         </div>
         <div class="p-item-main">
-            <div class="p-item-detail">
-                <div class="p-item-title">
-                    <span>{{ post.user.name }}</span>
-                </div>
-            </div>
+
             <div class="p-post-text">
-                <img
-                    v-if="post.attachment"
-                    :src="post.attachment.files.medium.url"
-                    :alt="post.attachment.alt"
-                    class="p-post-image"
-                />
-                <router-link
-                :to="getRouterObject(post)">
-                {{ postBody }}
-                </router-link>
+                <div class="p-item-detail">
+                    {{ postBody }}
+                </div>
+                <div class="p-post-text p-post-attachment" v-if="post.attachment">
+                    <img
+                            v-if="post.attachment"
+                            :src="post.attachment.files.medium.url"
+                            :alt="post.attachment.alt"
+                            class="p-post-image"
+                        />
+
+                </div>
             </div>
             <div class="p-item-meta">
                 <actions :actionable="post" :id="id"></actions>
@@ -55,6 +49,7 @@
               default: null,
           }
         },
+        
         data () {
             return {
                 moment: window.moment,
@@ -63,7 +58,7 @@
         computed: {
           postBody() {
               if(this.post.body){
-                return this.filter.clean(this.post.body)
+                return this.post.body
               }else{
                   return '';
               }
@@ -88,6 +83,9 @@
         align-items: flex-start;
         flex-direction: column;
         margin-bottom: 2em;
+    }
+    .p-post-attachment {
+        margin-top: 8px;
     }
     .p-item-title {
         font-size: 19px;

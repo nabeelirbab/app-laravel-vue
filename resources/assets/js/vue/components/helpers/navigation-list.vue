@@ -9,6 +9,11 @@
                 <router-link class="navigation-list__item" to="#" @click.prevent.native="$modal.show(item.modal)">{{ item.title }}</router-link>
             </span>
         </li>
+        <li v-if="menu == 'slideout_menu' && ifAdmin()">
+            <span>
+            <a href="/admin">Admin</a>
+            </span>
+        </li>
     </ul>
 </template>
 
@@ -21,6 +26,10 @@ export default {
         items: {
             type: Array,
             required: true
+        },
+        menu: {
+            type: String,
+            required: false
         }
     },
 
@@ -86,7 +95,14 @@ export default {
             }
 
             return false
-        }
+        },
+
+        ifAdmin() {
+            if(! this.app.user.loggedin) {
+                return false;
+            }
+            return (this.app.user.roles[0].name == 'admin');
+        },
     }
 }
 </script>

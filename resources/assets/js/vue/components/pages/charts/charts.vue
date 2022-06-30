@@ -6,72 +6,72 @@
 		</filter-container>
 		<div class="chart-results">
 			<div v-if="loadedAll">
-				<div class="charts-section" v-if="!filters.classes.length || results.album">
+				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'album')">
 					<div class="header flex justify-between">
 						<h2>Top Albums</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('album')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div class="chart-result" v-for="(album, index) in results.album" :key="index">
+						<div v-if="results.album" class="chart-result" v-for="(album, index) in results.album" :key="index">
 							<release-tile :release="album" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.album.length">
+						<div class="not-found-div" v-if="!results.album || !results.album.length">
 							No Albums Found
 						</div>
 					</div>
 				</div>
-				<div class="charts-section" v-if="!filters.classes.length || results.single">
+				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'single')">
 					<div class="header flex justify-between">
 						<h2>Top Singles</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('single')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div class="chart-result" v-for="(single, index) in results.single" :key="index">
+						<div v-if="results.single" class="chart-result" v-for="(single, index) in results.single" :key="index">
 							<release-tile :release="single" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.single.length">
+						<div class="not-found-div" v-if="!results.single || !results.single.length">
 							No Singles Found
 						</div>
 					</div>
 				</div>
-				<div class="charts-section" v-if="!filters.classes.length || results.ep">
+				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'ep')">
 					<div class="header flex justify-between">
-						<h2>Top Top EPs</h2>
+						<h2>Top EPs/LPs</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('ep')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div class="chart-result" v-for="(ep, index) in results.ep">
+						<div v-if="results.ep" class="chart-result" v-for="(ep, index) in results.ep">
 							<release-tile :release="ep" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.ep.length">
+						<div class="not-found-div" v-if="!results.ep || !results.ep.length">
 							No EP's Found
 						</div>
 					</div>
 				</div>
-				<div class="charts-section" v-if="!filters.classes.length || results.compilation">
+				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'compilation')">
 					<div class="header flex justify-between">
 						<h2>Top Compilations</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" class="see-more" @click.prevent="seeMore('compilation')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div class="chart-result" v-for="(compilation, index) in results.compilation" :key="index">
+						<div v-if="results.compilation" class="chart-result" v-for="(compilation, index) in results.compilation" :key="index">
 							<release-tile :release="compilation" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.compilation.length">
+						<div class="not-found-div" v-if="!results.compilation || !results.compilation.length">
 							No Compilations Found
 						</div>
 					</div>
 				</div>
-				<div class="charts-section" v-if="!filters.classes.length || results.sample">
+				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'sample')">
 					<div class="header flex justify-between">
 						<h2>Top Sample Packs</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('sample')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div class="chart-result" v-for="(sample, index) in results.sample" :key="index">
+						<div v-if="results.sample" class="chart-result" v-for="(sample, index) in results.sample" :key="index">
 							<release-tile :release="sample" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
-						<div v-if="!results.sample.length">
+						<div class="not-found-div" v-if="!results.sample || !results.sample.length">
 							No Sample Packs Found
 						</div>
 					</div>
@@ -112,6 +112,14 @@ export default {
 			},
 		};
 	},
+	computed: {
+	    currentClass: function () {
+	      if(this.filters.classes.length > 0) {
+	      	return this.filters.classes[0].val;
+	      }
+	      return '';
+	    },
+  	},
 	created: function() {
 		if (this.$route.query.filter) {
 			this.filters.classes.push({
@@ -132,8 +140,15 @@ export default {
 	methods: {
 		fetchCharts() {
 			this.loadedAll = false;
+			this.filters.newsearch = 1;
 			axios.post(`/api/charts/${this.amount}`, this.filters).then((response) => {
-				this.results = response.data;
+				if(response.data.filters) {
+					if(JSON.stringify(response.data.filters) === JSON.stringify(this.filters)) {
+						this.results = response.data.returndata;
+					}
+				}else{
+					this.results = response.data;
+				}
 				this.loadedAll = true;
 			});
 		},
@@ -173,7 +188,7 @@ export default {
 		padding: 0 20px;
 
 		.charts-section {
-			margin: 30px 0;
+			margin: 40px 0;
 			.header {
 				margin-bottom: 20px;
 				align-items: flex-start;
@@ -193,6 +208,19 @@ export default {
 				}
 				grid-gap: 10px;
 			}
+		}
+	}
+
+	.not-found-div {
+		width: 800px;
+    	text-align: center;
+    	
+		@media (max-width: 750px) {
+			width: 600px;
+		}
+
+		@media (max-width: 400px) {
+			width: 300px;
 		}
 	}
 }

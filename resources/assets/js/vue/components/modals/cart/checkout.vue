@@ -2,7 +2,7 @@
     <modal name="modal-checkout" width="600px" height="auto" @closed="closed" @before-close="closed" @opened="opened" scrollable adaptive>
         <div class="modal modal-checkout">
             <div class="modal-header">
-                <img src="/img/logo.png" class="modal-logo centered-block"/>
+                <logo class="modal-logo centered-block" style="width: 185px;" />
                 <close-icon @click.native="$modal.hide('modal-checkout')"></close-icon>
             </div>
             <div class="modal-content">
@@ -92,6 +92,7 @@
 
 <script>
   import Vue from 'vue'
+  import Logo from "global/logo";
   import PhButton from 'global/ph-button'
   import CloseIcon from 'global/close-icon'
   import { HalfCircleSpinner as Spinner } from 'epic-spinners'

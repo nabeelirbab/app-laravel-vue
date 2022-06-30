@@ -109,7 +109,16 @@ class ChartController extends Controller
                 ->get()
                 ->groupBy('class');
         });
-        return $items;
+        return request()->has('newsearch') ?
+            [
+              'filters' => [
+                'classes' => request('classes'),
+                'genres' => request('genres'),
+                'newsearch' => request("newsearch")
+              ],
+              'returndata' => $items
+            ]
+         : $items;
     }
 
     private function getForClass($class, $count = null)

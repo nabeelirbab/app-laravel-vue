@@ -32,7 +32,11 @@
             <div class="form-group">
                 <label for="class">Class</label>
                 @include('admin.partials.field-error', ['field' => 'class'])
-                <input type="text" class="form-control" name="class" id="class" value="{{ $release->class }}">
+                <select name="class" id="class" class="form-control" >
+                    @foreach($allClass as $key => $class)
+                        <option {{ ( $key == $release->class ) ? 'selected' : null }} value="{{ $key }}">{{ $class }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="form-group">
@@ -45,8 +49,8 @@
             <div class="form-group">
                 <label for="release-date">Release Date</label>
                 @include('admin.partials.field-error', ['field' => 'release_date'])
-                <input type="text" class="form-control" name="release-date" id="release-date"
-                       value="{{ $release->release_date }}">
+                <input type="date" class="form-control" name="release_date" id="release-date"
+                       value="{{ date('Y-m-d', strtotime($release->release_date)) }}">
             </div>
 
             <div class="form-group">

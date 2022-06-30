@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ph-button @click.native="$modal.show('modal-create-event')" size="medium">
+        <ph-button v-if="isPro" @click.native="showEventCreateModal" size="medium">
             Add Event
         </ph-button>
         <spinner style="margin: 3em auto;"
@@ -9,9 +9,14 @@
                  color="black"
                  v-show="loadingEvents"
         />
-        <item v-for="event in events"
-              :item="event"
-              :key="event.id" />
+        <div v-if="events.length">
+            <item v-for="event in events"
+                :item="event"
+                :key="event.id" />
+        </div>
+        <div v-if="!events.length && !loadingEvents" class="not-found">
+            Events not found
+        </div>
     </div>
 </template>
 
@@ -19,7 +24,8 @@
     import ProfileMixin from '../profile-mixin';
     import { HalfCircleSpinner as Spinner } from 'epic-spinners';
     import Item from 'global/items/item';
-    import { ModalEvents } from '../../../../../event-bus'
+    import { ModalEvents } from '../../../../../event-bus';
+    import {mapState} from "vuex";
 
     export default {
         data () {
@@ -28,11 +34,22 @@
                 events: [],
             }
         },
+        computed: {
+            isPro: function() {
+              return (this.app.user.account_type === 'pro' || this.app.user.account_type === 'admin')
+            },
+            ...mapState([
+                'app'
+              ])
+        },
         created: function() {
             this.fetchEvents();
             ModalEvents.$on('event-created', this.fetchEvents)
         },
         methods: {
+            showEventCreateModal() {
+                this.$modal.show('modal-create-event', { user: this.user });
+            },
             fetchEvents() {
                 this.loadingEvents = true;
                 axios.get('/api/user/' + this.user.id + '/events').then(response => {
@@ -53,5 +70,8 @@
 </script>
 
 <style lang="scss" scoped>
-
+  .not-found {
+    text-align: center;
+    margin-top: 10px;
+  }
 </style>

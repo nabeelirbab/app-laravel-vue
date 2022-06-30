@@ -18,7 +18,20 @@
 			<div class="form-group">
 				<label for="category-icon">Category Icon</label>
 				@include('admin.partials.field-error', ['field' => 'category-icon'])
-				<input type="text" class="form-control" name="category-icon" id="category-icon">
+				
+				<div class="row">
+					<div class="col-sm-9">
+						<select class="form-control" name="category-icon" id="category-icon">
+							@foreach($allIcons as $icon) 
+								<option value="{{$icon}}" 
+								><i class="{{ $icon }}" aria-hidden="true"></i> {{ $icon }} </option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-sm-3">
+						<div id="icon-view-div"><i class="{{ $allIcons[0] }} fa-1.5x" ></i></div>
+					</div>
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -30,4 +43,19 @@
 			<input type="submit" class="btn btn-sm btn-outline-secondary" value="Create">
 		</form>
 	</div>
+@push('scripts')
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<script>
+		jQuery(function ($) {
+			$('#category-icon').select2();
+
+			
+			$('#category-icon').on("change", function() {
+				var icon = $(this).val();
+				$("#icon-view-div").html("<i class='"+icon+" fa-1.5x' ></i>");
+			})
+		})
+</script>
+@endpush
+
 @endsection

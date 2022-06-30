@@ -40,7 +40,11 @@
         banned:false,
       }
     },
-
+    created: function() {
+            if(this.app.user.loggedin) {
+                this.$router.push({path: '/account'});
+            }
+    },
     computed: {
       ...mapState([
         'app'

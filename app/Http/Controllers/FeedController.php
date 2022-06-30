@@ -31,77 +31,57 @@ class FeedController extends Controller
     public function index()
     {
         // 6 hours
-        $cache_seconds = now()->addMinutes(30);
+        //$cache_seconds = now()->addMinutes(30);
+        $cache_seconds = 30;
         $cache_token = 'feed';
 
         try {
 
-            $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
-
+           // $cached_result = Cache::remember($cache_token, $cache_seconds, function () {
+              
                 $default_limit = 10;
-                $collection = collect([]);
+               // $collection = collect([]);
+                $collection = [];
 
-                Release::statuslive()->with([
-                    'image',
-                    'uploader' => function ($query) {
-                        $query->select('id', 'name', 'path');
-                    },
-                ])->withCount('shares', 'comments', 'likes')->limit(10)->get()->each(function ($item) use (&$collection) {
-                    $item->component = 'feed-release';
-                    $item->type = 'release';
-                    $collection->push($item);
-                });
-                Track::namenotnull()->isApproved()->with([
-                    'preview',
-                    'release',
-                    'release.image',
-                    'release.uploader' => function ($query) {
-                        $query->select('id', 'name', 'path');
-                    },
-                ])->whereHas('release', function($query) {
-                    $query->statuslive();
-                })->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
-                    $item->component = 'feed-track';
-                    $item->type = 'track';
-                    $collection->push($item);
-                });
+                $releases = Release::statuslive()->with([
+                    'image'
+                ])->withCount('shares', 'comments', 'likes')
+                ->take(10)->get();
+                $this->mergeArrays($collection, $releases, 'feed-release', 'release');
+                
+                $releaseIds = $releases->map(function($item) {
+                    return $item['id'];
+                  });
+                $releaseWithIds = [];
+                foreach($releases as $rl) {
+                    $releaseWithIds[$rl->id] = $rl;
+                }
+                $tracks = Track::namenotnull()->isApproved()
+                ->whereIn('release_id', $releaseIds)->take(10)->get();
+                foreach($tracks as &$tr) {
+                    $tr->release = isset($releaseWithIds[$tr->release_id]) ? $releaseWithIds[$tr->release_id] : null;
+                }
+                $this->mergeArrays($collection, $tracks, 'feed-track', 'track');
+                
                 if (auth()->check()) {
-                    if (Auth::user()->can('upload videos')) {
-                        Video::published()->limit(8)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-video';
-                            $item->type = 'video';
-                            $collection->push($item);
-                        });
-                    }
 
-                    if (Auth::user()->can('add events')) {
-                        Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-event';
-                            $item->type = 'event';
-                            $collection->push($item);
-                        });
-                    }
-
-                    if (Auth::user()->can('add merch')) {
-                        Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-merch';
-                            $item->type = 'merch';
-                            $collection->push($item);
-                        });
-                    }
+                    $videos = Video::published()->take(8)->get();
+                    $this->mergeArrays($collection, $videos, 'feed-video', 'video');
+                    
+                    $events = Event::datenotnull()->withCount('shares')->take(7)->get();
+                    $this->mergeArrays($collection, $events, 'feed-event', 'event');
+                   
+                    $merchs = Merch::namenotnull()->take(6)->get();
+                    $this->mergeArrays($collection, $merchs, 'feed-merch', 'merch');
+                    
                 }
 
-                Post::bodynotnull()->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
-                    $item->component = 'feed-post';
-                    $item->type = 'post';
-                    $collection->push($item);
-                });
+                $posts = \DB::table('posts')->where('body', '<>', '')->take(7)->get();
+                //$posts = Post::bodynotnull()->take(7)->get();
+               
 
-                Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {
-                    $item->component = 'feed-genre';
-                    $item->type = 'genre';
-                    $collection->push($item);
-                });
+                $this->mergeArrays($collection, $posts, 'feed-post', 'post');
+
 
                 //                Playlist::namenotnull()->limit(7)->get()->each( function( $item ) use ( &$collection ) {
                 //                    $item->component = 'feed-playlist';
@@ -112,8 +92,10 @@ class FeedController extends Controller
                 // TODO - Charts.
 
                 // We have a flat array with each item assigned a frontend component.
-                return $collection;
-            });
+               // return $collection;
+           // });
+
+            return ['data' => $collection];
         } catch (\Exception $e) {
             // Log::info("FeedController:index -> " . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 422);
@@ -122,6 +104,14 @@ class FeedController extends Controller
         return ['data' => $cached_result];
     }
 
+    function mergeArrays(&$collection = [], $object = [], $component = '', $type = '')
+    {
+        foreach($object as $ob) {
+            $ob->component = $component;
+            $ob->type = $type;
+            $collection[] = $ob;
+        }
+    }
 
     public function deleteAction($id)
     {

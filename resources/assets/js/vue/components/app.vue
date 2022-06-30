@@ -22,19 +22,14 @@
               @slideoutToggle="mobileSlideoutActivte = !mobileSlideoutActivte"
           />
           <user-bar v-if="app.user.loggedin || $route.path !== '/'"/>
+          <only-music-bar v-if="!app.user.loggedin && $route.path === '/'"/>
           <!-- <transition-group mode="out-in" style="flex: 1"> -->
           <search-view v-if="search.visible" key="search-view"/>
           <router-view v-show="!search.visible" key="router-view"/>
           <!-- </transition-group> -->
           <vue-progress-bar/>
         </main>
-        <aside
-            class="main-right"
-            v-if="app.user.loggedin || search.visible"
-            :class="{ searching: search.visible }"
-        >
-          <main-right/>
-        </aside>
+        
       </div>
       <main-footer/>
 
@@ -57,9 +52,9 @@ import SlideoutMenu from "./layout/slideout-menu";
 import MobileSlideoutMenu from "./layout/mobile-slideout-menu.vue";
 import TopBar from "./layout/top-bar";
 import UserBar from "./layout/user-bar";
+import OnlyMusicBar from "./layout/only-music-bar";
 import SearchView from "./pages/search/search-view";
 import MainLeft from "./layout/main-left";
-import MainRight from "./layout/main-right";
 import MainFooter from "./layout/main-footer";
 import {MessageEvents} from "../event-bus";
 
@@ -78,9 +73,9 @@ export default {
     UserBar,
     SearchView,
     MainLeft,
-    MainRight,
     MainFooter,
     MobileSlideoutMenu,
+    OnlyMusicBar
   },
   computed: {
     ...mapState(["search", "messenger", "app"]),
@@ -151,6 +146,8 @@ export default {
     this.$store.dispatch("merch/requireMerch");
     this.$store.dispatch("app/fetchPlans");
     this.$store.dispatch("app/fetchPricePerFeaturedSlot");
+    this.$store.dispatch("app/fetchPriceRangesForTrack");
+    this.$store.dispatch("app/fetchCaptchaCredentials");
     this.$store.dispatch("cart/load");
 
     if (window.user) {

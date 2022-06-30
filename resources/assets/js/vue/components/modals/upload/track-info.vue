@@ -226,7 +226,30 @@ export default {
 		setTrackFile: function(event, track) {
 			const { files } = event.target;
 			if (files && files[0]) {
-				track.file = files[0];
+				var filename = files[0].name;
+        if(this.currentTrack.format == 'mp3' && !filename.match(/mp3.*/)) {
+          this.$notify({
+                            group: 'main',
+                            type: 'error',
+                            title: 'File must be mp3',
+                        });
+          track.file = null;
+          this.$refs.fileInput.value=null;
+          
+        } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
+          this.$notify({
+                            group: 'main',
+                            type: 'error',
+                            title: 'File must be wav',
+                        });
+          
+          track.file = null;
+          this.$refs.fileInput.value=null;
+          
+        } else {
+        	track.file = files[0];
+        }
+				
 			}
 		},
 
