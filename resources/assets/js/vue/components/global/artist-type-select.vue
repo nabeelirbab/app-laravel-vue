@@ -1,12 +1,12 @@
 <template>
     <div class="artist-type-select">
-        <ul >
+        <ul class="gridtypelist list-unstyled list-inline float-left">
             <li
                 v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
                 :class="{ highlighted: selectedType === artistType.id }"
             >
-            <label >
+            <label v-bind:class="[selectedType === artistType.id ? 'active' : '']">
               <input @click="selectArtistType(artistType)" type="radio" v-model="selectedType" :value="artistType.id">I am {{artistType.name}}
             </label>
             </li>
@@ -51,54 +51,38 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "~styles/helpers/_variables.scss";
-    .genre-select {
-        ul.search-results {
-            background: white;
-            border-left: 1px solid $color-grey2;
-            border-right: 1px solid $color-grey2;
-            border-bottom: 1px solid $color-grey2;
+  @import "~styles/helpers/_variables.scss";
 
-            li {
-                padding: 5px;
-                cursor: pointer;
+  ul.gridtypelist {
+    margin-bottom: 2px;
+  }
 
-                &.highlighted {
-                    background: darken(white, 5);
-                }
+  ul.gridtypelist li label {
+    display: block;
+    color: $color-grey3;
+    text-align: center;
+    padding: $padding-sm;
+    text-decoration: none;
+  }
 
-                .active {
-                }
-            }
-        }
-        p {
-            margin: 5px 0;
-            color: $color-grey2;
-            font-size: 10px;
-        }
-        ul.selected-genres {
-            margin: 5px 0;
+  ul.gridtypelist li label:hover {
+    background-color: $color-2;
+    color: $color-grey3;
+  }
 
-            li {
-                display: inline-block;
-                padding: 5px;
-                margin-right: 5px;
-                cursor: pointer;
-                background: darken(white, 15);
-                border-radius: 5px;
+  ul.gridtypelist li label.active {
+    background-color: $color-grey3;
+    color: #fff;
+  }
 
-                &:hover {
-                    background: darken(white, 20);
-                }
-            }
-        }
-        input {
-            box-sizing: border-box;
-            font-size: inherit;
-            border: 1px solid $color-grey2;
-            padding: 5px;
-            border-radius: 2px;
-            width: 100%;
-        }
-    }
+  ul.gridtypelist li label input[type="radio"] {
+    display: none;
+  }
+
+  .gridfilter_list_count {
+    padding-top: $padding-sm;
+    padding-bottom: $padding-sm;
+    text-align: right;
+    color: $color-blue2;
+  }
 </style>
