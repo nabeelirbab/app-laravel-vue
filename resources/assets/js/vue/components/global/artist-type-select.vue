@@ -63,6 +63,9 @@
     text-align: center;
     padding: $padding-sm;
     text-decoration: none;
+    border: 2px $color-2 solid;
+    border-radius: 10px;
+    margin: 2px;
   }
 
   ul.gridtypelist li label:hover {
@@ -71,7 +74,7 @@
   }
 
   ul.gridtypelist li label.active {
-    background-color: $color-grey3;
+    background-color: $color-2;
     color: #fff;
   }
 
