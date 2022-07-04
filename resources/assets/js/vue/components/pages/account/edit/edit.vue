@@ -26,7 +26,7 @@
               />
               <p
                   class="error-message"
-                  v-show="!artist_user_type"
+                  v-show="!form.artist_user_type"
                   style="margin-top: 20px"
                 >
                   The artist type is required
