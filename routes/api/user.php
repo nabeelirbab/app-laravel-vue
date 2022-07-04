@@ -56,3 +56,8 @@ Route::prefix('user')->group(function () {
     Route::get('delete/{id}', 'UserController@delete');
     Route::post('restore', 'UserController@restore');
 });
+
+
+Route::get('artist-types', function () {
+    return \App\ArtistType::where("id", ">", 0)->get();
+});

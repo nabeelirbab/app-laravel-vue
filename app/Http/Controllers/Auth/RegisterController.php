@@ -37,6 +37,7 @@ class RegisterController extends Controller
             'personal.username' => 'required|string|unique:users,name|max:20',
         ],
         'pro' => [
+            'personal.artist_user_type' => 'required',
             'artist.username' => 'required|string|unique:users,name|max:20',
             'artist.genres' => 'required|between:1,4',
             'artist.genres.*.id' => 'required|exists:genres,id',
@@ -46,6 +47,7 @@ class RegisterController extends Controller
             'social.twitter' => 'nullable|string|max:255',
             'social.soundcloud' => 'nullable|string|max:255',
             'social.youtube' => 'nullable|string|max:255',
+
         ],
     ];
 
@@ -88,6 +90,7 @@ class RegisterController extends Controller
             $user->social_youtube = $data['social']['youtube'];
             $user->social_facebook = $data['social']['facebook'];
             $user->social_twitter = $data['social']['twitter'];
+            $user->artist_user_type_id = $data['personal']['artist_user_type'];
             $user->save();
         }
 

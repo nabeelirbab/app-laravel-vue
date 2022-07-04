@@ -19,7 +19,8 @@ export default {
         plans: [],
         pricePerFeaturedSlot: "",
         priceRangesForTrack: [],
-        captchaCredentials: []
+        captchaCredentials: [],
+        artistTypes: [],
     },
     mutations: {
         setNavigation(state, data) {
@@ -60,6 +61,10 @@ export default {
         },
         setGenres(state, genres) {
             state.genres = genres;
+        },
+
+        setArtistTypes(state, artistTypes) {
+            state.artistTypes = artistTypes;
         },
         setReleases(state, releases) {
             state.releases = releases;
@@ -274,6 +279,22 @@ export default {
                     .get("/api/genres")
                     .then(function(response) {
                         commit("setGenres", response.data.data);
+                        resolve();
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                        reject();
+                    });
+            });
+        },
+
+        fetchArtistTypes({ commit, state }) {
+            if (state.genres.length) return; // Don't re-fetch if data is already set.
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/api/artist-types")
+                    .then(function(response) {
+                        commit("setArtistTypes", response.data.data);
                         resolve();
                     })
                     .catch(function(error) {

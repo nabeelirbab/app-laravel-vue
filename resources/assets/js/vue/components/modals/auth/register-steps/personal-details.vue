@@ -38,6 +38,51 @@
                     </div>
                 </div>
             </div>
+
+            <div
+                class="register-form-inputs"
+                v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'"
+            >
+                <div class="full-width">
+                    <div class="full-width">
+                        <div class="input">
+                            <div>
+                                Artist Type:
+                            </div>
+                            <div>
+                            <artist-type-select
+                                @change="artistTypesChanged"
+                                :min="2"
+                                :max="4"
+                                tabindex="10"
+                                :disabled="submitting"
+                                data-vv-validate-on="blur"
+                            />
+                                
+                                 <input
+                                type="hidden"
+                                name="artist_user_type"
+                                placeholder="Artist Type"
+                                v-validate="'required'"
+                                ref="artist_user_type_input"
+                            />
+
+                              <p class="error-message">
+                                {{ errors.first("personal.artist_user_type") }}
+                              </p>
+                                <p
+                                    class="error-message"
+                                    v-show="
+                                        validationErrors['personal.artist_user_type']
+                                    "
+                                >
+                                    The artist type is required
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="register-form-inputs">
                 <div class="left">
                     <div class="input">
@@ -450,6 +495,7 @@
 
     import Recaptcha from "../../../global/recaptcha";
     import GenreSelect from "../../upload/genre-select";
+    import ArtistTypeSelect from "../../../global/artist-type-select";
 
     import Cookies from 'js-cookie';
 
@@ -480,6 +526,7 @@
                         password: "",
                         password_confirmation: "",
                         mobile:"",
+                        artist_user_type:""
                     },
                     artist: {
                         username: "",
@@ -527,6 +574,12 @@
                 }
                 this.$refs.interest_genre_input.value = this.interestGenresString;
                 
+            },
+
+            artistTypesChanged(artistType) {
+                this.data.personal.artist_user_type = artistType;
+
+                this.$refs.artist_user_type_input.value = this.artistType;
             },
             registerUser() {
                 this.submitted = true;
@@ -603,7 +656,7 @@
         },
 
         components: {
-            GenreSelect, Recaptcha
+            GenreSelect, Recaptcha, ArtistTypeSelect
         },
     };
 </script>
