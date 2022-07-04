@@ -72,9 +72,7 @@
                               </p>
                                 <p
                                     class="error-message"
-                                    v-show="
-                                        validationErrors['personal.artist_user_type']
-                                    "
+                                    v-show="!personal.artist_user_type"
                                 >
                                     The artist type is required
                                 </p>
