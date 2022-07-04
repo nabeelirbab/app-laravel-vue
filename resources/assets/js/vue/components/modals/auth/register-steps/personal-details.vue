@@ -73,6 +73,7 @@
                                 <p
                                     class="error-message"
                                     v-show="emptyArtistType"
+                                    style="margin-top: 20px"
                                 >
                                     The artist type is required
                                 </p>

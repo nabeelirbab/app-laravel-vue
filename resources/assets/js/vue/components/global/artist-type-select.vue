@@ -63,9 +63,10 @@
     text-align: center;
     padding: $padding-sm;
     text-decoration: none;
-    border: 2px $color-2 solid;
+    border: 2px $color-blue solid;
     border-radius: 10px;
     margin: 2px;
+    background-color: #f1f1f1;
   }
 
   ul.gridtypelist li label:hover {
