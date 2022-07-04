@@ -4,6 +4,39 @@
       <h2>Edit Info</h2>
       <hr />
       <table>
+
+        <tr v-if="app.user.roles[0].name == 'artist' || app.user.roles[0].name == 'pro'">
+          <td>Artist Type</td>
+          <td>
+            <artist-type-select
+              @change="artistTypesChanged"
+            
+              tabindex="10"
+              :disabled="submitting"
+              data-vv-validate-on="blur"
+              :selectedType="app.user.artist_user_type_id"
+               />
+                                
+            <input
+                type="hidden"
+                name="artist_user_type"
+                placeholder="Artist Type"
+                v-validate="'required'"
+                ref="artist_user_type_input"
+              />
+
+              <p class="error-message">
+                {{ errors.first("artist_user_type") }}
+              </p>
+              <p
+                  class="error-message"
+                  v-show="!artist_user_type"
+                  style="margin-top: 20px"
+                >
+                  The artist type is required
+              </p>
+          </td>
+        </tr>
         <tr>
           <td>Bio</td>
           <td>
@@ -112,6 +145,8 @@
 import { mapState } from "vuex";
 import GenreSelect from "../../../modals/upload/genre-select";
 
+import ArtistTypeSelect from "../../../global/artist-type-select";
+
 export default {
   name: "edit",
 
@@ -125,6 +160,7 @@ export default {
         twitter: "",
         facebook: "",
         interests: [],
+        artist_user_type: ''
       },
       submitting: false,
       bioLength: 0,
@@ -139,7 +175,7 @@ export default {
     },
   },
 
-  components: { GenreSelect },
+  components: { GenreSelect, ArtistTypeSelect },
 
   created() {
     this.form.bio = this.app.user.bio;
@@ -148,6 +184,7 @@ export default {
     this.form.youtube = this.app.user.social_youtube;
     this.form.twitter = this.app.user.social_twitter;
     this.form.facebook = this.app.user.social_facebook;
+    this.form.artist_user_type = this.app.user.artist_user_type_id;
 
     if (this.form.bio) {
       this.bioLength = this.form.bio.length;
@@ -165,6 +202,11 @@ export default {
       genres.forEach((genre) => {
         this.form.interests.push(genre.id);
       });
+    },
+
+    artistTypesChanged(artist_user_type) {
+      this.form.artist_user_type = artist_user_type;
+      this.$refs.artist_user_type_input.value = artistType;
     },
     bioChange(evt) {
       this.bioLength = this.form.bio.length;

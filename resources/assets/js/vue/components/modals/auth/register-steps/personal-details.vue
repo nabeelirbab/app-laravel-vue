@@ -56,7 +56,7 @@
                                 :max="4"
                                 tabindex="10"
                                 :disabled="submitting"
-                                data-vv-validate-on="blur"
+                                data-vv-validate-on="blur" 
                             />
                                 
                                  <input

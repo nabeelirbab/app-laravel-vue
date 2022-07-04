@@ -20,16 +20,14 @@
     export default {
         data() {
             return {
-                selectedType: ''
             }
         },
         props: {
-            populated: {
-                selectedType:  {
-                  type: String,
-                  default: "",
-                },
-            }
+            selectedType:  {
+                type: String,
+                default: "",
+            },
+            
         },
     
         created() {
