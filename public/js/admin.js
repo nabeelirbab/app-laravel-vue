@@ -1018,7 +1018,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     fetchArtistTypes: function fetchArtistTypes(_ref3) {
       var commit = _ref3.commit,
           state = _ref3.state;
-      if (state.genres.length) return; // Don't re-fetch if data is already set.
+      if (state.artistTypes.length) return; // Don't re-fetch if data is already set.
 
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/artist-types").then(function (response) {

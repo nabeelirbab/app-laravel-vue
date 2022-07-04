@@ -289,7 +289,7 @@ export default {
         },
 
         fetchArtistTypes({ commit, state }) {
-            if (state.genres.length) return; // Don't re-fetch if data is already set.
+            if (state.artistTypes.length) return; // Don't re-fetch if data is already set.
             return new Promise((resolve, reject) => {
                 axios
                     .get("/api/artist-types")
