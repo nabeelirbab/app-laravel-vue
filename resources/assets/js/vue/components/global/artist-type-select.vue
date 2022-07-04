@@ -4,10 +4,10 @@
             <li
                 v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
-                :class="{ highlighted: selectedType === artistType.id }"
+                :class="{ highlighted: artistTypeId === artistType.id }"
             >
-            <label v-bind:class="[selectedType === artistType.id ? 'active' : '']">
-              <input @click="selectArtistType(artistType)" type="radio" v-model="selectedType" :value="artistType.id">I am {{artistType.name}}
+            <label v-bind:class="[artistTypeId === artistType.id ? 'active' : '']">
+              <input @click="selectArtistType(artistType)" type="radio" v-model="artistTypeId" :value="artistType.id">I am {{artistType.name}}
             </label>
             </li>
         </ul>
@@ -23,6 +23,12 @@
             }
         },
         props: ['selectedType'],
+
+        data: function () {
+            return {
+                artistTypeId: this.selectedType
+            }
+        },
     
         created() {
              this.$store.dispatch("app/fetchArtistTypes");
@@ -33,7 +39,7 @@
         },
         methods: {
             selectArtistType: function(artistType) {
-                this.selectedType = artistType;
+                this.artistTypeId = artistType;
                 this.$emit("change", artistType.id);
             }
             
