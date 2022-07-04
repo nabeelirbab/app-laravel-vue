@@ -7,7 +7,7 @@
                 :class="{ highlighted: artistTypeId === artistType.id }"
             >
             <label v-bind:class="[artistTypeId === artistType.id ? 'active' : '']">
-              <input @click="selectArtistType(artistType)" type="radio" v-model="artistTypeId" :value="artistType.id">I am {{artistType.name}}
+              <input @click="selectArtistType(artistType)" type="radio" v-model="artistTypeId" :value="artistType.id">I am a {{artistType.name}}
             </label>
             </li>
         </ul>
