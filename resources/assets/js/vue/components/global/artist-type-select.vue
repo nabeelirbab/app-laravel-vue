@@ -4,7 +4,7 @@
             <li
                 v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
-                :class="{ highlighted: i === arrowCounter }"
+                :class="{ highlighted: selectedType === artistType.id }"
             >
             <label >
               <input @click="selectArtistType(artistType)" type="radio" v-model="selectedType" :value="artistType.id">I am {{artistType.name}}
