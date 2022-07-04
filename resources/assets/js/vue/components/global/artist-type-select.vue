@@ -2,7 +2,7 @@
     <div class="artist-type-select">
         <ul >
             <li
-                v-for="(artistType, i) in getArtistTypes()"
+                v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
                 :class="{ highlighted: i === arrowCounter }"
             >
@@ -35,9 +35,6 @@
            
         },
         methods: {
-            getArtistTypes: function() {
-                return this.app.artistTypes;
-            },
             selectArtistType: function(artistType) {
                 this.selectedType = artistType;
                 this.$emit("change", artistType.id);
