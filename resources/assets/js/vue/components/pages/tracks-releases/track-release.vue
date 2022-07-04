@@ -100,7 +100,7 @@
                                 Release Date
                                 <span class="date">{{
                                     moment(release.release_date).format(
-                                        "YYYY-MM-DD"
+                                        "DD-MM-YYYY"
                                     )
                                 }}</span>
                             </p>
@@ -178,7 +178,7 @@
                         <td>
                             {{
                                 moment(track.release.release_date).format(
-                                    "YYYY-MM-DD"
+                                    "DD-MM-YYYY"
                                 )
                             }}
                         </td>

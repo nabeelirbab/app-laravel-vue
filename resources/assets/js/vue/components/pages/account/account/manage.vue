@@ -131,19 +131,6 @@
                     }).finally(()=>location.reload())
             },
             downgradeAccount() {
-<<<<<<< HEAD
-                this.downgrading = true
-                axios.post('/api/account/downgrade', {user_id: this.app.user})
-                    .then(response => {
-                        this.$store.commit('app/setUser', response.data)
-                        this.$notify({
-                            group: 'main',
-                            type: 'success',
-                            title: '<img src="/img/success.gif" alt="success">',
-                        });
-                        this.downgrading = false
-                    })
-=======
                 if (this.app.user.roles[0].name != 'artist') {
                     this.$modal.show('modal-downgrade');
                 } else {
@@ -159,8 +146,7 @@
                             this.downgrading = false;
                         }).finally(()=>location.reload())
                 }
-                
->>>>>>> staging
+
             },
         },
         components: {
