@@ -5,15 +5,15 @@
     </slot>
     <br />
     <div class="filter-buttons">
-      <div class="button-container" v-for="filter in options">
+      <div class="button-container" v-for="(artistType, i) in $store.state.app.artistTypes">
         <ph-button
           size="medium"
           color="blue2"
           width="100%"
           type="search-filter"
-          :active="isActive(filter)"
-          @click.native="single ? setSingleFilter(filter) : toggleFilter(filter)"
-        >{{ filter }}</ph-button>
+          :active="isActive(artistType.id)"
+          @click.native="single ? setSingleFilter(artistType.id) : toggleFilter(artistType.id)"
+        >{{ artistType.name }}</ph-button>
       </div>
     </div>
     
@@ -22,6 +22,7 @@
 
 <script>
 import FilterMethods from "./filter-methods";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -44,8 +45,9 @@ export default {
       default: "Select a filter",
     },
   },
+  computed: mapState(["app"]),
   created: function () {
-    // this.$store.dispatch('app/fetchGenres');
+     this.$store.dispatch("app/fetchArtistTypes");
   },
   mixins: [FilterMethods],
 };

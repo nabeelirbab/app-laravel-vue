@@ -34,9 +34,10 @@ class DiscoverController extends Controller
             }
         }
         $filter = '';
+        $filterArtistType = '';
         if (request()->has('filter')) {
             if (count(request('filter')) > 0) {
-                $filter = request('filter')[0];
+                $filterArtistType = request('filter')[0];
             }
         }
         $column = $this->getFilterOrderBy($filter)['column'];
@@ -49,7 +50,13 @@ class DiscoverController extends Controller
                 if (count($genres) > 0) {
                     $query->whereIn('genres.id', $genres);
                 }
-            })->whereHas('tracks', function ($query) use ($classes) {
+            })
+            ->whereHas('uploader', function ($query) use ($filterArtistType) {
+                if (!empty($filterArtistType) && $filterArtistType > 0) {
+                    $query->where('artist_user_type_id', $filterArtistType);
+                }
+            })
+            ->whereHas('tracks', function ($query) use ($classes) {
                 if (request()->has('bpm')) {
                     $query->whereBetween('bpm', [request('bpm')[0], request('bpm')[1]]);
                 }
