@@ -22,13 +22,7 @@
             return {
             }
         },
-        props: {
-            selectedType:  {
-                type: Number,
-                default: "",
-            },
-            
-        },
+        props: ['selectedType'],
     
         created() {
              this.$store.dispatch("app/fetchArtistTypes");
