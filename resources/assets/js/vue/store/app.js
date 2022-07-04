@@ -294,7 +294,7 @@ export default {
                 axios
                     .get("/api/artist-types")
                     .then(function(response) {
-                        commit("setArtistTypes", response.data.data);
+                        commit("setArtistTypes", response.data);
                         resolve();
                     })
                     .catch(function(error) {

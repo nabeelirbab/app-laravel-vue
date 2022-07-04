@@ -1022,7 +1022,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/artist-types").then(function (response) {
-          commit("setArtistTypes", response.data.data);
+          commit("setArtistTypes", response.data);
           resolve();
         })["catch"](function (error) {
           console.log(error);
