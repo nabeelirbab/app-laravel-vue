@@ -72,7 +72,7 @@
                               </p>
                                 <p
                                     class="error-message"
-                                    v-show="!personal.artist_user_type"
+                                    v-show="emptyArtistType"
                                 >
                                     The artist type is required
                                 </p>
@@ -509,6 +509,7 @@
 
         data() {
             return {
+                emptyArtistType: true,
                 artistGenresString: "",
                 interestGenresString: "",
                 validationErrors: "",
@@ -578,6 +579,7 @@
                 this.data.personal.artist_user_type = artistType;
 
                 this.$refs.artist_user_type_input.value = artistType;
+                this.emptyArtistType = (artistType) ? false : true;
             },
             registerUser() {
                 this.submitted = true;
