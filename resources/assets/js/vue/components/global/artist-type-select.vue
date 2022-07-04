@@ -20,7 +20,10 @@
     export default {
         props: {
             populated: {
-                selectedType: string
+                selectedType:  {
+                  type: String,
+                  default: "",
+                },
             }
         },
     
