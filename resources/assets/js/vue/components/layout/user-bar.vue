@@ -20,7 +20,7 @@
           Upload
           <template v-if="!app.user.stripe_account_id || !app.user.approved_at" slot="tooltip">
             <p v-if="!app.user.stripe_account_id" >Complete verification in your account section</p>
-            <p v-if="app.user.stripe_account_id && !app.user.approved_at" >Please wait until admin aprove your account.</p>
+            <p v-if="app.user.stripe_account_id && !app.user.approved_at" >We're just verifying your account first.</p>
           </template>
 
           <template v-else-if="app.user.tracks_count_this_month >= free_release_limit" slot="tooltip">
