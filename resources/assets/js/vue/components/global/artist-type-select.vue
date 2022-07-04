@@ -28,10 +28,11 @@
         },
     
         created() {
+             this.$store.dispatch("app/fetchArtistTypes");
         },
         computed: mapState(["app"]),
         mounted: function() {
-            this.$store.dispatch("app/fetchArtistTypes");
+           
         },
         methods: {
             getArtistTypes: function() {
