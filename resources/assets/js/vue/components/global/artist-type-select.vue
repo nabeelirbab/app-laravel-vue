@@ -1,6 +1,7 @@
 <template>
     <div class="artist-type-select">
         <ul >
+        {{$store.state.app.artistTypes}}
             <li
                 v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
