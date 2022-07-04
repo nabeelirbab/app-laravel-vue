@@ -1,14 +1,13 @@
 <template>
     <div class="artist-type-select">
         <ul >
-        {{$store.state.app.artistTypes}}
             <li
                 v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
                 :class="{ highlighted: i === arrowCounter }"
             >
             <label >
-              <input @click="selectArtistType(artistType)" type="radio" v-model="selectedType" :value="artistType.id">{{artistType.name}}
+              <input @click="selectArtistType(artistType)" type="radio" v-model="selectedType" :value="artistType.id">I am {{artistType.name}}
             </label>
             </li>
         </ul>
