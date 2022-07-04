@@ -19,7 +19,9 @@
     import { mapState } from "vuex";
     export default {
         data() {
-            selectedType: ''
+            return {
+                selectedType: ''
+            }
         },
         props: {
             populated: {
