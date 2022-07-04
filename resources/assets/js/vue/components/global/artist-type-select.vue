@@ -24,7 +24,7 @@
         },
         props: {
             selectedType:  {
-                type: String,
+                type: Number,
                 default: "",
             },
             

@@ -206,7 +206,7 @@ export default {
 
     artistTypesChanged(artist_user_type) {
       this.form.artist_user_type = artist_user_type;
-      this.$refs.artist_user_type_input.value = artistType;
+      this.$refs.artist_user_type_input.value = artist_user_type;
     },
     bioChange(evt) {
       this.bioLength = this.form.bio.length;
