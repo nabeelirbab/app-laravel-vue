@@ -82,7 +82,7 @@ class MyAccountController extends Controller
         $request->user()->social_twitter = $request->twitter;
         $request->user()->social_facebook = $request->facebook;
 
-        if (in_array($request->user()->account_type, ['artist', 'pro']) {
+        if (in_array($request->user()->account_type, ['artist', 'pro'])) {
             $request->user()->artist_user_type_id = $request->artist_user_type;
         }
 
