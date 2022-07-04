@@ -579,7 +579,7 @@
                 this.data.personal.artist_user_type = artistType;
 
                 this.$refs.artist_user_type_input.value = artistType;
-                this.emptyArtistType = (artistType) ? false : true;
+                this.emptyArtistType = false;
             },
             registerUser() {
                 this.submitted = true;
