@@ -24,10 +24,6 @@
                 v-validate="'required'"
                 ref="artist_user_type_input"
               />
-
-              <p class="error-message">
-                {{ errors.first("artist_user_type") }}
-              </p>
               <p
                   class="error-message"
                   v-show="!artist_user_type"
