@@ -81,7 +81,7 @@ class ReleaseController extends Controller
 
             case 'forceDelete':
 
-                \App\Track::onlyTrashed()->whereIn("release_id", $selected)->update(['release_id' => null]);
+                \App\Track::withTrashed()->whereIn("release_id", $selected)->update(['release_id' => null]);
                 \DB::table("release_track_genres")->whereIn("release_id", $selected)->delete();
                 Release::onlyTrashed()->whereIn('id', $selected)->forceDelete();
                 break;
