@@ -24,7 +24,7 @@
       new
     </div>
     <div class="play-pause" v-if="track && track.status === 'approved'">
-      <play-pause-button :track="track" :size="25" />
+      <play-pause-button :track="track" :size="25" :type="streamable" />
     </div>
   </div>
 </template>

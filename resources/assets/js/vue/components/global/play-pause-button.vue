@@ -46,7 +46,6 @@
         return this.$store.state.player.track.id === this.track.id
       },
       togglePlayback() {
-        this.type = 'streamable';
         if (!this.thisTrackisLoaded()) {
             if (this.$store.state.app.user.id !== -1) {
                 axios.post('/api/user/track', {

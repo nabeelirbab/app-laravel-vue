@@ -13,7 +13,7 @@
             </tr>
             <tr v-for="track in tracks" class="data-row" :key="track.id">
                 <td>
-                    <play-pause-button :track="track" :size="15" />
+                    <play-pause-button :track="track" :size="15" :type="streamable" />
                 </td>
                 <td @click="trackClicked($event, track)">
                     {{ track.name }}

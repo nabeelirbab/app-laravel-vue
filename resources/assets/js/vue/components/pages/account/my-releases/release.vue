@@ -16,7 +16,7 @@
                             <p class="text-sm">{{ release.uploader.name }}</p>
                         </div>
                         <div v-if="release.tracks.length" class="play-button">
-                           <play-pause-button :track="release.tracks[0]" :size="15" />
+                           <play-pause-button :track="release.tracks[0]" :size="15" :type="streamable" />
                         </div>
                         <div>
                             <span class="text-sm"><span class="text-blue">Release Date: </span> {{ formattedDate }}</span>

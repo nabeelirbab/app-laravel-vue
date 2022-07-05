@@ -20,7 +20,7 @@
           >
             <span>{{ mutableTrack.name }}</span>
           </router-link>
-          <play-pause-button :track="item"/>
+          <play-pause-button :track="item" :type="streamable"/>
         </div>
         <div class="p-item-subtitle">
           {{ mutableTrack.release.name }}

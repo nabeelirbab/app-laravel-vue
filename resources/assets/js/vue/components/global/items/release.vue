@@ -33,7 +33,7 @@
                 </div>
                 <div>
                   {{ index + 1 }} - {{ track.name }}
-                  <play-pause-button :track="track" type="preview"></play-pause-button>
+                  <play-pause-button :track="track" type="streamable"></play-pause-button>
                 </div>
               </div>
             </div>
