@@ -31,6 +31,7 @@
                                     v-if="track"
                                     :track="track"
                                     :size="3"
+                                    :type="streamable"
                                 />
                                 {{ item.name }}
                             </h1>
