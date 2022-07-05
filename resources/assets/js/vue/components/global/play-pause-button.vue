@@ -27,7 +27,7 @@
       },
       type: {
         type: String,
-        default: 'preview',
+        default: 'streamable',
       },
     },
     data() {
