@@ -82,7 +82,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      streamable: 'streamable'
+    };
   },
   created: function() {},
   components: {

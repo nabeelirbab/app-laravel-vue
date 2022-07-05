@@ -68,6 +68,7 @@
             return {
                 moment: window.moment,
               tracks: null,
+              streamable: 'streamable'
             }
         },
         created: function() {

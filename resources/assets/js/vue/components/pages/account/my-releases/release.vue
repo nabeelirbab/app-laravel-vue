@@ -103,6 +103,7 @@
         tab: 'details',
         tabOpen: false,
         contextMenu: false,
+        streamable: 'streamable'
       }
     },
 

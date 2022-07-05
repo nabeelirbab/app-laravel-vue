@@ -62,7 +62,8 @@ export default {
         rect: null,
         progress: 0,
         dragging: false,
-      }
+      },
+      streamable: 'streamable'
     }
   },
   computed: {

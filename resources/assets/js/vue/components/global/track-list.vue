@@ -65,6 +65,7 @@
             return {
                 moment: window.moment,
                 playing: false,
+                streamable: 'streamable'
             }
         },
         computed: {

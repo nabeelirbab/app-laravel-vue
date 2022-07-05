@@ -218,7 +218,8 @@ export default {
         return {
             moment: window.moment,
             release: null,
-            track: null
+            track: null,
+            streamable: 'streamable'
         };
     },
     computed: {
