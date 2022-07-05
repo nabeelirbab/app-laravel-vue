@@ -25,5 +25,5 @@
 		</li>
 	</ul>
 
-	@include('admin.partials.bulk-actions')
+	@include('admin.partials.bulk-actions', ['forcedelete' => 1])
 </div>

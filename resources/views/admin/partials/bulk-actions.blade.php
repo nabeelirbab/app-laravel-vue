@@ -9,6 +9,9 @@
 				<option value="publish">Publish Post</option>
 			@endif
 			@if ($filter == 'trashed')
+				@if(isset($forcedelete) && $forcedelete == 1)
+					<option value="forceDelete">Delete</option>
+				@endif
 				<option value="restore">Restore</option>
 			@endif
 		</select>

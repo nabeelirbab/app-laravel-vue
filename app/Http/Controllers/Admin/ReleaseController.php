@@ -78,6 +78,13 @@ class ReleaseController extends Controller
             case 'restore':
                 Release::onlyTrashed()->whereIn('id', $selected)->restore();
                 break;
+
+            case 'forceDelete':
+
+                \App\Track::onlyTrashed()->whereIn("release_id", $selected)->update(['release_id' => null]);
+                \DB::table("release_track_genres")->whereIn("release_id", $selected)->delete();
+                Release::onlyTrashed()->whereIn('id', $selected)->forceDelete();
+                break;
         }
 
         return redirect('/admin/releases');
@@ -243,6 +250,8 @@ class ReleaseController extends Controller
      */
     public function destroy($id)
     {
+        \App\Track::onlyTrashed()->where("release_id", $id)->update(['release_id' => null]);
+        \DB::table("release_track_genres")->where("release_id", $id)->delete();
         Release::onlyTrashed()->where('id', $id)->forceDelete();
 
         return redirect('/admin/releases/trashed');
