@@ -3,7 +3,7 @@
         <h5>{{ video.title }}</h5>
         <p>{{ video.description }}</p>
         <video controls width="100%" height="500" :id="'video' + video.id" :poster="video.asset.files.video_thumbnail.url">
-            <source :src="video.asset.files.original.url" :type="video.asset.files.original.mime" />
+            <source :src="getBlobUrl()" :type="video.asset.files.original.mime" />
         </video>
     </div>
 </template>
@@ -31,6 +31,10 @@
             });
         },
         methods: {
+
+            getBlobUrl() {
+                return 'blob:'+this.video.asset.files.original.url;
+            }
 
         },
         components: {
