@@ -31,8 +31,13 @@ class VideoController extends Controller
         $video = Video::create([
             'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
         ]);
+
+        if (session()->has("uploading_video_id")) {
+            session()->forget("uploading_video_id");
+        }
         session()->put('uploading_video_id', $video->id);
         session()->save();
+        
         $video->refresh();
         \Log::info("Saved video id :: " . $video->id);
         
