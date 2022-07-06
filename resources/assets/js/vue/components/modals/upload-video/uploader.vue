@@ -26,7 +26,7 @@
                 target: '/api/video/upload',
                 withCredentials: true,
                 fileType: ['mp4'],
-                testChunks: false,
+                testChunks: true,
                 maxFileSize: 500 * 1024 * 1024,
                 chunkSize: 1 * 1024 * 1024, // 1MB
                 simultaneousUploads: 10,
