@@ -32,6 +32,7 @@ class VideoController extends Controller
             'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
         ]);
         $video->refresh();
+        \Log::info("Saved video id :: " . $video->id);
         session()->put('uploading_video_id', $video->id);
         session()->save();
         return $video;
@@ -110,7 +111,7 @@ class VideoController extends Controller
     protected function saveFile(Request $request, UploadedFile $file)
     {
         $videoID = session()->get('uploading_video_id');
-        \Log::info("Video Id :: " . $videoID);
+        \Log::info("Retrieved Video Id :: " . $videoID);
         $video = Video::find($videoID);
         // _tb TODO: Uncomment these lines. If they are commented, uploaded videos will never be uploded and transcoded!
         $transcoder = new VideoTranscoder($video, $file);
