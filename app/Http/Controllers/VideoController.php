@@ -32,14 +32,14 @@ class VideoController extends Controller
             'user_id' => $request->has('userid') ? $request->get("userid") : $request->user()->id,
         ]);
 
-        if (session()->get("uploading_video_id")) {
+        /*if (session()->get("uploading_video_id")) {
             \Log::info("Forget the session key ");
             session()->forget("uploading_video_id");
 
             \Log::info("old video  session id :: " . session()->get("uploading_video_id"));
         }
         session()->put('uploading_video_id', $video->id);
-        session()->save();
+        session()->save();*/
 
         $video->refresh();
         \Log::info("Saved video id :: " . session()->get("uploading_video_id"));
@@ -70,10 +70,9 @@ class VideoController extends Controller
         // receive the file
         $save = $receiver->receive();
 
-        \Log::info("Uploading  Video Id 75 :: " . session()->get("uploading_video_id"));
         // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
-            //sleep(2);
+            sleep(2);
             // save the file and return any response you need
             $this->saveFile($request, $save->getFile());
         }
@@ -120,10 +119,12 @@ class VideoController extends Controller
      */
     protected function saveFile(Request $request, UploadedFile $file)
     {
-        $videoID = session()->get('uploading_video_id');
+        /*$videoID = session()->get('uploading_video_id');
         \Log::info("Retrieved Video Id :: " . $videoID);
-        $video = Video::find($videoID);
+        $video = Video::find($videoID);*/
         // _tb TODO: Uncomment these lines. If they are commented, uploaded videos will never be uploded and transcoded!
+        $video = Video::where("user_id", auth()->user()->id)->last();
+        \Log::info("Retrieved Video Id :: " . $video->id);
         $transcoder = new VideoTranscoder($video, $file);
         $transcoder->makeItHappen();
         event(new UploadedVideo($video));
