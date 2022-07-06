@@ -39,7 +39,7 @@ class VideoController extends Controller
             \Log::info("old video  session id :: " . session()->get("uploading_video_id"));
         }
         session()->put('uploading_video_id', $video->id);
-        //session()->save();
+        session()->save();
 
         $video->refresh();
         \Log::info("Saved video id :: " . $video->id);
