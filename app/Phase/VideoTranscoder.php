@@ -67,6 +67,7 @@ class VideoTranscoder
     {
         $path = Storage::putFile('video/original', $this->file);
         //unlink($this->file->getPathname()); // Not needed now because the file is not saved on the local filesystem
+        \Log::info("Original file path :: ". $path);
         $this->createOriginalFileModel($path);
     }
 
@@ -126,6 +127,8 @@ class VideoTranscoder
         $outputDir = 'video/transcoded/' . $dirName . '/';
 
         // _tb TODO: Perhaps in the future decide on a preset to use based on the size of the original video
+        \Log::info("original file model :: ".json_encode($this->originalFileModel));
+
         $elasticTranscoder->createJob([
             'PipelineId' => env('AWS_ET_VIDEO_PIPELINEID'),
             'Input' => [
