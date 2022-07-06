@@ -123,7 +123,7 @@ class VideoController extends Controller
         \Log::info("Retrieved Video Id :: " . $videoID);
         $video = Video::find($videoID);*/
         // _tb TODO: Uncomment these lines. If they are commented, uploaded videos will never be uploded and transcoded!
-        $video = Video::where("user_id", auth()->user()->id)->last();
+        $video = Video::where("user_id", auth()->user()->id)->orderByDesc('created_at')->first();
         \Log::info("Retrieved Video Id :: " . $video->id);
         $transcoder = new VideoTranscoder($video, $file);
         $transcoder->makeItHappen();
