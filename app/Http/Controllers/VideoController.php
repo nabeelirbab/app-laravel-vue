@@ -58,7 +58,7 @@ class VideoController extends Controller
      * @throws UploadMissingFileException
      *
      */
-    public function uploadFile(Request $request)
+    public function uploadFileOld(Request $request)
     {
         // create the file receiver
         $receiver = new FileReceiver("file", $request, HandlerFactory::classFromRequest($request));
@@ -75,6 +75,27 @@ class VideoController extends Controller
         // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
             sleep(2);
+            // save the file and return any response you need
+            $this->saveFile($request, $save->getFile());
+        }
+        // we are in chunk mode, lets send the current progress
+        /** @var AbstractHandler $handler */
+        $handler = $save->handler();
+        return response()->json([
+            "done" => $handler->getPercentageDone()
+        ]);
+    }
+
+    public function uploadFile(Request $request, FileReceiver $receiver)
+    {
+        // check if the upload is success, throw exception or return response you need
+        if ($receiver->isUploaded() === false) {
+            throw new UploadMissingFileException();
+        }
+        // receive the file
+        $save = $receiver->receive();
+        // check if the upload has finished (in chunk mode it will send smaller files)
+        if ($save->isFinished()) {
             // save the file and return any response you need
             $this->saveFile($request, $save->getFile());
         }
