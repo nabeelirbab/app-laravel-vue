@@ -60,7 +60,7 @@ class VideoController extends Controller
         // receive the file
         $save = $receiver->receive();
         \Log::info(json_encode($save->handler()));
-        sleep(3);
+        sleep(2);
         // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
             // save the file and return any response you need
@@ -110,6 +110,7 @@ class VideoController extends Controller
     protected function saveFile(Request $request, UploadedFile $file)
     {
         $videoID = session()->get('uploading_video_id');
+        \Log::info("Video Id :: " . $videoID);
         $video = Video::find($videoID);
         // _tb TODO: Uncomment these lines. If they are commented, uploaded videos will never be uploded and transcoded!
         $transcoder = new VideoTranscoder($video, $file);
