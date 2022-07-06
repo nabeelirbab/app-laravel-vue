@@ -33,7 +33,7 @@
         methods: {
 
             getBlobUrl() {
-                return 'blob:'+this.video.asset.files.original.url;
+                return 'blob:'+this.video.asset.files.hls_playlist.url;
             }
 
         },
