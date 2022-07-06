@@ -69,8 +69,8 @@ class VideoController extends Controller
         }
         // receive the file
         $save = $receiver->receive();
-        \Log::info(json_encode($save->handler()));
-        
+
+        \Log::info("Uploading  Video Id 75 :: " . session()->get("uploading_video_id"));
         // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
             //sleep(2);
