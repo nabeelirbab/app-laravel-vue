@@ -35,9 +35,11 @@ class VideoController extends Controller
         if (session()->get("uploading_video_id")) {
             \Log::info("Forget the session key ");
             session()->forget("uploading_video_id");
+
+            \Log::info("old video  session id :: " . session()->get("uploading_video_id"));
         }
         session()->put('uploading_video_id', $video->id);
-        session()->save();
+        //session()->save();
 
         $video->refresh();
         \Log::info("Saved video id :: " . $video->id);
