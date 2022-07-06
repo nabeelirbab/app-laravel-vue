@@ -73,7 +73,7 @@ class VideoController extends Controller
         
         // check if the upload has finished (in chunk mode it will send smaller files)
         if ($save->isFinished()) {
-            sleep(2);
+            //sleep(2);
             // save the file and return any response you need
             $this->saveFile($request, $save->getFile());
         }
