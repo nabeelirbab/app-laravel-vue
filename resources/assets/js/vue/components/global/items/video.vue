@@ -20,7 +20,8 @@
 
 <script>
     import 'mediaelement/full';
-
+    import {mapState} from "vuex";
+    
     export default {
         props: {
             video: {
