@@ -17,7 +17,7 @@
     export default {
         data () {
             return {
-                token: Math.random().toString(36).substring(7),
+                token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 resumable: null,
             }
         },
@@ -31,6 +31,7 @@
                 chunkSize: 1 * 1024 * 1024, // 1MB
                 simultaneousUploads: 10,
                 forceChunkSize: true,
+                throttleProgressCallbacks: 1,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
                     'X-Requested-With': 'XMLHttpRequest',
@@ -38,6 +39,7 @@
                 query: {
                     upload_token: this.token
                 },
+
             });
             this.resumable.assignBrowse(this.$refs.browseButton);
             this.resumable.assignDrop(this.$refs.dropZone);
