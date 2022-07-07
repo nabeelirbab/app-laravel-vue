@@ -132,6 +132,7 @@ class UserController extends Controller
     public function getVideosForUser($userID)
     {
         return User::findOrFail($userID)->videos()
+            ->orderByDesc("id")
             ->get();
     }
 
