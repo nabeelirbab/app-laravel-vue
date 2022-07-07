@@ -19,7 +19,7 @@
                         <i class="fa fa-spinner fa-spin"></i> Uploading <em>{{ resumable.files[0].fileName }}</em>
                     </h3>
                     <ph-button v-show="resumable.isUploading()"   @click.native="resumable.cancel()">Cancel</ph-button>
-                    <h3 v-show="uploadComplete">
+                    <h3 v-show="uploadComplete && !resumable.isUploading()">
                         <i class="fa fa-check-circle"></i> Upload Complete
                     </h3>
                     <div class="upload-progress">
