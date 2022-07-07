@@ -28,7 +28,7 @@
                                 <span v-show="uploadComplete">{{ resumable.files[0].fileName }}</span>
                             </div>
                         </div>
-                        <div class="progress-digits" v-show="!uploadComplete">
+                        <div class="progress-digits" v-show="!uploadComplete || resumable.isUploading()">
                             {{ uploadedSize }}MB / {{ fileSize }}MB ({{ Math.floor(resumable.progress() * 100) }}%)
                         </div>
                     </div>
