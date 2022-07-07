@@ -1,6 +1,6 @@
 <template>
     <div class="video" v-if="video.title && video.asset && video.asset.files.video_thumbnail">
-        <div class="delete-video" v-if="app.user.id === video.user_id" @click.prevent="$modal.show('modal-delete-confirm', { deleteable: video })">
+        <div class="delete-video" v-if="app.user && app.user.id === video.user_id" @click.prevent="$modal.show('modal-delete-confirm', { deleteable: video })">
             <i class="fa fa-trash"></i>
         </div>
         <div class="p-video-main">
