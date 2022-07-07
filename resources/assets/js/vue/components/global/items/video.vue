@@ -7,12 +7,6 @@
                     <h5>{{ video.title }}</h5>
                     <p>{{ video.description }}</p>
                 </div>
-
-                <div class="p-video-iframe" >
-                    <video controls width="100%" height="500" :id="'video' + video.id" :poster="video.asset.files.video_thumbnail.url">
-                        <source :src="video.asset.files.original.url" :type="video.asset.files.original.mime" />
-                    </video>
-                </div>
             </div>
 
             <div class="p-video-meta">
@@ -21,6 +15,10 @@
                     {{ moment(video.created_at).fromNow() }}
                 </div>
             </div>
+
+            <video controls width="100%" height="500" :id="'video' + video.id" :poster="video.asset.files.video_thumbnail.url">
+                        <source :src="video.asset.files.original.url" :type="video.asset.files.original.mime" />
+                    </video>
         </div>
     </div>
 </template>
@@ -51,7 +49,7 @@
 
         },
         components: {
-
+            Actions
         }
     }
 </script>
