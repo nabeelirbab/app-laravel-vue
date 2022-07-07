@@ -6,7 +6,7 @@
             </div>
             <div class="modal-content">
                 <h2 >Upload Video</h2>
-                <div v-show="!resumable || (resumable && !resumable.isUploading())">
+                <div v-show="!saved && (!resumable || (resumable && !resumable.isUploading()))">
                     <h3>First, browse for your video or drag it into the zone below:</h3>
                     <uploader
                             @upload-start="uploadStart"
