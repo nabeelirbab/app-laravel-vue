@@ -104,9 +104,11 @@ class VideoController extends Controller
                 'title' => $data['title'],
                 'description' => $data['description'],
             ])->save();
-            return $video;
 
         event(new UploadedVideo($video));
+        
+        return $video;
+
         
     }
 
