@@ -27,7 +27,7 @@
 
 <script>
     import 'mediaelement/full';
-
+    import Actions from 'global/actions/actions';
     export default {
         props: {
             video: {
