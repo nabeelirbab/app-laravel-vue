@@ -47,6 +47,11 @@
                 this.resumable.upload();
             });
             this.resumable.on('fileSuccess', (file, message) => {
+                 axios.post('/api/video/upload',{
+                    token: this.token
+                }).then((response) => {
+                    console.log(response.data);
+                });
                 this.$emit('upload-success', this.resumable);
             });
             
