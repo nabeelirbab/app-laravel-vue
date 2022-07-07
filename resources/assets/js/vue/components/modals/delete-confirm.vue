@@ -50,6 +50,9 @@ export default {
         case "comment":
           return "Delete Comment";
           break;
+        case "video":
+          return "Delete Video";
+          break;
         default:
           "Delete Confirm";
       }
@@ -64,6 +67,9 @@ export default {
           break;
         case "message":
           return "Are you sure you want to delete this message?";
+          break;
+        case "video":
+          return "Are you sure you want to delete this video?";
           break;
         default:
           "Are you sure ?";
@@ -102,6 +108,15 @@ export default {
             .post(`/api/message/remove/${this.deleteable.id}`)
             .then((response) => {
               MessageEvents.$emit("message-removed");
+              this.$modal.hide("modal-delete-confirm");
+              this.submitting = false;
+            });
+          break;
+        case "video":
+          axios
+            .post(`/api/video/${this.deleteable.id}/delete`)
+            .then((response) => {
+              UserEvents.$emit("video-deleted");
               this.$modal.hide("modal-delete-confirm");
               this.submitting = false;
             });

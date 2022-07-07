@@ -6,7 +6,7 @@
             </div>
             <div class="modal-content">
                 <h2 >Upload Video</h2>
-                <div v-show="!resumable || (resumable && !resumable.isUploading() && !uploadComplete)">
+                <div v-show="!resumable || (resumable && !resumable.isUploading())">
                     <h3>First, browse for your video or drag it into the zone below:</h3>
                     <uploader
                             @upload-start="uploadStart"
@@ -86,6 +86,7 @@
 <script>
     import CloseIcon from 'global/close-icon';
     import Uploader from './uploader';
+    import { UserEvents } from "events";
 
     export default {
         data () {
@@ -144,6 +145,7 @@
                     this.saved = true;
                 }).finally(() => {
                     this.saving = false;
+                    UserEvents.$emit("video-added");
                 });
             },
             maybeReset() {

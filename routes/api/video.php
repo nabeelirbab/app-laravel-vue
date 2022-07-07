@@ -6,4 +6,6 @@ Route::prefix('video')->group(function() {
     Route::get('upload', 'VideoController@uploadFile');
     Route::post('upload', 'VideoController@uploadFile');
     Route::post('save/{videoid}', 'VideoController@save');
+
+    Route::post('{id}/delete', 'VideoController@deleteVideo');
 });

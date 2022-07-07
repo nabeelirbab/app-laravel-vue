@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ph-button v-if="isPro" @click.native="$modal.show('modal-upload-video', {user: user});" size="medium">Add Video</ph-button>
+    <ph-button @addedVideo="addedVideo" v-if="isPro" @click.native="$modal.show('modal-upload-video', {user: user});" size="medium">Add Video</ph-button>
     <spinner
       style="margin: 3em auto;"
       :animation-duration="1000"
@@ -24,6 +24,7 @@
 import ProfileMixin from "../profile-mixin";
 import { HalfCircleSpinner as Spinner } from "epic-spinners";
 import Item from "global/items/item";
+import { UserEvents } from "events";
 import {mapState} from "vuex";
 
 export default {
@@ -43,6 +44,13 @@ export default {
   },
   created: function () {
     this.fetchVideos();
+    UserEvents.$on('video-added', () => {
+      this.fetchVideos();
+    });
+
+    UserEvents.$on('video-deleted', () => {
+      this.fetchVideos();
+    });
   },
   methods: {
     fetchVideos() {
@@ -55,7 +63,7 @@ export default {
         .finally(() => {
           this.loadingVideos = false;
         });
-    },
+    }
   },
   mixins: [ProfileMixin],
   components: {

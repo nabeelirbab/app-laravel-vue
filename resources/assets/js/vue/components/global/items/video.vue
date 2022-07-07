@@ -1,18 +1,13 @@
 <template>
     <div class="video" v-if="video.title && video.asset && video.asset.files.video_thumbnail">
-
+        <div class="delete-video" v-if="app.user.id === video.user_id" @click.prevent="$modal.show('modal-delete-confirm', { deleteable: event })">
+            <i class="fa fa-trash"></i>
+        </div>
         <div class="p-video-main">
             <div class="p-video-text">
                 <div class="p-video-detail">
                     <h5>{{ video.title }}</h5>
                     <p>{{ video.description }}</p>
-                </div>
-            </div>
-
-            <div class="p-video-meta">
-                <actions :actionable="video" :id="video.id"></actions>
-                <div class="p-item-time">
-                    {{ moment(video.created_at).fromNow() }}
                 </div>
             </div>
 
@@ -25,7 +20,7 @@
 
 <script>
     import 'mediaelement/full';
-    import Actions from 'global/actions/actions';
+
     export default {
         props: {
             video: {
@@ -38,6 +33,12 @@
                 moment: window.moment,
             }
         },
+        computed: {
+            ...mapState([
+                'app',
+            ]),
+        },
+
         mounted: function() {
             new MediaElementPlayer(document.getElementById('video' + this.video.id), {
                 success: function () {
@@ -46,10 +47,10 @@
             });
         },
         methods: {
-
+            
         },
         components: {
-            Actions
+            
         }
     }
 </script>
@@ -69,5 +70,9 @@
 
     .p-post-iframe {
         margin-top: 8px;
+    }
+    .delete-video {
+        float: right;
+        margin-top: 20px;
     }
 </style>

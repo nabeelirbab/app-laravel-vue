@@ -131,4 +131,12 @@ class VideoController extends Controller
         $transcoder->makeItHappen();
         event(new UploadedVideo($video));
     }
+
+    public function deleteAction($id)
+    {
+        
+        Video::destroy($id);
+
+        return "This Video Has Been Deleted";
+    }
 }
