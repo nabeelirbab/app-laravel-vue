@@ -17,7 +17,7 @@
     export default {
         data () {
             return {
-                token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                token: Math.random().toString(36).substring(7),
                 resumable: null,
             }
         },
@@ -31,13 +31,15 @@
                 chunkSize: 1 * 1024 * 1024, // 1MB
                 simultaneousUploads: 10,
                 forceChunkSize: true,
+
                 throttleProgressCallbacks: 1,
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
                     'X-Requested-With': 'XMLHttpRequest',
                 },
                 query: {
-                    upload_token: this.token
+                    upload_token: this.token,
+                    _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
 
             });
