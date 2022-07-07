@@ -1,68 +1,79 @@
 <template>
     <div>
-        <div class="form-group">
-            <div class="custom-file drop-zone">
-                <input type="file" class="custom-file-input browse-button" id="customFile" accept="video/*" ref="fileContainer" @change="onChangeFile">
-                <label class="custom-file-label" for="customFile" ref="fileLabel">{{ label }}</label>
-            </div>
-            <div class="my-3 progress">
-                <div class="progress-bar" role="progressbar" v-bind:style="{ width: progress + '%' }" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <div class="my-3 alert alert-primary" v-bind:class="{ 'd-none': null === result }" role="alert">
-                <a v-bind:href="result" target="_blank">{{ result }}</a>
-            </div>
+        <p>
+            Supported file types: mp4
+        </p>
+        <div class="drop-zone" ref="dropZone">
+            <span class="browse-button" ref="browseButton">
+                Browse
+            </span>
         </div>
     </div>
 </template>
 
 <script>
-    import { uploadService } from '../../../services';
+    import Resumable from 'resumablejs';
+
     export default {
-        data() {
+        data () {
             return {
-                label: 'Choose File',
-                file: null,
-                progress: 0,
-                result: null,
-            };
+                token: Math.random().toString(36).substring(7),
+                resumable: null,
+            }
+        },
+        mounted: function() {
+            this.resumable = new Resumable({
+                target: '/api/video/upload',
+                withCredentials: true,
+                fileType: ['mp4'],
+                testChunks: false,
+                maxFileSize: 500 * 1024 * 1024,
+                chunkSize: 1 * 1024 * 1024, // 1MB
+                simultaneousUploads: 10,
+                forceChunkSize: true,
+                headers: {
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                query: {
+                    upload_token: this.token
+                },
+            });
+            this.resumable.assignBrowse(this.$refs.browseButton);
+            this.resumable.assignDrop(this.$refs.dropZone);
+
+            this.resumable.on('fileAdded', (file, event) => {
+                this.$emit('upload-start', this.resumable);
+                this.resumable.upload();
+            });
+            this.resumable.on('fileSuccess', (file, message) => {
+                 axios.post('/api/video/upload',{
+                    token: this.token,
+                    file: file
+                }).then((response) => {
+                    console.log(response.data);
+                });
+                this.$emit('upload-success', this.resumable);
+            });
+            
+            this.resumable.on('pause', (file, message) => {
+                this.$emit('upload-pause', this.resumable);
+            });
+
+            this.resumable.on('cancel', (file, message) => {
+                this.$emit('upload-cancel', this.resumable);
+            });
+            this.resumable.on('fileError', (file, message) => {
+                this.$emit('upload-error', this.resumable);
+            });
         },
         methods: {
-            fileUpload() {
-                
-                    this.progress = 0;
-                    this.result = null;
-                    uploadService.chunk(
-                        '/api/video/upload', 
-                        this.file, 
-                        // onProgress
-                        percent => {
-                            this.progress = percent;
-                        },
-                        // onError
-                        err => {
-                            alert('Error Occured');
-                            console.log(err);
-                        },
-                        // onSuccess
-                        res => {
-                            const { data } = res;
-                            this.result = data.path;
-                        }
-                );
-                
-            },
-            onChangeFile() {
-                const file = this.$refs.fileContainer.files;
-                this.file = file.length > 0 ? file[0] : null;
-                if (null !== this.file) {
-                    this.label = `${this.file.name}`;
-                    this.fileUpload();
-                } else {
-                    this.label = 'Choose File';
-                }
-            }
+
+        },
+        components: {
+
         }
-}
+    }
 </script>
 
 <style lang="scss" scoped>
