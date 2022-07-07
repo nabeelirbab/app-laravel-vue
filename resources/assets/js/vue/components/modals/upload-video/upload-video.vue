@@ -65,7 +65,7 @@
                         </tr>
                     </table>
                 </form>
-                <div v-if="resumable && saved">
+                <div v-if="resumable && saved && !resumable.isUploading()">
                     <ph-panel type="success">
                         <div class="header">
                             Video Saved Successfully.
@@ -133,6 +133,7 @@
                 });
             },
             uploadStart(resumable) {
+                this.saved = false;
                 this.resumable = resumable;
                 this.createVideo();
             },
