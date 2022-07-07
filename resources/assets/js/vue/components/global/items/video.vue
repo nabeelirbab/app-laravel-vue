@@ -21,7 +21,7 @@
 <script>
     import 'mediaelement/full';
     import {mapState} from "vuex";
-    
+
     export default {
         props: {
             video: {
@@ -75,5 +75,6 @@
     .delete-video {
         float: right;
         margin-top: 20px;
+        cursor: pointer;
     }
 </style>
