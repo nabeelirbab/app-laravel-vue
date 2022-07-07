@@ -24,13 +24,13 @@
         mounted: function() {
             this.resumable = new Resumable({
                 target: '/api/video/upload',
-                withCredentials: true,
+                withCredentials: false,
                 fileType: ['mp4'],
                 testChunks: false,
                 maxFileSize: 500 * 1024 * 1024,
                 chunkSize: 1 * 1024 * 1024, // 1MB
                 simultaneousUploads: 10,
-                forceChunkSize: true,
+                forceChunkSize: false,
 
                 throttleProgressCallbacks: 1,
                 headers: {
@@ -38,8 +38,7 @@
                     'X-Requested-With': 'XMLHttpRequest',
                 },
                 query: {
-                    upload_token: this.token,
-                    _token: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    upload_token: this.token
                 },
 
             });
