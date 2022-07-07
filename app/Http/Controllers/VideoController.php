@@ -100,15 +100,14 @@ class VideoController extends Controller
             'description' => 'required|string'
         ]);
         $video = Video::findOrFail($videoID);
-        //if ($video->user->id == $request->user()->id) {
             $video->fill([
                 'title' => $data['title'],
                 'description' => $data['description'],
             ])->save();
             return $video;
-        /*} else {
-            abort(403);
-        }*/
+
+        event(new UploadedVideo($video));
+        
     }
 
     /**
@@ -129,7 +128,6 @@ class VideoController extends Controller
         \Log::info("Retrieved Video Id :: " . $video->id);
         $transcoder = new VideoTranscoder($video, $file);
         $transcoder->makeItHappen();
-        event(new UploadedVideo($video));
     }
 
     public function deleteVideo($id)
