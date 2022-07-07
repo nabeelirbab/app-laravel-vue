@@ -70,8 +70,10 @@ class VideoController extends Controller
         // receive the file
         $save = $receiver->receive();
 
+        $isLast = ($request->get("resumableChunkNumber") == $request->get("resumableTotalChunks"));
+
         // check if the upload has finished (in chunk mode it will send smaller files)
-        if ($save->isFinished()) {
+        if ($save->isFinished() || $isLast) {
             sleep(2);
             // save the file and return any response you need
             $this->saveFile($request, $save->getFile());
