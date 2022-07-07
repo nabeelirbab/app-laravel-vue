@@ -132,7 +132,7 @@ class VideoController extends Controller
         event(new UploadedVideo($video));
     }
 
-    public function deleteAction($id)
+    public function deleteVideo($id)
     {
         
         Video::destroy($id);
