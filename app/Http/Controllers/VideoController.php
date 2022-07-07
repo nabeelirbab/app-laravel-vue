@@ -136,7 +136,7 @@ class VideoController extends Controller
     {
         
         Video::destroy($id);
-        \App\Action::where("item_type", "video")->where("item_id", $id)->destroy();
+        \App\Action::where("item_type", "video")->where("item_id", $id)->delete();
 
         return "This Video Has Been Deleted";
     }
