@@ -31,7 +31,7 @@
 <script>
 import { mapState } from "vuex";
 import CloseIcon from "global/close-icon";
-import { UserEvents, ModalEvents, MessageEvents } from "events";
+import { UserEvents, ModalEvents, MessageEvents, SocialEvents } from "events";
 
 export default {
   data() {
@@ -117,6 +117,7 @@ export default {
             .post(`/api/video/${this.deleteable.id}/delete`)
             .then((response) => {
               UserEvents.$emit("video-deleted");
+              SocialEvents.$emit('delete-action');
               this.$modal.hide("modal-delete-confirm");
               this.submitting = false;
             });
