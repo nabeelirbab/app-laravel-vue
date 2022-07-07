@@ -48,7 +48,8 @@
             });
             this.resumable.on('fileSuccess', (file, message) => {
                  axios.post('/api/video/upload',{
-                    token: this.token
+                    token: this.token,
+                    file: file
                 }).then((response) => {
                     console.log(response.data);
                 });
