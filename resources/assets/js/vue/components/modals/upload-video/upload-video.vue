@@ -86,7 +86,7 @@
 <script>
     import CloseIcon from 'global/close-icon';
     import Uploader from './uploader';
-    import { UserEvents } from "events";
+    import { UserEvents, SocialEvents } from "events";
 
     export default {
         data () {
@@ -147,6 +147,7 @@
                 }).finally(() => {
                     this.saving = false;
                     UserEvents.$emit("video-added");
+                    SocialEvents.$emit('delete-action');
                 });
             },
             maybeReset() {
