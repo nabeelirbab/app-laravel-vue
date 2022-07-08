@@ -28,7 +28,7 @@
                 fileType: ['mp4'],
                 testChunks: false,
                 maxFileSize: 500 * 1024 * 1024,
-                chunkSize: 500 * 1024 * 1024, // 1MB
+                chunkSize: 5 * 1024 * 1024, // 1MB
                 simultaneousUploads: 10,
                 forceChunkSize: false,
 
