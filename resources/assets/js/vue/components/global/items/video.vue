@@ -1,8 +1,6 @@
 <template>
     <div class="video" v-if="video.title && video.asset && video.asset.files.video_thumbnail">
-        <div class="delete-video" v-if="app.user && app.user.id === video.user_id" @click.prevent="$modal.show('modal-delete-confirm', { deleteable: video })">
-            <i class="fa fa-trash"></i>
-        </div>
+        
         <div class="p-video-main">
             <div class="p-video-text">
                 <div class="p-video-detail">
@@ -14,6 +12,10 @@
             <video controls width="100%" height="500" :id="'video' + video.id" :poster="video.asset.files.video_thumbnail.url">
                         <source :src="video.asset.files.original.url" :type="video.asset.files.original.mime" />
                     </video>
+        </div>
+
+        <div class="delete-video" v-if="app.user && app.user.id === video.user_id" @click.prevent="$modal.show('modal-delete-confirm', { deleteable: video })">
+            <i class="fa fa-trash"></i>
         </div>
     </div>
 </template>
@@ -73,8 +75,9 @@
         margin-top: 8px;
     }
     .delete-video {
-        float: right;
-        margin-top: 20px;
+        float: left;
+        margin-top: 10px;
         cursor: pointer;
+        margin-left: 20px;
     }
 </style>
