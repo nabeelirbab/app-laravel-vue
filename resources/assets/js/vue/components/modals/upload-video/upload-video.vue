@@ -77,7 +77,7 @@
                         </p>
                         <br/>
                         <p>
-                            <a class="text-center  button small"  @click.native="resumable.cancel()">
+                            <a class="button small"  @click="resumable.cancel()">
                                  Click  Here
                             </a> to upload new video
                         </p>
