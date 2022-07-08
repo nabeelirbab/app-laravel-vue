@@ -75,11 +75,15 @@
                         <p>
                             After your video is finished uploading and processing it will be available to view!
                         </p>
+
+                        <p>
+                            <ph-button class="text-center" size="small" @click.native="resumable.cancel()">
+                                 Click  Here
+                            </ph-button> to upload new video
+                        </p>
                     </ph-panel>
-                    <ph-button class="text-center" size="medium" @click.native="reset">
-                        Upload Another Video
-                    </ph-button>
                     
+
                     <ph-button class="text-center" size="large" @click.native="close">
                         Done
                     </ph-button>
