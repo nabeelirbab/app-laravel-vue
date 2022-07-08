@@ -20,7 +20,7 @@
                     </h3>
                     <ph-button v-show="resumable.isUploading()"   @click.native="resumable.cancel()">Cancel</ph-button>
 
-                    <ph-button v-show="uploadComplete"   @click.native="resumable.cancel()">Change Video</ph-button>
+                    <ph-button v-show="uploadComplete && !saved"   @click.native="resumable.cancel()">Change Video</ph-button>
                     <h3 v-show="uploadComplete">
                         <i class="fa fa-check-circle"></i> Upload Complete
                     </h3>
@@ -76,9 +76,15 @@
                             After your video is finished uploading and processing it will be available to view!
                         </p>
                     </ph-panel>
+                    <ph-button class="text-center" size="medium" @click.native="reset">
+                        Upload Another Video
+                    </ph-button>
+                    
                     <ph-button class="text-center" size="large" @click.native="close">
                         Done
                     </ph-button>
+
+                    
                 </div>
             </div>
         </div>
