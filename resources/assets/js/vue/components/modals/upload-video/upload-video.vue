@@ -6,7 +6,7 @@
             </div>
             <div class="modal-content">
                 <h2 >Upload Video</h2>
-                <div v-show="!saved && (!resumable || (resumable && !resumable.isUploading()))">
+                <div v-show="!resumable || (resumable && !resumable.isUploading() && !uploadComplete)">
                     <h3>First, browse for your video or drag it into the zone below:</h3>
                     <uploader
                             @upload-start="uploadStart"
@@ -19,7 +19,9 @@
                         <i class="fa fa-spinner fa-spin"></i> Uploading <em>{{ resumable.files[0].fileName }}</em>
                     </h3>
                     <ph-button v-show="resumable.isUploading()"   @click.native="resumable.cancel()">Cancel</ph-button>
-                    <h3 v-show="uploadComplete && !resumable.isUploading()">
+
+                    <ph-button v-show="uploadComplete"   @click.native="resumable.cancel()">Change Video</ph-button>
+                    <h3 v-show="uploadComplete">
                         <i class="fa fa-check-circle"></i> Upload Complete
                     </h3>
                     <div class="upload-progress">
@@ -28,7 +30,7 @@
                                 <span v-show="uploadComplete">{{ resumable.files[0].fileName }}</span>
                             </div>
                         </div>
-                        <div class="progress-digits" v-show="!uploadComplete || resumable.isUploading()">
+                        <div class="progress-digits" v-show="!uploadComplete">
                             {{ uploadedSize }}MB / {{ fileSize }}MB ({{ Math.floor(resumable.progress() * 100) }}%)
                         </div>
                     </div>
