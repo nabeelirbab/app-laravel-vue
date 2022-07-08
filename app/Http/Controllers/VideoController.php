@@ -137,17 +137,16 @@ class VideoController extends Controller
     public function deleteVideo($id)
     {
         $video = Video::find($id);
-        print_r($video->asset->files['original']);die();
-        if (!empty($video->asset->files->original->path)) {
-            Storage::disk('s3')->delete($video->asset->files->original->path);
+        if (!empty($video->asset->files['original']->path)) {
+            Storage::disk('s3')->delete($video->asset->files['original']->path);
         }
 
-        if (!empty($video->asset->files->hls_playlist->path)) {
-            Storage::disk('s3')->delete($video->asset->files->hls_playlist->path);
+        if (!empty($video->asset->files['hls_playlist']->path)) {
+            Storage::disk('s3')->delete($video->asset->files['hls_playlist']->path);
         }
 
-        if (!empty($video->asset->files->video_thumbnail->path)) {
-            Storage::disk('s3')->delete($video->asset->files->video_thumbnail->path);
+        if (!empty($video->asset->files['video_thumbnail']->path)) {
+            Storage::disk('s3')->delete($video->asset->files['video_thumbnail']->path);
         }
 
         $video->delete();
