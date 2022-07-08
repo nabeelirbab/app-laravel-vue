@@ -1,5 +1,5 @@
 <template>
-    <div class="video" v-if="video.title && video.asset && video.asset.files.video_thumbnail">
+    <div class="video video-clear" v-if="video.title && video.asset && video.asset.files.video_thumbnail">
         
         <div class="p-video-main">
             <div class="p-video-text">
@@ -78,6 +78,11 @@
         float: left;
         margin-top: 10px;
         cursor: pointer;
-        margin-left: 20px;
+        margin-left: 10px;
+    }
+
+    .video-clear {
+        clear: both;
+        margin-bottom: 20px;
     }
 </style>
