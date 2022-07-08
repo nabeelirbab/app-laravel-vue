@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <video controls width="100%" height="500" :id="'video' + video.id" :poster="video.asset.files.video_thumbnail.url">
+            <video controls width="100%" height="300" :id="'video' + video.id" :poster="video.asset.files.video_thumbnail.url">
                         <source :src="video.asset.files.original.url" :type="video.asset.files.original.mime" />
                     </video>
         </div>
