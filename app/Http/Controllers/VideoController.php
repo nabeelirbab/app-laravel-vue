@@ -17,6 +17,8 @@ use App\Phase\VideoTranscoder;
 
 use App\Video;
 
+use Storage;
+
 
 class VideoController extends Controller
 {
@@ -134,8 +136,20 @@ class VideoController extends Controller
 
     public function deleteVideo($id)
     {
-        
-        Video::destroy($id);
+        $video = Video::find($id);
+        if (!empty($video->asset->files->original->path)) {
+            Storage::disk('s3')->delete($video->asset->files->original->path);
+        }
+
+        if (!empty($video->asset->files->hls_playlist->path)) {
+            Storage::disk('s3')->delete($video->asset->files->hls_playlist->path);
+        }
+
+        if (!empty($video->asset->files->video_thumbnail->path)) {
+            Storage::disk('s3')->delete($video->asset->files->video_thumbnail->path);
+        }
+
+        $video->delete();
         \App\Action::where("item_type", "video")->where("item_id", $id)->delete();
 
         return "This Video Has Been Deleted";
