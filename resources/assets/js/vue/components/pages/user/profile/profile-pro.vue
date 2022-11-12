@@ -10,12 +10,12 @@
             : `url(${backgroundImageUrl})`,
         }"
       >
-        <div class="change-button" @click="showChangeBannerModal">
+        <div v-if="$store.state.app.user.id" class="change-button" @click="showChangeBannerModal">
           Change Banner
         </div>
 
         <div
-          v-if="backgroundImageUrl"
+          v-if="backgroundImageUrl && $store.state.app.user.id"
           class="remove-button"
           @click="deleteBanner"
         >
