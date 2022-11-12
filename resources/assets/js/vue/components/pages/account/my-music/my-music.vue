@@ -45,6 +45,12 @@
   import MyMusicTrack from './my-music-track'
 
   export default {
+    props: {
+        user: {
+            type: Object,
+            required: true,
+        }      
+    },
     data () {
       return {
         loaded: false,
@@ -58,7 +64,7 @@
     methods: {
       fetchMyMusic() {
         this.loaded = false;
-        axios.get('/api/mymusic').then((response) => {
+        axios.get('/api/mymusic/' + this.user.id).then((response) => {
           this.myMusic = response.data;
           this.loaded = true;
         });

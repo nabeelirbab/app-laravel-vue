@@ -14,10 +14,14 @@ use File;
 
 class APIMyMusicController extends Controller
 {
-    public function getMyMusic(Request $request)
+    public function getMyMusic(Request $request, $user_id = null)
     {
+        $user_id = !empty($request->user()) ? $request->user() : $user_id;
+        if (empty($user_id)) {
+            return response('Invalid Request', 403);
+        }
         $mymusic = collect();
-        $userOrders = Order::where('purchaser_id', $request->user()->id)
+        $userOrders = Order::where('purchaser_id', $user_id)
             ->where('status', 'complete')
             ->orderByDesc('created_at')
             ->get()->pluck('id');
