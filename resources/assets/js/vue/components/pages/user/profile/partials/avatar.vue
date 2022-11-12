@@ -34,7 +34,8 @@ export default {
   },
   methods: {
     showModal() {
-      this.$modal.show('modal-change-avatar');
+      if (this.$store.state.app.user.id > 0)
+        this.$modal.show('modal-change-avatar');
     },
   },
   components: {}
