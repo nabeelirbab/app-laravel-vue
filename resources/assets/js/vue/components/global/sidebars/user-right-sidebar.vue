@@ -82,7 +82,7 @@
 
       computed: {
           favouritesLink() {
-            if (this.user.id !== this.currentUser.id) {
+            if (typeof(this.currentUser.id) == typeof(undefined) || this.user.id !== this.currentUser.id) {
               return `/user/${this.user.path}/favourites`
             }
 

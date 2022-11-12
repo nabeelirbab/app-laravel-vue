@@ -58,7 +58,7 @@
     methods: {
       fetchMyMusic() {
         this.loaded = false;
-        axios.get('/api/mymusic').then((response) => {
+        axios.get('/api/mymusic' + this.user.id).then((response) => {
           this.myMusic = response.data;
           this.loaded = true;
         });
