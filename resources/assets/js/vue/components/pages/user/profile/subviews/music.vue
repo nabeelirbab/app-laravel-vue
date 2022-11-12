@@ -15,7 +15,7 @@
         />
         <item v-for="event in events" :item="event" :key="event.id" /> -->
 
-        <my-music />
+        <my-music :user="user" />
     </div>
 </template>
 
