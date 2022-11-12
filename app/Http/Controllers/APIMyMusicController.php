@@ -16,7 +16,7 @@ class APIMyMusicController extends Controller
 {
     public function getMyMusic(Request $request, $user_id = null)
     {
-        $user_id = !empty($request->user()) ? $request->user() : $user_id;
+        $user_id = !empty($user_id) ? $user_id : $request->user()->id;
         if (empty($user_id)) {
             return response('Invalid Request', 403);
         }
