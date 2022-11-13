@@ -41,7 +41,7 @@ class FeedController extends Controller
                 $default_limit = 10;
                 $collection = collect([]);
 
-                Release::statuslive()->with([
+                /*Release::statuslive()->with([
                     'image',
                     'uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
@@ -50,7 +50,7 @@ class FeedController extends Controller
                     $item->component = 'feed-release';
                     $item->type = 'release';
                     $collection->push($item);
-                });
+                });*/
                 Track::namenotnull()->isApproved()->with([
                     'preview',
                     'release',
@@ -94,11 +94,11 @@ class FeedController extends Controller
                     $collection->push($item);
                 });
 
-                Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {
+                /*Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-genre';
                     $item->type = 'genre';
                     $collection->push($item);
-                });
+                });*/
 
                 //                Playlist::namenotnull()->limit(7)->get()->each( function( $item ) use ( &$collection ) {
                 //                    $item->component = 'feed-playlist';

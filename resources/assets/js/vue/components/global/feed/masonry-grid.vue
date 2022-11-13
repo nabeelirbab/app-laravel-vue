@@ -53,6 +53,7 @@
         <div class="float-right gridfilter_list_count">{{ filteredItemCount }}</div>
       </form>
     </div>
+    {{user.id}}
     <add-text v-if="selectedCategory === 'all'" type="post" :addTextAble="user" @success="addStatusUpdate" />
     <div id="masonry-container" v-bind:class="[gridLoaded ? 'showGrid' : '']">
       
