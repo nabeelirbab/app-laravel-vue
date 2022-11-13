@@ -66,6 +66,6 @@ class Post extends PhaseModel
 
     public function action()
     {
-        return $this->hasOne(Action::class, 'id', 'item_id')->where("item_type", "post");
+        return $this->hasMany(Action::class, 'id', 'item_id');
     }
 }
