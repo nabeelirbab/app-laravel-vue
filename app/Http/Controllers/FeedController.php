@@ -47,7 +47,7 @@ class FeedController extends Controller
                     'image'
                 ])->withCount('shares', 'comments', 'likes')
                 ->take(10)->get();
-                $this->mergeArrays($collection, $releases, 'feed-release', 'release');
+                //$this->mergeArrays($collection, $releases, 'feed-release', 'release');
                 
                 $releaseIds = $releases->map(function($item) {
                     return $item['id'];
@@ -65,7 +65,7 @@ class FeedController extends Controller
                 
                 if (auth()->check()) {
 
-                    $videos = Video::published()->take(8)->get();
+                    $videos = Video::take(8)->get();
                     $this->mergeArrays($collection, $videos, 'feed-video', 'video');
                     
                     $events = Event::datenotnull()->withCount('shares')->take(7)->get();
