@@ -1,5 +1,5 @@
 <template>
-  <!--<router-link
+  <router-link
     :to="getRouterObject(item)"
     :class="'masonry-item ' + item.component"
   >
@@ -17,17 +17,12 @@
         </span>
       </span>
 
-  </router-link>-->
-  <video :video="item" />
+  </router-link>
 </template>
 
 <script>
-import Video from "global/items/video";
 export default {
   name: 'DiscoveryVideo',
-  components: {
-     Video
-  },
   props: { item: Object },
   data() {
     return {
