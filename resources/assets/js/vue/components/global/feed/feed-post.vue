@@ -2,19 +2,19 @@
     <div :class="'masonry-item ' + item.component">
         <!-- discovery-post -->
         <div class="masonry-inner masonry-inner-fixed">
-            <h4>Post</h4>
-            <p>{{ item.body }}</p>
-            <!-- <div class="date-xxl">
-                Posted {{ moment(item.created_at).format("MMM Do") }}
-            </div> -->
+            <post  :post="item" :id="id" />
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-        props: { item: Object },
-    };
+import Post from 'global/items/post';
+export default {
+    props: { item: Object },
+    components: {
+            Post
+        }
+};
 </script>
 
 <style lang="scss" scoped>

@@ -63,4 +63,9 @@ class Post extends PhaseModel
     {
         return $this->created_at->diffInDays() < 7;
     }
+
+    public function action()
+    {
+        return $this->hasOne(Action::class, 'id', 'item_id')->where("item_type", "post");
+    }
 }
