@@ -90,6 +90,7 @@
       FeedTrack,
       FeedVideo,
       FeedGenre,
+      FeedRelease,
       AddText
     },
     data() {
@@ -97,7 +98,7 @@
         selectedCategory: "all",
         requiresRefresh: false,
         gridLoaded: false,
-        user: this.$store.state.app.user.id
+        user: this.$store.state.app.user
       };
     },
     computed: {
