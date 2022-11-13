@@ -94,7 +94,7 @@
     },
     data() {
       return {
-        selectedCategory: "release",
+        selectedCategory: "all",
         requiresRefresh: false,
         gridLoaded: false,
         user: this.$store.state.app.user
