@@ -94,13 +94,14 @@ class FeedController extends Controller
                     $collection->push($item);
                 });*/
 
-                Action::where("item_type", "post")->limit(8)->get()->each(function($item) use(&$collection) {
-                    print_r($item);
-                    $post = $item->item;
-                    $post->component = 'feed-post';
-                    $post->type = 'post';
-                    $post->action_id = $item->id;
-                    $collection->push($post);
+                Action::where("item_type", "post")->limit(10)->get()->each(function($item) use(&$collection) {
+                    if (!empty($item->item)) {
+                        $post = $item->item;
+                        $post->component = 'feed-post';
+                        $post->type = 'post';
+                        $post->action_id = $item->id;
+                        $collection->push($post);
+                    }
                 });
 
                 /*Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {
