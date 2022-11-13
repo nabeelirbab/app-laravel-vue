@@ -7,6 +7,7 @@ use App\Traits\Likeable;
 use App\Traits\Reportable;
 use App\Traits\Shareable;
 use App\User;
+use App\Action;
 
 /**
  * A user created 'post'. Like a 'status update'
