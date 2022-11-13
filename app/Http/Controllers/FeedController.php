@@ -89,7 +89,7 @@ class FeedController extends Controller
                 }
 
                 Post::bodynotnull()->with('user')->with(['action' => function($q) {
-                        $q->where('type', 'post');
+                        $q->where('item_type', 'post');
                     }])->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-post';
                     $item->type = 'post';
