@@ -78,6 +78,7 @@
   import FeedTrack from "global/feed/feed-track";
   import FeedVideo from "global/feed/feed-video";
   import AddText from "global/add-text/add-text";
+  import { UserEvents} from "events";
 
   export default {
     props: { feed_items: Array },
@@ -87,13 +88,15 @@
       FeedPost,
       FeedTrack,
       FeedVideo,
+      FeedGenre,
       AddText
     },
     data() {
       return {
         selectedCategory: "all",
         requiresRefresh: false,
-        gridLoaded: false
+        gridLoaded: false,
+        user: this.$store.state.app.user.id
       };
     },
     computed: {
