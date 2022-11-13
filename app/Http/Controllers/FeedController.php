@@ -95,6 +95,7 @@ class FeedController extends Controller
                 });*/
 
                 Action::where("item_type", "post")->limit(8)->get()->each(function($item) use(&$collection) {
+                    print_r($item);
                     $post = $item->item;
                     $post->component = 'feed-post';
                     $post->type = 'post';
