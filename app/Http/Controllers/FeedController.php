@@ -58,7 +58,7 @@ class FeedController extends Controller
                     'release.uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
                     },
-                ])->whereHas('release', function($query) {
+                ])->whereHas('release', function ($query) {
                     $query->statuslive();
                 })->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-track';
@@ -66,29 +66,26 @@ class FeedController extends Controller
                     $collection->push($item);
                 });
                 if (auth()->check()) {
-                    if (Auth::user()->can('upload videos')) {
-                        Video::published()->limit(8)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-video';
-                            $item->type = 'video';
-                            $collection->push($item);
-                        });
-                    }
 
-                    if (Auth::user()->can('add events')) {
-                        Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-event';
-                            $item->type = 'event';
-                            $collection->push($item);
-                        });
-                    }
+                    Video::limit(8)->get()->each(function ($item) use (&$collection) {
+                        $item->component = 'feed-video';
+                        $item->type = 'video';
+                        $collection->push($item);
+                    });
 
-                    if (Auth::user()->can('add merch')) {
-                        Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-merch';
-                            $item->type = 'merch';
-                            $collection->push($item);
-                        });
-                    }
+
+                    Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
+                        $item->component = 'feed-event';
+                        $item->type = 'event';
+                        $collection->push($item);
+                    });
+
+
+                    Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
+                        $item->component = 'feed-merch';
+                        $item->type = 'merch';
+                        $collection->push($item);
+                    });
                 }
 
                 Post::bodynotnull()->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {

@@ -8,27 +8,28 @@
               <input type="radio" v-model="selectedCategory" value="all">All
             </label>
           </li>
-          <li>
+          <!--<li>
             <label v-bind:class="[selectedCategory === 'release' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="release">Releases
             </label>
-          </li>
+          </li>-->
           <li>
             <label v-bind:class="[selectedCategory === 'track' ? 'active' : '']">
-              <input type="radio" v-model="selectedCategory" value="track">Tracks
+              <input type="radio" v-model="selectedCategory" value="track">Music
             </label>
           </li>
-          <li v-if="$can('upload videos')">
-            <label v-bind:class="[selectedCategory === 'video' ? 'active' : '']">
-              <input type="radio" v-model="selectedCategory" value="video">Videos
-            </label>
-          </li>
-          <li v-if="$can('add events')">
+          <li >
             <label v-bind:class="[selectedCategory === 'event' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="event">Events
             </label>
           </li>
-          <li v-if="$can('add merch')">
+          <li >
+            <label v-bind:class="[selectedCategory === 'video' ? 'active' : '']">
+              <input type="radio" v-model="selectedCategory" value="video">Videos
+            </label>
+          </li>
+          
+          <li >
             <label v-bind:class="[selectedCategory === 'merch' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="merch">Merch
             </label>
@@ -38,11 +39,11 @@
               <input type="radio" v-model="selectedCategory" value="post">Posts
             </label>
           </li>
-          <li>
+         <!-- <li>
             <label v-bind:class="[selectedCategory === 'genre' ? 'active' : '']">
               <input type="radio" v-model="selectedCategory" value="genre">Genres
             </label>
-          </li>
+          </li> -->
 <!--          <li>-->
 <!--            <label v-bind:class="[selectedCategory === 'playlist' ? 'active' : '']">-->
 <!--              <input type="radio" v-model="selectedCategory" value="playlist">Playlists-->
@@ -53,6 +54,7 @@
       </form>
     </div>
     <div id="masonry-container" v-bind:class="[gridLoaded ? 'showGrid' : '']">
+      <add-text v-if="selectedCategory === 'all'" type="post" :addTextAble="user" @success="addStatusUpdate" />
       <component
         :is="item.component"
         v-for="item in filteredGrid"
@@ -74,18 +76,17 @@
   import FeedRelease from "global/feed/feed-release";
   import FeedTrack from "global/feed/feed-track";
   import FeedVideo from "global/feed/feed-video";
+  import AddText from "global/add-text/add-text";
 
   export default {
     props: { feed_items: Array },
     components: {
       FeedEvent,
-      FeedGenre,
       FeedMerch,
-      FeedPlaylist,
       FeedPost,
-      FeedRelease,
       FeedTrack,
-      FeedVideo
+      FeedVideo,
+      AddText
     },
     data() {
       return {
@@ -119,6 +120,11 @@
     updated: function() {
       if (this.requiresRefresh) {
         this.masonryGridInstance.recalculate(true);
+      }
+    },
+    methods: {
+      addStatusUpdate(action) {
+        this.filteredGrid.unshift(action)
       }
     },
     mounted: function() {
