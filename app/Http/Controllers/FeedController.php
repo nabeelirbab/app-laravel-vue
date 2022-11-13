@@ -88,12 +88,18 @@ class FeedController extends Controller
                     });
                 }
 
-                Post::bodynotnull()->with('user')->with('action')/*->with(['action' => function($q) {
-                        $q->where('item_type', 'post');
-                    }])*/->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
+                /*Post::bodynotnull()->with('user')->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-post';
                     $item->type = 'post';
                     $collection->push($item);
+                });*/
+
+                Action::where("item_type", "post")->with('item.user')->whereHas('post')->limit(8)->get()->each(function($item) use(&$collection) {
+                    $post = $item->item;
+                    $post->component = 'feed-post';
+                    $post->type = 'post';
+                    $post->action_id = $item->id;
+                    $collection->push($post);
                 });
 
                 /*Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {

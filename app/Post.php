@@ -7,7 +7,6 @@ use App\Traits\Likeable;
 use App\Traits\Reportable;
 use App\Traits\Shareable;
 use App\User;
-use App\Action;
 
 /**
  * A user created 'post'. Like a 'status update'
@@ -63,10 +62,5 @@ class Post extends PhaseModel
     public function getIsRecentAttribute()
     {
         return $this->created_at->diffInDays() < 7;
-    }
-
-    public function action()
-    {
-        return $this->hasMany(Action::class, 'id', 'item_id');
     }
 }
