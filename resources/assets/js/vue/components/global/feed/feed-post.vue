@@ -64,7 +64,7 @@ export default {
         methods: {
           deletedItem() {
             this.item.deleted = true;
-            isDeleted = true;
+            this.isDeleted = true;
           }
         },
     components: {
