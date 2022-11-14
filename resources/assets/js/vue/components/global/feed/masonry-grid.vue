@@ -79,11 +79,9 @@
   import FeedVideo from "global/feed/feed-video";
   import AddText from "global/add-text/add-text";
   import { UserEvents} from "events";
-  import store from 'store';
 
   export default {
     props: { feed_items: Array },
-    
     components: {
       FeedEvent,
       FeedMerch,
@@ -94,9 +92,6 @@
       FeedRelease,
       AddText
     },
-    created: function() {
-        SocialEvents.$on('delete-action', this.fetchFeed)
-    },
     data() {
       return {
         selectedCategory: "all",
@@ -105,10 +100,7 @@
         user: this.$store.state.app.user
       };
     },
-
-    computed: mapState([
-      'app',
-    {
+    computed: {
       filteredGrid: function() {
         var vm = this;
         var category = vm.selectedCategory;
@@ -124,7 +116,7 @@
       filteredItemCount: function() {
         return this.filteredGrid.length;
       }
-    }]),
+    },
     watch: {
       filteredGrid: function(newVal, oldVal) {
         this.requiresRefresh = true;
@@ -138,13 +130,6 @@
     methods: {
       addStatusUpdate(action) {
         this.filteredGrid.unshift(action)
-      },
-      fetchFeed() {
-        store.dispatch('app/fetchFeed')
-          .then(() => {
-            this.loadedAll = true
-            this.feed_items = this.app.feed;
-          });
       }
     },
     mounted: function() {
