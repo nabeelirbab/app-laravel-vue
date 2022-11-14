@@ -1,5 +1,5 @@
 <template>
-   <div v-if="!isDeleted" class="p-item">
+   <div v-if="!this.isDeleted" class="p-item">
 
         <div class="p-item-image">
             <router-link
