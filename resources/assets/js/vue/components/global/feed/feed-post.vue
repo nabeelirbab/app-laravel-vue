@@ -1,5 +1,7 @@
 <template>
-   <div v-if="item.deleted != true" class="p-item">
+   <div v-if="item.deleted != 'true'" class="p-item">
+   
+{{item.deleted}}
         <div class="p-item-image">
             <router-link
                 :to="getRouterObject(item)">
