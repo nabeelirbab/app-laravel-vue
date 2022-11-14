@@ -31,9 +31,6 @@
             </div>
             <div class="p-item-meta">
                 <actions :actionable="item" :id="item.action_id"></actions>
-                <div class="p-item-time">
-                    {{ moment(item.created_at).fromNow() }}
-                </div>
             </div>
         </div>
     </div>  
