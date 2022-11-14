@@ -4,7 +4,7 @@
             <router-link
                 :to="getRouterObject(item)">
                 <avatar
-                    :size="130"
+                    :size="60"
                     :src="item.user.avatar.files.thumb.url"
                     
                 />
@@ -45,7 +45,7 @@ export default {
     computed: {
           postBody() {
               if(this.item.body){
-                return this.filter.clean(this.item.body)
+                return this.item.body;
               }else{
                   return '';
               }
