@@ -93,7 +93,7 @@ class FeedController extends Controller
                         $post->component = 'feed-post';
                         $post->type = 'post';
                         $post->action_id = $item->id;
-                        $collection->push($post);
+                        $collection[] = $post;
                     }
                 });
 
