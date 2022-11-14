@@ -47,6 +47,11 @@ export default {
     created: function() {
         SocialEvents.$on('delete-action', this.deletedItem)
     },
+    data () {
+      return {
+        isDeleted: false,
+      }
+    },
     computed: {
           postBody() {
               if(this.item.body){
@@ -54,16 +59,12 @@ export default {
               }else{
                   return '';
               }
-          },
-          isDeleted() {
-            console.log("item deleted" + this.item.deleted);
-            return (this.item.deleted === true);
           }
         },
         methods: {
           deletedItem() {
-          
             this.item.deleted = true;
+            isDeleted = true;
           }
         },
     components: {
