@@ -43,6 +43,9 @@ import Avatar from 'global/avatar';
 import {SocialEvents} from "../../../event-bus";
 export default {
     props: { item: Object },
+    created: function() {
+        SocialEvents.$on('delete-action', this.deletedItem)
+    },
     computed: {
           postBody() {
               if(this.item.body){
