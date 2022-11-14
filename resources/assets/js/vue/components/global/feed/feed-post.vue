@@ -1,24 +1,82 @@
 <template>
-    <div :class="'masonry-item ' + item.component">
-        <!-- discovery-post -->
-        <div class="masonry-inner masonry-inner-fixed">
-            <h4>Post</h4>
-            <p>{{ item.body }}</p>
-            <!-- <div class="date-xxl">
-                Posted {{ moment(item.created_at).format("MMM Do") }}
-            </div> -->
+   <div class="p-item">
+        <div class="p-item-image">
+            <router-link
+                :to="getRouterObject(item)">
+                <avatar
+                    :size="60"
+                    :src="item.user.avatar.files.thumb.url"
+                    
+                />
+            </router-link>
+
         </div>
-    </div>
+        <div class="p-item-main">
+            <div class="p-item-detail">
+                <div class="p-item-title">
+                    <span>{{ item.user.name }}</span>
+                </div>
+            </div>
+            <div class="p-post-text">
+                <img
+                    v-if="item.attachment"
+                    :src="item.attachment.files.medium.url"
+                    :alt="item.attachment.alt"
+                    class="p-post-image"
+                />
+                <router-link
+                :to="getRouterObject(item)">
+                {{ postBody }}
+                </router-link>
+            </div>
+            <div class="p-item-meta">
+                <actions :actionable="item" :id="item.action_id"></actions>
+            </div>
+        </div>
+    </div>  
 </template>
 
 <script>
-    export default {
-        props: { item: Object },
-    };
+import Actions from 'global/actions/actions';
+import ActionMenu from 'global/actions/action-menu';
+import Avatar from 'global/avatar';
+export default {
+    props: { item: Object },
+    computed: {
+          postBody() {
+              if(this.item.body){
+                return this.item.body;
+              }else{
+                  return '';
+              }
+          }
+        },
+    components: {
+            Actions,
+            ActionMenu,
+            Avatar,
+        }
+};
 </script>
 
 <style lang="scss" scoped>
-    .feed-post {
-        min-height: 140px;
+    .p-post-text {
+        flex: 1;
+        font-size: 14px;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 2em;
+    }
+    .p-item-title {
+        font-size: 19px;
+    }
+    .p-item-main {
+        justify-content: flex-start;
+    }
+    .p-post-image {
+        height: 120px;
+        width: auto;
+        margin-bottom: 1em;
     }
 </style>

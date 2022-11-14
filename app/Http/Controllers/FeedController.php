@@ -76,11 +76,26 @@ class FeedController extends Controller
                     
                 }
 
-                $posts = \DB::table('posts')->where('body', '<>', '')->take(7)->get();
-                //$posts = Post::bodynotnull()->take(7)->get();
-               
 
-                $this->mergeArrays($collection, $posts, 'feed-post', 'post');
+                //$posts = \DB::table('posts')->where('body', '<>', '')->take(7)->get();
+                //$posts = Post::bodynotnull()->take(7)->get();
+               //$this->mergeArrays($collection, $posts, 'feed-post', 'post');
+
+                /*Post::bodynotnull()->with('user')->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
+                    $item->component = 'feed-post';
+                    $item->type = 'post';
+                    $collection->push($item);
+                });*/
+
+                Action::where("item_type", "post")->limit(6)->orderByDesc('id')->get()->each(function($item) use(&$collection) {
+                    if (!empty($item->item) && $item->item_type == 'post') {
+                        $post = $item->item;
+                        $post->component = 'feed-post';
+                        $post->type = 'post';
+                        $post->action_id = $item->id;
+                        $collection->push($post);
+                    }
+                });
 
 
                 //                Playlist::namenotnull()->limit(7)->get()->each( function( $item ) use ( &$collection ) {
