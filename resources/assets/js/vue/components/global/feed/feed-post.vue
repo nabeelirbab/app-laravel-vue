@@ -65,7 +65,7 @@ export default {
           deletedItem() {
             this.item.deleted = true;
             this.isDeleted = true;
-            console.log("item deleted" + this.item.deleted);
+            this.fetchFeed();
           }
         },
         components: {
