@@ -1,5 +1,5 @@
 <template>
-   <div class="p-item">
+   <div v-if="item.deleted != true" class="p-item">
         <div class="p-item-image">
             <router-link
                 :to="getRouterObject(item)">
@@ -30,7 +30,7 @@
                 </router-link>
             </div>
             <div class="p-item-meta">
-                <actions :actionable="item" :id="item.action_id"></actions>
+                <actions v-on:delete-action="deletedItem" :actionable="item" :id="item.action_id"></actions>
             </div>
         </div>
     </div>  
@@ -40,8 +40,12 @@
 import Actions from 'global/actions/actions';
 import ActionMenu from 'global/actions/action-menu';
 import Avatar from 'global/avatar';
+import {SocialEvents} from "../../../event-bus";
 export default {
     props: { item: Object },
+    created: function() {
+        SocialEvents.$on('delete-action', this.deletedItem)
+    },
     computed: {
           postBody() {
               if(this.item.body){
@@ -49,6 +53,12 @@ export default {
               }else{
                   return '';
               }
+          }
+        },
+        methods: {
+          deletedItem() {
+          console.log("item deleted");
+            this.item.deleted = true;
           }
         },
     components: {

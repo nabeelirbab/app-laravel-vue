@@ -31,6 +31,7 @@ class FeedController extends Controller
     public function index()
     {
         // 6 hours
+
         //$cache_seconds = now()->addMinutes(30);
         $cache_seconds = 30;
         $cache_token = 'feed';
