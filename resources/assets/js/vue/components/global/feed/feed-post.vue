@@ -1,5 +1,5 @@
 <template>
-   <div v-if="!this.isDeleted" class="p-item">
+   <div v-if="!item.deleted" class="p-item">
 
         <div class="p-item-image">
             <router-link
@@ -49,7 +49,7 @@ export default {
     },
     data () {
       return {
-        isDeleted: false,
+        isDeleted: (this.item.deleted == true) ? true : false,
       }
     },
     computed: {
@@ -65,9 +65,10 @@ export default {
           deletedItem() {
             this.item.deleted = true;
             this.isDeleted = true;
+            console.log("item deleted" + this.item.deleted);
           }
         },
-    components: {
+        components: {
             Actions,
             ActionMenu,
             Avatar,
