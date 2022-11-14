@@ -54,16 +54,16 @@ export default {
               }else{
                   return '';
               }
+          },
+          isDeleted() {
+            console.log("item deleted" + this.item.deleted);
+            return (this.item.deleted === true);
           }
         },
         methods: {
           deletedItem() {
           
             this.item.deleted = true;
-          },
-          isDeleted() {
-            console.log("item deleted" + this.item.deleted);
-            return (this.item.deleted === true);
           }
         },
     components: {
