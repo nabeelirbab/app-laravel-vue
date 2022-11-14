@@ -1,11 +1,16 @@
 <template>
-    <div :class="'masonry-item ' + item.component">
-        <!-- discovery-post -->
-        <div class="masonry-inner masonry-inner-fixed">
-            <post  :post="item" :id="item.action_id" />
-            
-        </div>
+   <router-link
+        :to="getRouterObject(item)"
+        :class="'masonry-item ' + item.component"
+              >
+        <img :src="item.user.avatar.files.thumb.url" :alt="item.name" class="masonry-image masonry-image-release">
+    <div class="masonry-inner masonry-inner-fixed">
+        <h4>Post</h4>
+        <p>{{ item.body }}</p>
     </div>
+    </router-link>
+            
+        
 </template>
 
 <script>
