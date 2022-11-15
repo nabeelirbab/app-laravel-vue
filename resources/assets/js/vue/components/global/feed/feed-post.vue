@@ -1,5 +1,5 @@
 <template>
-   <div v-if="!item.deleted" class="p-item">
+   <div v-if="postBody != ''" class="p-item">
 
         <div class="p-item-image">
             <router-link
@@ -52,8 +52,8 @@ export default {
         isDeleted: (this.item.deleted == true) ? true : false,
       }
     },
-    computed: {
-          postBody() {
+    watch: {
+          postBody: function() {
               if(this.item.body){
                 return this.item.body;
               }else{
@@ -65,6 +65,7 @@ export default {
           deletedItem() {
             this.item.deleted = true;
             this.isDeleted = true;
+            this.item.body = '';
             this.fetchFeed();
           }
         },
