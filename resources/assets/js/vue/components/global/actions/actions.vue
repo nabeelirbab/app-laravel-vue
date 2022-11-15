@@ -107,6 +107,7 @@
             axios
                 .post("/api/feed/" + this.id + "/delete")
                 .then((response) => {
+                localStorage.setItem('last_deleted_action_id', this.id);
                   SocialEvents.$emit('delete-action')
                 })
                 .catch(function(error) {

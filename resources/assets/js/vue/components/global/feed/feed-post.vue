@@ -63,10 +63,13 @@ export default {
         },
         methods: {
           deletedItem() {
-            this.item.deleted = true;
-            this.isDeleted = true;
-            this.item.body = '';
-            this.fetchFeed();
+            var action_id = localStorage.getItem('last_deleted_action_id');
+            if (this.item.action_id == action_id) {
+                this.item.deleted = true;
+                this.isDeleted = true;
+                this.item.body = '';
+            }
+           
           }
         },
         components: {
