@@ -52,8 +52,8 @@ export default {
         isDeleted: (this.item.deleted == true) ? true : false,
       }
     },
-    watch: {
-          postBody: function() {
+    computed: {
+          postBody() {
               if(this.item.body){
                 return this.item.body;
               }else{
