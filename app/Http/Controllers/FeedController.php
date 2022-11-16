@@ -31,7 +31,7 @@ class FeedController extends Controller
     public function index()
     {
         // 6 hours
-        $cache_seconds = now()->addMinutes(30);
+        $cache_seconds = now()->addMinutes(5);
         $cache_token = 'feed';
 
         try {
@@ -41,7 +41,7 @@ class FeedController extends Controller
                 $default_limit = 10;
                 $collection = collect([]);
 
-                Release::statuslive()->with([
+                /*Release::statuslive()->with([
                     'image',
                     'uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
@@ -50,7 +50,7 @@ class FeedController extends Controller
                     $item->component = 'feed-release';
                     $item->type = 'release';
                     $collection->push($item);
-                });
+                });*/
                 Track::namenotnull()->isApproved()->with([
                     'preview',
                     'release',
@@ -58,7 +58,7 @@ class FeedController extends Controller
                     'release.uploader' => function ($query) {
                         $query->select('id', 'name', 'path');
                     },
-                ])->whereHas('release', function($query) {
+                ])->whereHas('release', function ($query) {
                     $query->statuslive();
                 })->with('asset')->limit(10)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-track';
@@ -66,42 +66,49 @@ class FeedController extends Controller
                     $collection->push($item);
                 });
                 if (auth()->check()) {
-                    if (Auth::user()->can('upload videos')) {
-                        Video::published()->limit(8)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-video';
-                            $item->type = 'video';
-                            $collection->push($item);
-                        });
-                    }
 
-                    if (Auth::user()->can('add events')) {
-                        Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-event';
-                            $item->type = 'event';
-                            $collection->push($item);
-                        });
-                    }
+                    Video::limit(8)->get()->each(function ($item) use (&$collection) {
+                        $item->component = 'feed-video';
+                        $item->type = 'video';
+                        $collection->push($item);
+                    });
 
-                    if (Auth::user()->can('add merch')) {
-                        Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
-                            $item->component = 'feed-merch';
-                            $item->type = 'merch';
-                            $collection->push($item);
-                        });
-                    }
+
+                    Event::datenotnull()->withCount('shares')->limit(7)->get()->each(function ($item) use (&$collection) {
+                        $item->component = 'feed-event';
+                        $item->type = 'event';
+                        $collection->push($item);
+                    });
+
+
+                    Merch::namenotnull()->limit(6)->get()->each(function ($item) use (&$collection) {
+                        $item->component = 'feed-merch';
+                        $item->type = 'merch';
+                        $collection->push($item);
+                    });
                 }
 
-                Post::bodynotnull()->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
+                /*Post::bodynotnull()->with('user')->withCount(['comments', 'likes', 'shares'])->limit(7)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-post';
                     $item->type = 'post';
                     $collection->push($item);
+                });*/
+
+                Action::where("item_type", "post")->limit(6)->orderByDesc('id')->get()->each(function($item) use(&$collection) {
+                    if (!empty($item->item) && $item->item_type == 'post') {
+                        $post = $item->item;
+                        $post->component = 'feed-post';
+                        $post->type = 'post';
+                        $post->action_id = $item->id;
+                        $collection->push($post);
+                    }
                 });
 
-                Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {
+                /*Genre::namenotnull()->limit(8)->get()->each(function ($item) use (&$collection) {
                     $item->component = 'feed-genre';
                     $item->type = 'genre';
                     $collection->push($item);
-                });
+                });*/
 
                 //                Playlist::namenotnull()->limit(7)->get()->each( function( $item ) use ( &$collection ) {
                 //                    $item->component = 'feed-playlist';
