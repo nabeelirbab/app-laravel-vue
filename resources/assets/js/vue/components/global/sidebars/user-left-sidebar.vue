@@ -73,7 +73,7 @@
       </sidebar-group>
       <sidebar-group title="Events">
         <div class="sidebar-group-content">
-        <a v-if="$can('add event')" @click.native="$modal.show('modal-create-event')" size="small">
+        <a v-if="$can('add events')" @click.native="$modal.show('modal-create-event')" size="small">
           <i class="fa fa-plus-circle"></i>
         </a>
           <sidebar-group-item
