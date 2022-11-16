@@ -1,6 +1,17 @@
 <template>
     <div class="actions">
         <div>
+            <div class="action" v-if="actionable.type='merch'">
+                <span class="merch-link"
+                        v-for="(link, index) in actionable.links"
+                        :key="index"
+                    >
+                <a :href="link.link" target="_blank"
+                            >
+                    <i class="fa fa-info-circle"></i>
+                </a>
+            </span>
+            </div>
             <div class="action" v-if="app.user.loggedin">
                 <comment-button :commentable="actionable" @commented="commented" />
                 <div v-if="actionable.comments_count >= 0" class="action-count">{{ actionable.comments_count }}</div>

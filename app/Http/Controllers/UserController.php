@@ -162,7 +162,7 @@ class UserController extends Controller
 
     public function getMerchForUser($userID)
     {
-        return User::findOrFail($userID)->merch()
+        return User::findOrFail($userID)->merch()->with("user")
             ->orderByDesc('created_at')->get();
     }
 

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <ph-button v-if="isPro" @click.native="showMerchCreateModal" size="medium">
-      Add Merch
-    </ph-button>
     <spinner style="margin: 3em auto;"
       :animation-duration="1000"
       :size="60"

@@ -58,17 +58,31 @@
       </div>
     </sidebar-group>
     <!-- Pro Sidebar Items -->
-    <div v-if="user.account_type === 'pro'">
+    <div >
       <sidebar-group title="Merchandise">
-        <div class="sidebar-group-content">...</div>
+        <div class="sidebar-group-content">
+        <a v-if="isPro" @click="showMerchCreateModal" size="small">
+          <i class="fa fa-2x fa-plus-circle"></i>
+        </a>
+          <sidebar-group-item
+            v-for="(item, index) in merchs"
+            :item="item"
+            :key="index"
+          ></sidebar-group-item>
+          <router-link v-if="merchs.length > 0" :to="{ name: 'profile_merch' }"> >> View All</router-link>
+        </div>
       </sidebar-group>
       <sidebar-group title="Events">
         <div class="sidebar-group-content">
+        <a v-if="isPro" @click="showEventCreateModal" size="small">
+          <i class="fa fa-2x fa-plus-circle"></i>
+        </a>
           <sidebar-group-item
             v-for="(item, index) in events"
             :item="item"
             :key="index"
           ></sidebar-group-item>
+          <router-link v-if="events.length > 0" :to="{ name: 'profile_events' }"> >> View All</router-link>
         </div>
       </sidebar-group>
     </div>
@@ -100,6 +114,7 @@ export default {
     return {
       mutableUser: this.user,
       events: [],
+      merchs:[]
     };
   },
 
@@ -109,10 +124,17 @@ export default {
     },
     isLogin: function() {
       return this.$store.state.app.user.loggedin;
-    }
+    },
+    isPro: function() {
+      return (this.$store.state.app.user.account_type === 'pro' || this.$store.state.app.user.account_type === 'admin')
+    },
+    ...mapState([
+                'app'
+              ])
   },
   created() {
     this.fetchEvents();
+    this.fetchMerch();
     ModalEvents.$on('event-created', ()=> {
       this.fetchEvents()
     })
@@ -121,6 +143,11 @@ export default {
     fetchEvents() {
       axios.get(`/api/event/${this.mutableUser.id}/list`).then((response) => {
         this.events = response.data;
+      });
+    },
+    fetchMerch() {
+      axios.get(`/api/user/${this.mutableUser.id}/merch`).then((response) => {
+        this.merchs = response.data;
       });
     },
     followStatusUpdated(followStatus) {
@@ -134,6 +161,12 @@ export default {
     },
     shared() {
       this.$emit("share");
+    },
+    showMerchCreateModal() {
+       this.$modal.show('modal-create-merch', { user: this.user });
+    },
+    showEventCreateModal() {
+        this.$modal.show('modal-create-event', { user: this.user });
     },
   },
   components: {

@@ -17,17 +17,13 @@
                 <div class="merch-description">
                     <p>{{ merch.description }}</p>
                 </div>
-                <div>
-                    <span
-                        class="merch-link"
-                        v-for="(link, index) in merch.links"
-                        :key="index"
-                    >
-                        <a :href="link.link" target="_blank"
-                            ><i :class="`fab fa-${link.shop}`"></i
-                        ></a>
-                    </span>
+                <div class="p-item-meta">
+                    <actions :actionable="merch" :id="merch.id"></actions>
+                    <div class="p-item-time">
+                        {{ moment(merch.created_at).fromNow() }}
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -46,7 +42,9 @@
             }
         },
         data() {
-            return {};
+            return {
+                moment: window.moment
+            };
         },
         created: function() {},
         methods: {},
