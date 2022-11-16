@@ -53,7 +53,8 @@ class EventController extends Controller
     {
         $user = User::findOrFail($userId);
 
-        return $user->events;
+        return $user->events()->with("user")
+            ->orderByDesc('created_at')->get();
     }
 
     /**
