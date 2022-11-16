@@ -61,8 +61,8 @@
     <div >
       <sidebar-group title="Merch">
         <div class="sidebar-group-content">
-        <a v-if="$can('add merch')" @click.native="$modal.show('modal-create-merch')" size="small">
-          <i class="fa fa-plus-circle"></i>
+        <a v-if="$can('add merch')" @click="$modal.show('modal-create-merch')" size="small">
+          <i class="fa fa-2x fa-plus-circle"></i>
         </a>
           <sidebar-group-item
             v-for="(item, index) in merchs"
@@ -73,8 +73,8 @@
       </sidebar-group>
       <sidebar-group title="Events">
         <div class="sidebar-group-content">
-        <a v-if="$can('add events')" @click.native="$modal.show('modal-create-event')" size="small">
-          <i class="fa fa-plus-circle"></i>
+        <a v-if="$can('add events')" @click="$modal.show('modal-create-event')" size="small">
+          <i class="fa fa-2x fa-plus-circle"></i>
         </a>
           <sidebar-group-item
             v-for="(item, index) in events"
