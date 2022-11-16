@@ -38,6 +38,10 @@
           <div class="action" v-if="actionable.type === 'post' && app.user.id === actionable.user_id" @click="deleteAction">
             <i class="fa fa-trash"></i>
           </div>
+
+          <div class="action" v-if="actionable.type === 'merch' && app.user.id === actionable.user_id" @click="deleteMerch">
+            <i class="fa fa-trash"></i>
+          </div>
         </div>
     </div>
 </template>
