@@ -58,9 +58,15 @@
       </div>
     </sidebar-group>
     <!-- Pro Sidebar Items -->
-    <div v-if="user.account_type === 'pro'">
-      <sidebar-group title="Merchandise">
-        <div class="sidebar-group-content">...</div>
+    <div >
+      <sidebar-group title="Merch">
+        <div class="sidebar-group-content">
+          <sidebar-group-item
+            v-for="(item, index) in merchs"
+            :item="item"
+            :key="index"
+          ></sidebar-group-item>
+        </div>
       </sidebar-group>
       <sidebar-group title="Events">
         <div class="sidebar-group-content">
@@ -100,6 +106,7 @@ export default {
     return {
       mutableUser: this.user,
       events: [],
+      merchs:[]
     };
   },
 
@@ -118,6 +125,11 @@ export default {
     fetchEvents() {
       axios.get(`/api/event/${this.mutableUser.id}/list`).then((response) => {
         this.events = response.data;
+      });
+    },
+    fetchMerch() {
+      axios.get(`/api/user/${this.mutableUser.id}/merch`).then((response) => {
+        this.merchs = response.data;
       });
     },
     followStatusUpdated(followStatus) {
