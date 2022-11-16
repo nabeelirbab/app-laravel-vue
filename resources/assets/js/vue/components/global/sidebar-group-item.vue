@@ -108,7 +108,11 @@ export default {
                     break;
                 
                 case "event":
-                    return this.item.image.files.thumb.url
+                    return this.item.image.files.thumb.url;
+
+                case "merch":
+                    return this.item.image.files.thumb.url;
+                    break;
 
                 default:
                     return this.item.image.files.original.url;

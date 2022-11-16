@@ -117,6 +117,7 @@ export default {
   },
   created() {
     this.fetchEvents();
+    this.fetchMerch();
     ModalEvents.$on('event-created', ()=> {
       this.fetchEvents()
     })
