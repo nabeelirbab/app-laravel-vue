@@ -75,6 +75,33 @@ class MerchController extends Controller
      */
     public function destroy(Merch $merch)
     {
-        //
+        $merch->delete();
+
+        return [
+            'success' => true,
+        ];
+    }
+
+    public function delete(Request $request, $merchId)
+    {
+        $merch = $this->authorizeRequest($request, $merchId);
+
+        $merch->delete();
+
+        return [
+            'success' => true,
+        ];
+    }
+
+
+    private function authorizeRequest($request, $merchId)
+    {
+        $merch = Merch::findOrFail($merchId);
+
+        if ($merch->user_id == $request->user()->id) {
+            return $merch;
+        } else {
+            abort(403);
+        }
     }
 }

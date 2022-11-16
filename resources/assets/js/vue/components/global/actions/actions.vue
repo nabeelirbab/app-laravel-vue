@@ -125,6 +125,16 @@
                   console.log(error);
                 });
           },
+          deleteMerch() {
+            axios
+                .post("/api/merch/" + this.id + "/delete")
+                .then((response) => {
+                  SocialEvents.$emit('merch-deleted');
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+          },
         },
         components: {
             CommentButton,

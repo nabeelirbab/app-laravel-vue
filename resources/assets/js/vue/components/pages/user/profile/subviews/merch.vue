@@ -21,7 +21,7 @@
 import ProfileMixin from '../profile-mixin';
 import { HalfCircleSpinner as Spinner } from 'epic-spinners';
 import Item from 'global/items/item';
-import { UserEvents } from "events";
+import { UserEvents, SocialEvents } from "events";
 import {mapState} from "vuex";
 
 export default {
@@ -42,6 +42,9 @@ export default {
   created: function() {
     this.fetchMerch();
     UserEvents.$on('merch-added', () => {
+      this.fetchMerch();
+    });
+    SocialEvents.$on('merch-deleted', () => {
       this.fetchMerch();
     });
   },
