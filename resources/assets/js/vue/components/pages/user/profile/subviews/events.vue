@@ -1,8 +1,5 @@
 <template>
     <div>
-        <ph-button @click.native="$modal.show('modal-create-event')" size="medium">
-            Add Event
-        </ph-button>
         <spinner style="margin: 3em auto;"
                  :animation-duration="1000"
                  :size="60"
