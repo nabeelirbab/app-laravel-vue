@@ -61,6 +61,9 @@
     <div >
       <sidebar-group title="Merch">
         <div class="sidebar-group-content">
+        <ph-button @click.native="$modal.show('modal-create-merch')" size="small">
+          <i class="fas fa-cart-plus"></i>
+        </ph-button>
           <sidebar-group-item
             v-for="(item, index) in merchs"
             :item="item"

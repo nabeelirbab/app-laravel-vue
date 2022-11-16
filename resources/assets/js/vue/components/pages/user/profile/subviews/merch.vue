@@ -1,8 +1,6 @@
 <template>
   <div>
-    <ph-button @click.native="$modal.show('modal-create-merch')" size="medium">
-      Add Merch
-    </ph-button>
+    
     <spinner style="margin: 3em auto;"
       :animation-duration="1000"
       :size="60"
