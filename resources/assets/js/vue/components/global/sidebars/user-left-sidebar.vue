@@ -59,7 +59,7 @@
     </sidebar-group>
     <!-- Pro Sidebar Items -->
     <div >
-      <sidebar-group title="Merch">
+      <sidebar-group title="Merchandise">
         <div class="sidebar-group-content">
         <a v-if="$can('add merch')" @click="$modal.show('modal-create-merch')" size="small">
           <i class="fa fa-2x fa-plus-circle"></i>
@@ -69,6 +69,7 @@
             :item="item"
             :key="index"
           ></sidebar-group-item>
+          <router-link :to="{ name: 'profile_merch' }"> >> View All</router-link>
         </div>
       </sidebar-group>
       <sidebar-group title="Events">
@@ -81,6 +82,7 @@
             :item="item"
             :key="index"
           ></sidebar-group-item>
+          <router-link :to="{ name: 'profile_events' }"> >> View All</router-link>
         </div>
       </sidebar-group>
     </div>
@@ -119,7 +121,7 @@ export default {
   computed: {
     isMe: function () {
       return this.user.id === this.$store.state.app.user.id;
-    },
+    }
   },
   created() {
     this.fetchEvents();
