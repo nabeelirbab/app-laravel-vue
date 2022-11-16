@@ -54,7 +54,9 @@
             }
         },
         data() {
-            return {};
+            return {
+                moment: window.moment
+            };
         },
         created: function() {},
         methods: {},
