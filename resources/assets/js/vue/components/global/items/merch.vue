@@ -25,13 +25,12 @@
                     >
                         <a :href="link.link" target="_blank"
                             >
-                            <!-- <i :class="`fab fa-${link.shop}`"></i> -->
                             <i class="fa fa-info-circle"></i>
                         </a>
                     </span>
                 </div>
                 <div class="p-item-meta">
-                    <actions :actionable="merch" :id="id"></actions>
+                    <actions :actionable="merch" :id="merch.id"></actions>
                     <div class="p-item-time">
                         {{ moment(merch.created_at).fromNow() }}
                     </div>
