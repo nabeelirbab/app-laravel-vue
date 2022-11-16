@@ -8,7 +8,7 @@
                     >
                 <a :href="link.link" target="_blank"
                             >
-                    <i class="fa fa-info"></i>
+                    <i class="fa fa-info-circle"></i>
                 </a>
             </span>
             </div>

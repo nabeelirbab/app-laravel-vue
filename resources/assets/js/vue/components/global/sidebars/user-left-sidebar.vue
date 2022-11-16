@@ -61,8 +61,8 @@
     <div >
       <sidebar-group title="Merch">
         <div class="sidebar-group-content">
-        <ph-button @click.native="$modal.show('modal-create-merch')" size="small">
-          <i class="fa fa-plus-circle" data-fa-transform="grow-40"></i>
+        <ph-button v-if="$can('add merch')" @click.native="$modal.show('modal-create-merch')" size="small">
+          <i class="fa fa-plus-circle"></i>
         </ph-button>
           <sidebar-group-item
             v-for="(item, index) in merchs"
