@@ -69,7 +69,7 @@
             :item="item"
             :key="index"
           ></sidebar-group-item>
-          <router-link :to="{ name: 'profile_merch' }"> >> View All</router-link>
+          <router-link v-if="merchs.length > 0" :to="{ name: 'profile_merch' }"> >> View All</router-link>
         </div>
       </sidebar-group>
       <sidebar-group title="Events">
@@ -82,7 +82,7 @@
             :item="item"
             :key="index"
           ></sidebar-group-item>
-          <router-link :to="{ name: 'profile_events' }"> >> View All</router-link>
+          <router-link v-if="events.length > 0" :to="{ name: 'profile_events' }"> >> View All</router-link>
         </div>
       </sidebar-group>
     </div>
