@@ -92,7 +92,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { UserEvents, ModalEvents } from "events";
+import { UserEvents, ModalEvents, SocialEvents } from "events";
 
 
 import SidebarGroup from "global/sidebar-group";
@@ -138,6 +138,12 @@ export default {
     ModalEvents.$on('event-created', ()=> {
       this.fetchEvents()
     })
+    SocialEvents.$on('merch-deleted', () => {
+      this.fetchMerch();
+    });
+    UserEvents.$on('merch-added', () => {
+      this.fetchMerch();
+    });
   },
   methods: {
     fetchEvents() {
