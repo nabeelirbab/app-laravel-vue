@@ -7,6 +7,7 @@
         <!-- MAIN CONTENT -->
         <div class="page-main">
             <profile-navigation :user="user" />
+            Link clicked values {{linkclicked}}
             <router-view :user="user" v-if="linkclicked == 0" />
         </div>
         <aside class="sidebar-right">
