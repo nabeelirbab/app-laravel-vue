@@ -46,6 +46,7 @@
         <!-- MAIN CONTENT -->
         <div class="pro-content-area">
           <profile-navigation :user="user" @linkclick="linkClicked" />
+          {{linkclicked}}
           <router-view :user="user" v-if="linkclicked == 0" />
         </div>
       </div>

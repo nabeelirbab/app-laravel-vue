@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         changeRoute(pathname) {
-            this.$router.replace({ name: pathname });
+            //this.$router.replace({ name: pathname });
             this.routename = pathname;
             this.$emit("linkclick");
         },
