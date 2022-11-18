@@ -6,7 +6,7 @@
         </aside>
         <!-- MAIN CONTENT -->
         <div class="page-main">
-            <profile-navigation />
+            <profile-navigation :user="user" />
             <router-view :user="user" />
         </div>
         <aside class="sidebar-right">

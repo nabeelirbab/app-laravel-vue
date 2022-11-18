@@ -45,7 +45,7 @@
         </aside>
         <!-- MAIN CONTENT -->
         <div class="pro-content-area">
-          <profile-navigation />
+          <profile-navigation :user="user"  />
           <router-view :user="user" />
         </div>
       </div>
