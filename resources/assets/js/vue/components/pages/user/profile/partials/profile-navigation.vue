@@ -21,7 +21,7 @@ export default {
     },
      methods: {
         changeRoute() {
-            this.$router.go(0);
+            this.$router.go();
         },
         
     },
