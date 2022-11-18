@@ -6,7 +6,7 @@
         </aside>
         <!-- MAIN CONTENT -->
         <div class="page-main">
-            <profile-navigation :user="user" />
+            <profile-navigation :user="user" @linkclick="linkClicked" />
             Link clicked values {{linkclicked}}
             <router-view :user="user" v-if="linkclicked == 0" />
         </div>
