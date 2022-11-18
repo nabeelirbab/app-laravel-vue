@@ -1,12 +1,12 @@
 <template>
     <nav class="sub-nav">
         <ul>
-            <li><router-link  @click.native="changeRoute('profile_all')">All</router-link></li>
-            <li><router-link @click.native="changeRoute('profile_music')">Music</router-link></li>
-            <li ><router-link  @click.native="changeRoute('profile_events')">Events</router-link></li>
-            <li><router-link  @click.native="changeRoute('profile_videos')">Videos</router-link></li>
-            <li ><router-link  @click.native="changeRoute('profile_merch')">Merch</router-link></li>
-            <li><router-link @click.native="changeRoute('profile_posts')">Posts</router-link></li>
+            <li><a v-bind:class="[currentRouteName == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"  @click="changeRoute('profile_all')">All</a></li>
+            <li><a v-bind:class="[currentRouteName == 'profile_music' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_music')">Music</a></li>
+            <li ><a v-bind:class="[currentRouteName == 'profile_events' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_events')">Events</a></li>
+            <li><a  v-bind:class="[currentRouteName == 'profile_videos' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_videos')">Videos</a></li>
+            <li ><a v-bind:class="[currentRouteName == 'profile_merch' ? 'router-link-exact-active router-link-active' : '']"  @click="changeRoute('profile_merch')">Merch</a></li>
+            <li><a v-bind:class="[currentRouteName == 'profile_posts' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_posts')">Posts</a></li>
         </ul>
     </nav>
 </template>
@@ -19,7 +19,12 @@ export default {
             required: true,
         }
     },
-     methods: {
+    computed: {
+        currentRouteName() {
+            return this.$route.name;
+        }
+    },
+    methods: {
         changeRoute(pathname) {
             //this.$router.push({ path: pathname });
             this.$emit("linkclick");
