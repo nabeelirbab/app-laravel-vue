@@ -7,7 +7,7 @@
         <!-- MAIN CONTENT -->
         <div class="page-main">
             <profile-navigation :user="user" />
-            <router-view :user="user" />
+            <router-view :user="user" v-if="linkclicked == 0" />
         </div>
         <aside class="sidebar-right">
             <user-right-sidebar :user="user" :news="news" />
@@ -32,6 +32,16 @@
             FollowAction,
             UserRightSidebar,
             UserLeftSidebar,
+        },
+        data() {
+            return {
+              linkclicked: 0,
+            }
+        },
+        methods: {
+            linkClicked() {
+              this.linkclicked = 1;
+            },
         },
         mixins: [
             ProfileMixin

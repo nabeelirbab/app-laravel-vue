@@ -45,8 +45,8 @@
         </aside>
         <!-- MAIN CONTENT -->
         <div class="pro-content-area">
-          <profile-navigation :user="user"  />
-          <router-view :user="user" />
+          <profile-navigation :user="user" @linkclick="linkClicked" />
+          <router-view :user="user" v-if="linkclicked == 0" />
         </div>
       </div>
     </div>
@@ -80,6 +80,11 @@ export default {
     FollowAction,
     ProfileNavigation,
   },
+  data() {
+    return {
+      linkclicked: 0,
+    }
+  },
   mixins: [ProfileMixin],
   computed: {
     isMe: function() {
@@ -102,6 +107,9 @@ export default {
       axios.delete("/api/user/banner").then((data) => {
         this.user.banner = data;
       });
+    },
+    linkClicked() {
+      this.linkclicked = 1;
     },
   },
 };
