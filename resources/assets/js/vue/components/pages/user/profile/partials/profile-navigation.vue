@@ -21,7 +21,7 @@ export default {
     },
      methods: {
         changeRoute() {
-            this.$router.go();
+            this.$router.push({ path: '/expedition' });
         },
         
     },
