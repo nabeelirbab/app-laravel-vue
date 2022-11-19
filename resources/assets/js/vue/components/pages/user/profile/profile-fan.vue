@@ -43,14 +43,6 @@
               subviewpath: ''
             }
         },
-        created() {
-            var currentUrl = window.location.href;
-            var urlArr = currentUrl.split("#");
-            if (urlArr.length > 1) {
-                this.linkclicked = 1;
-                this.subviewpath = "profile_" + urlArr[1];
-            }
-        },
         methods: {
             linkClicked(path) {
               this.linkclicked = 1;
