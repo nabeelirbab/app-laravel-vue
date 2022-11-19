@@ -1,12 +1,12 @@
 <template>
     <nav class="sub-nav">
         <ul>
-            <li><a href="#all" v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"  @click="changeRoute('profile_all')">All</a></li>
-            <li><a href="#music" v-bind:class="[routename == 'profile_music' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_music')">Music</a></li>
-            <li ><a href="#events" v-bind:class="[routename == 'profile_events' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_events')">Events</a></li>
-            <li><a href="#videos"  v-bind:class="[routename == 'profile_videos' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_videos')">Videos</a></li>
-            <li ><a href="#merch" v-bind:class="[routename == 'profile_merch' ? 'router-link-exact-active router-link-active' : '']"  @click="changeRoute('profile_merch')">Merch</a></li>
-            <li><a href="#posts" v-bind:class="[routename == 'profile_posts' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_posts')">Posts</a></li>
+            <li><a href="#?page=all" v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"  @click="changeRoute('profile_all')">All</a></li>
+            <li><a href="#?page=music" v-bind:class="[routename == 'profile_music' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_music')">Music</a></li>
+            <li ><a href="#?page=events" v-bind:class="[routename == 'profile_events' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_events')">Events</a></li>
+            <li><a href="#?page=videos"  v-bind:class="[routename == 'profile_videos' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_videos')">Videos</a></li>
+            <li ><a href="#?page=merch" v-bind:class="[routename == 'profile_merch' ? 'router-link-exact-active router-link-active' : '']"  @click="changeRoute('profile_merch')">Merch</a></li>
+            <li><a href="#?page=posts" v-bind:class="[routename == 'profile_posts' ? 'router-link-exact-active router-link-active' : '']" @click="changeRoute('profile_posts')">Posts</a></li>
         </ul>
     </nav>
 </template>
