@@ -46,7 +46,6 @@
         <!-- MAIN CONTENT -->
         <div class="pro-content-area">
           <profile-navigation :user="user" @linkclick="linkClicked" />
-          Link clicked values {{linkclicked}}
           <router-view :user="user" v-if="linkclicked == 0" />
           <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" />
         </div>

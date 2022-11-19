@@ -1,12 +1,12 @@
 <template>
     <div>
-        <all v-if="path == 'profile_all'" />
-        <events v-if="path == 'profile_events'" />
-        <merch v-if="path == 'profile_merch'" />
-        <music v-if="path == 'profile_music'" />
-        <posts v-if="path == 'profile_posts'" />
-        <releases v-if="path == 'profile_releases'" />
-        <videos v-if="path == 'profile_videos'" />
+        <all :user="user" v-if="path == 'profile_all'" />
+        <events :user="user" v-if="path == 'profile_events'" />
+        <merch :user="user" v-if="path == 'profile_merch'" />
+        <music :user="user" v-if="path == 'profile_music'" />
+        <posts :user="user" v-if="path == 'profile_posts'" />
+        <releases :user="user" v-if="path == 'profile_releases'" />
+        <videos :user="user" v-if="path == 'profile_videos'" />
     </div>
 </template>
 
