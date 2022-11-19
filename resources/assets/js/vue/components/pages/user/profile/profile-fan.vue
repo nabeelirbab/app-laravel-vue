@@ -47,7 +47,7 @@
             linkClicked(path) {
               this.linkclicked = 1;
               this.subviewpath = path;
-              var urlpath = str.replace("profile_", "");
+              var urlpath = path.replace("profile_", "");
               var url = '/user/'+this.user.path;
               if (urlpath != "all") {
                 url += "/" + urlpath;
