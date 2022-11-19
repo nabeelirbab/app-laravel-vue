@@ -9,6 +9,8 @@
             <profile-navigation :user="user" @linkclick="linkClicked" />
             Link clicked values {{linkclicked}}
             <router-view :user="user" v-if="linkclicked == 0" />
+            <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" />
+
         </div>
         <aside class="sidebar-right">
             <user-right-sidebar :user="user" :news="news" />
@@ -23,8 +25,9 @@
     import ProfileNavigation from './partials/profile-navigation';
 
     import ProfileAvatar from './partials/avatar';
-    import UserRightSidebar from 'global/sidebars/user-right-sidebar'
-    import UserLeftSidebar from 'global/sidebars/user-left-sidebar'
+    import UserRightSidebar from 'global/sidebars/user-right-sidebar';
+    import UserLeftSidebar from 'global/sidebars/user-left-sidebar';
+    import MainSubview from "./subviews/main-subview";
 
     export default {
         components: {
@@ -33,15 +36,18 @@
             FollowAction,
             UserRightSidebar,
             UserLeftSidebar,
+            MainSubview
         },
         data() {
             return {
               linkclicked: 0,
+              subviewpath: ''
             }
         },
         methods: {
-            linkClicked() {
+            linkClicked(path) {
               this.linkclicked = 1;
+              this.subviewpath = path;
             },
         },
         mixins: [

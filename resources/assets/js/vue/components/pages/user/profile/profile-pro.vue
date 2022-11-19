@@ -48,6 +48,7 @@
           <profile-navigation :user="user" @linkclick="linkClicked" />
           Link clicked values {{linkclicked}}
           <router-view :user="user" v-if="linkclicked == 0" />
+          <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" />
         </div>
       </div>
     </div>
@@ -69,6 +70,7 @@ import AddText from "global/add-text/add-text";
 import PhLabel from "global/ph-label";
 import UserLeftSidebar from "../../../global/sidebars/user-left-sidebar";
 import UserRightSidebar from "../../../global/sidebars/user-right-sidebar";
+import MainSubview from "./subviews/main-subview";
 
 export default {
   components: {
@@ -80,10 +82,12 @@ export default {
     PhLabel,
     FollowAction,
     ProfileNavigation,
+    MainSubview
   },
   data() {
     return {
       linkclicked: 0,
+      subviewpath: ''
     }
   },
   mixins: [ProfileMixin],
@@ -109,8 +113,9 @@ export default {
         this.user.banner = data;
       });
     },
-    linkClicked() {
+    linkClicked(path) {
       this.linkclicked = 1;
+      this.subviewpath = path;
     },
   },
 };
