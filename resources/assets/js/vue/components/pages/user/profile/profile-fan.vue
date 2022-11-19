@@ -52,7 +52,7 @@
               if (urlpath != "all") {
                 url += "/" + urlpath;
               }
-              window.history.pushState("", "", url);
+              window.history.pushState(url, "");
             },
         },
         mixins: [
