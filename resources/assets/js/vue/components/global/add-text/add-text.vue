@@ -60,6 +60,8 @@
             >
             </textarea>
           </form>
+        </div>
+      </div>
           <div class="img-preview-remove" v-if="previewUrl" >
             <a title="Remove Image"
             @click="removeAttachment"><i style="color: #FF0000;" class="fa fa-times text-danger"></i></a>
@@ -69,6 +71,8 @@
             class="image-preview"
             v-if="previewUrl"
           />
+      <div class="lower">
+       <div class="lower-text-input">
           <ph-button
             color="blue"
             size="medium"
