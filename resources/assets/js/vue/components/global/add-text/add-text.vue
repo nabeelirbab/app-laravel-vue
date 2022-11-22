@@ -403,8 +403,8 @@ export default {
 
   .img-preview-remove {
     float: right;
-    margin-left: 65px;
-    margin-bottom: 20px;
+    margin-left: 70px;
+    margin-bottom: 35px;
     position: absolute;
     color: #FF0000;
     cursor: pointer;
