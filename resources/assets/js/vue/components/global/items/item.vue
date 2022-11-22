@@ -40,6 +40,7 @@
         },
         methods: {
             itemIs(type) {
+            console.log("item type == "+type);
                 return this.item.type === type;
             }
         },
