@@ -44,15 +44,7 @@
         </div>
       </div>
       <div class="lower">
-        <div class="img-preview-remove" v-if="previewUrl" >
-          <a title="Remove Image"
-          @click="removeAttachment"><i style="color: #FF0000;" class="fa fa-times text-danger"></i></a>
-        </div>
-        <img
-          :src="previewUrl"
-          class="image-preview"
-          v-if="previewUrl"
-        />
+        
 
         <div class="lower-text-input">
           <form>
@@ -68,6 +60,15 @@
             >
             </textarea>
           </form>
+          <div class="img-preview-remove" v-if="previewUrl" >
+            <a title="Remove Image"
+            @click="removeAttachment"><i style="color: #FF0000;" class="fa fa-times text-danger"></i></a>
+          </div>
+          <img
+            :src="previewUrl"
+            class="image-preview"
+            v-if="previewUrl"
+          />
           <ph-button
             color="blue"
             size="medium"
@@ -211,12 +212,14 @@ export default {
     removeAttachment() {
       this.attachment = null;
       this.previewUrl = null;
+      this.imageUpload = false;
     },
     handleAttachmentChange(e) {
       const file = e.target.files[0];
       if(file.type==='image/jpeg' || file.type==='image/png'){
         this.previewUrl = URL.createObjectURL(file);
         this.attachment = file;
+        this.imageUpload = true;
       }else{
 
         Vue.notify({
