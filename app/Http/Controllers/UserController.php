@@ -115,9 +115,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($userID);
 
-        $userActions = $user->actions;
+        //$userActions = $user->actions;
 
-        return $userActions->with('item')->where('item_type', 'post')
+        return $user->actions()->with('item')->where('item_type', 'post')
             ->sortByDesc('created_at')
             ->values();
     }
