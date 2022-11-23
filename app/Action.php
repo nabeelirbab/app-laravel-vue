@@ -16,9 +16,9 @@ class Action extends PhaseModel
 {
     protected $guarded = [];
 
-    protected $appends = ['item'];
+    //protected $appends = ['item'];
 
-    //protected $with = ['user'];
+    protected $with = ['item'];
 
     const USER_CREATED_EVENT = 'user_created_event';
     const USER_CREATED_MERCH = 'user_created_merch';
