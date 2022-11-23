@@ -11,7 +11,6 @@
         <div class="p-item-main">
             <div class="p-item-detail">
                 <div class="p-item-title">
-                <div>{{merch.type}}</div>
                     <span>{{ merch.title }}</span>
                 </div>
             </div>
