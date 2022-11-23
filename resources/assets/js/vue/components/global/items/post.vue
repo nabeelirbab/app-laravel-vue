@@ -1,6 +1,5 @@
 <template>
     <div class="p-item">
-    Post View
         <div class="p-item-image">
                 <avatar
                     :size="130"
@@ -11,7 +10,7 @@
         <div class="p-item-main">
 
             <div class="p-post-text">
-                <div class="p-item-detail">
+                <div v-if="postBody != ''" class="p-item-detail">
                     {{ postBody }}
                 </div>
                 <div class="p-post-text p-post-attachment" v-if="post.attachment">
