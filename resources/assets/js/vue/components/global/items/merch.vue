@@ -3,7 +3,7 @@
         <div class="p-item-image">
             <avatar
                 :size="130"
-                v-if="merch.image.files"
+                v-if="merch.image"
                 :src="merch.image.files.medium.url"
                 :tile="true"
             />

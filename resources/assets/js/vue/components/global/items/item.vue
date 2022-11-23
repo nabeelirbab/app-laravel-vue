@@ -1,5 +1,5 @@
 <template>
-    <div v-if="itemIs('post')"  >
+    <div v-if="item.type == 'post'"  >
         Load Post
         <post :post="item" :id="id" />
     </div>
