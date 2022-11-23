@@ -115,11 +115,26 @@ class UserController extends Controller
     {
         $user = User::findOrFail($userID);
 
-        $userActions = $user->actions;
 
-        return $userActions->where('item_type', 'post')
+        $userActions = $user->actions;
+        $postIds = $userActions->where('item_type', 'post')->pluck("item_id")
+        ->toArray();
+        $allPosts = Post::whereIn('id', $postIds)->get();
+        $postArr = [];
+        foreach ($allPosts as $post) {
+            $postArr[$post->id] = $post;
+        }
+        $actions = $userActions->where('item_type', 'post')
             ->sortByDesc('created_at')
             ->values();
+        foreach ($actions as &$act) {
+            if (!empty($postArr[$act->item_id])) {
+                $act->item = $postArr[$act->item_id];
+            } else {
+                $act->item = null;
+            }
+        }
+        return $actions;
     }
 
     public function getEventsForUser($userID)
