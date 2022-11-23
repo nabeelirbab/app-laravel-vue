@@ -1,5 +1,8 @@
 <template>
-    <post v-if="itemIs('post')" :post="item" :id="id" />
+    <div v-if="itemIs('post')"  >
+        Load Post
+        <post :post="item" :id="id" />
+    </div>
     <release v-else-if="itemIs('release')" :release="item" />
     <p-track v-else-if="itemIs('track')" :track="item" />
     <asset v-else-if="itemIs('asset')" :asset="item" />
