@@ -1,5 +1,6 @@
 <template>
     <div class="p-item">
+    Post View
         <div class="p-item-image">
                 <avatar
                     :size="130"
