@@ -9,6 +9,7 @@
     <share v-else-if="itemIs('share')" :share="item" />
     <p-video v-else-if="itemIs('video')" :video="item" />
     <merch v-else-if="itemIs('merch')" :merch="item" />
+    <post v-else-if="itemIs('post')" :post="item" :id="id" />
 </template>
 
 <script>
