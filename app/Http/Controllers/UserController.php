@@ -113,11 +113,11 @@ class UserController extends Controller
 
     public function getPostsForUser($userID)
     {
-        $user = User::findOrFail($userID);
+        //$user = User::findOrFail($userID);
 
         //$userActions = $user->actions;
 
-        return $user->actions()->with('item')->where('item_type', 'post')
+        return Action::where("created_by", $userId)->with('item')->where('item_type', 'post')
             ->sortByDesc('created_at')
             ->values();
     }
