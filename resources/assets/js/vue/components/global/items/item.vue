@@ -1,5 +1,5 @@
 <template>
-    <div v-if="1 == 1" >
+    <div v-if="itemIs('post')" >
     Item type {{item.type}}
     </div> 
     <post v-else-if="itemIs('post')" :post="item" :id="id" />
