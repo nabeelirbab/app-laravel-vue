@@ -117,7 +117,7 @@ class UserController extends Controller
 
         $userActions = $user->actions;
 
-        return $userActions->where('item_type', 'post')
+        return $userActions->with('item')->where('item_type', 'post')
             ->sortByDesc('created_at')
             ->values();
     }
