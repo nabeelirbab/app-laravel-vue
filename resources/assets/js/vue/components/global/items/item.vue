@@ -39,8 +39,6 @@
           }
         },
         created: function() {
-            console.log(this.item);
-            console.log("Item type " + this.item.type);
         },
         methods: {
             itemIs(type) {
