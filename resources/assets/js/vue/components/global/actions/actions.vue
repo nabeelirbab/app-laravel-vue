@@ -35,6 +35,9 @@
             <div class="action">
                 <action-menu v-if="actType === 'track' && download" :actionable="actionable" :download="download"></action-menu>
             </div>
+            {{actType}}
+
+            {{app.user.id}} && {{actionable.user_id}}
           <div class="action" v-if="actType === 'post' && app.user.id === actionable.user_id" @click="deleteAction">
             <i class="fa fa-trash"></i>
           </div>
