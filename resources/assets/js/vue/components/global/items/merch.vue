@@ -52,7 +52,9 @@
                 moment: window.moment
             };
         },
-        created: function() {},
+        created: function() {
+            console.log(this.merch)
+        },
         methods: {},
         components: {
             Actions,
