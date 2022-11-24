@@ -1,5 +1,6 @@
 <template>
-    <div class="p-item">
+    <post v-if="merch.body" :post="merch" :id="id" />
+    <div v-else class="p-item">
         <div class="p-item-image">
             <avatar
                 :size="130"
@@ -34,12 +35,16 @@
     import Actions from "global/actions/actions";
     import ActionMenu from "global/actions/action-menu";
     import Avatar from "global/avatar";
+    import Post from './post';
 
     export default {
         props: {
             merch: {
                 type: Object,
                 required: true
+            },
+            id: {
+                type: Number
             }
         },
         data() {
@@ -52,7 +57,8 @@
         components: {
             Actions,
             ActionMenu,
-            Avatar
+            Avatar,
+            Post
         },
         filters: {
             addPrefix(value) {
