@@ -47,7 +47,7 @@
         },
         methods: {
             itemIs(type) {
-                return this.item.type == type;
+                return this.item.type === type;
             }
         },
         components: {

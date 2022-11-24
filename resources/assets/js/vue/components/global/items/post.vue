@@ -8,6 +8,7 @@
                 />
         </div>
         <div class="p-item-main">
+        <input type="hidden" v-model="post.type" />
 
             <div class="p-post-text">
                 <div v-if="postBody != ''" class="p-item-detail">
@@ -24,7 +25,7 @@
                 </div>
             </div>
             <div class="p-item-meta">
-                <actions :actionable="post" :id="id"></actions>
+                <actions :actionable="post" :id="id" :actiontype='post' ></actions>
                 <div class="p-item-time">
                     {{ moment(post.created_at).fromNow() }}
                 </div>
@@ -56,7 +57,7 @@
             }
         },
         created: function() {
-            this.post.type = 'post'
+            this.updateType();
         },
         computed: {
           postBody() {
@@ -68,6 +69,9 @@
           }
         },
         methods: {
+            updateType() {
+              this.post.type = 'post';
+            },
 
         },
         components: {
