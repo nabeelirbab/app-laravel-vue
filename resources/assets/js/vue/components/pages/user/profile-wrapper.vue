@@ -42,7 +42,7 @@
         },
         computed: {
             isPro: function() {
-                return (this.user.account_type === 'pro')
+                return (this.user.account_type === 'pro' && this.user.approved_at !== null)
             }
         },
         created: function() {
