@@ -83,6 +83,7 @@
         },
         created: function () {
         
+            console.log("actype :: "+actiontype);
             SocialEvents.$on("commented", () => {
               this.actionable.comments_count++;
             });
@@ -106,7 +107,7 @@
                 return `${this.actionable.shares_count} ${this.actionable.shares_count == '1' ? 'SHARE' : 'SHARES'}`
             },
             actType() {
-                if (typeof(this.actiontype) != undefined && this.actiontype != '') {
+                if (typeof(this.actiontype) != undefined && this.actiontype != '' && this.actiontype != null) {
                     return this.actiontype;
                 } else {
                     return this.actionable.type;
