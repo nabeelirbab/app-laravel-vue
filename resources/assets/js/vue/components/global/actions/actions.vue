@@ -107,9 +107,10 @@
             },
             actType() {
                 if (typeof(this.actiontype) != undefined && this.actiontype != '') {
-                    return this.actiontype.replace('-type', '');
+                    var types = this.actiontype;
+                    return types.replace('-type', '');
                 } else {
-                    this.actionable.type;
+                    return this.actionable.type;
                 }
             },
         },
