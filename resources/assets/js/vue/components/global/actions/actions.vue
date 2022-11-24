@@ -107,8 +107,7 @@
             },
             actType() {
                 if (typeof(this.actiontype) != undefined && this.actiontype != '') {
-                    var types = this.actiontype;
-                    return types.replace('-type', '');
+                    return this.actiontype;
                 } else {
                     return this.actionable.type;
                 }
