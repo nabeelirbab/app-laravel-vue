@@ -1,7 +1,7 @@
 <template>
     <div class="actions">
         <div>
-            <div class="action" v-if="actionable.type='merch'">
+            <div class="action" v-if="actType='merch'">
                 <span class="merch-link"
                         v-for="(link, index) in actionable.links"
                         :key="index"
@@ -29,17 +29,18 @@
             <div class="action" v-if="app.user.loggedin">
                 <report-button :reportable="actionable" @report="reported"></report-button>
             </div>
-            <div v-if="actionable.type != 'post'" class="action">
+            <div v-if="actType != 'post'" class="action">
                 <info-button :infoable="actionable"></info-button>
             </div>
             <div class="action">
-                <action-menu v-if="actionable.type === 'track' && download" :actionable="actionable" :download="download"></action-menu>
+                <action-menu v-if="actType === 'track' && download" :actionable="actionable" :download="download"></action-menu>
             </div>
-          <div class="action" v-if="actionable.type === 'post' && app.user.id === actionable.user_id" @click="deleteAction">
+            {{actType}}
+          <div class="action" v-if="actType === 'post' && app.user.id === actionable.user_id" @click="deleteAction">
             <i class="fa fa-trash"></i>
           </div>
 
-          <div class="action" v-if="actionable.type === 'merch' && app.user.id === actionable.user_id" @click="deleteMerch">
+          <div class="action" v-if="actType === 'merch' && app.user.id === actionable.user_id" @click="deleteMerch">
             <i class="fa fa-trash"></i>
           </div>
         </div>
@@ -70,6 +71,9 @@
           id: {
               type: Number,
               default: null,
+          },
+          actiontype: {
+            type: String
           }
         },
         data () {
@@ -100,6 +104,13 @@
             },
             shareText() {
                 return `${this.actionable.shares_count} ${this.actionable.shares_count == '1' ? 'SHARE' : 'SHARES'}`
+            },
+            actType() {
+                if (typeof(this.actiontype) != undefined && this.actiontype != '') {
+                    return this.actiontype.replace('-type', '');
+                } else {
+                    this.actionable.type;
+                }
             },
         },
         methods: {

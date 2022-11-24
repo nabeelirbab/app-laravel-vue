@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="p-item-meta">
-                <actions :actionable="post" :id="id" :actiontype='post' ></actions>
+                <actions :actionable="post" :id="id" :actiontype='post-type' ></actions>
                 <div class="p-item-time">
                     {{ moment(post.created_at).fromNow() }}
                 </div>
