@@ -1,6 +1,6 @@
 <template>
     <post v-if="merch.body || merch.attachment" :post="merch" :id="id" />
-    <div v-else class="p-item">
+    <div v-else-if="merch.title" class="p-item">
         <div class="p-item-image">
             <avatar
                 :size="130"
