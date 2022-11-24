@@ -1,5 +1,5 @@
 <template>
-    <post v-if="itemIs('post')" :post="item" :id="id" />
+    <post v-if="itemType == 'post'" :post="item" :id="id" />
     <release v-else-if="itemIs('release')" :release="item" />
     <p-track v-else-if="itemIs('track')" :track="item" />
     <asset v-else-if="itemIs('asset')" :asset="item" />
@@ -37,6 +37,11 @@
               type: Number,
               default: null
           }
+        },
+        computed: {
+            itemType() {
+              return this.item.type;
+            }
         },
         created: function() {
         },
