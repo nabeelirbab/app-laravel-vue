@@ -55,6 +55,9 @@
                 moment: window.moment,
             }
         },
+        created: function() {
+            this.post.type = 'post'
+        },
         computed: {
           postBody() {
               if(this.post.body){
