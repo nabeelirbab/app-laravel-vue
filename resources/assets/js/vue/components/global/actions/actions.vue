@@ -35,7 +35,6 @@
             <div class="action">
                 <action-menu v-if="actType === 'track' && download" :actionable="actionable" :download="download"></action-menu>
             </div>
-            {{actType}}
           <div class="action" v-if="actType === 'post' && app.user.id === actionable.user_id" @click="deleteAction">
             <i class="fa fa-trash"></i>
           </div>
@@ -82,8 +81,7 @@
             }
         },
         created: function () {
-        
-            console.log("actype :: "+actiontype);
+    
             SocialEvents.$on("commented", () => {
               this.actionable.comments_count++;
             });
@@ -115,6 +113,12 @@
             },
         },
         methods: {
+            setActType(actiontype) {
+                this.actiontype = actiontype;
+            },
+            getActType() {
+                return this.actiontype;
+            },
             liked() {
               this.actionable.likes_count++
             },
