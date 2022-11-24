@@ -20,7 +20,7 @@
                     <p>{{ merch.description }}</p>
                 </div>
                 <div class="p-item-meta">
-                    <actions :actionable="merch" :id="merch.id"></actions>
+                    <actions :actionable="merch" :id="merch.id" :actiontype='"merch"'></actions>
                     <div class="p-item-time">
                         {{ moment(merch.created_at).fromNow() }}
                     </div>

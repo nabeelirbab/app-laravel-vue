@@ -40,7 +40,7 @@
           </div>
 
             <div class="p-item-meta">
-                <actions :actionable="release"></actions>
+                <actions :actionable="release" :actiontype='"release"'></actions>
                 <div class="p-item-time">
                     {{ moment(release.release_date).fromNow() }}
                 </div>

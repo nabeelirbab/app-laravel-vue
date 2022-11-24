@@ -22,7 +22,7 @@
                 {{ news.content.trunc(110) }}
             </div>
             <div class="p-item-meta">
-                <actions :actionable="news"></actions>
+                <actions :actionable="news" :actiontype='"news"'></actions>
                 <div class="p-item-time">
                     {{ moment(news.published_at).fromNow() }}
                 </div>

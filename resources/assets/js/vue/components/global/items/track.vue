@@ -48,7 +48,7 @@
                 <actions
                     :actionable="mutableTrack"
                     @like="liked"
-                    @unlike="unliked"
+                    @unlike="unliked" :actiontype='"track"'
                 />
                 <div class="p-item-time">
                     {{ moment(mutableTrack.created_at).fromNow() }}
