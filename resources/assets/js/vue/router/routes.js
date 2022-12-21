@@ -1,7 +1,6 @@
 /**
  * Import All Components
  */
-
 // Generic
 import PageHome from '../components/pages/home/home';
 
@@ -142,6 +141,8 @@ let aliases = {
 
     'PageEmailVerified': PageEmailVerified,
 };
+// console.log(aliases);
+console.log("asddas", routes);
 
 /**
  * Iterate through the routes array and replace the string representation of the objects with the actual objects
@@ -161,7 +162,7 @@ const replaceWithObjects = (routes) =>{
 }
 
 routes = replaceWithObjects(window.routes)
-
+// console.log("asdasd22", routes);
 routes.push(
     {
         name: 'login',
@@ -170,6 +171,31 @@ routes.push(
         meta: {
             noAuth: true
         }
+    },
+    {
+        name: 'home',
+        path: '/',
+        component: PageHome
+    },
+    {
+        name: 'discover',
+        path: '/discover',
+        component: PageDiscover
+    },
+    {
+        name: 'genres',
+        path: '/genres',
+        component: PageGenres
+    },
+    {
+        name: 'charts',
+        path: '/charts',
+        component: PageCharts
+    },
+    {
+        name: 'new-music',
+        path: '/new',
+        component: PageNewMusic
     },
     {
         name: 'PageUserMessagesProfile',
@@ -191,5 +217,8 @@ routes.push(
         component: Reset
     }
 )
+// console.log(window)
 
+
+// console.log("window", replaceWithObjects);
 export default routes
