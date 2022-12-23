@@ -39,6 +39,7 @@
                 </div>
             </div>
 
+            
             <div
                 class="register-form-inputs"
                 v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'"

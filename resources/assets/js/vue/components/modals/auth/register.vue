@@ -73,6 +73,7 @@ import ConnectDetails from "./register-steps/connect-details";
 import VerificationDetails from "./register-steps/verification-details";
 import { mapGetters } from "vuex";
 
+
 export default {
   data() {
     return {
