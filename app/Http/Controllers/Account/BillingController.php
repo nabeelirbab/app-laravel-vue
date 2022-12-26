@@ -19,10 +19,9 @@ class BillingController extends Controller
         }
 
         $user->updateDefaultPaymentMethod($request->payment_method);
-        dd($user->subscribedToPlan('price_1MJBAwJ05tUsYkdQdSiPdRBT', 'default'));
 
-        if (!$user->subscribedToPlan('price_1MJBAwJ05tUsYkdQdSiPdRBT', 'default') && $user->roles->first()->name !== 'standard') {
-            $user->newSubscription('default', 'price_1MJBAwJ05tUsYkdQdSiPdRBT')
+        if (!$user->subscribedToPlan('artist_pro', 'default') && $user->roles->first()->name !== 'standard') {
+            $user->newSubscription('default', 'artist_pro')
                 ->trialUntil(Carbon::parse($user->trial_ends_at))
                 ->create(
                     $request->payment_method, [
