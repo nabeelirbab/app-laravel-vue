@@ -306,6 +306,7 @@ import ImageSelect from "global/image-select";
 import PriceRange from "global/price-range";
 import FeaturedSpotPicker from "./featured-spot-picker";
 
+
 export default {
   name: "cover-info",
 
@@ -424,8 +425,8 @@ export default {
     isDisabled(item) {
       return item === "single" && this.trackCount > 1;
     },
-
     getSingleTrackPriceFrom() {
+      console.log(this.app);
         return (this.app.priceRangesForTrack.single_track_price_from) ? this.app.priceRangesForTrack.single_track_price_from : 50;
     },
     getSingleTrackPriceTo() {
@@ -433,6 +434,8 @@ export default {
     },
 
     getAlbumPriceFrom() {
+      // console.log("test the NANNN");
+
         return (this.app.priceRangesForTrack.album_price_from) ? this.app.priceRangesForTrack.album_price_from : 300;
     },
     getAlbumPriceTo() {

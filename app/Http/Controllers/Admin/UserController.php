@@ -181,8 +181,14 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->syncRoles($validated['role']);
         $user->update($validated);
-        $user->interests()->sync($validated['interests']);
-        $user->genres()->sync($validated['genres']);
+
+        if($request->interests){
+            $user->interests()->sync($validated['interests']);
+        }
+
+        if($request->genres){
+            $user->genres()->sync($validated['genres']);
+        }
 
         return back();
     }

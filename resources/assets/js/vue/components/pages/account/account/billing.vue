@@ -47,7 +47,8 @@
 
     methods: {
       payment() {
-        const stripe = Stripe(process.env.MIX_STRIPE_KEY)
+
+        const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY)
         const elements = stripe.elements()
         const cardElement = elements.create('card', { hidePostalCode: true })
         const cardButton = document.getElementById('card-button')
