@@ -14,7 +14,6 @@ class BillingController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
         if (!$user->hasStripeId()) {
             $user->createAsStripeCustomer();
         }
