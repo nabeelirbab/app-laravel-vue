@@ -145,7 +145,7 @@
         })
       },
       async setupCardElement() {
-        this.stripe = Stripe(process.env.MIX_STRIPE_KEY)
+        this.stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY)
         const elements = this.stripe.elements()
         this.cardElement = elements.create('card', { hidePostalCode: true })
 

@@ -42,7 +42,7 @@
         methods: {
             async submitForm() {
                 this.loading = true
-                const stripe = Stripe(process.env.MIX_STRIPE_KEY)
+                const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY)
                 const files = await this.uploadFiles({
                     document: document.querySelector(`#document`) ? document.querySelector(`#document`).files[0] : null,
                     additional_document: document.querySelector(`#additional_document`) ? document.querySelector(`#additional_document`).files[0] : null,
@@ -119,7 +119,7 @@
                     this.loading = true
                     const fileResult = await fetch('https://uploads.stripe.com/v1/files', {
                         method: 'POST',
-                        headers: {'Authorization': `Bearer ${process.env.MIX_STRIPE_KEY}`},
+                        headers: {'Authorization': `Bearer ${process.env.MIX_VUE_APP_STRIPE_KEY}`},
                         body: data,
                     })
 

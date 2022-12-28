@@ -125,7 +125,7 @@
 
             didSendMessage(message) {
                 const sender = this.getMessageSender(message);
-                return sender.id === this.user.id ? 'mine' : 'not-mine';
+                return sender.id === this.app.user.id ? 'mine' : 'not-mine';
             },
 
             scrollToLatest() {
