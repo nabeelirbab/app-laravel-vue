@@ -318,7 +318,7 @@
 
             async createToken() {
                 this.loading = true;
-                const stripe = Stripe(process.env.MIX_STRIPE_KEY);
+                const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
                 this.stripeError = null;
 
                 await stripe

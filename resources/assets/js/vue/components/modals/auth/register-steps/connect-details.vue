@@ -198,7 +198,7 @@ export default {
 
 	methods: {
 		async getAccountToken() {
-			const stripe = Stripe(process.env.MIX_STRIPE_KEY);
+			const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
 
 			await stripe
 				.createToken("account", this.account)

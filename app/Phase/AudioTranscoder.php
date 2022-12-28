@@ -1,4 +1,6 @@
-<?php namespace App\Phase;
+<?php
+
+namespace App\Phase;
 
 use App\Asset;
 use App\File;
@@ -45,6 +47,7 @@ class AudioTranscoder
      *
      * @return $this
      */
+
     public function transcodePreview()
     {
         $filename = Str::random(40) . '.mp3';
@@ -54,7 +57,6 @@ class AudioTranscoder
         } else {
             $file = $this->track->asset->files['wav']->path;
         }
-
         $elasticTranscoder->createJob([
             'PipelineId' => env('AWS_ET_AUDIO_PIPELINEID'),
             'Input' => [
@@ -77,7 +79,7 @@ class AudioTranscoder
         $this->createPreviewAssetModel();
         $this->createPreviewFileModel($filename);
         $this->associatePreviewWithTrack();
-
+dd($this);
         return $this;
     }
 

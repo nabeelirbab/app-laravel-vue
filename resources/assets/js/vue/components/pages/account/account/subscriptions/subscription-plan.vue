@@ -1,5 +1,5 @@
 <template>
-    <div class="subscription-plan">
+    <div class="subscription-plan" v-if="app.user.roles[0].name !== 'standard'">
         <div class="plan-info">
             <h3>{{ plan.title }}</h3>
             <p>

@@ -3,7 +3,7 @@
 		
 		<form @submit.prevent="handleForm" id="account-form">
 			<h1>Verification</h1>
-			<p>The following details are required to provide verification and a method of payment for sales, these can be added later in your account area but must be complete before uploading a release</p>
+			<p>The following details are required to provide verification and a method of payment for sales</p>
 
 			<div class="flex">
 				<div class="input">
@@ -201,7 +201,7 @@ export default {
 
 	methods: {
 		async getAccountToken() {
-			const stripe = Stripe(process.env.MIX_STRIPE_KEY);
+			const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
 
 			await stripe
 				.createToken("account", this.account)
