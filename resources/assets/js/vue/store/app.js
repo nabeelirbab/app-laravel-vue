@@ -134,10 +134,6 @@ export default {
                         to: "/charts"
                     },
                     {
-                        title: "Genres",
-                        to: "/genres"
-                    },
-                    {
                         title: "Discover",
                         to: "/discover",
                     },
@@ -197,10 +193,6 @@ export default {
                     {
                         title: "Charts",
                         to: "/charts"
-                    },
-                    {
-                        title: "Genres",
-                        to: "/genres"
                     },
                     {
                         title: "Discover",

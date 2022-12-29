@@ -619,12 +619,14 @@
                             })
                             .catch((error) => {
                                 this.submitting = false;
+                                // this.validationErrors.recaptcha[0].reset();
+                                
                                 this.validationErrors =
                                     error.response.data.errors;
 
-                               if (this.validationErrors.recaptcha) {
-                                    this.captchaValidationError = this.validationErrors.recaptcha[0];
-                               }
+                            //    if (this.validationErrors.recaptcha) {
+                            //         this.captchaValidationError = this.validationErrors.recaptcha[0];
+                            //    }
                             });
                     }
                 });
@@ -635,7 +637,9 @@
                 this.captchaValidationError = '';
             },
 
-            captchaExpired() {
+            captchaExpired(val) {
+                console.log(val);
+                this.$refs.recaptcha.reset();
                 this.data.recaptcha = '';
 
             },
