@@ -131,21 +131,22 @@
                     }).finally(()=>location.reload())
             },
             downgradeAccount() {
-                if (this.app.user.roles[0].name != 'artist') {
                     this.$modal.show('modal-downgrade');
-                } else {
-                    this.downgrading = true
-                    axios.post('/api/account/downgrade', {user_id: this.app.user})
-                        .then(response => {
-                            this.$store.commit('app/setUser', response.data)
-                            this.$notify({
-                                group: 'main',
-                                type: 'success',
-                                title: 'Successfully downgrade account',
-                            });
-                            this.downgrading = false;
-                        }).finally(()=>location.reload())
-                }
+                // if (this.app.user.roles[0].name != 'artist') {
+                //     this.$modal.show('modal-downgrade');
+                // } else {
+                //     this.downgrading = true
+                //     axios.post('/api/account/downgrade', {user_id: this.app.user})
+                //         .then(response => {
+                //             this.$store.commit('app/setUser', response.data)
+                //             this.$notify({
+                //                 group: 'main',
+                //                 type: 'success',
+                //                 title: 'Successfully downgrade account',
+                //             });
+                //             this.downgrading = false;
+                //         }).finally(()=>location.reload())
+                // }
 
             },
         },

@@ -3,7 +3,7 @@
         <h2>Subscriptions</h2>
         <hr>
         <p>
-            All subscriptions are billed monthly.
+            All subscriptions are billed monthly. 
         </p>
         <subscription-plan
                 v-for="plan in plans"
@@ -36,7 +36,7 @@
         subscriptionsLoaded: false,
       }
     },
-    computed: {},
+    computed:{},
     mounted: function () {
       this.getSubscriptionPlans()
       this.getSubscriptions()
@@ -47,6 +47,7 @@
         await axios.get('/api/account/subscription/plans').then(response => {
           this.plansLoaded = true
           this.plans = response.data
+          console.log("subs plan", this.plans);
         })
       },
       async getSubscriptions() {
@@ -54,6 +55,8 @@
         await axios.get('/api/account/subscription/subscriptions').then(response => {
           this.subscriptionsLoaded = true
           this.subscriptions = response.data
+          console.log("subssss", this.subscriptions);
+
         })
       },
       getSubscriptionForPlan(plan) {
