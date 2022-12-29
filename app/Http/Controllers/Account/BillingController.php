@@ -22,7 +22,7 @@ class BillingController extends Controller
 
         if (!$user->subscribedToPlan('artist_pro', 'default') && $user->roles->first()->name !== 'standard') {
             $user->newSubscription('default', 'artist_pro')
-                ->trialUntil(Carbon::parse($user->trial_ends_at))
+                // ->trialUntil(Carbon::parse($user->trial_ends_at))
                 ->create(
                     $request->payment_method, [
                         'email' => $user->email,

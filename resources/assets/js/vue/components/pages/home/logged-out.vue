@@ -25,10 +25,10 @@
               :latest-releases="app.releases.slice(0, 3)"
           />
         </div>
-        <div>
+        <!-- <div>
           <h1>Genres</h1>
           <home-genres :genres="app.genres.slice(0, 5)"/>
-        </div>
+        </div> -->
 
         <div class="home-banner" v-if="!app.user.loggedin">
           <overlay/>

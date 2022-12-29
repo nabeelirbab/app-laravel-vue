@@ -118,7 +118,7 @@
                 })
             },
             async saveBankAccount() {
-                const stripe = Stripe(process.env.MIX_STRIPE_KEY)
+                const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY)
 
                 const bankResult = await stripe.createToken('bank_account', {
                     country: this.newBankAccount.country,

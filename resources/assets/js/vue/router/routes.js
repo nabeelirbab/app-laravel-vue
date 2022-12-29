@@ -11,8 +11,6 @@ import PageNewsArticle from '../components/pages/news-article/article';
 
 import PageCharts from '../components/pages/charts/charts'
 
-import PageGenres from '../components/pages/genres/genres'
-import PageGenresSingle from '../components/pages/genres/genre'
 
 import PageNewMusic from '../components/pages/new-music/new-music'
 
@@ -89,8 +87,6 @@ let aliases = {
 
     'PageCharts': PageCharts,
 
-    'PageGenres': PageGenres,
-    'PageGenresSingle': PageGenresSingle,
 
     'PageSamples': PageSamples,
     'PageSamplesPacks': PageSamplesPacks,
@@ -181,11 +177,6 @@ routes.push(
         name: 'discover',
         path: '/discover',
         component: PageDiscover
-    },
-    {
-        name: 'genres',
-        path: '/genres',
-        component: PageGenres
     },
     {
         name: 'charts',
