@@ -19,6 +19,11 @@ class MarketplaceController extends Controller
                 $user->save();
             }
 
+            if($request->artist_user_type) {
+                $user->artist_user_type_id = $request->artist_user_type;
+                $user->save();
+            }
+
             return $user;
         } catch(\Exception $e) {
             return response()->json(['message' => $e->getMessage()])->setStatusCode(500);;

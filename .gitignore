@@ -52,7 +52,6 @@ Thumbs.db
 #laravel
 /vendor
 .env*
-/storage
 /docker
 storage/*.key
 _ide_helper_models.php

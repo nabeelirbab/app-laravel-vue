@@ -2,7 +2,6 @@
   <div class="edit-cover">
     <div class="upload-heading">
       <div>
-        {{ isSingle ? '' : 'Cover Info' }}
         <!-- {{ isSingle ? 'Release Info' : 'Cover Info' }} -->
       </div>
     </div>

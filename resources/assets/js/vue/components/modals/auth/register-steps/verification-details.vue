@@ -3,8 +3,7 @@
         <h1>Verification Details</h1>
 
         <div>
-            <p>The following details are required to provide verification and a method of payment for sales, these can
-                be added later in your account area but must be complete before uploading a release</p>
+            <p>The following details are required to provide verification and a method of payment for sales</p>
 
             <div>
                 <label for="document">Document</label>
