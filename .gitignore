@@ -51,6 +51,8 @@ Thumbs.db
 
 #laravel
 /vendor
+/public/js/app.js
+/public/js/app.js.map
 .env*
 /docker
 storage/*.key

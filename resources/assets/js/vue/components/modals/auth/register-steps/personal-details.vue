@@ -465,9 +465,17 @@
                     <div class="input">
                         <div>
                         </div>
+                        <div class="center">
+                        </div>
                         <div>
-                            <recaptcha @onvalidateCaptcha="onCaptchaValidated" @onExpiredCaptcha="captchaExpired" />
                             
+                            <vue-recaptcha
+                                :sitekey="getSiteKey()"
+                                :loadRecaptchaScript="true"
+                                ref="recaptcha"
+                                @verify="onCaptchaVerified"
+                                @expired="onCaptchaExpired"
+                            />
                             <p v-if="captchaValidationError" class="error-message" style="padding-top:40px;">
                                 {{ captchaValidationError }}
                             </p>
@@ -492,16 +500,15 @@
 
 <script>
     
-
-    import Recaptcha from "../../../global/recaptcha";
+    
     import GenreSelect from "../../upload/genre-select";
     import ArtistTypeSelect from "../../../global/artist-type-select";
-
+    import { VueRecaptcha } from 'vue-recaptcha';
+    import {mapState} from "vuex";
     import Cookies from 'js-cookie';
 
     export default {
         name: "personal-details",
-
         props: {
             selectedPlan: {
                 required: true,
@@ -517,6 +524,7 @@
                 validationErrors: "",
                 captchaValidationError: "",
                 submitting: false,
+                recaptcha: '',
                 submitted: false, // If a submission was attempted
                 data: {
                     personal: {
@@ -551,10 +559,14 @@
         },
 
         computed: {
+            ...mapState(['app']),
             /** Determine if any of the values in the social data are valid */
             hasValidSocial() {
                 return !!Object.entries(this.data.social).filter(([_, value]) => !!value).length;
             }
+        },
+        mounted(){
+            console.log(this.app.captchaCredentials.key);
         },
 
         methods: {
@@ -619,26 +631,34 @@
                             })
                             .catch((error) => {
                                 this.submitting = false;
-                                // this.validationErrors.recaptcha[0].reset();
-                                
+                                this.$refs.recaptcha.reset();
                                 this.validationErrors =
                                     error.response.data.errors;
 
-                            //    if (this.validationErrors.recaptcha) {
-                            //         this.captchaValidationError = this.validationErrors.recaptcha[0];
-                            //    }
+                               if (this.validationErrors.recaptcha) {
+                                    this.captchaValidationError = this.validationErrors.recaptcha[0];
+                               }
                             });
                     }
                 });
             },
+            onCaptchaVerified: function (recaptchaToken) {
+                this.validateCaptcha = true;
+                this.data.recaptcha = recaptchaToken;
+                this.captchaValidationError = '';
+            },
+          
+            getSiteKey: function () {
+                return this.app.captchaCredentials.key;
+            },
 
             onCaptchaValidated(captcha) {
+                this.validateCaptcha = true;
                 this.data.recaptcha = captcha;
                 this.captchaValidationError = '';
             },
 
-            captchaExpired(val) {
-                console.log(val);
+            onCaptchaExpired() {
                 this.$refs.recaptcha.reset();
                 this.data.recaptcha = '';
 
@@ -662,14 +682,16 @@
         },
 
         components: {
-            GenreSelect, Recaptcha, ArtistTypeSelect
+            GenreSelect, VueRecaptcha, ArtistTypeSelect
         },
     };
 </script>
 
 <style lang="scss" scoped>
     @import "~styles/helpers/_variables.scss";
-
+   .center{
+      width: 11%;
+    }
     form.register-form {
         margin-top: 100px;
         padding: 0;
