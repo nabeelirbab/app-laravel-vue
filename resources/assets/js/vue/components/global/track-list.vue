@@ -6,7 +6,6 @@
                 <th>Name</th>
                 <th>Length</th>
                 <th>Format</th>
-                <th>Genres</th>
                 <th>Key</th>
                 <th>BPM</th>
                 <th></th>

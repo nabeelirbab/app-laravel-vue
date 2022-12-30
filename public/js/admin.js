@@ -869,9 +869,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           title: "Charts",
           to: "/charts"
         }, {
-          title: "Genres",
-          to: "/genres"
-        }, {
           title: "Discover",
           to: "/discover"
         }],
@@ -935,9 +932,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         footer_one: [{
           title: "Charts",
           to: "/charts"
-        }, {
-          title: "Genres",
-          to: "/genres"
         }, {
           title: "Discover",
           to: "/discover"

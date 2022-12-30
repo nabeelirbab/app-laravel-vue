@@ -30,7 +30,7 @@
     },
     beforeRouteEnter (to, from, next) {
       store.dispatch('app/fetchReleases').then(() => {
-        store.dispatch('app/fetchGenres');
+       store.dispatch('app/fetchGenres');
       }).then(() => {
         next(vm => {
           vm.getFeaturedReleases();
