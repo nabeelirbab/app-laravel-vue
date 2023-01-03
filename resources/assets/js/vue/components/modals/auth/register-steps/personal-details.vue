@@ -518,7 +518,7 @@
 
         data() {
             return {
-                emptyArtistType: true,
+                emptyArtistType: false,
                 artistGenresString: "",
                 interestGenresString: "",
                 validationErrors: "",
@@ -596,6 +596,10 @@
                 this.emptyArtistType = false;
             },
             registerUser() {
+                if(this.data.personal.artist_user_type == ""){
+                    this.emptyArtistType = true;
+                    return 0;
+                }
                 this.submitted = true;
                 this.$validator.validate().then((passes) => {
                     if (!this.hasValidSocial && this.selectedPlan.title !== 'Standard') return;
@@ -626,12 +630,13 @@
                                     "app/setTempUser",
                                     response.data
                                 );
-                                this.captchaExpired();
+                                this.onCaptchaExpired();
                                 this.$emit("next-step");
                             })
                             .catch((error) => {
+                                console.log(error);
                                 this.submitting = false;
-                                this.$refs.recaptcha.reset();
+                                this.onCaptchaExpired();
                                 this.validationErrors =
                                     error.response.data.errors;
 
@@ -690,7 +695,7 @@
 <style lang="scss" scoped>
     @import "~styles/helpers/_variables.scss";
    .center{
-      width: 11%;
+      width: 22%;
     }
     form.register-form {
         margin-top: 100px;

@@ -53,6 +53,7 @@ Thumbs.db
 /vendor
 /public/js/app.js
 /public/js/app.js.map
+/storage
 .env*
 /docker
 storage/*.key
