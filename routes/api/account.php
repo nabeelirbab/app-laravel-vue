@@ -11,6 +11,7 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
 
     Route::post('upgrade', 'MyAccountController@upgrade');
     Route::post('downgrade', 'MyAccountController@downgrade');
+    Route::post('downgrade/pro', 'MyAccountController@downgradeToArtist');
 
     Route::prefix('notifications')->group(function() {
         Route::get('/', 'MyAccountController@getNotifications');

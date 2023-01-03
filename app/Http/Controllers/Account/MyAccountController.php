@@ -155,6 +155,17 @@ class MyAccountController extends Controller
         return $user->fresh();
     }
 
+    public function downgradeToArtist(Request $request)
+    {
+        $user = $request->user();
+
+        $user->syncRoles('artist');
+
+        Mail::to($user->email)->send(new AccountDowngraded($user));
+
+        return $user->fresh();
+    }
+
 //    public function update(Request $request)
 //    {
 //        $braintreeId = $request->user()->braintree_id;

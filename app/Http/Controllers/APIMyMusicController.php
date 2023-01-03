@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Download;
 use App\Order;
+use App\Release;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -20,27 +21,44 @@ class APIMyMusicController extends Controller
         if (empty($user_id)) {
             return response('Invalid Request', 403);
         }
-        $mymusic = collect();
-        $userOrders = Order::where('purchaser_id', $user_id)
-            ->where('status', 'complete')
-            ->orderByDesc('created_at')
-            ->get()->pluck('id');
-        $downloads = Download::whereIn('order_id', $userOrders)
-            ->with([
-                'track',
-                'track.release' => function ($query) {
-                    $query->select('id', 'name', 'slug', 'featured', 'royalty_fee', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
-                },
-                'track.release.uploader' => function ($query) {
-                    $query->select('id', 'name', 'path');
-                },
-                'track.release.image',
-                'track.streamable'
-            ])
-            ->orderByDesc("order_id")
-            ->get()->groupBy('track.release_id')->sortByDesc('order_id');
 
-        return array_values($downloads->toArray());
+        // $mymusic = collect();
+
+        // $userOrders = Order::where('purchaser_id', $user_id)
+        //     ->where('status', 'complete')
+        //     ->orderByDesc('created_at')
+        //     ->get()->pluck('id');
+        // $downloads = Download::whereIn('order_id', $userOrders)
+        //     ->with([
+        //         'track',
+        //         'track.release' => function ($query) {
+        //             $query->select('id', 'name', 'slug', 'featured', 'royalty_fee', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
+        //         },
+        //         'track.release.uploader' => function ($query) {
+        //             $query->select('id', 'name', 'path');
+        //         },
+        //         'track.release.image',
+        //         'track.streamable'
+        //     ])
+        //     ->orderByDesc("order_id")
+        //     ->get()->groupBy('track.release_id')->sortByDesc('order_id');
+
+        $mymusic = Release::where('uploaded_by', $user_id)
+            ->with([
+                'image',
+                'tracks',
+                'genres',
+                'tracks.preview',
+                'uploader' => function ($query) {
+                    $query->select(['id', 'name', 'path']);
+                }
+            ])
+            ->latest('release_date')
+            ->paginate(10)
+        ;
+        // dd($mymusic);
+        return $mymusic;
+        // return array_values($downloads->toArray());
         // Remove items where the user has reached the download limit
         //        for ($i = 0; $i < count($mymusic); $i++) {
         //            if ($mymusic[$i]->count >= 3) {

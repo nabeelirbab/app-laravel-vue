@@ -3,29 +3,23 @@
         <h2>Manage Account</h2>
         <hr>
         <div>
-            <h3 class="account-type">Account Type - {{app.user.account_type}}</h3>
+            <h3 class="account-type">Account Type - {{ app.user.account_type }}</h3>
         </div>
         <p>
             Deactivate or delete your account permanently.
         </p>
-        
+
         <div>
-            <ph-button
-                    v-if="app.user.roles[0].name !== 'standard'"
-                    style="margin-bottom: 5px;"
-                    size="medium"
-                    @click.native="downgradeAccount"
-                    :loading="downgrading"
-            >
+            <ph-button v-if="app.user.roles[0].name === 'artist'" style="margin-bottom: 5px;" size="medium"
+                @click.native="downgradeAccount" :loading="downgrading">
                 Downgrade to Standard
             </ph-button>
-            <ph-button
-                    v-if="app.user.roles[0].name === 'standard'"
-                    style="margin-bottom: 5px;"
-                    size="medium"
-                    @click.native="openVerificationModal"
-                    :loading="upgrading"
-            >
+            <ph-button v-if="app.user.roles[0].name === 'pro'" style="margin-bottom: 5px;" size="medium"
+                @click.native="downgradeToArtist" :loading="downgrading">
+                Downgrade to Artist
+            </ph-button>
+            <ph-button v-if="app.user.roles[0].name === 'standard'" style="margin-bottom: 5px;" size="medium"
+                @click.native="openVerificationModal" :loading="upgrading">
                 Upgrade to Artist
             </ph-button>
             <ph-button style="margin-bottom: 5px;" size="medium" @click.native="deleteAccount">
@@ -35,139 +29,131 @@
                 Deactivate Account
             </ph-button>
         </div>
-        
+
 
         <delete-modal></delete-modal>
         <deactivate-modal></deactivate-modal>
         <downgrade-modal></downgrade-modal>
-        <modal
-            name="modal-account-reg-form"
-            @before-open="beforeOpen"
-            @closed="closed"
-            width="80%"
-            height="auto"
-            scrollable
-            style="padding: 10px 35px;display: table-cell;"
-        >
+        <downgrade-to-artist-modal></downgrade-to-artist-modal>
+        <modal name="modal-account-reg-form" @before-open="beforeOpen" @closed="closed" width="80%" height="auto"
+            scrollable style="padding: 10px 35px;display: table-cell;">
             <div class="modal modal-account-reg-form">
-            <div class="modal-header">
-                <logo class="modal-logo centered-block" style="width: 185px;" />
-            </div>
-            <div class="modal-content full-width" v-if="!submitted" style="padding: 10px 35px;">
-                
-                <connect-details
-                    :user="app.user"
-                    v-if="step === 2"
-                    @next-step="step++"
-                    @finished="submitted = true"
-                ></connect-details>
-                <verification-details
-                    :user="app.user"
-                    v-if="step === 3"
-                    @finished="upgradeAccount"
-                ></verification-details>
-            </div>
+                <div class="modal-header">
+                    <logo class="modal-logo centered-block" style="width: 185px;" />
+                </div>
+                <div class="modal-content full-width" v-if="!submitted" style="padding: 10px 35px;">
+
+                    <connect-details :user="app.user" v-if="step === 2" @next-step="step++"
+                        @finished="submitted = true"></connect-details>
+                    <verification-details :user="app.user" v-if="step === 3"
+                        @finished="upgradeAccount"></verification-details>
+                </div>
             </div>
         </modal>
     </ph-panel>
 </template>
 
 <script>
-    import DeleteModal from './../../../modals/delete'; 
-    import DowngradeModal from './../../../modals/downgrade-confirm';
-    import DeactivateModal from './../../../modals/deactivate';
-    import ConnectDetails from './connect-details';
-    import VerificationDetails from './verification-details';
-    import {mapState} from "vuex";
+import DeleteModal from './../../../modals/delete';
+import DowngradeModal from './../../../modals/downgrade-confirm';
+import DowngradeArtistModal from './../../../modals/downgrade-to-artist-confirm';
+import DeactivateModal from './../../../modals/deactivate';
+import ConnectDetails from './connect-details';
+import VerificationDetails from './verification-details';
+import { mapState } from "vuex";
 
-    export default {
-        data () {
-            return {
-                step:1,
-                upgrading: false,
-                downgrading: false,
-                submitted: false
-            }
-        },
-        computed: {
-            ...mapState([
-                'app'
-            ])
-        },
-        mounted: function() {
-            
-        },
-        methods: {
-            beforeOpen(){
-
-            },
-            closed(){
-
-            },
-            deactivateAccount() {
-                this.$modal.show('modal-deactivate');
-            },
-            deleteAccount() {
-                this.$modal.show('modal-delete');
-            },
-            openVerificationModal(){
-                this.step = 2;
-                this.$modal.show("modal-account-reg-form");
-                this.upgrading = true;
-            },
-            upgradeAccount() {
-                this.submitted = true;
-                this.$modal.hide("modal-account-reg-form");
-                axios.post('/api/account/upgrade', {user_id: this.app.user})
-                    .then(response => {
-                        this.$store.commit('app/setUser', response.data)
-                        this.$notify({
-                            group: 'main',
-                            type: 'success',
-                            title: '<img src="/img/success.gif" alt="success">',
-                        });
-                        this.upgrading = false;
-                        
-                    }).finally(()=>location.reload())
-            },
-            downgradeAccount() {
-                    this.$modal.show('modal-downgrade');
-                // if (this.app.user.roles[0].name != 'artist') {
-                //     this.$modal.show('modal-downgrade');
-                // } else {
-                //     this.downgrading = true
-                //     axios.post('/api/account/downgrade', {user_id: this.app.user})
-                //         .then(response => {
-                //             this.$store.commit('app/setUser', response.data)
-                //             this.$notify({
-                //                 group: 'main',
-                //                 type: 'success',
-                //                 title: 'Successfully downgrade account',
-                //             });
-                //             this.downgrading = false;
-                //         }).finally(()=>location.reload())
-                // }
-
-            },
-        },
-        components: {
-            'delete-modal':DeleteModal,
-            'downgrade-modal':DowngradeModal,
-            'deactivate-modal':DeactivateModal,
-            'connect-details':ConnectDetails,
-            'verification-details':VerificationDetails,
+export default {
+    data() {
+        return {
+            step: 1,
+            upgrading: false,
+            downgrading: false,
+            submitted: false
         }
+    },
+    computed: {
+        ...mapState([
+            'app'
+        ])
+    },
+    mounted: function () {
+
+    },
+    methods: {
+        beforeOpen() {
+
+        },
+        closed() {
+
+        },
+        deactivateAccount() {
+            this.$modal.show('modal-deactivate');
+        },
+        deleteAccount() {
+            this.$modal.show('modal-delete');
+        },
+        openVerificationModal() {
+            this.step = 2;
+            this.$modal.show("modal-account-reg-form");
+            this.upgrading = true;
+        },
+        upgradeAccount() {
+            this.submitted = true;
+            this.$modal.hide("modal-account-reg-form");
+            axios.post('/api/account/upgrade', { user_id: this.app.user })
+                .then(response => {
+                    this.$store.commit('app/setUser', response.data)
+                    this.$notify({
+                        group: 'main',
+                        type: 'success',
+                        title: '<img src="/img/success.gif" alt="success">',
+                    });
+                    this.upgrading = false;
+
+                }).finally(() => location.reload())
+        },
+        downgradeAccount() {
+            this.$modal.show('modal-downgrade');
+            // if (this.app.user.roles[0].name != 'artist') {
+            //     this.$modal.show('modal-downgrade');
+            // } else {
+            //     this.downgrading = true
+            //     axios.post('/api/account/downgrade', {user_id: this.app.user})
+            //         .then(response => {
+            //             this.$store.commit('app/setUser', response.data)
+            //             this.$notify({
+            //                 group: 'main',
+            //                 type: 'success',
+            //                 title: 'Successfully downgrade account',
+            //             });
+            //             this.downgrading = false;
+            //         }).finally(()=>location.reload())
+            // }
+
+        },
+        downgradeToArtist() {
+            this.$modal.show('modal-to-artist-downgrade');
+        }
+    },
+    components: {
+        'delete-modal': DeleteModal,
+        'downgrade-modal': DowngradeModal,
+        'downgrade-to-artist-modal': DowngradeArtistModal,
+        'deactivate-modal': DeactivateModal,
+        'connect-details': ConnectDetails,
+        'verification-details': VerificationDetails,
     }
+}
 </script>
 
 <style lang="scss" scoped>
-    p {
-        margin: 10px 0;
-    }
+p {
+    margin: 10px 0;
+}
 
-    .account-type {
-        margin: 20px 0;
-        font-weight: bold;
-        text-transform: capitalize;
-    }
+.account-type {
+    margin: 20px 0;
+    font-weight: bold;
+    text-transform: capitalize;
+}
 </style>

@@ -21,7 +21,6 @@ Route::get('/track/{track}', function (Track $track) {
 
 
 Route::get('price-ranges-for-tracks', function () {
-	dd(setting());
 	return [
 		'single_track_price_from' => setting('single_track_price_from'),
 		'single_track_price_to' => setting('single_track_price_to'),
