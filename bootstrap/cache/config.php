@@ -135,9 +135,9 @@
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => 'uvhRFAQdBdIJQaCopT5qB8EvdBpxABd2n_xCTLrl3rk',
-        'secret' => '',
-        'app_id' => '',
+        'key' => '78b1ff505d3291374f06',
+        'secret' => '0725692babfe39c82189',
+        'app_id' => '1530532',
         'options' => 
         array (
           'cluster' => 'eu',
@@ -181,7 +181,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\phase-app-laravel-vue\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\phase\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -348,23 +348,23 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\phase-app-laravel-vue\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\phase\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\phase-app-laravel-vue\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\phase\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
       's3' => 
       array (
         'driver' => 's3',
-        'key' => 'AKIAWNS7YPVPSBZJLJMR',
-        'secret' => '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',
-        'region' => 'eu-west-1',
-        'bucket' => 'iclicksee-phase',
-        'url' => NULL,
+        'key' => 'AKIAQVILN57EKVE742NW',
+        'secret' => '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',
+        'region' => 'us-east-1',
+        'bucket' => 'phase-bucket',
+        'url' => 'https://phase-bucket.s3.es-east-1.amazonaws.com',
       ),
     ),
   ),
@@ -479,7 +479,7 @@
     'include_helpers' => true,
     'helper_files' => 
     array (
-      0 => 'D:\\phase-app-laravel-vue/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
+      0 => 'C:\\xampp\\htdocs\\phase/vendor/laravel/framework/src/Illuminate/Support/helpers.php',
     ),
     'model_locations' => 
     array (
@@ -538,13 +538,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\phase-app-laravel-vue\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\phase\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\phase-app-laravel-vue\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\phase\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 7,
       ),
@@ -619,7 +619,7 @@
     array (
       'paths' => 
       array (
-        0 => 'D:\\phase-app-laravel-vue\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\phase\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -894,7 +894,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\phase-app-laravel-vue\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\phase\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -992,13 +992,13 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\phase-app-laravel-vue\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\phase\\resources\\views',
     ),
-    'compiled' => 'D:\\phase-app-laravel-vue\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\phase\\storage\\framework\\views',
   ),
   'aws' => 
   array (
-    'region' => 'eu-west-1',
+    'region' => 'us-east-1',
     'version' => 'latest',
     'ua_append' => 
     array (
@@ -1017,7 +1017,7 @@
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => 'D:\\phase-app-laravel-vue\\storage\\debugbar',
+      'path' => 'C:\\xampp\\htdocs\\phase\\storage\\debugbar',
       'connection' => NULL,
       'provider' => '',
       'hostname' => '127.0.0.1',
