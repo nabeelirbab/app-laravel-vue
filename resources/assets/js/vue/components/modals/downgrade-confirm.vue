@@ -5,7 +5,7 @@
                 <close-icon class="float-right" @click.native="$modal.hide('modal-downgrade')"></close-icon>
             </div>
             <div class="modal-content">
-                <div v-if="downgradeConfirm">
+                <div v-if="downgradeConfirm" class="timePeriodBlock">
                     {{ this.subscriptionLeftPeriod() }}
                 </div>
                 <div v-else="downgradeConfirm">
@@ -66,15 +66,14 @@ export default {
                     });
                     this.submitting = false;
                 }).finally(() => {
-                    // this.downgradeConfirm = true;
-                    console.log(this.app)
-                    // setInterval(() => {
-                    //     location.reload()
-                    // }, 10000);
+                    this.downgradeConfirm = true;
+                    setInterval(() => {
+                        location.reload()
+                    }, 10000);
                 })
         },
         subscriptionLeftPeriod: function () {
-            return `Your remaining subscription time period  ${moment(this.app).add(1, 'M').format('DD/MM/YYYY')}.`
+            return `Your remaining subscription time period ${moment(this.subscriptions.created_at).add(29, 'd').diff(moment(), 'days')} days, and you will be automatically downgrade on ${moment(this.subscriptions.created_at).add(1, 'M').format('DD/MM/YYYY')}.`
         },
         async getSubscriptions() {
             this.subscriptionsLoaded = false
@@ -109,6 +108,10 @@ textarea {
     padding: 5px;
     width: 100%;
     height: 50px;
+}
+
+.timePeriodBlock {
+    padding-top: 2em;
 }
 
 .save-button {

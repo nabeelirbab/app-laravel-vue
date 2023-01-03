@@ -57,7 +57,7 @@ class AudioTranscoder
         } else {
             $file = $this->track->asset->files['wav']->path;
         }
-        $elasticTranscoder->createJob([
+        $jobResult = $elasticTranscoder->createJob([
             'PipelineId' => env('AWS_ET_AUDIO_PIPELINEID'),
             'Input' => [
                 // Input File
@@ -79,7 +79,6 @@ class AudioTranscoder
         $this->createPreviewAssetModel();
         $this->createPreviewFileModel($filename);
         $this->associatePreviewWithTrack();
-dd($this);
         return $this;
     }
 
@@ -97,7 +96,6 @@ dd($this);
         } else {
             $file = $this->track->asset->files['wav']->path;
         }
-
         $elasticTranscoder->createJob([
             'PipelineId' => env('AWS_ET_AUDIO_PIPELINEID'),
             'Input' => [
@@ -116,7 +114,6 @@ dd($this);
         $this->createStreamableAssetModel();
         $this->createStreamableFileModel($filename);
         $this->associateStreamableWithTrack();
-
         return $this;
     }
 

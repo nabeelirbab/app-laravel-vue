@@ -50,12 +50,13 @@ Thumbs.db
 *.wmv
 
 #laravel
-/vendor
+/vendor 
 /public/js/app.js
 /public/js/app.js.map
 /storage
 .env*
 /docker
+/storage
 storage/*.key
 _ide_helper_models.php
 _ide_helper.php
