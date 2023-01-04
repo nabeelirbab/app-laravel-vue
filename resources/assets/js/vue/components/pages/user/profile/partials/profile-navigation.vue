@@ -1,6 +1,6 @@
 <template>
     <nav class="sub-nav">
-        <ul v-if="app.user.roles[0].name === 'standard'">
+        <ul v-if="user.account_type === 'standard'">
             <li><a href="#"
                     v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"
                     @click="changeRoute('profile_all')">Activity</a>&nbsp;|</li>
@@ -44,9 +44,6 @@ export default {
             type: Object,
             required: true,
         }
-    },
-    computed: {
-        ...mapState(['app'])
     },
     methods: {
         changeRoute(pathname) {
