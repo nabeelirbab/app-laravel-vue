@@ -747,6 +747,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     settings: [],
     genres: [],
     releases: [],
+    uploadedMusic: {
+      data: [],
+      current_page: '',
+      next_page_url: '',
+      prev_page_url: '',
+      last_page: '',
+      from: '',
+      to: ''
+    },
     classes: [],
     keys: [],
     page: {},
@@ -788,6 +797,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       state.user.releases.last_page = releases.last_page;
       state.user.releases.from = releases.from;
       state.user.releases.to = releases.to;
+    },
+    setUserUploadedMusic: function setUserUploadedMusic(state, releases) {
+      var _state$uploadedMusic$;
+      (_state$uploadedMusic$ = state.uploadedMusic.data).push.apply(_state$uploadedMusic$, _toConsumableArray(releases.data));
+      state.uploadedMusic.current_page = releases.current_page;
+      state.uploadedMusic.next_page_url = releases.next_page_url;
+      state.uploadedMusic.prev_page_url = releases.prev_page_url;
+      state.uploadedMusic.last_page = releases.last_page;
+      state.uploadedMusic.from = releases.from;
+      state.uploadedMusic.to = releases.to;
     },
     setUserEvents: function setUserEvents(state, events) {
       state.user.events = events;
@@ -1119,21 +1138,35 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         });
       });
     },
-    fetchUsersEvents: function fetchUsersEvents(_ref12) {
+    fetchUsersUploadedMusic: function fetchUsersUploadedMusic(_ref12, user_id) {
       var commit = _ref12.commit,
-        state = _ref12.state;
+        state = _ref12.state,
+        getters = _ref12.getters;
+      if (!getters.releasesHasAnotherPage) return;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/mymusic/uploaded/".concat(user_id, "/?page=").concat(state.uploadedMusic.current_page + 1)).then(function (response) {
+          commit("setUserUploadedMusic", response.data);
+          resolve();
+        })["catch"](function (error) {
+          reject();
+        });
+      });
+    },
+    fetchUsersEvents: function fetchUsersEvents(_ref13) {
+      var commit = _ref13.commit,
+        state = _ref13.state;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/event/".concat(state.user.id, "/list")).then(function (response) {
         commit("setUserEvents", response.data);
       });
     },
-    removeUserRelease: function removeUserRelease(_ref13, release) {
-      var commit = _ref13.commit;
+    removeUserRelease: function removeUserRelease(_ref14, release) {
+      var commit = _ref14.commit;
       axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/account/releases/mine/delete/".concat(release.id)).then(function (response) {
         commit("removeUserReleaseFromState", release);
       });
     },
-    updateUserRelease: function updateUserRelease(_ref14, data) {
-      var commit = _ref14.commit;
+    updateUserRelease: function updateUserRelease(_ref15, data) {
+      var commit = _ref15.commit;
       axios__WEBPACK_IMPORTED_MODULE_0___default().patch("/api/account/releases/mine/".concat(data.release.id), {
         status: data.status
       }).then(function (response) {
@@ -1183,6 +1216,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     releasesHasAnotherPage: function releasesHasAnotherPage(state) {
       return state.user.releases.current_page < state.user.releases.last_page;
+    },
+    getUsersUploadedMusic: function getUsersUploadedMusic(state) {
+      return state.uploadedMusic;
+    },
+    uploadedMusicHasAnotherPage: function uploadedMusicHasAnotherPage(state) {
+      return state.uploadedMusic.current_page < state.uploadedMusic.last_page;
     },
     getUser: function getUser(state) {
       return state.user;

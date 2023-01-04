@@ -354,6 +354,12 @@ export default {
   },
 
   watch: {
+    // When the format changes we need to remove the file as it will no longer be valid
+    'currentTrack.format': function (v) {
+      if (v) {
+        this.removeFile();
+      }
+    },
     cover: {
       immediate: true,
       handler: function (v) {

@@ -12,6 +12,15 @@ export default {
         settings: [],
         genres: [],
         releases: [],
+        uploadedMusic: {
+            data: [],
+            current_page: '',
+            next_page_url: '',
+            prev_page_url: '',
+            last_page: '',
+            from: '',
+            to: '',
+        },
         classes: [],
         keys: [],
         page: {},
@@ -52,6 +61,15 @@ export default {
             state.user.releases.last_page = releases.last_page;
             state.user.releases.from = releases.from;
             state.user.releases.to = releases.to;
+        },
+        setUserUploadedMusic(state, releases) {
+            state.uploadedMusic.data.push(...releases.data);
+            state.uploadedMusic.current_page = releases.current_page;
+            state.uploadedMusic.next_page_url = releases.next_page_url;
+            state.uploadedMusic.prev_page_url = releases.prev_page_url;
+            state.uploadedMusic.last_page = releases.last_page;
+            state.uploadedMusic.from = releases.from;
+            state.uploadedMusic.to = releases.to;
         },
         setUserEvents(state, events) {
             state.user.events = events;
@@ -269,11 +287,11 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .get("/api/genres")
-                    .then(function(response) {
+                    .then(function (response) {
                         commit("setGenres", response.data.data);
                         resolve();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                         reject();
                     });
@@ -285,11 +303,11 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .get("/api/artist-types")
-                    .then(function(response) {
+                    .then(function (response) {
                         commit("setArtistTypes", response.data);
                         resolve();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                         reject();
                     });
@@ -300,11 +318,11 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .get("/api/releases/latest")
-                    .then(function(response) {
+                    .then(function (response) {
                         commit("setReleases", response.data.data);
                         resolve();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                         reject();
                     });
@@ -314,11 +332,11 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .post("/api/page", { path: page })
-                    .then(function(response) {
+                    .then(function (response) {
                         commit("setPageData", response.data);
                         resolve();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error(error);
                         reject();
                     });
@@ -330,12 +348,12 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .get("/api/feed")
-                    .then(function(response) {
+                    .then(function (response) {
                         // console.log(response.data);
                         commit("setFeed", response.data.data);
                         resolve();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         // !! IDEA - catch and handle 422 errors.
                         reject();
                     });
@@ -345,11 +363,11 @@ export default {
             return new Promise((resolve, reject) => {
                 axios
                     .get("api/plans")
-                    .then(function(response) {
+                    .then(function (response) {
                         commit("setPlans", response.data);
                         resolve();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         reject();
                     });
             });
@@ -358,25 +376,25 @@ export default {
             axios.get("/api/price-per-featured-slot").then((response) => {
                 commit("setPrice", response.data);
             })
-            .catch(e => {
-                return;
-            });
+                .catch(e => {
+                    return;
+                });
         },
         fetchPriceRangesForTrack({ commit, state }) {
             axios.get("/api/price-ranges-for-tracks").then((response) => {
                 commit("setPriceRanges", response.data);
             })
-            .catch(e => {
-                return;
-            });
+                .catch(e => {
+                    return;
+                });
         },
         fetchCaptchaCredentials({ commit, state }) {
             axios.get("/api/fetch-captcha-credentials").then((response) => {
                 commit("setCaptchaCredentials", response.data);
             })
-            .catch(e => {
-                return;
-            });
+                .catch(e => {
+                    return;
+                });
         },
         fetchUsersReleases({ commit, state, getters }) {
             if (!getters.releasesHasAnotherPage) return;
@@ -389,6 +407,24 @@ export default {
                     )
                     .then((response) => {
                         commit("setUserReleases", response.data);
+                        resolve();
+                    })
+                    .catch((error) => {
+                        reject();
+                    });
+            });
+        },
+        fetchUsersUploadedMusic({ commit, state, getters }, user_id) {
+            if (!getters.releasesHasAnotherPage) return;
+
+            return new Promise((resolve, reject) => {
+                axios
+                    .get(
+                        `/api/mymusic/uploaded/${user_id}/?page=${state.uploadedMusic
+                            .current_page + 1}`
+                    )
+                    .then((response) => {
+                        commit("setUserUploadedMusic", response.data);
                         resolve();
                     })
                     .catch((error) => {
@@ -458,7 +494,15 @@ export default {
         },
         releasesHasAnotherPage: (state) => {
             return (
-              state.user.releases.current_page < state.user.releases.last_page
+                state.user.releases.current_page < state.user.releases.last_page
+            );
+        },
+        getUsersUploadedMusic: (state) => {
+            return state.uploadedMusic;
+        },
+        uploadedMusicHasAnotherPage: (state) => {
+            return (
+                state.uploadedMusic.current_page < state.uploadedMusic.last_page
             );
         },
         getUser: (state) => {

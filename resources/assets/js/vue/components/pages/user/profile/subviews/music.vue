@@ -23,7 +23,7 @@
     import ProfileMixin from "../profile-mixin";
     import { HalfCircleSpinner as Spinner } from "epic-spinners";
     import Item from "global/items/item";
-    import MyMusic from "../../../../../components/pages/account/my-music/my-music";
+    import MyMusic from "../../../../../components/pages/account/uploaded-music";
 
     export default {
         data() {
