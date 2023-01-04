@@ -4,10 +4,10 @@
             <li
                 v-for="(artistType, i) in $store.state.app.artistTypes"
                 :key="i"
-                :class="{ highlighted: artistTypeId === artistType.id }"
+                :class="{ highlighted: artistTypeId === artistType.id && i == 0}"
             >
-            <label v-bind:class="[artistTypeId === artistType.id ? 'active' : '']">
-              <input @click="selectArtistType(artistType)" type="radio" v-model="artistTypeId" :value="artistType.id">I am a {{artistType.name}}
+            <label v-bind:class="[artistTypeId === artistType.id ? 'active' : '' && i == 0 ? 'active' : '']">
+              <input @click="selectArtistType(artistType)" type="radio" :checked="i == 0" v-model="artistTypeId" :value="artistType.id">I am a {{artistType.name}}
             </label>
             </li>
         </ul>

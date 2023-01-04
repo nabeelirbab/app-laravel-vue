@@ -91,26 +91,23 @@
 				<div class="input">
 					<div>Address:</div>
 					<div>
-						<input type="text" name="line1" v-model="account.individual.address.line1"
-							v-validate="'required'" placeholder="Line 1" data-vv-validate-on="blur" />
+						<input type="text" name="line1" style="margin-top: 8px; margin-bottom: 8px;" v-model="account.individual.address.line1" v-validate="'required'" placeholder="Line 1" data-vv-validate-on="blur" />
 						<span class="error-message">{{
-		errors.first("line1")
-}}</span>
-						<input type="text" name="line2" v-model="account.individual.address.line2" placeholder="Line 2"
-							data-vv-validate-on="blur" />
-						<input type="text" name="city" v-model="account.individual.address.city" v-validate="'required'"
-							placeholder="City" data-vv-validate-on="blur" />
+                            errors.first("line1")
+                        }}</span>
+						<input type="text" name="line2" style="margin-top: 8px; margin-bottom: 8px;" v-model="account.individual.address.line2" placeholder="Line 2" data-vv-validate-on="blur" />
+						<input type="text" name="city" style="margin-top: 8px; margin-bottom: 8px;" v-model="account.individual.address.city" v-validate="'required'" placeholder="City" data-vv-validate-on="blur" />
 						<span class="error-message">{{
-		errors.first("city")
-}}</span>
-						<input type="text" name="state" v-model="account.individual.address.state" placeholder="County"
-							data-vv-validate-on="blur" />
-						<input type="text" name="postal_code" v-model="account.individual.address.postal_code"
-							v-validate="'required'" placeholder="Post Code" data-vv-validate-on="blur" />
+                            errors.first("city")
+                        }}</span>
+						<input type="text" name="state" style="margin-top: 8px; margin-bottom: 8px;" v-model="account.individual.address.state" placeholder="State" data-vv-validate-on="blur" />
+						<input type="text" name="postal_code" style="margin-top: 8px; margin-bottom: 8px;" v-model="account.individual.address.postal_code" v-validate="'required'" placeholder="Post Code" data-vv-validate-on="blur" />
 						<span class="error-message">{{
-		errors.first("postal_code")
-}}</span>
-						<country-select @change="artistCountryChanged" />
+                            errors.first("postal_code")
+                        }}</span>
+						<country-select
+                               @change="artistCountryChanged"
+                            style="width: 100%;margin-top: 8px;"/>
 						<span class="error-message">{{
 		errors.first("country")
 }}</span>

@@ -39,7 +39,7 @@
             v-if="selectedPlan.id !== 1"
           >
             <br />
-            <p style="margin-top: 30px;">
+            <p style="margin-top: 30px;text-align: center;">
               *
               {{ selectedPlan.id === 2 ? "Artist" : "Artist Pro" }} Applications
               are subject to a verification process. This may take up to 48
