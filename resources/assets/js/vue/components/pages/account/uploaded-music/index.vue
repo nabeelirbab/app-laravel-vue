@@ -1,18 +1,6 @@
 <template>
   <div>
-    <!-- MAIN CONTENT -->
-    <!--        <nav class="sub-nav">-->
-    <!--            <ul>-->
-    <!--                <li class="active">Songs</li>-->
-    <!--                <li>Albums</li>-->
-    <!--                <li>Artists</li>-->
-    <!--                <li>EP/LPs</li>-->
-    <!--                <li>Genres</li>-->
-
-    <!--            </ul>-->
-    <!--        </nav>-->
     <div v-if="loading">
-    <!-- <div v-if="myMusic"> -->
     <div class="release-wrapper" v-if="releases.data.length">
       <my-music-release v-for="release in releases.data" :key="release.id" :release="release" />
 
@@ -22,20 +10,9 @@
         </ph-button>
       </div>
     </div>
-    <!-- <div v-for="(items, index) in myMusic.data" style="margin-bottom: 20px;" :key="index">
-          <div v-if="items.length > 1">
-            <my-music-release :item="items" :background="index % 2" />
-          </div>
-          <div v-else>
-            <my-music-track v-for="item in items" :item="item" :key="item.id" :background="index % 2" />
-          </div>
-        </div> -->
-
-
-    <!-- </div> -->
     <div v-else>
         <p>
-          You don't have any uploaded music available.
+          Don't have any uploaded music available.
         </p>
       </div>
     </div>
@@ -49,7 +26,7 @@ import { HalfCircleSpinner } from 'epic-spinners';
 import { UserEvents } from "events";
 import { mapGetters, mapState } from 'vuex';
 import Item from '../../../global/items/item'
-import MyMusicRelease from '../my-releases/release'
+import MyMusicRelease from './music'
 
 export default {
   props: {

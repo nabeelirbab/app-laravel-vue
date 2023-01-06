@@ -131,12 +131,12 @@
                                 tabindex="6"
                                 :disabled="submitting"
                                 v-validate="{
-                                    is: data.personal.password_confirmation,
                                     required: true,
                                     max: 255,
                                 }"
                                 data-vv-as="password"
                                 data-vv-validate-on="focusout"
+                                ref="password"
                             />
                             <p class="error-message">
                                 {{ errors.first("personal-password") }}
@@ -177,7 +177,7 @@
                                 v-model="data.personal.password_confirmation"
                                 tabindex="7"
                                 :disabled="submitting"
-                                v-validate="'required|max:255'"
+                                v-validate="'required|max:255|confirmed:password'"
                                 data-vv-as="password confirmation"
                                 data-vv-validate-on="focusout"
                             />

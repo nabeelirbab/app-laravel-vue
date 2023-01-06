@@ -52,7 +52,7 @@ class APIMyMusicController extends Controller
     }
     public function getUploadedMusic($user_id = null)
     {
-        $uploadedMusic = Release::where('uploaded_by', $user_id)
+        $uploadedMusic = Release::where('uploaded_by', $user_id)->where('status', 'live')
             ->with([
                 'image',
                 'tracks',
@@ -65,7 +65,6 @@ class APIMyMusicController extends Controller
             ->latest('release_date')
             ->paginate(10)
         ;
-        // dd($uploadedMusic);
         return $uploadedMusic;
     }
 

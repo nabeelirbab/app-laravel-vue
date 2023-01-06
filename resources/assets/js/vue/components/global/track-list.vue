@@ -25,9 +25,9 @@
                    <span v-if="!track.format" >WAV, MP3</span>
                    
                 </td>
-                <td @click="trackClicked($event, track)">
+                <!-- <td @click="trackClicked($event, track)">
                     <span v-if="release" v-for="(genre, index) in release.genres" :key="index">{{ genre.name }}<span v-if="release.genres[index + 1]">, </span></span>
-                </td>
+                </td> -->
                 <td v-html="$store.getters['app/getKeyByKey'](track.key).name" @click="trackClicked($event, track)">
 
                 </td>
