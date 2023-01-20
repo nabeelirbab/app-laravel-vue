@@ -35,7 +35,7 @@
                 userid: this.$route.params.userid
             }
         },
-
+ 
         computed: {
             ...mapState( 'messenger', {
                 threads: state => state.threads

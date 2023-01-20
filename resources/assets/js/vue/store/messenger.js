@@ -62,6 +62,16 @@ export default {
                  .catch(error => console.log(error))
         },
 
+        markMessageRead({commit}, id){
+            axios.get(`/api/thread/message/markread/${id}`)
+            .then(response => {
+                console.log(response);
+            //    commit('setCurrentThread', response.data);
+            //    dispatch('fetchThreads'); //to get latest unread messages for top dropdown
+           })
+            .catch(error => console.log(error))
+   },
+
         markread({commit}, payload){
             //send ajax call to mark thread as read for current user
             axios.get(`/api/thread/markread/${payload.id}`)

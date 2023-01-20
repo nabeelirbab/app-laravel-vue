@@ -40,8 +40,8 @@ class Message extends Model
         $sender = $this->sender;
 
         return $this->thread
-                    ->users
-                    ->where('id', '!=', $sender->id);
+            ->users
+            ->where('id', '!=', $sender->id);
     }
 
     function getTypeAttribute()
@@ -57,19 +57,20 @@ class Message extends Model
             'user_id' => $this->sender_id,
             'view' => 1
         ]);
-
-        //save view for receiver
-        \App\MessageView::create([
-            'message_id' => $this->id,
-            'user_id' => $receiver_id,
-            'view' => 1
-        ]);
+        if ($receiver_id) {
+            //save view for receiver
+            \App\MessageView::create([
+                'message_id' => $this->id,
+                'user_id' => $receiver_id,
+                'view' => 0
+            ]);
+        }
     }
 
     function hideMessage()
     {
         \App\MessageView::where("message_id", $this->id)
-        ->where("user_id", auth()->id())
-        ->update(['view' => 0]);
+            ->where("user_id", auth()->id())
+            ->update(['view' => 0]);
     }
 }

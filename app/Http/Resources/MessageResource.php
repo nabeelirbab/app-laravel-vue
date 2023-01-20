@@ -19,7 +19,10 @@ class MessageResource extends JsonResource
             'body' => $this->body,
             'sender' => $this->sender->id,
             'date' => $this->created_at,
-            'type' => $this->type
+            'type' => $this->type,
+            'views' => $this->views->filter(function ($view) {
+                return $view->user_id == auth()->id();
+            })->values()
         ];
     }
 }

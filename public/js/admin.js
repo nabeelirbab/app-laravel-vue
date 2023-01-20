@@ -1549,8 +1549,18 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
-    markread: function markread(_ref3, payload) {
+    markMessageRead: function markMessageRead(_ref3, id) {
       var commit = _ref3.commit;
+      axios.get("/api/thread/message/markread/".concat(id)).then(function (response) {
+        console.log(response);
+        //    commit('setCurrentThread', response.data);
+        //    dispatch('fetchThreads'); //to get latest unread messages for top dropdown
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    markread: function markread(_ref4, payload) {
+      var commit = _ref4.commit;
       //send ajax call to mark thread as read for current user
       axios.get("/api/thread/markread/".concat(payload.id)).then(function (response) {
         commit('removeReadThread', payload.index);

@@ -54,13 +54,17 @@ class NewMessage extends Notification implements ShouldQueue
     {
         return [
             "title" => 'New Message Received!',
-            "message" => $this->message->sender->name.' sent you a message',
-            "image" => env('AWS_URL').'/'.$this->message->sender->avatar->files['medium']['path'],
+            "message" => $this->message->sender->name . ' sent you a message',
+            "image" => env('AWS_URL') . '/' . $this->message->sender->avatar->files['medium']['path'],
             "data" => [
                 'id' => $this->message->id,
                 'body' => $this->message->body,
                 'sender' => $this->message->sender->id,
-                'date' => $this->message->created_at
+                'date' => $this->message->created_at,
+                'type' => $this->message->type,
+                'views' => $this->message->views->filter(function ($view) {
+                    return $view->user_id != auth()->id();
+                })->values()
             ]
         ];
     }
