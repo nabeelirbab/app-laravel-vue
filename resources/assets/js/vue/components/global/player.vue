@@ -224,6 +224,7 @@ export default {
             this.$store.commit('player/setMaxTime', this.audio.duration);
         },
         expandPlayer() {
+            console.log(this.track)
             this.expanded = !this.expanded
         },
         timeUpdate() {

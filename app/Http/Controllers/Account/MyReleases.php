@@ -22,6 +22,7 @@ class MyReleases extends Controller
                 'tracks',
                 'genres',
                 'tracks.preview',
+                'tracks.release',
                 'uploader' => function ($query) {
                     $query->select(['id', 'name', 'path']);
                 }

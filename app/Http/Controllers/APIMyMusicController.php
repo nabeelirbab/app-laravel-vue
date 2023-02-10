@@ -32,7 +32,7 @@ class APIMyMusicController extends Controller
             ->with([
                 'track',
                 'track.release' => function ($query) {
-                    $query->select('id', 'name', 'slug', 'featured', 'royalty_fee', 'created_at', 'class', 'uploaded_by', 'status', 'image_id');
+                    $query->select('id', 'name', 'slug', 'featured', 'royalty_fee', 'created_at', 'class', 'uploaded_by', 'status', 'image_id', 'release_date');
                 },
                 'track.release.uploader' => function ($query) {
                     $query->select('id', 'name', 'path');

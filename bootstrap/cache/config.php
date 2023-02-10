@@ -360,8 +360,8 @@
       's3' => 
       array (
         'driver' => 's3',
-        'key' => 'AKIAQVILN57ELJ6KAZOP',
-        'secret' => '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',
+        'key' => 'AKIAQVILN57ELI3T54FD',
+        'secret' => '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',
         'region' => 'us-east-1',
         'bucket' => 'phase-bucket',
         'url' => 'https://phase-bucket.s3.es-east-1.amazonaws.com',
