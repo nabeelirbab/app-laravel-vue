@@ -25,7 +25,7 @@ class HelpController extends Controller
         ]);
 
         // Send to main site admin email
-        Mail::to(setting('admin_email'))
+        Mail::to('support@phase.uk')
             ->send(new AdminContactFormSubmitted($validated));
 
         // Send to all users with permission to receive contact submissions

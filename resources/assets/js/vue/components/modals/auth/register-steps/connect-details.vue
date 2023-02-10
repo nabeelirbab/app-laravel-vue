@@ -119,7 +119,7 @@
 					</ph-button>
 				</div>
 				<div class="button-wrap">
-					<ph-button size="large" @click.native="$emit('finished')">
+					<ph-button size="large" @click.native="$emit('skip')">
 						Skip
 					</ph-button>
 				</div>

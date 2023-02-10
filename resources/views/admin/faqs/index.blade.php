@@ -34,8 +34,8 @@
 					@include('admin.faqs.partials.title', ['partial' => $faq])
 					<td>{{ $faq->question }}</td>
 					<td>{{ $faq->sort_id }}</td>
-					<td>{{ $faq->updated_at }}</td>
-					<td>{{ $faq->created_at }}</td>
+					<td>{{ $faq->updated_at->format('D/M/Y H:i:s') }}</td>
+					<td>{{ $faq->created_at->format('D/M/Y H:i:s') }}</td>
 				</tr>
 				@endforeach
 			</tbody>

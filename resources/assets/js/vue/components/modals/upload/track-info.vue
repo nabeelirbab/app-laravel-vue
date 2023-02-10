@@ -11,15 +11,9 @@
 						<tr>
 							<td>Title*</td>
 							<td class="form-td">
-								<input
-									type="text"
-									name="track_title"
-									placeholder="Track Name"
-									v-model="currentTrack.title"
-									v-validate="'required|max:50'"
-									data-vv-as="track title"
-									:key="currentTrackNumber"
-								/>
+								<input type="text" name="track_title" placeholder="Track Name"
+									v-model="currentTrack.title" v-validate="'required|max:50'" data-vv-as="track title"
+									:key="currentTrackNumber" />
 								<span class="error-message">{{ errors.first('track_title') }}</span>
 							</td>
 						</tr>
@@ -27,14 +21,9 @@
 						<tr>
 							<td>Format*</td>
 							<td class="form-td">
-								<ph-select
-									:key="currentTrackNumber"
-									name="format"
-									title="Format"
-									v-validate="'required'"
-									v-model="currentTrack.format"
-									:options="{ mp3: 'MP3', wav: 'WAV' }"
-								/>
+								<ph-select :key="currentTrackNumber" name="format" title="Format"
+									v-validate="'required'" v-model="currentTrack.format"
+									:options="{ mp3: 'MP3', wav: 'WAV' }" />
 								<span class="error-message">{{ errors.first('format') }}</span>
 							</td>
 						</tr>
@@ -42,16 +31,11 @@
 						<tr v-show="currentTrack.format" :key="currentTrackNumber">
 							<td>Audio File* {{ `.${currentTrack.format}` }}</td>
 							<td class="form-td">
-								<input
-									type="file"
-									@change="setTrackFile($event, track)"
-									name="file"
-									:accept="`.${currentTrack.format}`"
-									v-validate="'required'"
-									ref="fileInput"
-									:key="currentTrackNumber"
-									v-if="!track.file"
-								/>
+								<ph-button @click.native.prevent="selectFile" v-if="!track.file">Choose File</ph-button>
+
+								<input type="file" @change="setTrackFile($event, track)" name="file"
+									:accept="`.${currentTrack.format}`" v-validate="'required'" ref="fileInput"
+									:key="currentTrackNumber" v-if="!track.file" style="display:none" />
 
 								<div class="selected-file" v-else>
 									<div class="selected-file__left">
@@ -69,13 +53,8 @@
 						<tr>
 							<td>Key*</td>
 							<td class="form-td">
-								<ph-select
-									:key="currentTrackNumber"
-									name="key"
-									title="Key"
-									v-validate="'required'"
-									v-model="currentTrack.key"
-									:options="{
+								<ph-select :key="currentTrackNumber" name="key" title="Key" v-validate="'required'"
+									v-model="currentTrack.key" :options="{
 										a: 'A',
 										'a+': 'A#',
 										b: 'B',
@@ -88,8 +67,7 @@
 										'f+': 'F#',
 										g: 'G',
 										'g+': 'G#'
-									}"
-								/>
+									}" />
 								<span class="error-message">{{ errors.first('key') }}</span>
 							</td>
 						</tr>
@@ -97,15 +75,9 @@
 						<tr>
 							<td>BPM*</td>
 							<td class="form-td">
-								<input
-									type="number"
-									name="bpm"
-									v-model="currentTrack.bpm"
-									:value.sync="currentTrack.bpm"
-									:key="currentTrackNumber"
-									v-validate="'required|between:40,250'"
-									min="40" max="250"
-								/>
+								<input type="number" name="bpm" v-model="currentTrack.bpm"
+									:value.sync="currentTrack.bpm" :key="currentTrackNumber"
+									v-validate="'required|between:40,250'" min="40" max="250" />
 								<span class="error-message">{{ errors.first('bpm') }}</span>
 							</td>
 						</tr>
@@ -113,18 +85,10 @@
 						<tr>
 							<td>Release Date*</td>
 							<td class="form-td">
-								<v-date-picker
-									v-model="currentTrack.date"
-									:input-props="inputProps"
-									:min-date="new Date()"
-									class="form-control form-td release-input"
-									name="track_date"
-									v-validate="'required'"
-									:masks="{input: 'DD/MM/YYYY'}"
-									data-vv-as="track date"
-									:key="currentTrackNumber"
-									:popover="{ placement: 'top-start' }"
-								/>
+								<v-date-picker v-model="currentTrack.date" :input-props="inputProps"
+									:min-date="new Date()" class="form-control form-td release-input" name="track_date"
+									v-validate="'required'" :masks="{ input: 'DD/MM/YYYY' }" data-vv-as="track date"
+									:key="currentTrackNumber" :popover="{ placement: 'top-start' }" />
 								<span class="error-message">{{ errors.first('track_date') }}</span>
 							</td>
 						</tr>
@@ -132,25 +96,15 @@
 						<tr>
 							<td style="vertical-align: middle;">Price*</td>
 							<td class="form-td">
-								<price-range
-									:min="50"
-									:max="300"
-									:value.sync="currentTrack.price"
-									v-validate="'required'"
-									name="price"
-									:key="currentTrackNumber"
-									:step="1"
-								/>
+								<price-range :min="50" :max="300" :value.sync="currentTrack.price"
+									v-validate="'required'" name="price" :key="currentTrackNumber" :step="1" />
 								<span class="error-message">{{ errors.first('price') }}</span>
 							</td>
 						</tr>
 					</table>
 
-					<ph-button
-						size="medium"
-						class="centered-inline submit-button"
-						@click.native.prevent="attemptSubmit"
-					>
+					<ph-button size="medium" class="centered-inline submit-button"
+						@click.native.prevent="attemptSubmit">
 						Upload release
 					</ph-button>
 				</form>
@@ -184,33 +138,31 @@ export default {
 		currentTrackNumber: {
 			required: true
 		},
-    trackError :
-        {
-          required: true
-        }
+		trackError:
+		{
+			required: true
+		}
 	},
 
 	components: {
 		PriceRange
 	},
 
-  watch: {
-    // When the format changes we need to remove the file as it will no longer be valid
-    'currentTrack.format': function (v) {
-      if (v) {
-        this.removeFile();
-      }
-    },
+	watch: {
+		// When the format changes we need to remove the file as it will no longer be valid
+		'currentTrack.format': function (v) {
+			if (v) {
+				this.removeFile();
+			}
+		},
 
-    // when the trackError value changes, run the check funtion to valiate the form
-    'trackError': function(v)
-    {
-      if(v)
-      {
-        this.checkTrackError();
-      }
-    }
-  },
+		// when the trackError value changes, run the check funtion to valiate the form
+		'trackError': function (v) {
+			if (v) {
+				this.checkTrackError();
+			}
+		}
+	},
 
 	computed: {
 		track: function () {
@@ -218,49 +170,51 @@ export default {
 		},
 	},
 
-  mounted: function(){
-    this.checkTrackError();
-  },
+	mounted: function () {
+		this.checkTrackError();
+	},
 
 	methods: {
-		setTrackFile: function(event, track) {
+		selectFile() {
+			let fileInputElement = this.$refs.fileInput;
+			fileInputElement.click();
+		},
+		setTrackFile: function (event, track) {
 			const { files } = event.target;
 			if (files && files[0]) {
 				var filename = files[0].name;
-        if(this.currentTrack.format == 'mp3' && !filename.match(/mp3.*/)) {
-          this.$notify({
-                            group: 'main',
-                            type: 'error',
-                            title: 'File must be mp3',
-                        });
-          track.file = null;
-          this.$refs.fileInput.value=null;
-          
-        } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
-          this.$notify({
-                            group: 'main',
-                            type: 'error',
-                            title: 'File must be wav',
-                        });
-          
-          track.file = null;
-          this.$refs.fileInput.value=null;
-          
-        } else {
-        	track.file = files[0];
-        }
-				
+				if (this.currentTrack.format == 'mp3' && !filename.match(/mp3.*/)) {
+					this.$notify({
+						group: 'main',
+						type: 'error',
+						title: 'File must be mp3',
+					});
+					track.file = null;
+					this.$refs.fileInput.value = null;
+
+				} else if (this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
+					this.$notify({
+						group: 'main',
+						type: 'error',
+						title: 'File must be wav',
+					});
+
+					track.file = null;
+					this.$refs.fileInput.value = null;
+
+				} else {
+					track.file = files[0];
+				}
+
 			}
 		},
 
-    checkTrackError: function()
-    {
-      if(this.trackError)
-      {
-        this.$validator.validateAll();
-        this.trackError= false;
-      }
-    },
+		checkTrackError: function () {
+			if (this.trackError) {
+				this.$validator.validateAll();
+				this.trackError = false;
+			}
+		},
 
 		removeFile: function () {
 			this.track.file = null;
@@ -269,7 +223,7 @@ export default {
 		/**
 		 * Check the form is valid. If it is then allow it to be submitted
 		 */
-		attemptSubmit: async function() {
+		attemptSubmit: async function () {
 			const valid = await this.$validator.validateAll();
 
 			if (valid) {
@@ -282,13 +236,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "~styles/helpers/_variables.scss";
+
 .track-info__table {
-  table-layout: fixed;
+	table-layout: fixed;
 }
 
 .form-td {
 	display: flex;
-  flex-wrap: wrap;
+	flex-wrap: wrap;
 
 	.select-wrapper {
 		width: 100%;
@@ -360,8 +315,8 @@ textarea {
 }
 
 .submit-button {
-  margin-top: 20px;
-  display: inline-block !important;
+	margin-top: 20px;
+	display: inline-block !important;
 }
 
 .subheading {

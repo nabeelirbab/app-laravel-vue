@@ -12,6 +12,11 @@ class MyReleases extends Controller
     public function index()
     {
         return Release::where('uploaded_by', auth()->id())
+            // ->where(function ($query) {
+            //     $query->where('status', 'live');
+            //     $query->where('release_date', '<=', date('Y-m-d'));
+            // })
+            // ->orWhere('status', '!=', 'live')
             ->with([
                 'image',
                 'tracks',

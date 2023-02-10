@@ -800,6 +800,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     setUserUploadedMusic: function setUserUploadedMusic(state, releases) {
       var _state$uploadedMusic$;
+      // if (state.uploadedMusic.data.length) {
+      //     state.uploadedMusic = {
+      //         data: [],
+      //         current_page: '',
+      //         next_page_url: '',
+      //         prev_page_url: '',
+      //         last_page: '',
+      //         from: '',
+      //         to: '',
+      //     };
+      // }
       (_state$uploadedMusic$ = state.uploadedMusic.data).push.apply(_state$uploadedMusic$, _toConsumableArray(releases.data));
       state.uploadedMusic.current_page = releases.current_page;
       state.uploadedMusic.next_page_url = releases.next_page_url;

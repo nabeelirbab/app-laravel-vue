@@ -32,7 +32,7 @@
 							<td>{{ ucfirst($report->reportable->type) }}</td>
 							<td>{{ ucfirst($report->reportable->id) }}</td>
 							<td><a href="/admin/users/edit/{{ $report->user->id }}">{{ $report->user->name }}</a></td>
-							<td>{{ $report->created_at }}</td>
+							<td>{{ $report->created_at->format('D/M/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

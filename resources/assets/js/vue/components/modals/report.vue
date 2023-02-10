@@ -5,8 +5,8 @@
                 <close-icon class="float-right" @click.native="$modal.hide('modal-report')"></close-icon>
             </div>
             <div class="modal-content">
-                <h2>Report {{ reportable.type }}</h2>
-                <p>
+                <h2 style="text-align: center;">Report {{ reportable.type }}</h2>
+                <p style="text-align: center;">
                     You can report content on Phase if you believe it does not conform to the content policy.
                 </p>
                 <div v-if="!response">

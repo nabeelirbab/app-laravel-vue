@@ -31,8 +31,8 @@
                 <td>{{$track->key}}</td>
                 <td>{{$track->price}}</td>
                 <td>{{$track->status}}</td>
-                <td>{{$track->created_at}}</td>
-                <td>{{$track->updated_at}}</td>
+                <td>{{$track->created_at->format('D/M/Y H:i:s')}}</td>
+                <td>{{$track->updated_at->format('D/M/Y H:i:s')}}</td>
             </tr>
             @endforeach
         </tbody>

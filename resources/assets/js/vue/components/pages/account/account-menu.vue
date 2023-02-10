@@ -81,6 +81,7 @@
 <style lang="scss" scoped>
 
     .sub-nav{
+      text-align: center;
       @media(max-width: 380px){
         padding-right: 6em;
       }

@@ -10,12 +10,14 @@
                                 `background-image:url(${chartImage(index)})`
                             "
                         ></div> -->
+              <!-- :invert="chartItemID(index) % 2 === 0 ? true : false" -->
             <circle-logo
               width="100px"
               height="100px"
-              :invert="chartItemID(index) % 2 === 0 ? true : false"
+              radius="0% !important"
+              :invert="true"
             >
-              <div style="font-size:11px;">Top 10 <br />{{ index }}s</div>
+              <div style="font-size:11px;">Top 10 <br />{{ index == 'sample' ? index + ' Pack' : index }}s</div>
             </circle-logo>
             <!-- <span>
                             Top 10
@@ -49,7 +51,7 @@
         <div class="chart-items">
           <div class="chart-item genre-name">
            
-            <span> Top 10 {{ index }}s</span>
+            <span> Top 10 {{ index == 'sample' ? index + ' Pack' : index }}s</span>
           </div>
           <div v-for="item in items" :key="item.id" class="chart-item">
             <router-link :to="getRouterObject(item)">

@@ -63,6 +63,17 @@ export default {
             state.user.releases.to = releases.to;
         },
         setUserUploadedMusic(state, releases) {
+            // if (state.uploadedMusic.data.length) {
+            //     state.uploadedMusic = {
+            //         data: [],
+            //         current_page: '',
+            //         next_page_url: '',
+            //         prev_page_url: '',
+            //         last_page: '',
+            //         from: '',
+            //         to: '',
+            //     };
+            // }
             state.uploadedMusic.data.push(...releases.data);
             state.uploadedMusic.current_page = releases.current_page;
             state.uploadedMusic.next_page_url = releases.next_page_url;

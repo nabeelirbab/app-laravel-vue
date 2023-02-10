@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Register;
+use App\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Mailcoach\Models\EmailList;
@@ -29,6 +32,14 @@ class MailingListController extends Controller
                 'success' => false,
                 'message' => 'There was an error subscribing you to the mailing list.'
             ];
+        }
+    }
+
+    public function auth(Request $request)
+    {
+        $user = User::where('id', $request->user['id'])->get();
+        if (date('Y-d-m', strtotime($user[0]['created_at'])) >= date('Y-d-m')) {
+            event(new Register($user[0]));
         }
     }
 }

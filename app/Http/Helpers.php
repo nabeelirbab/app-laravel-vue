@@ -37,6 +37,7 @@ function createVueRoute($item)
     return collect([
         'name' => $item->name,
         'path' => $item->path,
+        'breadcrumb' => $item->title,
         'component' => $item->component->name,
         'props' => true
     ]);
@@ -50,7 +51,7 @@ function createVueRoute($item)
 function getRoutes()
 {
     $routes = Cache::remember('routes', now()->addDay(), function () {
-        $pages = App\Page::isParent()->get(['id', 'name', 'parent_id', 'path', 'component_id']);
+        $pages = App\Page::isParent()->get(['id', 'name', 'title', 'parent_id', 'path', 'component_id']);
 
         return collect($pages)->map(function ($item) {
             $route = createVueRoute($item);

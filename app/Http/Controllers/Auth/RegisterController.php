@@ -165,7 +165,9 @@ class RegisterController extends Controller
             $user->syncGuestCart($data['guestCart']);
         }
 
-        event(new Register($user));
+        if ($type === 'standard') {
+            event(new Register($user));
+        }
 
         return $user;
     }

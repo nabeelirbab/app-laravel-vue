@@ -1,8 +1,8 @@
 <template>
-    <div class="page-content-padded">
-        <aside class="sidebar-left">
+    <div class="page-content-padded" style="padding: 0px;height: auto;">
+        <!-- <aside class="sidebar-left">
             <sidebar-group title="Notifications" :view-all="true" :items="[]"></sidebar-group>
-        </aside>
+        </aside> -->
 
         <div class="page-main single-thread-page">
             <div class="thread-messages" id="messages">
@@ -48,14 +48,14 @@
             </div>
             <div class="thread-respond">
                 <add-text type="message" @keydown.enter.prevent :thread="currentThread"
-                    @success="appendNewMessage($event)"></add-text>
+                    @success="appendNewMessage($event)" style="margin-bottom: 0rem;"></add-text>
             </div>
         </div>
 
-        <aside class="sidebar-right">
+        <!-- <aside class="sidebar-right">
             <sidebar-group title="Followed" :view-all="true" :items="[]"></sidebar-group>
             <sidebar-group title="Favourites" :view-all="true" :items="[]"></sidebar-group>
-        </aside>
+        </aside> -->
     </div>
 </template>
 
@@ -202,9 +202,9 @@ export default {
 }
 
 .thread-messages {
-    overflow: scroll;
+    overflow-y: scroll;
     flex: 1;
-    max-height: 50vh;
+    max-height: 70vh;
     padding-right: 10px;
     //box-shadow: 0 -5px 5px -5px #333;
 

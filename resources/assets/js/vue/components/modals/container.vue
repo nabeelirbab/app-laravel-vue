@@ -99,7 +99,7 @@
     }
 
     .modal-header {
-        position: relative;
+        // position: relative;
 
         .close-icon {
             position: absolute;

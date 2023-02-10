@@ -53,7 +53,9 @@
                 </div>
                 <div>
                     <a :href="`/api/mymusic/download/mp3/${track.id}`" title="Download Track" v-if="item[index].count < 5">
+                        <ph-button>
                         <i class="fas fa-download"></i>
+                        </ph-button>
                     </a>
                 </div>
             </div>

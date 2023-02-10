@@ -9,6 +9,7 @@ use App\Events\UnFreezeAccount;
 use App\Http\Controllers\Controller;
 use App\Mail\UserFreeze;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Spatie\Permission\Models\Role;
 use App\User;
 use App\NotificationSetting;
@@ -177,6 +178,10 @@ class UserController extends Controller
             'interests' => 'nullable',
             'genres' => 'nullable',
         ]);
+
+        if(!$validated['password']){
+            $validated = Arr::except($validated, ['password']);
+        }
 
         $user = User::findOrFail($id);
         $user->syncRoles($validated['role']);

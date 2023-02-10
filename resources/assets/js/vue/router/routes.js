@@ -158,7 +158,7 @@ const replaceWithObjects = (routes) =>{
 }
 
 routes = replaceWithObjects(window.routes)
-// console.log("asdasd22", routes);
+
 routes.push(
     {
         name: 'login',

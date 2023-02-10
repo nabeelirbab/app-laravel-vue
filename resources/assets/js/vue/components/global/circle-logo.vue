@@ -1,7 +1,7 @@
 <template>
   <a
     :class="{ invert: invert }"
-    :style="`width:${width};height:${height};`"
+    :style="`width:${width};height:${height};border-radius:${radius}`"
   >
     <slot></slot>
   </a>
@@ -17,6 +17,9 @@ export default {
       type: String,
     },
     width: {
+      type: String,
+    },
+    radius: {
       type: String,
     },
   },

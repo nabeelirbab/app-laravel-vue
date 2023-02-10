@@ -53,28 +53,28 @@
             <div class="form-group">
                 <label for="social_web">Website</label>
                 @include('admin.partials.field-error', ['field' => 'social_web'])
-                <input type="text" required class="form-control" name="social_web" id="social_web"
+                <input type="text" class="form-control" name="social_web" id="social_web"
                        value="{{ $user->social_web }}">
             </div>
 
             <div class="form-group">
                 <label for="social_youtube">YouTube</label>
                 @include('admin.partials.field-error', ['field' => 'social_youtube'])
-                <input type="text" required class="form-control" name="social_youtube" id="social_youtube"
+                <input type="text" class="form-control" name="social_youtube" id="social_youtube"
                        value="{{ $user->social_youtube }}">
             </div>
 
             <div class="form-group">
                 <label for="social_twitter">Twitter</label>
                 @include('admin.partials.field-error', ['field' => 'social_twitter'])
-                <input type="text" required class="form-control" name="social_twitter" id="social_twitter"
+                <input type="text" class="form-control" name="social_twitter" id="social_twitter"
                        value="{{ $user->social_twitter }}">
             </div>
 
             <div class="form-group">
                 <label for="social_facebook">Facebook</label>
                 @include('admin.partials.field-error', ['field' => 'social_facebook'])
-                <input type="text" required class="form-control" name="social_facebook" id="social_facebook"
+                <input type="text" class="form-control" name="social_facebook" id="social_facebook"
                        value="{{ $user->social_facebook }}">
             </div>
 

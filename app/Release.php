@@ -89,6 +89,17 @@ class Release extends PhaseModel
         }
     }
 
+    public function getStatusAttribute()
+    {
+        if ($this->attributes['status'] == 'live' && date('Y-d-m', strtotime($this->attributes['release_date'])) > date('Y-d-m')) {
+            return $this->attributes['status'] = 'scheduled';
+        }
+        if ($this->attributes['status'] == 'live' && date('Y-d-m', strtotime($this->attributes['release_date'])) <= date('Y-d-m')) {
+            return $this->attributes['status'] = 'live';
+        }
+        return $this->attributes['status'];
+    }
+
     public function setClassAttribute($key)
     {
         if (ReleaseClass::valid($key)) {

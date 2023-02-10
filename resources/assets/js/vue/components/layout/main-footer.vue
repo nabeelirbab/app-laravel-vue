@@ -1,6 +1,6 @@
 <template>
-  <footer class="main">
-<!--    <div class="footer-overlay"></div>-->
+  <footer class="main" :style="currentRouteName == 'message_thread' ? 'margin-top:0px;' : 'margin-top:40px;'">
+    <!--    <div class="footer-overlay"></div>-->
     <div class="footer-upper">
       <div class="footer-logo">
         <logo color="black" />
@@ -23,10 +23,7 @@
     <div class="footer-lower">
       <div>&copy; phase {{ new Date().getFullYear() }}</div>
       <div>
-        <navigation-list
-          class="footer-lower-menu"
-          :items="navigation.footer_lower"
-        />
+        <navigation-list class="footer-lower-menu" :items="navigation.footer_lower" />
       </div>
     </div>
   </footer>
@@ -42,6 +39,9 @@ export default {
   computed: {
     ...mapState(["app"]),
     ...mapGetters({ navigation: "app/getNavigation" }),
+    currentRouteName() {
+      return this.$route.name;
+    }
   },
 };
 </script>
@@ -50,12 +50,13 @@ export default {
 .footer-menu {
   margin: 0 25px;
 }
+
 .footer-logo {
   max-width: 183px;
 }
 
 footer {
-    margin-top: 40px;
+  margin-top: 40px;
   position: relative;
 
   .footer-overlay {
@@ -65,11 +66,9 @@ footer {
     background: red;
     height: 50px;
     width: 100%;
-    background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(0, 0, 0, 0) 100%
-    );
+    background: linear-gradient(0deg,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(0, 0, 0, 0) 100%);
   }
 }
 </style>

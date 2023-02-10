@@ -4,15 +4,16 @@
 			<class-filter v-model="filters.classes" :single="true"></class-filter>
 			<genre-filter v-model="filters.genres" :single="true"></genre-filter>
 		</filter-container>
-		<div class="chart-results">
-			<div v-if="loadedAll">
+		<div class="chart-results" v-if="loadedAll">
+			<div>
 				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'album')">
 					<div class="header flex justify-between">
 						<h2>Top Albums</h2>
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('album')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div v-if="results.album" class="chart-result" v-for="(album, index) in results.album" :key="index">
+						<div v-if="results.album" class="chart-result" v-for="(album, index) in results.album"
+							:key="index">
 							<release-tile :release="album" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
 						<div class="not-found-div" v-if="!results.album || !results.album.length">
@@ -26,7 +27,8 @@
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('single')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div v-if="results.single" class="chart-result" v-for="(single, index) in results.single" :key="index">
+						<div v-if="results.single" class="chart-result" v-for="(single, index) in results.single"
+							:key="index">
 							<release-tile :release="single" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
 						<div class="not-found-div" v-if="!results.single || !results.single.length">
@@ -51,11 +53,14 @@
 				<div class="charts-section" v-if="!filters.classes.length || (currentClass == 'compilation')">
 					<div class="header flex justify-between">
 						<h2>Top Compilations</h2>
-						<a style="cursor:pointer" v-if="amount <= 7" class="see-more" @click.prevent="seeMore('compilation')">See more >></a>
+						<a style="cursor:pointer" v-if="amount <= 7" class="see-more"
+							@click.prevent="seeMore('compilation')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div v-if="results.compilation" class="chart-result" v-for="(compilation, index) in results.compilation" :key="index">
-							<release-tile :release="compilation" :size="150" mode="charts" :position="index"></release-tile>
+						<div v-if="results.compilation" class="chart-result"
+							v-for="(compilation, index) in results.compilation" :key="index">
+							<release-tile :release="compilation" :size="150" mode="charts"
+								:position="index"></release-tile>
 						</div>
 						<div class="not-found-div" v-if="!results.compilation || !results.compilation.length">
 							No Compilations Found
@@ -68,7 +73,8 @@
 						<a style="cursor:pointer" v-if="amount <= 7" @click.prevent="seeMore('sample')">See more >></a>
 					</div>
 					<div class="chart-row">
-						<div v-if="results.sample" class="chart-result" v-for="(sample, index) in results.sample" :key="index">
+						<div v-if="results.sample" class="chart-result" v-for="(sample, index) in results.sample"
+							:key="index">
 							<release-tile :release="sample" :size="150" mode="charts" :position="index"></release-tile>
 						</div>
 						<div class="not-found-div" v-if="!results.sample || !results.sample.length">
@@ -77,10 +83,10 @@
 					</div>
 				</div>
 			</div>
-			<div v-else>
-				<div style="display:flex;justfiy-content:center;align-items:center;">
-					<spinner style="margin: 3em auto;" :animation-duration="1000" :size="60" color="black" />
-				</div>
+		</div>
+		<div style="width: 100%;justfiy-content:center;align-items:center;margin-top: auto;margin-bottom: auto;" v-else>
+			<div>
+				<spinner style="margin: 3em auto;" :animation-duration="1000" :size="60" color="black" />
 			</div>
 		</div>
 	</div>
@@ -113,14 +119,14 @@ export default {
 		};
 	},
 	computed: {
-	    currentClass: function () {
-	      if(this.filters.classes.length > 0) {
-	      	return this.filters.classes[0].val;
-	      }
-	      return '';
-	    },
-  	},
-	created: function() {
+		currentClass: function () {
+			if (this.filters.classes.length > 0) {
+				return this.filters.classes[0].val;
+			}
+			return '';
+		},
+	},
+	created: function () {
 		if (this.$route.query.filter) {
 			this.filters.classes.push({
 				name: this.capitalizeFirstLetter(this.$route.query.filter),
@@ -131,7 +137,7 @@ export default {
 	},
 	watch: {
 		filters: {
-			handler: function() {
+			handler: function () {
 				this.fetchCharts();
 			},
 			deep: true,
@@ -142,11 +148,11 @@ export default {
 			this.loadedAll = false;
 			this.filters.newsearch = 1;
 			axios.post(`/api/charts/${this.amount}`, this.filters).then((response) => {
-				if(response.data.filters) {
-					if(JSON.stringify(response.data.filters) === JSON.stringify(this.filters)) {
+				if (response.data.filters) {
+					if (JSON.stringify(response.data.filters) === JSON.stringify(this.filters)) {
 						this.results = response.data.returndata;
 					}
-				}else{
+				} else {
 					this.results = response.data;
 				}
 				this.loadedAll = true;
@@ -189,9 +195,11 @@ export default {
 
 		.charts-section {
 			margin: 40px 0;
+
 			.header {
 				margin-bottom: 20px;
 				align-items: flex-start;
+
 				h2 {
 					margin: 0 10px 0 0;
 				}
@@ -200,12 +208,15 @@ export default {
 			.chart-row {
 				display: grid;
 				grid-template-columns: repeat(5, 1fr);
+
 				@media (max-width: 900px) {
 					grid-template-columns: repeat(3, 1fr);
 				}
+
 				@media (max-width: 650px) {
 					grid-template-columns: repeat(2, 1fr);
 				}
+
 				grid-gap: 10px;
 			}
 		}
@@ -213,8 +224,8 @@ export default {
 
 	.not-found-div {
 		width: 800px;
-    	text-align: center;
-    	
+		text-align: center;
+
 		@media (max-width: 750px) {
 			width: 600px;
 		}

@@ -2,7 +2,7 @@
 
 <div class="password-reset">
     <div v-if="!loading && !loaded">
-    <h1>Reset password</h1>
+    <h1 style="text-align: center;">Reset password</h1>
     <form @submit.prevent="submit" autocomplete="false">
         <input v-model="password" class="form-element" type="password" name="password" id="" placeholder="New password" autocomplete="false">
         <input v-model="password_confirmation" class="form-element" type="password" name="password_confirmation" id="" placeholder="Confirm new password" autocomplete="false">
@@ -17,7 +17,7 @@
             />
     </div>
     <div v-if="loaded">
-        <p>Your Password has been reset, you will be redirected shortly</p>
+        <p style="text-align: center;">Your Password has been reset, you will be redirected shortly</p>
         <div style="display:flex;justify-content:center;margin-top:50px;">
             <orbit-spinner
             :animation-duration="1200"

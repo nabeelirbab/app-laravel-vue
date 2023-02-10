@@ -5,7 +5,7 @@
                 <close-icon class="float-right" @click.native="$modal.hide('modal-change-avatar')"></close-icon>
             </div>
             <div class="modal-content">
-                <h2>Change Avatar</h2>
+                <h2 style="text-align: center;">Change Avatar</h2>
                 <image-select name="image"
                               v-model="avatar"
                               v-validate="'required|min-dimensions:350,350'"

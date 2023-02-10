@@ -7,7 +7,7 @@
             </div>
             <div class="modal-content">
                 <div v-if="!complete">
-                    <h2 class="payment-info-header">Payment Information</h2>
+                    <h2 class="payment-info-header" style="text-align: center;">Payment Information</h2>
                     <div v-show="loadedInitialCardData">
                         <div v-if="userHasCard && !stripePayment">
                           <existing-card-account :card="card" />
@@ -27,7 +27,7 @@
                                  :color="'black'"
                         />
                     </div>
-                    <h2 class="no-top">Order Information</h2>
+                    <h2 class="no-top" style="text-align: center;">Order Information</h2>
                     <table>
                         <tr>
                             <td>
@@ -58,24 +58,24 @@
                         As this purchase is greater than £{{ parseInt(settings.purchase_approval_threshold) / 100 }}, it
                         will need to be manually approved by an admin.
                     </p>
-                    <div v-show="!loadedInitialCardData">
+                    <div v-show="!loadedInitialCardData" style="text-align: center;">
                         <i class="fa fa-spinner fa-spin"></i>
                     </div>
-                    <div v-show="loadedInitialCardData">
+                    <div v-show="loadedInitialCardData" style="text-align: center;">
                         <ph-button id="paymentButton" @click.native="pay" size="large" :loading="loading">Pay</ph-button>
                     </div>
-                    <p v-show="loadedInitialCardData">
+                    <p v-show="loadedInitialCardData" style="text-align: center;">
                         By confirming this purchase, you agree to the Phase Terms of Use.
                     </p>
                 </div>
                 <div v-else>
-                    <ph-panel type="error" v-if="error">
+                    <ph-panel type="error" v-if="error" style="text-align: center;">
                         <h2 class="no-top header">Error!</h2>
                         <p>
                             There was an error processing your payment. You have not been charged.
                         </p>
                     </ph-panel>
-                    <ph-panel type="success" v-else>
+                    <ph-panel type="success" v-else style="text-align: center;">
                         <h2 class="no-top header">Success!</h2>
                         <p>
                             Your purchase is complete. Visit your

@@ -15,9 +15,9 @@
                 <div class="action">
                     <like-button :likeable="thread" @like="liked" @unlike="unliked"></like-button>
                 </div>
-                <div class="action">
+                <!-- <div class="action">
                     <router-link :to="{ path: `/user/thread/${thread.id}`}">Reply</router-link>
-                </div>
+                </div> -->
                 <div class="action">
                     <router-link :to="{ path: `/user/thread/${thread.id}`}">Expand</router-link>
                 </div>

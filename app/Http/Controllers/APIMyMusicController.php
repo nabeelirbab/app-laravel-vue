@@ -53,9 +53,11 @@ class APIMyMusicController extends Controller
     public function getUploadedMusic($user_id = null)
     {
         $uploadedMusic = Release::where('uploaded_by', $user_id)->where('status', 'live')
+            ->where('release_date', '<=', date('Y-m-d'))
             ->with([
                 'image',
                 'tracks',
+                'tracks.release',
                 'genres',
                 'tracks.preview',
                 'uploader' => function ($query) {
@@ -63,8 +65,7 @@ class APIMyMusicController extends Controller
                 }
             ])
             ->latest('release_date')
-            ->paginate(10)
-        ;
+            ->paginate(10);
         return $uploadedMusic;
     }
 

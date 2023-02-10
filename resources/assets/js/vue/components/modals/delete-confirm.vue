@@ -19,7 +19,7 @@
         <p>{{ message }}</p>
 
         <div class="save-button">
-          <ph-button size="large" @click.native="onDelete" :loading="submitting"
+          <ph-button size="medium" @click.native="onDelete" :loading="submitting"
             >Delete</ph-button
           >
         </div>

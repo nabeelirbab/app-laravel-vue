@@ -30,8 +30,8 @@
 <style lang="scss" scoped>
     @import "~styles/helpers/_variables.scss";
     .close-icon {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         background: $color-secondary;
         display: flex;
         align-items: center;
@@ -41,13 +41,13 @@
         color: white;
 
         @media(max-width: 500px){
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
         }
 
         @media(max-width: 390px){
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
         }
     }
 </style>

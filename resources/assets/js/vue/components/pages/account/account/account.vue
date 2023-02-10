@@ -102,7 +102,7 @@
     </ph-panel>
    
     <billing />
-    <subscriptions />
+    <subscriptions v-if="app.user.roles[0].name !== 'standard'"/>
     <manage />
   </div>
 </template>

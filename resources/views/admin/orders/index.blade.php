@@ -40,8 +40,8 @@
 							<td>{{ $order->tax }}</td>
 							<td>{{ $order->total }}</td>
 							<td>{{ $order->status }}</td>
-							<td>{{ $order->updated_at }}</td>
-							<td>{{ $order->created_at }}</td>
+							<td>{{ $order->updated_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $order->created_at->format('D/M/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

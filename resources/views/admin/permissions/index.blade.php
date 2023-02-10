@@ -29,8 +29,8 @@
 						<tr>
 							<td><input type="checkbox" name="selected[]" class="page" value="{{ $permission->id }}"></td>
 							@include('admin.permissions.partials.title', ['partial' => $permission])
-							<td>{{ $permission->updated_at }}</td>
-							<td>{{ $permission->created_at }}</td>
+							<td>{{ $permission->updated_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $permission->created_at->format('D/M/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

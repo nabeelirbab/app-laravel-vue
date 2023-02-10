@@ -10,12 +10,8 @@
         <tbody>
           <tr>
             <td class="test-image-dimension">
-              <image-select
-                v-model="cover.image"
-                v-validate="'required|min-dimensions:300,300'"
-                name="image"
-                :currentSelected="selectedImage"
-              />
+              <image-select v-model="cover.image" v-validate="'required|min-dimensions:300,300'" name="image"
+                :currentSelected="selectedImage" />
             </td>
           </tr>
           <tr>
@@ -32,13 +28,8 @@
             <tr>
               <td>Title*</td>
               <td>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="Album Name"
-                  v-model="cover.title"
-                  v-validate="'required|max:50'"
-                />
+                <input type="text" name="title" placeholder="Release Name" v-model="cover.title"
+                  v-validate="'required|max:50'" />
                 <span class="error-message">{{ errors.first("title") }}</span>
               </td>
             </tr>
@@ -46,25 +37,15 @@
               <td>Genres*</td>
               <td>
                 <genre-select @change="coverGenresChanged" :populated="cover.genres" />
-                <input
-                  type="hidden"
-                  name="genre"
-                  placeholder="Genre"
-                  v-validate="'required'"
-                  :value="genreString"
-                />
+                <input type="hidden" name="genre" placeholder="Genre" v-validate="'required'" :value="genreString" />
                 <span class="error-message">{{ errors.first("genre") }}</span>
               </td>
             </tr>
             <tr>
               <td style="vertical-align: top;">Description*</td>
               <td>
-                <textarea
-                  name="description"
-                  placeholder="Maximum 255 characters"
-                  v-model="cover.description"
-                  v-validate="'required|max:255'"
-                ></textarea>
+                <textarea name="description" placeholder="Maximum 255 characters" v-model="cover.description"
+                  v-validate="'required|max:255'"></textarea>
                 <span class="error-message">{{ errors.first("description") }}</span>
               </td>
             </tr>
@@ -74,13 +55,8 @@
                 <div class="select-wrapper">
                   <select name="class" v-model="cover.class" v-validate="'required'">
                     <option disabled value="">Select</option>
-                    <option
-                      :disabled="isDisabled(k)"
-                      v-for="(v, k) in classes"
-                      :value="k"
-                      :selected="k === cover.class"
-                      :key="k"
-                    >
+                    <option :disabled="isDisabled(k)" v-for="(v, k) in classes" :value="k" :selected="k === cover.class"
+                      :key="k">
                       {{ v }}
                     </option>
                   </select>
@@ -139,16 +115,9 @@
             <tr class="responsive-class">
               <td>Release Date*</td>
               <td class="date-selects">
-                <v-date-picker
-                  v-model="cover.date"
-                  :input-props="inputProps"
-                  :min-date="new Date()"
-                  class="form-control"
-                  name="date"
-                  v-validate="'required'"
-                  :masks="{ input: 'DD/MM/YYYY' }"
-                  :popover="{ placement: 'top-start' }"
-                />
+                <v-date-picker v-model="cover.date" :input-props="inputProps" :min-date="new Date()"
+                  class="form-control" name="date" v-validate="'required'" :masks="{ input: 'DD/MM/YYYY' }"
+                  :popover="{ placement: 'top-start' }" />
                 <span class="error-message">{{ errors.first("date") }}</span>
               </td>
             </tr>
@@ -157,14 +126,8 @@
               <tr>
                 <td>Format*</td>
                 <td class="form-td">
-                  <ph-select
-                    :key="1"
-                    name="format"
-                    title="Format"
-                    v-validate="'required'"
-                    v-model="currentTrack.format"
-                    :options="{mp3: 'MP3', wav: 'WAV'}"
-                  />
+                  <ph-select :key="1" name="format" title="Format" v-validate="'required'" v-model="currentTrack.format"
+                    :options="{ mp3: 'MP3', wav: 'WAV' }" />
                   <span class="error-message">{{ errors.first('format') }}</span>
                 </td>
               </tr>
@@ -172,16 +135,10 @@
               <tr v-show="currentTrack.format" :key="1">
                 <td>Audio File* {{ `.${currentTrack.format}` }}</td>
                 <td class="form-td">
-                  <input
-                    type="file"
-                    @change="setTrackFile($event, currentTrack)"
-                    name="file"
-                    :accept="`.${currentTrack.format}`"
-                    v-validate="'required'"
-                    ref="fileInput"
-                    :key="1"
-                    v-if="!currentTrack.file"
-                  />
+                  <ph-button @click.native.prevent="selectFile" v-if="!currentTrack.file">Choose File</ph-button>
+                  <input type="file" @change="setTrackFile($event, currentTrack)" name="file"
+                    :accept="`.${currentTrack.format}`" v-validate="'required'" ref="fileInput" :key="1"
+                    v-if="!currentTrack.file" style="display:none" />
 
                   <div class="selected-file" v-else>
                     <div class="selected-file__left">
@@ -199,12 +156,7 @@
               <tr>
                 <td>Key*</td>
                 <td class="form-td">
-                  <ph-select
-                    :key="1"
-                    name="key"
-                    title="Key"
-                    v-validate="'required'"
-                    v-model="currentTrack.key"
+                  <ph-select :key="1" name="key" title="Key" v-validate="'required'" v-model="currentTrack.key"
                     :options="{
                       a: 'A',
                       'a+': 'A#',
@@ -218,8 +170,7 @@
                       'f+': 'F#',
                       g: 'G',
                       'g+': 'G#'
-                    }"
-                  />
+                    }" />
                   <span class="error-message">{{ errors.first('key') }}</span>
                 </td>
               </tr>
@@ -227,15 +178,8 @@
               <tr>
                 <td>BPM*</td>
                 <td class="form-td">
-                  <input
-                    type="number"
-                    name="bpm"
-                    v-model="currentTrack.bpm"
-                    :value.sync="currentTrack.bpm"
-                    :key="1"
-                    v-validate="'required|between:40,250'"
-                    min="40" max="250"
-                  />
+                  <input type="number" name="bpm" v-model="currentTrack.bpm" :value.sync="currentTrack.bpm" :key="1"
+                    v-validate="'required|between:40,250'" min="40" max="250" />
                   <span class="error-message">{{ errors.first('bpm') }}</span>
                 </td>
               </tr>
@@ -244,14 +188,9 @@
             <tr>
               <td style="vertical-align: middle;">Price*</td>
               <td>
-                <price-range
-                  :min="isSingle ? getSingleTrackPriceFrom() : getAlbumPriceFrom()"
-                  :max="isSingle ? getSingleTrackPriceTo() : getAlbumPriceTo()"
-                  :step="1"
-                  :value.sync="cover.price"
-                  v-validate="'required'"
-                  name="price"
-                />
+                <price-range :min="isSingle ? getSingleTrackPriceFrom() : getAlbumPriceFrom()"
+                  :max="isSingle ? getSingleTrackPriceTo() : getAlbumPriceTo()" :step="1" :value.sync="cover.price"
+                  v-validate="'required'" name="price" />
                 <span class="error-message">{{ errors.first("price") }}</span>
               </td>
             </tr>
@@ -262,12 +201,7 @@
               <table>
                 <tr>
                   <td>
-                    <input
-                      type="checkbox"
-                      name="agree_terms"
-                      v-model="cover.terms"
-                      v-validate="'required'"
-                    />
+                    <input type="checkbox" name="agree_terms" v-model="cover.terms" v-validate="'required'" />
                   </td>
                   <td>
                     By sharing, you confirm that your release complies with our
@@ -285,12 +219,8 @@
             </label>
           </div>
 
-          <ph-button
-            size="medium"
-            class="centered-inline submit-button"
-            @click.native.prevent="attemptSubmit"
-          >
-            {{ isSingle ? 'Upload Release' : 'Add Tracks' }}
+          <ph-button size="medium" class="centered-inline submit-button" @click.native.prevent="attemptSubmit">
+            {{ isSingle? 'Upload Release': 'Add Tracks' }}
           </ph-button>
         </form>
       </div>
@@ -336,7 +266,7 @@ export default {
   computed: {
     ...mapState(["app"]),
 
-    classes: function() {
+    classes: function () {
       const storeClasses = this.$store.state.app.classes;
       let obj = {};
       for (let i = 0; i < storeClasses.length; i++) {
@@ -378,52 +308,55 @@ export default {
     /**
      * When the user adds or removes a genre from the cover, update the array
      */
-    coverGenresChanged: function(genres) {
+    coverGenresChanged: function (genres) {
       this.cover.genres = [];
       this.cover.genres = genres;
 
       // Manually validate the genre string to update validation state
       this.$validator.validate('genre', this.genreString);
     },
-
-    setTrackFile: function(event, track) {
-			const { files } = event.target;
-			if (files && files[0]) {
+    selectFile() {
+      let fileInputElement = this.$refs.fileInput;
+      fileInputElement.click();
+    },
+    setTrackFile: function (event, track) {
+      const { files } = event.target;
+      if (files && files[0]) {
         var filename = files[0].name;
-        if(this.currentTrack.format == 'mp3' && !filename.match(/mp3.*/)) {
+        if (this.currentTrack.format == 'mp3' && !filename.match(/mp3.*/)) {
           this.$notify({
-                            group: 'main',
-                            type: 'error',
-                            title: 'File must be mp3',
-                        });
-          
+            group: 'main',
+            type: 'error',
+            title: 'File must be mp3',
+          });
+
           track.file = null;
-          this.$refs.fileInput.value=null;
-          
-        } else if(this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
+          this.$refs.fileInput.value = null;
+
+        } else if (this.currentTrack.format == 'wav' && !filename.match(/wav.*/)) {
           this.$notify({
-                            group: 'main',
-                            type: 'error',
-                            title: 'File must be wav',
-                        });
-          
+            group: 'main',
+            type: 'error',
+            title: 'File must be wav',
+          });
+
           track.file = null;
-          this.$refs.fileInput.value=null;
+          this.$refs.fileInput.value = null;
         } else {
           track.file = files[0];
         }
-				
-			}
-		},
 
-		removeFile: function () {
-			this.currentTrack.file = null;
-		},
+      }
+    },
+
+    removeFile: function () {
+      this.currentTrack.file = null;
+    },
 
     /**
      * Update parent component with valid state
      */
-    attemptSubmit: async function() {
+    attemptSubmit: async function () {
 
       const valid = await this.$validator.validateAll();
       this.$emit("onSubmit", { valid, isSingle: this.isSingle });
@@ -433,19 +366,19 @@ export default {
     },
     getSingleTrackPriceFrom() {
       console.log(this.app);
-        return (this.app.priceRangesForTrack.single_track_price_from) ? this.app.priceRangesForTrack.single_track_price_from : 50;
+      return (this.app.priceRangesForTrack.single_track_price_from) ? this.app.priceRangesForTrack.single_track_price_from : 50;
     },
     getSingleTrackPriceTo() {
-        return (this.app.priceRangesForTrack.single_track_price_to) ? this.app.priceRangesForTrack.single_track_price_to : 300;
+      return (this.app.priceRangesForTrack.single_track_price_to) ? this.app.priceRangesForTrack.single_track_price_to : 300;
     },
 
     getAlbumPriceFrom() {
       // console.log("test the NANNN");
 
-        return (this.app.priceRangesForTrack.album_price_from) ? this.app.priceRangesForTrack.album_price_from : 300;
+      return (this.app.priceRangesForTrack.album_price_from) ? this.app.priceRangesForTrack.album_price_from : 300;
     },
     getAlbumPriceTo() {
-        return (this.app.priceRangesForTrack.album_price_to) ? this.app.priceRangesForTrack.album_price_to : 3000;
+      return (this.app.priceRangesForTrack.album_price_to) ? this.app.priceRangesForTrack.album_price_to : 3000;
     },
   },
 
@@ -480,12 +413,14 @@ export default {
     font-size: 25px;
     font-weight: bold;
   }
+
   div:last-child {
     color: black;
     padding-top: 1em;
     font-size: 15px;
   }
 }
+
 .upload-detail {
   display: flex;
 
@@ -493,6 +428,7 @@ export default {
     flex-direction: column;
   }
 }
+
 .upload-meta {
   font-size: 12px;
   flex: 1;
@@ -506,14 +442,17 @@ export default {
       font-size: inherit;
     }
   }
-  td.date-selects > div {
+
+  td.date-selects>div {
     display: inline-block;
     width: 32%;
   }
 }
+
 table {
   width: 100%;
 }
+
 td {
   font-size: 16px;
   padding: 0.5em 10px;
@@ -581,17 +520,17 @@ textarea {
 }
 
 .selected-file {
-	align-items: center;
-	display: flex;
+  align-items: center;
+  display: flex;
 
-	&__left {
-		align-items: center;
-		display: flex;
-		margin-right: 12px;
-	}
+  &__left {
+    align-items: center;
+    display: flex;
+    margin-right: 12px;
+  }
 
-	&__name {
-		margin-left: 12px;
-	}
+  &__name {
+    margin-left: 12px;
+  }
 }
 </style>
