@@ -13,7 +13,7 @@ Route::get('/new-music/{count?}', function ($count = 100) {
             },
             'release' => function ($query) {
                 $query->select([
-                    'id', 'name', 'class', 'status', 'image_id', 'uploaded_by', 'created_at'
+                    'id', 'name', 'class', 'status', 'image_id', 'uploaded_by', 'created_at', 'release_date'
                 ]);
             },
             'release.uploader' => function ($query) {

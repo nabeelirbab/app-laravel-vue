@@ -82,7 +82,7 @@ Route::get('/release/{release}', function (Release $release) {
     $returnRelease = $release->load('uploader', 'image', 'genres')->load([
         'tracks' => function ($query) {
             return $query->where('status', 'approved');
-        }, 'tracks.artist', 'tracks.asset.files'
+        }, 'tracks.artist', 'tracks.asset.files', 'tracks.release'
     ]);
 
     foreach($returnRelease->tracks as $i => $track) {
