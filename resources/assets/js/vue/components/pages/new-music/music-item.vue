@@ -68,6 +68,7 @@ export default {
   },
   computed: {
     labels: function () {
+      console.log(this.item);
       // tl: {
       //     text: 'pending',
       //         color: 'orange'

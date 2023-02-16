@@ -1,12 +1,12 @@
 <template>
-    <div class="breadcrumbs">
-        <!-- <span @click="back">{{ text }}</span> -->
+    <!-- <div class="breadcrumbs">
+        <span @click="back">{{ text }}</span>
         <ul class="">
             <li v-for="(crumb, index) in crumbs"> <router-link :to="crumb.to">{{
                 crumb.text
             }}</router-link> </li>
         </ul>
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -21,32 +21,32 @@ export default {
     },
 
     computed: {
-        crumbs: function () {
-            let pathArray = this.$route.path.split("/")
-            if (Object.values(this.$route.params)[0]) {
-                console.log("params", this.$route.params);
-                let param = Object.values(this.$route.params)[0];
-                var paramResult = param
-                    .replace(/-/g, ' ')
-                    .replace(/^./, function (x) { return x.toUpperCase() })
-                console.log("result", paramResult);
-            }
+        // crumbs: function () {
+        //     let pathArray = this.$route.path.split("/")
+        //     if (Object.values(this.$route.params)[0]) {
+        //         console.log("params", this.$route.params);
+        //         let param = Object.values(this.$route.params)[0];
+        //         var paramResult = param
+        //             .replace(/-/g, ' ')
+        //             .replace(/^./, function (x) { return x.toUpperCase() })
+        //         console.log("result", paramResult);
+        //     }
 
-            pathArray.shift()
-            let breadcrumbs = pathArray.reduce((breadcrumbArray, path, idx) => {
-                if (path) {
-                    breadcrumbArray.push({
-                        path: path,
-                        to: breadcrumbArray[idx - 1]
-                            ? "/" + breadcrumbArray[idx - 1].path + "/" + path
-                            : "/" + path,
-                        text: path || paramResult,
-                    });
-                }
-                return breadcrumbArray;
-            }, [])
-            return breadcrumbs;
-        }
+        //     pathArray.shift()
+        //     let breadcrumbs = pathArray.reduce((breadcrumbArray, path, idx) => {
+        //         if (path) {
+        //             breadcrumbArray.push({
+        //                 path: path,
+        //                 to: breadcrumbArray[idx - 1]
+        //                     ? "/" + breadcrumbArray[idx - 1].path + "/" + path
+        //                     : "/" + path,
+        //                 text: path || paramResult,
+        //             });
+        //         }
+        //         return breadcrumbArray;
+        //     }, [])
+        //     return breadcrumbs;
+        // }
     },
 
     methods: {

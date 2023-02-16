@@ -29,8 +29,8 @@
 							<td><input type="checkbox" name="selected[]" class="page" value="{{ $plan->id }}"></td>
 							@include('admin.plans.partials.title', ['partial' => $plan])
 							<td>{{ $plan->price }}</td>
-							<td>{{ $plan->updated_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $plan->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $plan->updated_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $plan->created_at->format('d/m/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

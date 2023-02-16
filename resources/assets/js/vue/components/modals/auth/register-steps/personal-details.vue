@@ -178,7 +178,7 @@
                                 tabindex="7"
                                 :disabled="submitting"
                                 v-validate="'required|max:255|confirmed:password'"
-                                data-vv-as="confirm password"
+                                data-vv-as="password"
                                 data-vv-validate-on="focusout"
                             />
                             <p class="error-message">

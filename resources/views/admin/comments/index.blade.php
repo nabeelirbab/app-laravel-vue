@@ -29,8 +29,8 @@
 							@include('admin.comments.partials.title', ['partial' => $comment])
 							<td>{{ ucfirst($comment->commentable_type) }}</td>
 							<td>{{ $comment->user->name }}</td>
-							<td>{{ $comment->updated_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $comment->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $comment->updated_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $comment->created_at->format('d/m/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

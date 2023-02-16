@@ -33,8 +33,8 @@
 					<td><input type="checkbox" name="selected[]" class="page" value="{{ $faqsCateogry->id }}"></td>
 					@include('admin.faqs-categories.partials.title', ['partial' => $faqsCateogry])
 					<td>{{ $faqsCateogry->name }}</td>
-					<td>{{ $faqsCateogry->updated_at->format('D/M/Y H:i:s') }}</td>
-					<td>{{ $faqsCateogry->created_at->format('D/M/Y H:i:s') }}</td>
+					<td>{{ $faqsCateogry->updated_at->format('d/m/Y H:i:s') }}</td>
+					<td>{{ $faqsCateogry->created_at->format('d/m/Y H:i:s') }}</td>
 				</tr>
 				@endforeach
 			</tbody>

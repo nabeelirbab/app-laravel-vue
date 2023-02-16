@@ -31,6 +31,7 @@ class APIMyMusicController extends Controller
         $downloads = Download::whereIn('order_id', $userOrders)
             ->with([
                 'track',
+                'track.artist',
                 'track.release' => function ($query) {
                     $query->select('id', 'name', 'slug', 'featured', 'royalty_fee', 'created_at', 'class', 'uploaded_by', 'status', 'image_id', 'release_date');
                 },
@@ -58,6 +59,7 @@ class APIMyMusicController extends Controller
                 'image',
                 'tracks',
                 'tracks.release',
+                'tracks.artist',
                 'genres',
                 'tracks.preview',
                 'uploader' => function ($query) {

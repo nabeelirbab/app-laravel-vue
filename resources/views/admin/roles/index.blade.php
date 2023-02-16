@@ -31,8 +31,8 @@
 							<td><input type="checkbox" name="selected[]" class="page" value="{{ $role->id }}"></td>
 							@include('admin.roles.partials.title', ['partial' => $role])
 							<td>{{ $role->guard_name }}</td>
-							<td>{{ $role->updated_at->format('D/M/Y H:i:s')  }}</td>
-							<td>{{ $role->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $role->updated_at->format('d/m/Y H:i:s')  }}</td>
+							<td>{{ $role->created_at->format('d/m/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

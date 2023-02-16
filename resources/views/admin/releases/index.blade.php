@@ -40,10 +40,10 @@
 							<td>{{ $release->status }}</td>
 							<td>{{ $release->tracks->count() }}</td>
 							<td>@if ($release->isFeatured()) Yes @else No @endif</td>
-							<td>{{ $release->release_date->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $release->release_date->format('d/m/Y H:i:s') }}</td>
 							<td>{{ $release->royalty_fee }}%</td>
-							<td>{{ $release->updated_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $release->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $release->updated_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $release->created_at->format('d/m/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

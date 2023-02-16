@@ -9,14 +9,8 @@
         <p class="bpm-values">
           {{ filters.bpm[0] + " > " + filters.bpm[1] }}
         </p>
-        <vue-slider
-          v-model="filters.bpm"
-          :min="0"
-          :max="200"
-          :enable-cross="false"
-          :lazy="true"
-          v-on:drag-end.once="doSearch"
-        ></vue-slider>
+        <vue-slider v-model="filters.bpm" :min="0" :max="200" :enable-cross="false" :lazy="true"
+          v-on:drag-end.once="doSearch"></vue-slider>
       </div>
     </filter-container>
     <div class="search-results">
@@ -26,43 +20,24 @@
         </div>
         <div v-show="!loading">
           Showing {{ results.length }} results
-          <span v-if="$store.state.search.searchTerm.length"
-            >for '{{ $store.state.search.searchTerm }}'</span
-          >
-          <span
-            v-if="
-              filters.genres.length ||
-                filters.classes.length ||
-                filters.keys.length
-            "
-            >in</span
-          >
-          <span v-for="(genre, i) in filters.genres" :key="i"
-            >'{{ genre.name }}'<span v-if="filters.genres[i + 1]"
-              >,
-            </span></span
-          >
-          <span v-for="(type, i) in filters.classes" :key="i"
-            >'{{ type.name }}'<span v-if="filters.classes[i + 1]"
-              >,
-            </span></span
-          >
-          <span
-            v-for="(key, i) in filters.keys"
-            v-html="'\'' + key.name + '\''"
-            :key="i"
-            ><span v-if="filters.keys[i + 1]">, </span></span
-          >
+          <span v-if="$store.state.search.searchTerm.length">for '{{ $store.state.search.searchTerm }}'</span>
+          <span v-if="
+            filters.genres.length ||
+            filters.classes.length ||
+            filters.keys.length
+          ">in</span>
+          <span v-for="(genre, i) in filters.genres" :key="i">'{{ genre.name }}'<span v-if="filters.genres[i + 1]">,
+            </span></span>
+          <span v-for="(type, i) in filters.classes" :key="i">'{{ type.name }}'<span v-if="filters.classes[i + 1]">,
+            </span></span>
+          <span v-for="(key, i) in filters.keys" v-html="'\'' + key.name + '\''" :key="i"><span
+              v-if="filters.keys[i + 1]">, </span></span>
         </div>
       </div>
+      <!-- v-for="(item, index) in results" -->
       <div class="search-results-grid">
-        <div
-          class="search-result"
-          v-for="(item, index) in results"
-          v-show="!loading"
-          :key="index"
-        >
-          <search-result :result="item" />
+        <div class="search-result" v-show="!loading" :key="index">
+          <search-result :users="users" :releases="releases" :tracks="tracks" />
         </div>
       </div>
     </div>
@@ -91,6 +66,9 @@ export default {
     return {
       loading: false,
       results: [],
+      users: [],
+      releases: [],
+      tracks: [],
       filters: {
         classes: [],
         genres: [],
@@ -104,15 +82,15 @@ export default {
       vuexSearchTerm: "search/getSearchTerm",
     }),
   },
-  mounted: function() {
+  mounted: function () {
     this.doSearch();
   },
   watch: {
-    vuexSearchTerm: _.debounce(function() {
+    vuexSearchTerm: _.debounce(function () {
       this.doSearch();
     }, 500),
     filters: {
-      handler: function() {
+      handler: function () {
         this.doSearch();
       },
       deep: true,
@@ -131,30 +109,53 @@ export default {
           newsearch: 1
         })
         .then((response) => {
-          
-          if(typeof(response.data.term) != typeof(undefined)) {
+
+          if (typeof (response.data.term) != typeof (undefined)) {
 
             var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
             var validClasses = this.checkTwoArrays(this.filters.classes, response.data.classes);
             var validKeys = this.checkTwoArrays(this.filters.keys, response.data.keys);
             var validBpm = this.checkTwoArrays(this.filters.bpm, response.data.bpm);
 
-            if(response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm)
-            {
+            if (response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm) {
               this.loading = false;
               this.results = response.data.data;
+              this.users = [];
+              this.releases = [];
+              this.tracks = [];
+              this.results.map(e => {
+                if (e.type == 'user') {
+                  this.users.push(e);
+                } else if (e.type == 'release') {
+                  this.releases.push(e);
+                } else {
+                  this.tracks.push(e);
+                }
+              });
             }
           } else {
             this.loading = false;
             this.results = response.data;
+            this.users = [];
+            this.releases = [];
+            this.tracks = [];
+            this.results.map(e => {
+              if (e.type == 'user') {
+                this.users.push(e);
+              } else if (e.type == 'release') {
+                this.releases.push(e);
+              } else {
+                this.tracks.push(e);
+              }
+            });
           }
-          
+
         });
     },
 
     checkTwoArrays(arr1, arr2) {
       if (arr1.length != arr2.length) { return false; }
-      if(arr1.length == 0 && arr2.length == 0) { return true; }
+      if (arr1.length == 0 && arr2.length == 0) { return true; }
       for (let i = 0; i < arr1.length; i++) {
         if (JSON.stringify(arr1[i]) === JSON.stringify(arr2[i])) {
           continue;
@@ -186,6 +187,7 @@ export default {
   .vue-slider-process {
     background-color: #9eefe1;
   }
+
   .vue-slider-dot-tooltip-inner {
     border-color: #9eefe1;
     background-color: #9eefe1;
@@ -197,6 +199,7 @@ export default {
 .bpm-filter {
   margin-bottom: 50px;
 }
+
 .search-filter-group {
   margin-bottom: 30px;
 }
@@ -206,6 +209,7 @@ export default {
     margin: 30px 0;
   }
 }
+
 .search-view {
   display: flex;
   align-items: flex-start;
@@ -220,17 +224,21 @@ export default {
 
     .search-results-grid {
       margin-top: 20px;
-      display: grid;
+      // display: grid;
       grid-template-columns: repeat(8, 1fr);
+
       @media (max-width: 1500px) {
         grid-template-columns: repeat(6, 1fr);
       }
+
       @media (max-width: 900px) {
         grid-template-columns: repeat(3, 1fr);
       }
+
       @media (max-width: 650px) {
         grid-template-columns: repeat(2, 1fr);
       }
+
       grid-gap: 10px;
     }
   }

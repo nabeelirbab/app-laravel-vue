@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="details" v-if="track.release && track.release.uploader">
-                <router-link :to="`/release/${track.slug}`">
+                <router-link :to="`/track/${track.slug}`">
                     {{ track.release.uploader.name }} - {{ track.name }}
                 </router-link>
             </div>
@@ -192,7 +192,6 @@ export default {
         }),
         trackUrl() {
             const track = this.trackType(this.type)
-
             return track.files[this.type].url
         }
     },

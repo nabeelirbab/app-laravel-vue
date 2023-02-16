@@ -35,9 +35,9 @@
 							@include('admin.news.partials.title', ['partial' => $post])
 							<td><a href="{{ url($post->path) }}" target="_blank">{{ \Illuminate\Support\Str::limit($post->path, 30) }}</td>
 							<td>{{ $post->user->name }}</td>
-							<td>{{ $post->published_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $post->updated_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $post->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $post->published_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $post->updated_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $post->created_at->format('d/m/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

@@ -20,6 +20,7 @@ class MyReleases extends Controller
             ->with([
                 'image',
                 'tracks',
+                'tracks.artist',
                 'genres',
                 'tracks.preview',
                 'tracks.release',

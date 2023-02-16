@@ -30,8 +30,8 @@
 						<tr>
 							<td><input type="checkbox" name="selected[]" class="page" value="{{ $genre->id }}"></td>
 							@include('admin.genres.partials.title', ['partial' => $genre])
-							<td>{{ $genre->updated_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $genre->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $genre->updated_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $genre->created_at->format('d/m/Y H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>

@@ -52,8 +52,8 @@
                 class="bg-primary text-white p-2" 
                 }
                 @endif>{{$track->status}}</td>
-                <td>{{$track->created_at->format('D/M/Y H:i:s')}}</td>
-                <td>{{$track->updated_at->format('D/M/Y H:i:s')}}</td>
+                <td>{{$track->created_at->format('d/m/Y H:i:s')}}</td>
+                <td>{{$track->updated_at->format('d/m/Y H:i:s')}}</td>
             </tr>
             @endforeach
         </tbody>

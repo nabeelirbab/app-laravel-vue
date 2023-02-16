@@ -7,7 +7,7 @@
       <item v-for="video in videos" :item="video" :key="video.id" />
     </div>
     <div v-if="!videos.length && !loadingVideos" class="not-found">
-      Videos not found
+      This user has not uploaded any videos yet.
     </div>
     <div>
 

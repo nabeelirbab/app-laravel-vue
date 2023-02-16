@@ -38,10 +38,10 @@
                             <td>{{ $user->status }}</td>
 							<td>
 								@if(!$user->approved_at) <p class="btn-danger p-2">Requires Approval</p>
-								@else {{ date('D/M/Y H:i:s', strtotime($user->approved_at)) }}
+								@else {{ date('d/m/Y H:i:s', strtotime($user->approved_at)) }}
 								@endif
 							</td>
-							<td>{{ date('D/M/Y H:i:s', strtotime($user->created_at))}}</td>
+							<td>{{ date('d/m/Y H:i:s', strtotime($user->created_at))}}</td>
 						</tr>
 					@endforeach
 				</tbody>

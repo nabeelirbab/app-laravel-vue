@@ -34,8 +34,8 @@
 							@include('admin.pages.partials.title', ['partial' => $page])
 							<td><a href="{{ url($page->path) }}" target="_blank">{{ $page->path }}</a></td>
 							<td>{{ $page->user->name }}</td>
-							<td>{{ $page->updated_at->format('D/M/Y H:i:s') }}</td>
-							<td>{{ $page->created_at->format('D/M/Y H:i:s') }}</td>
+							<td>{{ $page->updated_at->format('d/m/Y H:i:s') }}</td>
+							<td>{{ $page->created_at->format('d/m/Y H:i:s') }}</td>
 
 							@if ( ! empty($page->children))
 								@foreach ($page->children as $child)
@@ -44,8 +44,8 @@
 										@include('admin.pages.partials.title', ['partial' => $child])
 										<td><a href="{{ url($page->path . $child->path) }}" target="_blank">{{ $child->path }}</a></td>
 										<td>{{ $child->user->name }}</td>
-										<td>{{ $child->updated_at->format('D/M/Y H:i:s') }}</td>
-										<td>{{ $child->created_at->format('D/M/Y H:i:s') }}</td>
+										<td>{{ $child->updated_at->format('d/m/Y H:i:s') }}</td>
+										<td>{{ $child->created_at->format('d/m/Y H:i:s') }}</td>
 									</tr>
 								@endforeach
 							@endif

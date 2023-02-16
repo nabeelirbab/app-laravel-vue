@@ -15,7 +15,7 @@ class FavouritesController extends Controller
         return $user->likes()
             ->latest()
             ->paginate(10)->each(function ($item) {
-            return $item->likeable;
-        });
+                return $item->likeable;
+            });
     }
 }

@@ -84,7 +84,7 @@ export default {
       this.submitted = true;
       this.step = 1;
       axios.post(
-          "/api/auth/mail/",
+          "/api/auth/mail",
           {
             user: this.tempUser,
           }
