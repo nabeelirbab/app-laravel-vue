@@ -70,7 +70,7 @@
                 } else {
                     length = this.item.length
                 }
-
+                console.log(length);
                 return moment().startOf('day').seconds(length).format('mm:ss')
             },
             artist() {

@@ -5,7 +5,7 @@ use App\Track;
 Route::get('/new-music/{count?}', function ($count = 100) {
     return Track::select([
         'id', 'name', 'preview_id', 'release_id', 'streamable_id', 'slug', 'status',
-        'uploaded_by', 'created_at', 'asset_id'
+        'uploaded_by', 'created_at', 'asset_id', 'length', 'price'
     ])
         ->with([
             'preview' => function ($query) {
@@ -20,6 +20,7 @@ Route::get('/new-music/{count?}', function ($count = 100) {
                 $query->select('id', 'name', 'path');
             },
             'release.image',
+            'artist',
         ])
         ->whereHas('release', function($query) {
                     $query->statuslive();
