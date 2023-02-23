@@ -27,7 +27,7 @@ class Track extends PhaseModel
 {
     use Shareable, Likeable, Commentable, Reportable, SearchableTrait, SoftDeletes, HasSlug;
 
-    protected $fillable = ['name', 'length', 'bpm', 'key', 'price', 'image'];
+    protected $fillable = ['name', 'length', 'bpm', 'key', 'price', 'image', 'uploaded_by'];
 
     protected $with = [
         /*'preview', */'streamable', 'release'

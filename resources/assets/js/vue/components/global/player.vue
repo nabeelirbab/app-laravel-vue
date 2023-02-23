@@ -54,6 +54,9 @@
                     <span @click="toggleRepeat" class="controls-repeat" :class="{ active: $store.state.player.repeat }">
                         <i class="fa fa-redo" data-fa-transform="shrink-3"></i>
                     </span>
+                    <like-button :likeable="track" @like="liked" @unlike="unliked" />
+                    <share-button :shareable="track" />
+                    <report-button :reportable="track" />
                     <!-- <span @click="shuffle = !shuffle" class="controls-shuffle"
                         :class="{ active: $store.state.player.shuffle }">
                         <i class="fa fa-random" data-fa-transform="shrink-3"></i>

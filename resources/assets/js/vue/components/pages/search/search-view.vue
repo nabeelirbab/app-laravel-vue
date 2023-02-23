@@ -15,11 +15,12 @@
     </filter-container>
     <div class="search-results">
       <div class="search-results-count">
+        <!-- <button @click="loadmore">load more</button> -->
         <div v-show="loading">
           Loading...
         </div>
         <div v-show="!loading">
-          Showing {{ results.length }} results
+          Showing {{ users.length + releases.length + tracks.length }} results
           <span v-if="$store.state.search.searchTerm.length">for '{{ $store.state.search.searchTerm }}'</span>
           <span v-if="
             filters.genres.length ||
@@ -37,7 +38,8 @@
       <!-- v-for="(item, index) in results" -->
       <div class="search-results-grid">
         <div class="search-result" v-show="!loading" :key="index">
-          <search-result :users="users" :releases="releases" :tracks="tracks" />
+          <search-result :users="users" :releases="releases" :tracks="tracks" @handleUserLoad="handleUserLoad"
+            @handleReleaseLoad="handleReleaseLoad" @handleTrackLoad="handleTrackLoad" :counts="counts" :pages="pages" />
         </div>
       </div>
     </div>
@@ -66,6 +68,19 @@ export default {
     return {
       loading: false,
       results: [],
+      pages: {
+        user: 1,
+        old_user: 0,
+        release: 1,
+        old_release: 0,
+        track: 1,
+        old_track: 0,
+      },
+      counts: {
+        user: 0,
+        release: 0,
+        track: 0,
+      },
       users: [],
       releases: [],
       tracks: [],
@@ -87,20 +102,85 @@ export default {
   },
   watch: {
     vuexSearchTerm: _.debounce(function () {
+      this.beforeSearchMutation();
       this.doSearch();
     }, 500),
     filters: {
       handler: function () {
+        this.beforeSearchMutation();
         this.doSearch();
       },
       deep: true,
     },
   },
   methods: {
+    handleUserLoad() {
+      console.log('U Load more....');
+      this.pages.old_user = this.pages.user;
+      this.pages.old_release = this.pages.release;
+      this.pages.old_track = this.pages.track;
+      this.pages.user += 1;
+      this.doSearch();
+    },
+    handleReleaseLoad() {
+      console.log('R Load more....');
+      this.pages.old_user = this.pages.user;
+      this.pages.old_release = this.pages.release;
+      this.pages.old_track = this.pages.track;
+      this.pages.release += 1;
+      this.doSearch();
+    },
+    handleTrackLoad() {
+      console.log('T Load more....');
+      this.pages.old_user = this.pages.user;
+      this.pages.old_release = this.pages.release;
+      this.pages.old_track = this.pages.track;
+      this.pages.track += 1;
+      this.doSearch();
+    },
+    beforeSearchMutation() {
+      this.pages.user = 1;
+      this.pages.release = 1;
+      this.pages.track = 1;
+      this.pages.old_user = 0;
+      this.pages.old_release = 0;
+      this.pages.old_track = 0;
+      this.counts.user = 0;
+      this.counts.release = 0;
+      this.counts.track = 0;
+      this.users = [];
+      this.releases = [];
+      this.tracks = [];
+    },
+    afterSearchMutation(res) {
+      if (this.pages.user == 1 && this.pages.release == 1 && this.pages.track == 1) {
+        this.counts.user = res.userChunkCount;
+        this.counts.release = res.releaseChunkCount;
+        this.counts.track = res.trackChunkCount;
+      }
+
+      if (res.users.length && this.pages.old_user < this.pages.user) {
+        res.users.map(e => {
+          this.users.push(e);
+        });
+      }
+
+      if (res.releases.length && this.pages.old_release < this.pages.release) {
+        res.releases.map(e => {
+          this.releases.push(e);
+        });
+      }
+
+      if (res.tracks.length && this.pages.old_track < this.pages.track) {
+        res.tracks.map(e => {
+          this.tracks.push(e);
+        });
+      }
+    },
     doSearch() {
       this.loading = true;
       axios
-        .post("/api/search", {
+        .post("/api/search/" + this.pages.user + "/" + this.pages.release + "/" + this.pages.track, {
           term: this.vuexSearchTerm,
           classes: this.filters.classes,
           genres: this.filters.genres,
@@ -109,7 +189,7 @@ export default {
           newsearch: 1
         })
         .then((response) => {
-
+          console.log("response search", response);
           if (typeof (response.data.term) != typeof (undefined)) {
 
             var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
@@ -119,35 +199,16 @@ export default {
 
             if (response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm) {
               this.loading = false;
-              this.results = response.data.data;
-              this.users = [];
-              this.releases = [];
-              this.tracks = [];
-              this.results.map(e => {
-                if (e.type == 'user') {
-                  this.users.push(e);
-                } else if (e.type == 'release') {
-                  this.releases.push(e);
-                } else {
-                  this.tracks.push(e);
-                }
-              });
+              this.afterSearchMutation(response.data)
+
+            }
+            else if (response.data.term == this.vuexSearchTerm || validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.afterSearchMutation(response.data)
             }
           } else {
             this.loading = false;
-            this.results = response.data;
-            this.users = [];
-            this.releases = [];
-            this.tracks = [];
-            this.results.map(e => {
-              if (e.type == 'user') {
-                this.users.push(e);
-              } else if (e.type == 'release') {
-                this.releases.push(e);
-              } else {
-                this.tracks.push(e);
-              }
-            });
+            this.afterSearchMutation(response)
           }
 
         });

@@ -1,18 +1,14 @@
 <template>
   <div>
-    <spinner style="margin: 3em auto;"
-      :animation-duration="1000"
-      :size="60"
-      color="black"
-      v-show="loadingMerch"
-    />
+    <spinner style="margin: 3em auto;" :animation-duration="1000" :size="60" color="black" v-show="loadingMerch" />
     <div v-if="merches.length">
-      <item v-for="merch in merches"
-        :item="merch"
-        :key="merch.id" />
+      <item v-for="merch in merches" :item="merch" :key="merch.id" />
     </div>
-    <div v-if="!merches.length && !loadingMerch" class="not-found">
-      Merchandise not found
+    <div v-if="!merches.length && !loadingMerch">
+      <span class="not-found" v-if="!isShow">
+        This user hasn't added any merchandise yet.
+      </span>
+      <ph-button size="medium" style="display: block; text-align: center;" @click.native="showMerchCreateModal()" v-else>Add Merch</ph-button>
     </div>
   </div>
 </template>
@@ -22,24 +18,27 @@ import ProfileMixin from '../profile-mixin';
 import { HalfCircleSpinner as Spinner } from 'epic-spinners';
 import Item from 'global/items/item';
 import { UserEvents, SocialEvents } from "events";
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
       loadingMerch: false,
       merches: [],
     }
   },
   computed: {
-    isPro: function() {
+    isPro: function () {
       return (this.app.user.account_type === 'pro' || this.app.user.account_type === 'admin')
     },
+    isShow: function () {
+      return (this.app.user.id === this.user.id)
+    },
     ...mapState([
-                'app'
-              ])
+      'app'
+    ])
   },
-  created: function() {
+  created: function () {
     this.fetchMerch();
     UserEvents.$on('merch-added', () => {
       this.fetchMerch();
@@ -50,7 +49,7 @@ export default {
   },
   methods: {
     showMerchCreateModal() {
-       this.$modal.show('modal-create-merch', { user: this.user });
+      this.$modal.show('modal-create-merch', { user: this.user });
     },
     fetchMerch() {
       this.loadingMerch = true;
@@ -71,8 +70,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .not-found {
-    text-align: center;
-    margin-top: 10px;
-  }
+.not-found {
+  text-align: center;
+  margin-top: 10px;
+}
 </style>

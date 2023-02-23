@@ -17,7 +17,7 @@ class SearchController extends Controller
      * Main Search
      * 
      */
-    public function index(Request $request, $page = 1)
+    public function index(Request $request, $userPG = 1, $releasePG = 1, $trackPG = 1)
     {
         $validated = $request->validate([
             'term' => 'string|nullable',
@@ -36,6 +36,12 @@ class SearchController extends Controller
             'bpm' => 'array'
         ]);
 
+        if (!$validated['term'] && !$validated['genres']) {
+            // dd(auth()->user()->interests);
+            $validated['genres'] = auth()->user()->interests;
+            // dd($validated['genres']);
+        }
+
         $users = User::whereHas('roles', function ($q) use ($validated) {
             $q->whereIn('roles.name', ['pro', 'artist', 'admin', 'standard'])
                 ->where(function ($q) use ($validated) {
@@ -43,12 +49,12 @@ class SearchController extends Controller
                 });
         })->get();
 
-        $releaseQuery = Release::with('uploader')->where('status', 'live')
+        $releaseQuery = Release::with(['uploader', 'tracks.artist'])->where('status', 'live')
             ->where(function ($q) use ($validated) {
                 $q->where('name', 'like', '%' . $validated['term'] . '%')
-                ->orWhereHas('uploader', function ($query) use ($validated) {
-                    return $query->where('name', 'like', '%' . $validated['term'] . '%');
-                });
+                    ->orWhereHas('uploader', function ($query) use ($validated) {
+                        return $query->where('name', 'like', '%' . $validated['term'] . '%');
+                    });
             });
 
         $releases = collect($releaseQuery
@@ -58,17 +64,19 @@ class SearchController extends Controller
         $releaseNames = $releaseQuery->pluck("name")->toArray();
         $tracks = collect(Track::where('status', 'approved')
             ->where('name', 'like', '%' . $validated['term'] . '%')
-            ->with('release.image')
-            ->whereHas('release', function($query) {
-                    $query->statuslive();
+            ->orWhereHas('artist', function ($query) use ($validated) {
+                return $query->where('name', 'like', '%' . $validated['term'] . '%');
             })
-            ->where( function($query) use($releaseIds, $releaseNames) {
+            ->with(['release.image', 'artist'])
+            ->whereHas('release', function ($query) {
+                $query->statuslive();
+            })
+            ->where(function ($query) use ($releaseIds, $releaseNames) {
                 $query->whereNotIn("release_id", $releaseIds)
-                ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
+                    ->orWhereNotIn("name", $releaseNames); // if related to selected release and name is same ignore the track
             })
             ->get());
 
-        
 
         $filter = new Filter($releases);
         $trackfilter = new Filter($tracks);
@@ -100,21 +108,43 @@ class SearchController extends Controller
 
         $data = collect();
 
-        if ($validated['term']) $data = $data->merge($users);
+        // $data = $filter->get();
+        // $data = $data->chunk(20);
 
-        $data = $data->merge($trackfilter->get())->merge($filter->get());
 
-        $chunked = $data->chunk(20);
-        if (isset($chunked[$page - 1])) {
+        // if ($validated['term']) $data = $data->merge($users);
+
+        // $data = $data->merge($trackfilter->get())->merge($filter->get());
+        // dd($data);
+
+        $userChunks = $users->chunk(20);
+        $releaseChunks = $filter->get()->chunk(20);
+        $trackChunks = $trackfilter->get()->chunk(20);
+
+        // dd($trackChunks);
+
+        if (isset($userChunks[$userPG - 1]) || isset($releaseChunks[$releasePG - 1]) || isset($trackChunks[$trackPG - 1])) {
             return ($request->get('newsearch') == 1) ? [
                 'term' => !empty($validated['term']) ? $validated['term'] : '',
                 'genres' => !empty($validated['genres']) ? $validated['genres'] : [],
                 'classes' => !empty($validated['classes']) ? $validated['classes'] : [],
                 'bpm' => !empty($validated['bpm']) ? $validated['bpm'] : [],
                 'keys' => !empty($validated['keys']) ? $validated['keys'] : [],
-                'data' => $chunked[$page - 1]
-                ]
-            : $chunked[$page - 1];
+                'users' => array_values($userChunks[$userPG - 1]->toArray()),
+                'releases' => array_values($releaseChunks[$releasePG - 1]->toArray()),
+                'tracks' => array_values($trackChunks[$trackPG - 1]->toArray()),
+                'userChunkCount' => $userChunks->count(),
+                'releaseChunkCount' => $releaseChunks->count(),
+                'trackChunkCount' => $trackChunks->count(),
+            ]
+                : [
+                    'users' => array_values($userChunks[$userPG - 1]->toArray()),
+                    'releases' => array_values($releaseChunks[$releasePG - 1]->toArray()),
+                    'tracks' => array_values($trackChunks[$trackPG - 1]->toArray()),
+                    'userChunkCount' => $userChunks->count(),
+                    'releaseChunkCount' => $releaseChunks->count(),
+                    'trackChunkCount' => $trackChunks->count(),
+                ];
         } else {
             return [];
         }

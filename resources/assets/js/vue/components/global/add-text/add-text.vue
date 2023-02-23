@@ -1,100 +1,59 @@
 <template>
   <div class="add-text" v-if="app.user.loggedin">
     <div class="user-avatar">
-      <avatar
-        :size="90"
-        v-if="app.user.avatar"
-        :src="app.user.avatar.files.medium.url"
-        :alt="app.user.avatar.alt"
-      ></avatar>
+      <avatar :size="90" v-if="app.user.avatar" :src="app.user.avatar.files.medium.url" :alt="app.user.avatar.alt">
+      </avatar>
     </div>
     <div class="main-actions" v-show="!submitting">
       <div class="upper" v-if="show[type].upper">
         <div class="action-name">
-          <recipient-select
-            ref="recipientSelector"
-            :userid="userid"
-            v-if="type === 'newMessage'"
-            @selected="setReceiver($event)"
-            @unselected="clearReceiver($event)"
-          />
+          <recipient-select ref="recipientSelector" :userid="userid" v-if="type === 'newMessage'"
+            @selected="setReceiver($event)" @unselected="clearReceiver($event)" />
           {{ text[type].name }}
         </div>
-        <div
-          class="action-name action-name--secondary"
-          @click="$modal.show('modal-upload-video')"
-          v-if="type === 'post'"
-        >
+        <div class="action-name action-name--secondary" @click="$modal.show('modal-upload-video')"
+          v-if="type === 'post'">
           Upload Video
         </div>
-        <div
-          class="attachment-options"
-          @click="imageUpload = !imageUpload"
-          v-if="type === 'post'"
-        >
+        <div class="attachment-options" @click="imageUpload = !imageUpload" v-if="type === 'post'">
           <div class="attachment-option action-name--secondary">
-            <input
-              class="file-input--hidden"
-              type="file"
-              accept="image/png,image/jpeg"
-              @change="handleAttachmentChange"
-            />
+            <input class="file-input--hidden" type="file" accept="image/png,image/jpeg"
+              @change="handleAttachmentChange" @click="handleAttachmentClick"/>
             <i class="fa fa-image"></i>
           </div>
         </div>
       </div>
       <div class="lower">
-        
+
 
         <div class="lower-text-input">
           <form>
-            <textarea
-              @keyup.ctrl.enter="submit"
-              oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-              rows="1"
-              :placeholder="text[type].placeholder"
-              name="message"
-              v-model="message"
-              v-validate="{max: 255}"
-              data-vv-as="message"
-            >
+            <textarea @keyup.ctrl.enter="submit"
+              oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' rows="1"
+              :placeholder="text[type].placeholder" name="message" v-model="message" v-validate="{ max: 255 }"
+              data-vv-as="message">
             </textarea>
           </form>
-          
-          <ph-button
-            color="blue"
-            size="medium"
-            :loading="submitting"
-            @click.native="submit"
-            :disabled="isDisabled"
-          >
+
+          <ph-button color="blue" size="medium" :loading="submitting" @click.native="submit" :disabled="isDisabled">
             {{ text[type].button }}
-            <template v-if="type==='post' && isDisabled" slot="tooltip">
+            <template v-if="type === 'post' && isDisabled" slot="tooltip">
               <p>Upload a photo or write a post message to submit</p>
             </template>
           </ph-button>
         </div>
-        <div class="img-preview-remove" v-if="previewUrl" >
-            <a title="Remove Image"
-            @click="removeAttachment"><i style="color: #FF0000;" class="fa fa-times text-danger"></i></a>
-          </div>
-          <img
-            :src="previewUrl"
-            class="image-preview"
-            v-if="previewUrl"
-          />
+        <div class="img-preview-remove" v-if="previewUrl">
+          <a title="Remove Image" @click="removeAttachment"><i style="color: #FF0000;"
+              class="fa fa-times text-danger"></i></a>
+        </div>
+        <img :src="previewUrl" class="image-preview" v-if="previewUrl" />
       </div>
       <p class="error-message">
         {{ errors.first("message") }}
       </p>
     </div>
     <div class="main-actions" v-show="submitting">
-      <spinner
-        style="margin: 0 auto"
-        :animation-duration="1000"
-        :size="75"
-        color="black"
-      />
+      <spinner style="margin: 0 auto" :animation-duration="1000" :size="75" color="black" />
     </div>
   </div>
 </template>
@@ -121,7 +80,7 @@ export default {
       required: false,
       //default: function() { return {} },
     },
-    userid : {
+    userid: {
       type: String
     },
     thread: {
@@ -195,13 +154,13 @@ export default {
   },
   computed: {
     ...mapState(["app"]),
-  isDisabled() {
+    isDisabled() {
       if (
         this.type === "newMessage" &&
         (!this.newMessageReceiver || this.message.length === 0)
       ) {
         return true;
-      } else if(this.type === "post" &&
+      } else if (this.type === "post" &&
         (!this.imageUpload && this.message.length === 0)) {
         return true;
       } else {
@@ -215,21 +174,24 @@ export default {
       this.previewUrl = null;
       this.imageUpload = false;
     },
+    handleAttachmentClick(e) {
+      e.target.value = '';
+    },
     handleAttachmentChange(e) {
       const file = e.target.files[0];
-      if(file.type==='image/jpeg' || file.type==='image/png'){
+      if (file.type === 'image/jpeg' || file.type === 'image/png') {
         this.previewUrl = URL.createObjectURL(file);
         this.attachment = file;
         this.imageUpload = true;
-      }else{
+      } else {
 
         Vue.notify({
-              group: 'main',
-              type: 'error',
-              title: 'Only Jpeg and Png are allowed',
-            })
+          group: 'main',
+          type: 'error',
+          title: 'Only Jpeg and Png are allowed',
+        })
       }
-      
+
     },
     submit() {
       switch (this.type) {
@@ -255,9 +217,9 @@ export default {
       axios
         .put(
           "/api/social/comment/" +
-            this.addTextAble.type +
-            "/" +
-            this.addTextAble.id,
+          this.addTextAble.type +
+          "/" +
+          this.addTextAble.id,
           {
             body: this.message,
           }
@@ -273,20 +235,20 @@ export default {
       this.$validator.validate().then((passes) => {
         if (passes) {
           axios
-              .post(
-                  "/api/social/comment/" +
-                  this.addTextAble.type +
-                  "/" +
-                  this.addTextAble.id,
-                  {
-                    body: this.message,
-                  }
-              )
-              .then((response) => {
-                this.$emit("success", response.data);
-                this.message = "";
-                this.submitting = false;
-              });
+            .post(
+              "/api/social/comment/" +
+              this.addTextAble.type +
+              "/" +
+              this.addTextAble.id,
+              {
+                body: this.message,
+              }
+            )
+            .then((response) => {
+              this.$emit("success", response.data);
+              this.message = "";
+              this.submitting = false;
+            });
         }
         this.submitting = false
       })
@@ -360,6 +322,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "~styles/helpers/_variables.scss";
+
 .add-text {
   background: $color-grey;
   padding: 20px;
@@ -416,6 +379,7 @@ export default {
     align-items: center;
     margin: -8px 0 10px;
   }
+
   .file-input {
     &--hidden {
       position: absolute;
@@ -427,6 +391,7 @@ export default {
       z-index: 9999;
     }
   }
+
   .action-name {
     padding: 4px 15px 4px 0;
 
@@ -436,6 +401,7 @@ export default {
       padding-left: 15px;
     }
   }
+
   .attachment-options {
     font-size: 25px;
     display: flex;
@@ -473,6 +439,7 @@ export default {
       justify-content: center;
       align-items: center;
     }
+
     textarea {
       resize: none;
 

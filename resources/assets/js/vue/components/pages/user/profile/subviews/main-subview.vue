@@ -4,7 +4,7 @@
         <events :user="user" v-if="path == 'profile_events'" />
         <merch :user="user" v-if="path == 'profile_merch'" />
         <music :user="user" v-if="path == 'profile_music'" />
-        <posts :user="user" v-if="path == 'profile_posts'" />
+        <posts :user="user" v-if="path == 'profile_posts'" @createLink="pathToAll()"/>
         <releases :user="user" v-if="path == 'profile_releases'" />
         <videos :user="user" v-if="path == 'profile_videos'" />
     </div>
@@ -37,6 +37,11 @@
             Posts,
             Releases,
             Videos
+        },
+        methods:{
+          pathToAll(){
+            this.$emit('linkclickSubview', 'profile_all');
+          }
         }
     }
 </script>

@@ -70,11 +70,10 @@
                 } else {
                     length = this.item.length
                 }
-                console.log(length);
                 return moment().startOf('day').seconds(length).format('mm:ss')
             },
             artist() {
-                console.log("itemm", this.item);
+                console.log(this.item);
                 if (this.item.type === 'release') {
                     return this.item.tracks[0].artist.name
                 } else {

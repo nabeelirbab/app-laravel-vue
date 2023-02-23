@@ -45,9 +45,9 @@
         </aside>
         <!-- MAIN CONTENT -->
         <div class="pro-content-area">
-          <profile-navigation :user="user" @linkclick="linkClicked" />
+          <profile-navigation :user="user" @linkclick="linkClicked" :routeNameSubview="routeSubview"/>
           <router-view :user="user" v-if="linkclicked == 0" />
-          <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" />
+          <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" @linkclickSubview="linkClicked"/>
         </div>
       </div>
     </div>
@@ -86,7 +86,8 @@ export default {
   data() {
     return {
       linkclicked: 0,
-      subviewpath: ''
+      subviewpath: '',
+      routeSubview: ''
     }
   },
   mixins: [ProfileMixin],
@@ -114,6 +115,7 @@ export default {
     },
     linkClicked(path) {
       this.linkclicked = 1;
+      this.routeSubview = path;
       this.subviewpath = path;
     },
   },

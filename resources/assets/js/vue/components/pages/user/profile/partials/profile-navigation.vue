@@ -1,16 +1,14 @@
 <template>
     <nav class="sub-nav">
         <ul v-if="user.account_type === 'standard'">
-            <li><a href="#"
-                    v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"
+            <li><a href="#" v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"
                     @click="changeRoute('profile_all')">Activity</a>&nbsp;|</li>
             <li><a href="#"
                     v-bind:class="[routename == 'profile_posts' ? 'router-link-exact-active router-link-active' : '']"
                     @click="changeRoute('profile_posts')">Posts</a></li>
         </ul>
         <ul v-else>
-            <li><a href="#"
-                    v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"
+            <li><a href="#" v-bind:class="[routename == 'profile_all' ? 'router-link-exact-active router-link-active' : '']"
                     @click="changeRoute('profile_all')">Activity</a>&nbsp;|</li>
             <li><a href="#"
                     v-bind:class="[routename == 'profile_music' ? 'router-link-exact-active router-link-active' : '']"
@@ -32,7 +30,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 export default {
     data() {
         return {
@@ -43,7 +40,10 @@ export default {
         user: {
             type: Object,
             required: true,
-        }
+        },
+        routeNameSubview: {
+            type: String,
+        },
     },
     methods: {
         changeRoute(pathname) {
@@ -51,8 +51,12 @@ export default {
             this.routename = pathname;
             this.$emit("linkclick", pathname);
         },
-
     },
+    watch: {
+        routeNameSubview: function (newVal, oldVal) { // watch it
+            this.routename = newVal;
+        }
+    }
 }
 </script>
 

@@ -1,29 +1,32 @@
 <template>
     <div>
-        <h6>Users:</h6>
+        <h6>Users: {{ users.length }} Results</h6>
         <ul class="list" v-if="users.length">
-            <li v-for="(result, index) in users" class="item" >
-                <artist-tile :user="result" :size="150"  />
+            <li v-for="(result, index) in users" class="item">
+                <artist-tile :user="result" :size="150" />
             </li>
         </ul>
-        <span style="color: red;" v-else>No users found in this search!</span>
+        <a href="#" @click="userLoad" class="searchLoadMore" v-if="counts.user > pages.user">Load more</a>
+        <!-- <span style="color: red;" v-else>No users found in this search!</span> -->
 
-        <h6>Releases:</h6>
+        <h6>Releases: {{ releases.length }} Results</h6>
         <ul class="list" v-if="releases.length">
             <li v-for="(result, index) in releases" class="item" style="margin-right: 10px;">
-                <release-tile :release="result" :size="150" ></release-tile>
+                <release-tile :release="result" :size="150"></release-tile>
             </li>
         </ul>
-        <span style="color: red;" v-else>No releases found in this search!</span>
+        <a href="#" class="searchLoadMore" @click="releaseLoad" v-if="counts.release > pages.release">Load more</a>
+        <!-- <span style="color: red;" v-else>No releases found in this search!</span> -->
 
 
-        <h6>Tracks:</h6>
+        <h6>Tracks: {{ tracks.length }} Results</h6>
         <ul class="list" v-if="tracks.length">
             <li v-for="(result, index) in tracks" class="item">
-                <track-tile :track="result" :size="150" ></track-tile>
+                <track-tile :track="result" :size="150"></track-tile>
             </li>
         </ul>
-        <span style="color: red;" v-else>No tracks found in this search!</span>
+        <a href="#" @click="trackLoad" class="searchLoadMore" v-if="counts.track > pages.track">Load more</a>
+        <!-- <span style="color: red;" v-else>No tracks found in this search!</span> -->
 
     </div>
     <!-- <div>
@@ -51,21 +54,45 @@ import ReleaseTile from "global/releases/release-tile";
 import TrackTile from "global/releases/track-tile";
 import ArtistTile from "global/artists/artist-tile";
 export default {
-    props: ["users", "releases", "tracks"],
+    props: ["users", "releases", "tracks", "counts", "pages"],
     components: {
         ReleaseTile,
         TrackTile,
         ArtistTile,
-    }
+    },
+    methods: {
+        userLoad() {
+            this.$emit("handleUserLoad");
+        },
+        releaseLoad() {
+            this.$emit("handleReleaseLoad");
+
+        },
+        trackLoad() {
+            this.$emit("handleTrackLoad");
+
+        }
+    },
 };
 </script>
 
-<style>
+<style scoped>
+h6 {
+    border-bottom: 2px solid #3300ff;
+    padding-bottom: 10px;
+}
+
+.searchLoadMore{
+   color: #3300ff; 
+   font-size: 14px;
+}
+
 .list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
+
 .list li {
     margin-left: 10px;
     width: 150px;

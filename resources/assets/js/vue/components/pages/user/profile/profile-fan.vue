@@ -6,9 +6,9 @@
         </aside>
         <!-- MAIN CONTENT -->
         <div class="page-main">
-            <profile-navigation :user="user" @linkclick="linkClicked" />
+            <profile-navigation :user="user" @linkclick="linkClicked" :routeNameSubview="routeSubview"/>
             <router-view :user="user" v-if="linkclicked == 0" />
-            <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" />
+            <main-subview :user="user" :path="subviewpath" v-if="linkclicked == 1" @linkclickSubview="linkClicked"/>
 
         </div>
         <aside class="sidebar-right">
@@ -40,12 +40,15 @@
         data() {
             return {
               linkclicked: 0,
-              subviewpath: ''
+              subviewpath: '',
+              routeSubview:'',
             }
         },
         methods: {
             linkClicked(path) {
+                console.log(path);
               this.linkclicked = 1;
+              this.routeSubview = path;
               this.subviewpath = path;
             },
         },
