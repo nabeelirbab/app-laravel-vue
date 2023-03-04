@@ -225,6 +225,7 @@ export default {
 	.not-found-div {
 		width: 800px;
 		text-align: center;
+		display: block;
 
 		@media (max-width: 750px) {
 			width: 600px;

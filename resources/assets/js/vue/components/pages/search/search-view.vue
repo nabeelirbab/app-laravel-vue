@@ -13,14 +13,14 @@
           v-on:drag-end.once="doSearch"></vue-slider>
       </div>
     </filter-container>
-    <div class="search-results">
+    <div class="search-results" style="width: 100%;">
       <div class="search-results-count">
         <!-- <button @click="loadmore">load more</button> -->
-        <div v-show="loading">
+        <div v-show="loading" style="text-align: center;margin: 50% 0;">
           Loading...
         </div>
         <div v-show="!loading">
-          Showing {{ users.length + releases.length + tracks.length }} results
+          <!-- Showing {{ users.length + releases.length + tracks.length }} results -->
           <span v-if="$store.state.search.searchTerm.length">for '{{ $store.state.search.searchTerm }}'</span>
           <span v-if="
             filters.genres.length ||
@@ -39,7 +39,9 @@
       <div class="search-results-grid">
         <div class="search-result" v-show="!loading" :key="index">
           <search-result :users="users" :releases="releases" :tracks="tracks" @handleUserLoad="handleUserLoad"
-            @handleReleaseLoad="handleReleaseLoad" @handleTrackLoad="handleTrackLoad" :counts="counts" :pages="pages" />
+            @handleReleaseLoad="handleReleaseLoad" @handleTrackLoad="handleTrackLoad" :counts="counts" :pages="pages"
+            :loadingUserMore="loadingUserMore" :loadingReleaseMore="loadingReleaseMore"
+            :loadingTrackMore="loadingTrackMore" />
         </div>
       </div>
     </div>
@@ -67,6 +69,9 @@ export default {
   data() {
     return {
       loading: false,
+      loadingUserMore: false,
+      loadingReleaseMore: false,
+      loadingTrackMore: false,
       results: [],
       pages: {
         user: 1,
@@ -115,27 +120,30 @@ export default {
   },
   methods: {
     handleUserLoad() {
-      console.log('U Load more....');
+      // console.log('U Load more....');
       this.pages.old_user = this.pages.user;
       this.pages.old_release = this.pages.release;
       this.pages.old_track = this.pages.track;
       this.pages.user += 1;
+      this.loadingUserMore = true;
       this.doSearch();
     },
     handleReleaseLoad() {
-      console.log('R Load more....');
+      // console.log('R Load more....');
       this.pages.old_user = this.pages.user;
       this.pages.old_release = this.pages.release;
       this.pages.old_track = this.pages.track;
       this.pages.release += 1;
+      this.loadingReleaseMore = true;
       this.doSearch();
     },
     handleTrackLoad() {
-      console.log('T Load more....');
+      // console.log('T Load more....');
       this.pages.old_user = this.pages.user;
       this.pages.old_release = this.pages.release;
       this.pages.old_track = this.pages.track;
       this.pages.track += 1;
+      this.loadingTrackMore = true;
       this.doSearch();
     },
     beforeSearchMutation() {
@@ -178,7 +186,9 @@ export default {
       }
     },
     doSearch() {
-      this.loading = true;
+      if ((this.counts.user && this.counts.release && this.counts.track) === 0) {
+        this.loading = true;
+      }
       axios
         .post("/api/search/" + this.pages.user + "/" + this.pages.release + "/" + this.pages.track, {
           term: this.vuexSearchTerm,
@@ -189,7 +199,7 @@ export default {
           newsearch: 1
         })
         .then((response) => {
-          console.log("response search", response);
+          // console.log("response search", response);
           if (typeof (response.data.term) != typeof (undefined)) {
 
             var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
@@ -199,15 +209,24 @@ export default {
 
             if (response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm) {
               this.loading = false;
+              this.loadingUserMore = false;
+              this.loadingReleaseMore = false;
+              this.loadingTrackMore = false;
               this.afterSearchMutation(response.data)
 
             }
             else if (response.data.term == this.vuexSearchTerm || validGenres && validClasses && validKeys && validBpm) {
               this.loading = false;
+              this.loadingUserMore = false;
+              this.loadingReleaseMore = false;
+              this.loadingTrackMore = false;
               this.afterSearchMutation(response.data)
             }
           } else {
             this.loading = false;
+            this.loadingUserMore = false;
+            this.loadingReleaseMore = false;
+            this.loadingTrackMore = false;
             this.afterSearchMutation(response)
           }
 

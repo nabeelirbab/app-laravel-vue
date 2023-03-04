@@ -36,10 +36,8 @@ class SearchController extends Controller
             'bpm' => 'array'
         ]);
 
-        if (!$validated['term'] && !$validated['genres']) {
-            // dd(auth()->user()->interests);
+        if (auth()->user() && !$validated['term'] && !$validated['genres']) {
             $validated['genres'] = auth()->user()->interests;
-            // dd($validated['genres']);
         }
 
         $users = User::whereHas('roles', function ($q) use ($validated) {
@@ -117,9 +115,9 @@ class SearchController extends Controller
         // $data = $data->merge($trackfilter->get())->merge($filter->get());
         // dd($data);
 
-        $userChunks = $users->chunk(20);
-        $releaseChunks = $filter->get()->chunk(20);
-        $trackChunks = $trackfilter->get()->chunk(20);
+        $userChunks = $users->chunk(7);
+        $releaseChunks = $filter->get()->chunk(7);
+        $trackChunks = $trackfilter->get()->chunk(7);
 
         // dd($trackChunks);
 

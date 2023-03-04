@@ -70,5 +70,6 @@ export default {
 .not-found {
     text-align: center;
     margin-top: 10px;
+    display: block;
 }
 </style>
