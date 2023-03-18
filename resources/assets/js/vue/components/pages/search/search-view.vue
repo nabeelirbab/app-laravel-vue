@@ -17,7 +17,7 @@
       <div class="search-results-count">
         <!-- <button @click="loadmore">load more</button> -->
         <div v-show="loading" style="text-align: center;margin: 50% 0;">
-          Loading...
+          Searching deep within phase...
         </div>
         <div v-show="!loading">
           <!-- Showing {{ users.length + releases.length + tracks.length }} results -->
@@ -103,17 +103,26 @@ export default {
     }),
   },
   mounted: function () {
-    this.doSearch();
+    this.doUsersSearch();
+    this.doReleasesSearch();
+    this.doTracksSearch();
+    // this.doSearch();
   },
   watch: {
     vuexSearchTerm: _.debounce(function () {
       this.beforeSearchMutation();
-      this.doSearch();
+      this.doUsersSearch();
+      // this.doReleasesSearch();
+      // this.doTracksSearch();
+      // this.doSearch();
     }, 500),
     filters: {
       handler: function () {
         this.beforeSearchMutation();
-        this.doSearch();
+        this.doUsersSearch();
+        // this.doReleasesSearch();
+        // this.doTracksSearch();
+        // this.doSearch();
       },
       deep: true,
     },
@@ -126,7 +135,8 @@ export default {
       this.pages.old_track = this.pages.track;
       this.pages.user += 1;
       this.loadingUserMore = true;
-      this.doSearch();
+      // this.doSearch();
+      this.doUsersSearch();
     },
     handleReleaseLoad() {
       // console.log('R Load more....');
@@ -135,7 +145,8 @@ export default {
       this.pages.old_track = this.pages.track;
       this.pages.release += 1;
       this.loadingReleaseMore = true;
-      this.doSearch();
+      // this.doSearch();
+      this.doReleasesSearch();
     },
     handleTrackLoad() {
       // console.log('T Load more....');
@@ -144,7 +155,8 @@ export default {
       this.pages.old_track = this.pages.track;
       this.pages.track += 1;
       this.loadingTrackMore = true;
-      this.doSearch();
+      // this.doSearch();
+      this.doTracksSearch();
     },
     beforeSearchMutation() {
       this.pages.user = 1;
@@ -160,17 +172,21 @@ export default {
       this.releases = [];
       this.tracks = [];
     },
-    afterSearchMutation(res) {
-      if (this.pages.user == 1 && this.pages.release == 1 && this.pages.track == 1) {
+    afterSearchUserMutation(res) {
+      if (this.pages.user == 1 && res.userChunkCount > 0) {
         this.counts.user = res.userChunkCount;
-        this.counts.release = res.releaseChunkCount;
-        this.counts.track = res.trackChunkCount;
       }
+
 
       if (res.users.length && this.pages.old_user < this.pages.user) {
         res.users.map(e => {
           this.users.push(e);
         });
+      }
+    },
+    afterSearchReleaseMutation(res) {
+      if (this.pages.release == 1 && res.releaseChunkCount > 0) {
+        this.counts.release = res.releaseChunkCount;
       }
 
       if (res.releases.length && this.pages.old_release < this.pages.release) {
@@ -178,12 +194,143 @@ export default {
           this.releases.push(e);
         });
       }
+    },
+    afterSearchTrackMutation(res) {
+      if (this.pages.track == 1 && res.trackChunkCount > 0) {
+        this.counts.track = res.trackChunkCount;
+      }
 
       if (res.tracks.length && this.pages.old_track < this.pages.track) {
         res.tracks.map(e => {
           this.tracks.push(e);
         });
       }
+    },
+    doUsersSearch() {
+      if ((this.counts.user) === 0) {
+        this.loading = true;
+        this.loadingUserMore = true;
+      }
+      
+      axios
+        .post("/api/search/user/" + this.pages.user, {
+          term: this.vuexSearchTerm,
+          classes: this.filters.classes,
+          genres: this.filters.genres,
+          keys: this.filters.keys,
+          bpm: this.filters.bpm,
+          newsearch: 1
+        })
+        .then((response) => {
+          console.log(response);
+          if (typeof (response.data.term) != typeof (undefined)) {
+
+            var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
+            var validClasses = this.checkTwoArrays(this.filters.classes, response.data.classes);
+            var validKeys = this.checkTwoArrays(this.filters.keys, response.data.keys);
+            var validBpm = this.checkTwoArrays(this.filters.bpm, response.data.bpm);
+
+            if (response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.loadingUserMore = false;
+              this.afterSearchUserMutation(response.data)
+
+            }
+            else if (response.data.term == this.vuexSearchTerm || validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.loadingUserMore = false;
+              this.afterSearchUserMutation(response.data)
+            }
+          } else {
+            this.loading = false;
+            this.loadingUserMore = false;
+            this.afterSearchUserMutation(response)
+          }
+        });
+    },
+    doReleasesSearch() {
+      if ((this.counts.release) === 0) {
+        this.loading = true;
+        this.loadingReleaseMore = true;
+      }
+
+      axios
+        .post("/api/search/release/" + this.pages.release, {
+          term: 'Sam',
+          classes: this.filters.classes,
+          genres: this.filters.genres,
+          keys: this.filters.keys,
+          bpm: this.filters.bpm,
+          newsearch: 1
+        })
+        .then((response) => {
+          console.log(response);
+          if (typeof (response.data.term) != typeof (undefined)) {
+
+            var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
+            var validClasses = this.checkTwoArrays(this.filters.classes, response.data.classes);
+            var validKeys = this.checkTwoArrays(this.filters.keys, response.data.keys);
+            var validBpm = this.checkTwoArrays(this.filters.bpm, response.data.bpm);
+
+            if (response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.loadingReleaseMore = false;
+              this.afterSearchReleaseMutation(response.data)
+
+            }
+            else if (response.data.term == this.vuexSearchTerm || validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.loadingReleaseMore = false;
+              this.afterSearchReleaseMutation(response.data)
+            }
+          } else {
+            this.loading = false;
+            this.loadingReleaseMore = false;
+            this.afterSearchReleaseMutation(response)
+          }
+        });
+    },
+    doTracksSearch() {
+      if ((this.counts.track) === 0) {
+        this.loading = true;
+        this.loadingTrackMore = true;
+      }
+
+      axios
+        .post("/api/search/track/" + this.pages.track, {
+          term: 'Sam',
+          classes: this.filters.classes,
+          genres: this.filters.genres,
+          keys: this.filters.keys,
+          bpm: this.filters.bpm,
+          newsearch: 1
+        })
+        .then((response) => {
+          console.log(response);
+          if (typeof (response.data.term) != typeof (undefined)) {
+
+            var validGenres = this.checkTwoArrays(this.filters.genres, response.data.genres);
+            var validClasses = this.checkTwoArrays(this.filters.classes, response.data.classes);
+            var validKeys = this.checkTwoArrays(this.filters.keys, response.data.keys);
+            var validBpm = this.checkTwoArrays(this.filters.bpm, response.data.bpm);
+
+            if (response.data.term == this.vuexSearchTerm && validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.loadingTrackMore = false;
+              this.afterSearchTrackMutation(response.data)
+
+            }
+            else if (response.data.term == this.vuexSearchTerm || validGenres && validClasses && validKeys && validBpm) {
+              this.loading = false;
+              this.loadingTrackMore = false;
+              this.afterSearchTrackMutation(response.data)
+            }
+          } else {
+            this.loading = false;
+            this.loadingTrackMore = false;
+            this.afterSearchTrackMutation(response)
+          }
+        });
     },
     doSearch() {
       if ((this.counts.user && this.counts.release && this.counts.track) === 0) {

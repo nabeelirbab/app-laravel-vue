@@ -114,6 +114,7 @@ textarea {
 .save-button {
     margin-top: 1em;
     text-align: center;
+    font-size: 12px !important;
 }
 
 .error-msg {

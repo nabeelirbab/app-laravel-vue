@@ -10,8 +10,8 @@
         </p>
 
         <div>
-            <ph-button v-if="app.user.roles[0].name === 'artist'" style="margin-bottom: 5px;" size="medium"
-                @click.native="downgradeAccount" :loading="downgrading">
+            <ph-button v-if="app.user.roles[0].name === 'artist' || app.user.roles[0].name === 'pro'" style="
+                margin-bottom: 5px;" size="medium" @click.native="downgradeAccount" :loading="downgrading">
                 Downgrade to Standard
             </ph-button>
             <ph-button v-if="app.user.roles[0].name === 'pro'" style="margin-bottom: 5px;" size="medium"
@@ -35,10 +35,11 @@
         <deactivate-modal></deactivate-modal>
         <downgrade-modal></downgrade-modal>
         <downgrade-to-artist-modal></downgrade-to-artist-modal>
-        <modal name="modal-account-reg-form" @before-open="beforeOpen" @closed="closed" width="80%" height="auto"
-            scrollable style="padding: 10px 35px;display: table-cell;">
+        <modal name="modal-account-reg-form" @before-open="beforeOpen" @closed="closed" width="80%" height="auto" scrollable
+            style="padding: 10px 35px;display: table-cell;">
             <div class="modal modal-account-reg-form">
                 <div class="modal-header">
+                    <close-icon class="float-right" @click.native="closeManageModals()"></close-icon>
                     <logo class="modal-logo centered-block" style="width: 185px;" />
                 </div>
                 <div class="modal-content full-width" v-if="!submitted" style="padding: 10px 35px;">
@@ -54,6 +55,7 @@
 </template>
 
 <script>
+import CloseIcon from '../../../global/close-icon';
 import DeleteModal from './../../../modals/delete';
 import DowngradeModal from './../../../modals/downgrade-confirm';
 import DowngradeArtistModal from './../../../modals/downgrade-to-artist-confirm';
@@ -84,7 +86,21 @@ export default {
 
         },
         closed() {
-
+            if (this.upgrading) {
+                this.upgrading = false;
+            }
+            if (this.downgrading) {
+                this.downgrading = false;
+            }
+        },
+        closeManageModals() {
+            this.$modal.hide('modal-account-reg-form');
+            if (this.upgrading) {
+                this.upgrading = false;
+            }
+            if (this.downgrading) {
+                this.downgrading = false;
+            }
         },
         deactivateAccount() {
             this.$modal.show('modal-deactivate');
@@ -142,6 +158,7 @@ export default {
         'deactivate-modal': DeactivateModal,
         'connect-details': ConnectDetails,
         'verification-details': VerificationDetails,
+        'close-icon': CloseIcon,
     }
 }
 </script>

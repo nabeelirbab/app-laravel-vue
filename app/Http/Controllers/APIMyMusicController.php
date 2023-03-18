@@ -67,7 +67,7 @@ class APIMyMusicController extends Controller
                 }
             ])
             ->latest('release_date')
-            ->paginate(10);
+            ->paginate(7);
         return $uploadedMusic;
     }
 

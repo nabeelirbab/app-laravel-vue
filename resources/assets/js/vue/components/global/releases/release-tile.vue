@@ -1,12 +1,7 @@
 <template>
   <div>
-    <avatar-track
-      :fullWidth="true"
-      :tile="true"
-      :src="release.image.files.medium.url"
-      :track="release.tracks[0]"
-      :recent="release.is_recent"
-    />
+    <avatar-track :fullWidth="true" :tile="true" :src="release.image.files.medium.url" :track="release.tracks[0]"
+      :recent="release.is_recent" />
     <div v-if="mode === 'charts'" class="release-tile-chart-position">
       <div class="position"># {{ chartPosition }}</div>
       <div class="line"></div>
@@ -38,7 +33,11 @@ export default {
   data() {
     return {};
   },
-  created: function () {},
+  created: function () {
+  },
+  mounted(){
+    console.log(getRouterObject(this.release));
+  },
   components: {
     Avatar,
     AvatarTrack,
@@ -67,6 +66,7 @@ export default {
     font-weight: bold;
     color: var(--strong-blue);
   }
+
   .line {
     width: 100%;
     background: var(--strong-blue);
@@ -74,13 +74,16 @@ export default {
     border-radius: 12px;
   }
 }
+
 .release-tile {
   text-decoration: none;
 }
+
 .release-tile-text {
   text-align: left;
   margin: 1em 0;
 }
+
 .release-name {
   text-align: left;
   font-size: 12px;
@@ -95,7 +98,7 @@ export default {
 </style>
 
 <style lang="css">
-.release-tile-image > div {
+.release-tile-image>div {
   width: 100% !important;
 }
 </style>
