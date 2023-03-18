@@ -112,16 +112,16 @@ export default {
     vuexSearchTerm: _.debounce(function () {
       this.beforeSearchMutation();
       this.doUsersSearch();
-      // this.doReleasesSearch();
-      // this.doTracksSearch();
+      this.doReleasesSearch();
+      this.doTracksSearch();
       // this.doSearch();
     }, 500),
     filters: {
       handler: function () {
         this.beforeSearchMutation();
         this.doUsersSearch();
-        // this.doReleasesSearch();
-        // this.doTracksSearch();
+        this.doReleasesSearch();
+        this.doTracksSearch();
         // this.doSearch();
       },
       deep: true,
@@ -211,7 +211,7 @@ export default {
         this.loading = true;
         this.loadingUserMore = true;
       }
-      
+
       axios
         .post("/api/search/user/" + this.pages.user, {
           term: this.vuexSearchTerm,
