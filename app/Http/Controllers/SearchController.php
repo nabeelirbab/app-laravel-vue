@@ -254,7 +254,6 @@ class SearchController extends Controller
             ->get()
             ->map(function ($release) {
                 $tempRelease = Release::where('id', $release->id)->first();
-                dd($tempRelease);
                 // $release->image = Asset::with('files')->where('id', $release->image_id)->first();
                 $release->type = 'release';
                 if ($tempRelease) {
