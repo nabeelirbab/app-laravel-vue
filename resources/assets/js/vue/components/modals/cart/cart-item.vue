@@ -73,7 +73,7 @@
                 return moment().startOf('day').seconds(length).format('mm:ss')
             },
             artist() {
-                console.log(this.item);
+                console.log("cart item", this.item);
                 if (this.item.type === 'release') {
                     return this.item.tracks[0].artist.name
                 } else {

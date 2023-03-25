@@ -5,6 +5,10 @@
             <li v-for="(result, index) in users" class="item">
                 <artist-tile :user="result" :size="150" />
             </li>
+            <li class="load-more-icon">
+                <button class="btn" @click="userLoad" v-if="counts.user > pages.user" v-show="!loadingUserMore">Load
+                    More</button>
+            </li>
             <!-- <li class="load-more-icon">
                 <i class="fa fa-plus-circle"></i>
             </li>
@@ -13,7 +17,6 @@
             </li> -->
         </ul>
         <spinner style="margin: 2em auto" v-show="loadingUserMore" :animation-duration="1000" :size="60" color="black" />
-        <button class="btn" @click="userLoad" v-if="counts.user > pages.user" v-show="!loadingUserMore">Load More</button>
 
         <!-- <span style="color: red;" v-else>No users found in this search!</span> -->
 
@@ -21,6 +24,11 @@
         <ul class="list" v-if="releases.length">
             <li v-for="(result, index) in releases" class="item">
                 <release-tile :release="result" :size="150"></release-tile>
+            </li>
+            <li class="load-more-icon">
+                <button class="btn" @click="releaseLoad" v-if="counts.release > pages.release"
+                    v-show="!loadingReleaseMore">Load
+                    More</button>
             </li>
             <!-- <li class="load-more-icon" @click="releaseLoad" v-if="counts.release > pages.release"
                 v-show="!loadingReleaseMore">
@@ -31,8 +39,7 @@
             </li> -->
         </ul>
         <spinner style="margin: 2em auto" v-show="loadingReleaseMore" :animation-duration="1000" :size="60" color="black" />
-        <button class="btn" @click="releaseLoad" v-if="counts.release > pages.release" v-show="!loadingReleaseMore">Load
-            More</button>
+
         <!-- <span style="color: red;" v-else>No releases found in this search!</span> -->
 
 
@@ -40,6 +47,10 @@
         <ul class="list" v-if="tracks.length">
             <li v-for="(result, index) in tracks" class="item">
                 <track-tile :track="result" :size="150"></track-tile>
+            </li>
+            <li class="load-more-icon">
+                <button class="btn" @click="trackLoad" v-if="counts.track > pages.track" v-show="!loadingTrackMore">Load
+                    More</button>
             </li>
             <!-- <li class="load-more-icon" @click="trackLoad" v-if="counts.track > pages.track" v-show="!loadingTrackMore">
                 <i class="fa fa-plus-circle"></i>
@@ -49,8 +60,7 @@
             </li> -->
         </ul>
         <spinner style="margin: 2em auto" v-show="loadingTrackMore" :animation-duration="1000" :size="60" color="black" />
-        <button class="btn" @click="trackLoad" v-if="counts.track > pages.track" v-show="!loadingTrackMore">Load
-            More</button>
+
         <!-- <span style="color: red;" v-else>No tracks found in this search!</span> -->
 
     </div>
@@ -142,11 +152,11 @@ h6 {
 }
 
 .load-more-icon {
-    margin: auto 0;
-    padding: 5px;
+    margin: auto;
+    /* padding: 5px;
     color: #0000ff;
     font-size: 20px;
-    cursor: pointer;
+    cursor: pointer; */
 }
 
 .load-more-spinner {

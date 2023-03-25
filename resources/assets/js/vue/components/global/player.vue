@@ -194,6 +194,7 @@ export default {
             trackType: 'player/getTrackByType'
         }),
         trackUrl() {
+            console.log("tracksskk", this.track);
             const track = this.trackType(this.type)
             return track.files[this.type].url
         }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Asset;
 use App\Download;
+use App\Genre;
 use App\Order;
 use App\Release;
 use Exception;
@@ -10,6 +12,7 @@ use Illuminate\Http\Request;
 
 use App\Track;
 use App\User;
+use DB;
 use Storage;
 use File;
 
@@ -53,21 +56,61 @@ class APIMyMusicController extends Controller
     }
     public function getUploadedMusic($user_id = null)
     {
-        $uploadedMusic = Release::where('uploaded_by', $user_id)->where('status', 'live')
-            ->where('release_date', '<=', date('Y-m-d'))
-            ->with([
-                'image',
-                'tracks',
-                'tracks.release',
-                'tracks.artist',
-                'genres',
-                'tracks.preview',
-                'uploader' => function ($query) {
-                    $query->select(['id', 'name', 'path']);
-                }
-            ])
-            ->latest('release_date')
-            ->paginate(7);
+        // $uploadedMusic = Release::where('uploaded_by', $user_id)->where('status', 'live')
+        //     ->where('release_date', '<=', date('Y-m-d'))
+        //     ->with([
+        //         'image',
+        //         'tracks',
+        //         'tracks.release',
+        //         'tracks.artist',
+        //         'genres',
+        //         'tracks.preview',
+        //         'uploader' => function ($query) {
+        //             $query->select(['id', 'name', 'path']);
+        //         }
+        //     ])
+        //     ->latest('release_date')
+        //     ->paginate(7);
+        $uploadedMusic = DB::table('releases')
+            ->select(DB::raw('releases.*, users.name as uploader_name, users.email as uploader_email, users.path as uploader_path'))
+            ->where('releases.uploaded_by', $user_id)
+            ->where('releases.status', 'live')
+            ->where('releases.release_date', '<=', date('Y-m-d'))
+            // ->leftJoin('images', 'releases.image_id', '=', 'images.id')
+            ->join('users', 'releases.uploaded_by', '=', 'users.id')
+            // ->leftJoin('release_track_genres', 'releases.id', '=', 'release_track_genres.release_id')
+            // ->leftJoin('genres', 'release_track_genres.genre_id', '=', 'genres.id')
+            ->groupBy('releases.id', 'releases.name', 'releases.description', 'releases.price', 'releases.featured', 'releases.royalty_fee', 'releases.image_id', 'releases.uploaded_by', 'releases.release_date', 'releases.class', 'releases.status', 'releases.frozen_at', 'releases.deleted_at', 'releases.created_at', 'releases.slug', 'releases.updated_at', 'users.name', 'users.email', 'users.path')
+            ->orderBy('release_date', 'desc')
+            ->paginate(10);
+        $uploadedMusic->getCollection()->transform(function ($release) {
+            $release->image = Asset::with('files')->where('id', $release->image_id)->first();
+            $release->type = 'release';
+            $release->tracks = Track::where('release_id', $release->id)->get();
+            $release->genres = $release->tracks[0]->release->genres;
+            for ($i = 0; $i < count($release->tracks); $i++) {
+                unset(
+                    $release->tracks[$i]->release,
+                );
+            }
+            $release->uploader = [
+                'name' => $release->uploader_name,
+                'email' => $release->uploader_email,
+                'path' => $release->uploader_path,
+            ];
+            unset(
+                $release->uploader_name,
+                $release->uploader_email,
+                $release->uploader_path,
+                $release->image->files,
+            );
+            $serializedRelease = serialize($release);
+            $tempRelease = unserialize($serializedRelease);
+            $tempRelease->tracks[0]->release = $release;
+            $tempRelease->tracks[0]->artist = $release->uploader;
+            return $tempRelease;
+        });
+
         return $uploadedMusic;
     }
 

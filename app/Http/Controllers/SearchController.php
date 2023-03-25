@@ -172,7 +172,7 @@ class SearchController extends Controller
         if (auth()->user() && !$validated['term'] && !$validated['genres']) {
             $validated['genres'] = auth()->user()->interests;
         }
-        
+
         $users = User::whereHas('roles', function ($q) use ($validated) {
             $q->whereIn('roles.name', ['pro', 'artist', 'admin', 'standard'])
                 ->where(function ($q) use ($validated) {
@@ -256,10 +256,12 @@ class SearchController extends Controller
                 $tempRelease = Release::where('id', $release->id)->first();
                 // $release->image = Asset::with('files')->where('id', $release->image_id)->first();
                 $release->type = 'release';
-                $release->image = $tempRelease->image;
-                $release->is_liked = $tempRelease->is_liked;
-                $release->is_shared = $tempRelease->is_shared;
-                $release->is_recent = $tempRelease->is_recent;
+                if ($tempRelease) {
+                    $release->image = $tempRelease->image;
+                    $release->is_liked = $tempRelease->is_liked;
+                    $release->is_shared = $tempRelease->is_shared;
+                    $release->is_recent = $tempRelease->is_recent;
+                }
                 $release->tracks = Track::where('release_id', $release->id)->get();
                 $release->uploader = [
                     'name' => $release->uploader_name,
@@ -445,7 +447,7 @@ class SearchController extends Controller
             $trackfilter->addKeyFilter($validated['keys']);
         }
 
-        $trackChunks = $tracks->chunk(20);
+        $trackChunks = $trackfilter->get()->chunk(20);
 
         // dd($trackChunks);
 

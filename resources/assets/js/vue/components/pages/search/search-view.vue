@@ -256,7 +256,7 @@ export default {
 
       axios
         .post("/api/search/release/" + this.pages.release, {
-          term: 'Sam',
+          term: this.vuexSearchTerm,
           classes: this.filters.classes,
           genres: this.filters.genres,
           keys: this.filters.keys,
@@ -298,7 +298,7 @@ export default {
 
       axios
         .post("/api/search/track/" + this.pages.track, {
-          term: 'Sam',
+          term: this.vuexSearchTerm,
           classes: this.filters.classes,
           genres: this.filters.genres,
           keys: this.filters.keys,
