@@ -71,7 +71,7 @@ class Filter
     public function addGenreFilter(Genre $filterGenre)
     {
         $this->items = $this->items->filter(function ($item) use ($filterGenre) {
-            $genreLists = (isset($item->release->genres)) ? $item->release->genres : $item->genres;
+            $genreLists = (isset($item->release->genres)) ? $item->release->genres : (isset($item->genres) ? $item->genres : []);
             foreach ($genreLists as $genre) {
                 if ($genre->id == $filterGenre->id) {
                     return true;
@@ -111,16 +111,24 @@ class Filter
      */
     public function addKeyFilter($filterKey)
     {
-        
+
         $filterKey = collect($filterKey);
         $keyValues = [];
-        foreach($filterKey as $key) {
+        foreach ($filterKey as $key) {
             $keyValues[] = $key['val'];
         }
         $this->items = $this->items->filter(function ($item) use ($keyValues) {
-           if(in_array($item->key, $keyValues)) {
-                return true;
-            } 
+            if ($item->type == 'release') {
+                foreach ($item->tracks as $track) {
+                    if (in_array($track->key, $keyValues)) {
+                        return true;
+                    }
+                }
+            } else {
+                if (in_array($item->key, $keyValues)) {
+                    return true;
+                }
+            }
             return false;
         })->values();
         return $this;
@@ -137,7 +145,7 @@ class Filter
     {
 
         $this->items = $this->items->filter(function ($item) use ($minbpm, $maxbpm) {
-            if(isset($item->bpm)) {
+            if (isset($item->bpm)) {
                 if ($item->bpm >= $minbpm && $item->bpm <= $maxbpm) {
                     return true;
                 }
@@ -148,7 +156,7 @@ class Filter
                     }
                 }
             }
-            
+
             return false;
         });
         return $this;

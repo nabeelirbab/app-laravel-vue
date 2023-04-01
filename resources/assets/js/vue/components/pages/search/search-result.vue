@@ -152,7 +152,7 @@ h6 {
 }
 
 .load-more-icon {
-    margin: auto;
+    margin: 60px auto;
     /* padding: 5px;
     color: #0000ff;
     font-size: 20px;

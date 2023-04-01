@@ -16,7 +16,7 @@
     <div class="search-results" style="width: 100%;">
       <div class="search-results-count">
         <!-- <button @click="loadmore">load more</button> -->
-        <div v-show="loading" style="text-align: center;margin: 50% 0;">
+        <div v-show="loading" style="text-align: center;margin: 30% 0;">
           Searching deep within phase...
         </div>
         <div v-show="!loading">
@@ -68,7 +68,7 @@ import SearchResult from "./search-result";
 export default {
   data() {
     return {
-      loading: false,
+      loading: true,
       loadingUserMore: false,
       loadingReleaseMore: false,
       loadingTrackMore: false,
@@ -103,6 +103,7 @@ export default {
     }),
   },
   mounted: function () {
+    this.beforeSearchMutation();
     this.doUsersSearch();
     this.doReleasesSearch();
     this.doTracksSearch();
@@ -177,10 +178,15 @@ export default {
         this.counts.user = res.userChunkCount;
       }
 
-
       if (res.users.length && this.pages.old_user < this.pages.user) {
         res.users.map(e => {
-          this.users.push(e);
+          const index = this.users.findIndex(record => {
+            // Compare the new record with each existing record in the array
+            return record.id === e.id;
+          });
+          if (index === -1) {
+            this.users.push(e);
+          }
         });
       }
     },
@@ -191,7 +197,14 @@ export default {
 
       if (res.releases.length && this.pages.old_release < this.pages.release) {
         res.releases.map(e => {
-          this.releases.push(e);
+          const index = this.releases.findIndex(record => {
+            // Compare the new record with each existing record in the array
+            return record.id === e.id;
+          });
+
+          if (index === -1) {
+            this.releases.push(e);
+          }
         });
       }
     },
@@ -202,7 +215,13 @@ export default {
 
       if (res.tracks.length && this.pages.old_track < this.pages.track) {
         res.tracks.map(e => {
-          this.tracks.push(e);
+          const index = this.tracks.findIndex(record => {
+            // Compare the new record with each existing record in the array
+            return record.id === e.id;
+          });
+          if (index === -1) {
+            this.tracks.push(e);
+          }
         });
       }
     },

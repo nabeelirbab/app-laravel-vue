@@ -254,10 +254,12 @@ class SearchController extends Controller
             ->get()
             ->map(function ($release) {
                 $tempRelease = Release::where('id', $release->id)->first();
+                // dd($tempRelease->genres);
                 // $release->image = Asset::with('files')->where('id', $release->image_id)->first();
                 $release->type = 'release';
                 if ($tempRelease) {
                     $release->image = $tempRelease->image;
+                    $release->genres = $tempRelease->genres;
                     $release->is_liked = $tempRelease->is_liked;
                     $release->is_shared = $tempRelease->is_shared;
                     $release->is_recent = $tempRelease->is_recent;
@@ -297,6 +299,7 @@ class SearchController extends Controller
         }
 
         if (collect($validated['keys'])->isNotEmpty()) {
+            // dd($filter->addKeyFilter($validated['keys']));
             $filter->addKeyFilter($validated['keys']);
         }
         $releaseChunks = $filter->get()->chunk(20);

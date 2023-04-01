@@ -240,7 +240,7 @@ export default {
 							.then((response) => {
 
 								this.submitting = false;
-								this.$emit('finished');
+								this.$emit('next-step');
 
 							})
 							.catch((error) => {

@@ -1,6 +1,5 @@
 <template>
-  <modal name="modal-auth-register-form" @before-open="beforeOpen" @closed="closed" width="70%" height="auto"
-    scrollable>
+  <modal name="modal-auth-register-form" @before-open="beforeOpen" @closed="closed" width="70%" height="auto" scrollable>
     <div class="modal modal-auth-register-form">
       <div class="modal-header">
         <logo class="modal-logo centered-block" style="width: 185px;" />
@@ -16,8 +15,8 @@
         <!--                </div>-->
         <form class="register-form" v-if="selectedPlan">
           <personal-details v-if="step === 1" :selected-plan="selectedPlan" @next-step="nextStep"></personal-details>
-          <connect-details v-if="step === 2" @finished="onHandleFinished" @skip="onHandleSkip"></connect-details>
-
+          <connect-details v-if="step === 2" @skip="onHandleSkip"></connect-details>
+          <verification-details @finished="onHandleFinished" v-if="step === 3"></verification-details>
           <div class="time-confirmation-text" style="padding: 20px 50px" v-if="selectedPlan.id !== 1">
             <br />
             <p style="margin-top: 30px;text-align: center;">
@@ -84,11 +83,11 @@ export default {
       this.submitted = true;
       this.step = 1;
       axios.post(
-          "/api/auth/mail",
-          {
-            user: this.tempUser,
-          }
-        )
+        "/api/auth/mail",
+        {
+          user: this.tempUser,
+        }
+      )
     },
     onHandleFinished() {
       this.submitted = true;
