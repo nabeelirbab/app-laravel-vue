@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Release;
 use App\Report;
+use App\Track;
 use Illuminate\Support\Facades\Mail;
 
 class ReleaseController extends Controller
@@ -238,6 +239,7 @@ class ReleaseController extends Controller
     public function restore($id)
     {
         Release::onlyTrashed()->where('id', $id)->restore();
+        Track::onlyTrashed()->where('release_id', $id)->restore();
 
         return redirect('/admin/releases');
     }

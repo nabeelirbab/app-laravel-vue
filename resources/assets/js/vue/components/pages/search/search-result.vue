@@ -152,11 +152,8 @@ h6 {
 }
 
 .load-more-icon {
-    margin: 60px auto;
-    /* padding: 5px;
-    color: #0000ff;
-    font-size: 20px;
-    cursor: pointer; */
+    margin: auto 0px;
+    width: 150px;
 }
 
 .load-more-spinner {

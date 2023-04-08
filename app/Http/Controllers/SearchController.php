@@ -244,6 +244,7 @@ class SearchController extends Controller
             ->join('users', 'releases.uploaded_by', '=', 'users.id')
             ->join('tracks', 'releases.id', '=', 'tracks.release_id')
             ->where('releases.status', '=', 'live')
+            ->where('releases.deleted_at', '=', null)
             ->where(function ($q) use ($validated) {
                 $q->where('releases.name', 'like', '%' . $validated['term'] . '%')
                     ->orWhere(function ($q2) use ($validated) {
@@ -375,6 +376,7 @@ class SearchController extends Controller
             ->select(DB::raw('releases.*'))
             ->join('users', 'releases.uploaded_by', '=', 'users.id')
             ->where('releases.status', '=', 'live')
+            ->where('releases.deleted_at', '=', null)
             ->where(function ($q) use ($validated) {
                 $q->where('releases.name', 'like', '%' . $validated['term'] . '%')
                     ->orWhere(function ($q2) use ($validated) {

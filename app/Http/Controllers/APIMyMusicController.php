@@ -75,6 +75,7 @@ class APIMyMusicController extends Controller
             ->select(DB::raw('releases.*, users.name as uploader_name, users.email as uploader_email, users.path as uploader_path'))
             ->where('releases.uploaded_by', $user_id)
             ->where('releases.status', 'live')
+            ->where('releases.deleted_at', '=', null)
             ->where('releases.release_date', '<=', date('Y-m-d'))
             // ->leftJoin('images', 'releases.image_id', '=', 'images.id')
             ->join('users', 'releases.uploaded_by', '=', 'users.id')

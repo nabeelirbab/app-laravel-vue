@@ -15,7 +15,7 @@
         <!--                </div>-->
         <form class="register-form" v-if="selectedPlan">
           <personal-details v-if="step === 1" :selected-plan="selectedPlan" @next-step="nextStep"></personal-details>
-          <connect-details v-if="step === 2" @skip="onHandleSkip"></connect-details>
+          <connect-details v-if="step === 2" @skip="onHandleSkip" @next-step="nextStep"></connect-details>
           <verification-details @finished="onHandleFinished" v-if="step === 3"></verification-details>
           <div class="time-confirmation-text" style="padding: 20px 50px" v-if="selectedPlan.id !== 1">
             <br />

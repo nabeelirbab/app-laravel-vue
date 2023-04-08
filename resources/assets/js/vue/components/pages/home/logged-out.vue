@@ -1,29 +1,27 @@
 <template>
   <div>
-    <home-hero/>
+    <home-hero />
+
+    <div v-if="$route.query['email-verified'] === '1'" class="alert alert-success"
+      style="background: green; color: #fff; padding: 10px;">Email verified successfully. <span
+        v-if="!app.user.loggedin">Please <a href="#" @click="$modal.show('modal-auth-login')"
+          style="color: #fff;">Login</a> to Access.</span></div>
 
     <div class="page-content-padded" style="height:auto;">
       <div class="page-main">
-        <home-featured
-            :featured-items="featuredItems"
-            v-if="featuredItems.length"
-        />
+        <home-featured :featured-items="featuredItems" v-if="featuredItems.length" />
 
         <div>
           <h1>Latest News</h1>
-          <home-latest-news
-              :latest-news="news.articles.slice(0, 6)"
-          ></home-latest-news>
+          <home-latest-news :latest-news="news.articles.slice(0, 6)"></home-latest-news>
         </div>
         <div>
           <h1>Charts</h1>
-          <home-charts :chart-items="chartItems"/>
+          <home-charts :chart-items="chartItems" />
         </div>
         <div>
           <h1>Latest Releases</h1>
-          <home-latest-releases
-              :latest-releases="app.releases.slice(0, 3)"
-          />
+          <home-latest-releases :latest-releases="app.releases.slice(0, 3)" />
         </div>
         <!-- <div>
           <h1>Genres</h1>
@@ -31,14 +29,10 @@
         </div> -->
 
         <div class="home-banner" v-if="!app.user.loggedin">
-          <overlay/>
+          <overlay />
           <div class="hero-content">
             <h1>Ready to join phase? It's free!</h1>
-            <ph-button
-                color="white"
-                size="giant"
-                @click.native="showAuthModal()"
-            >
+            <ph-button color="white" size="giant" @click.native="showAuthModal()">
               <h2>Register</h2>
               <p>
                 Find Out More
@@ -49,10 +43,7 @@
       </div>
 
       <aside class="sidebar-right">
-        <sidebar-group
-            title="News"
-            :items="news.articles.slice(0, 5)"
-        ></sidebar-group>
+        <sidebar-group title="News" :items="news.articles.slice(0, 5)"></sidebar-group>
       </aside>
 
     </div>
@@ -61,7 +52,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import SidebarGroup from "global/sidebar-group";
 import PhButton from "global/ph-button";
 import HomeHero from "./home-hero";
