@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Events\User\UpdatedAvatar as UserUpdatedAvatar;
+use App\Role;
 use Storage;
 
 /**
@@ -75,7 +76,7 @@ class User extends Authenticatable
         'tracks_count_this_month',
         //        'is_on_trial',
         'account_verified',
-       // 'interests',
+        // 'interests',
         //        'plays',
         'is_recent',
         //        'stripe_account_id',
@@ -134,6 +135,10 @@ class User extends Authenticatable
 
     public function getAccountTypeAttribute()
     {
+        if (!$this->approved_at) {
+            return 'standard';
+        }
+
         if ($this->hasRole('admin')) {
             return 'admin';
         } elseif ($this->hasRole('pro')) {

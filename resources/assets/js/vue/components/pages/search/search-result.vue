@@ -153,7 +153,7 @@ h6 {
 
 .load-more-icon {
     margin: auto 0px;
-    width: 150px;
+    width: 160px;
 }
 
 .load-more-spinner {

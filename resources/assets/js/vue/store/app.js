@@ -30,6 +30,37 @@ export default {
         priceRangesForTrack: [],
         captchaCredentials: [],
         artistTypes: [],
+        account: {
+            type: "Individual",
+            business_type: "individual",
+            individual: {
+                first_name: '',
+                last_name: '',
+                dob: {
+                    day: "",
+                    month: "",
+                    year: "",
+                },
+                email: '',
+                phone: '',
+                address: {
+                    line1: '',
+                    line2: "",
+                    city: '',
+                    state: '',
+                    postal_code: '',
+                    country: 'GB',
+                },
+            },
+            company: {
+                name: "",
+            },
+            website: null,
+            country: "GB",
+            phone: '',
+            email: '',
+            tos_shown_and_accepted: false,
+        },
     },
     mutations: {
         setNavigation(state, data) {

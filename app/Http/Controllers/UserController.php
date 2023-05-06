@@ -118,7 +118,7 @@ class UserController extends Controller
 
         $userActions = $user->actions;
         $postIds = $userActions->where('item_type', 'post')->pluck("item_id")
-        ->toArray();
+            ->toArray();
         $allPosts = Post::whereIn('id', $postIds)->get();
         $postArr = [];
         foreach ($allPosts as $post) {
@@ -170,9 +170,8 @@ class UserController extends Controller
         $user = User::findOrFail($userID);
 
         $feed = new ProfileActivityFeedGenerator($user);
-        
-        return $feed->getActionsForProfile($request);
 
+        return $feed->getActionsForProfile($request);
     }
 
     public function getMerchForUser($userID)
@@ -366,8 +365,8 @@ class UserController extends Controller
     public function verifyEmailAddress($id = null, $key = '')
     {
         $user = User::where("activation_token", $key)->find($id);
-        if(empty($user)) {
-            abort(404);
+        if (empty($user)) {
+            return redirect('/');
         }
 
         $user->activation_token = '';
@@ -375,6 +374,5 @@ class UserController extends Controller
         $user->save();
 
         return redirect('/?email-verified=1');
-        
     }
 }

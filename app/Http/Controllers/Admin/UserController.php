@@ -51,6 +51,12 @@ class UserController extends Controller
             $users = $users->search($request->search)->paginate($this->count);
         } else {
             $users = $users->paginate($this->count);
+            // dd($users[1]->roles);
+            foreach ($users as $user) {
+                if (!$user->approved_at) {
+                    $user->roles = Role::where('name', 'standard')->get();
+                }
+            }
         }
 
         $roles = Role::all();
@@ -179,7 +185,7 @@ class UserController extends Controller
             'genres' => 'nullable',
         ]);
 
-        if(!$validated['password']){
+        if (!$validated['password']) {
             $validated = Arr::except($validated, ['password']);
         }
 
@@ -187,11 +193,11 @@ class UserController extends Controller
         $user->syncRoles($validated['role']);
         $user->update($validated);
 
-        if($request->interests){
+        if ($request->interests) {
             $user->interests()->sync($validated['interests']);
         }
 
-        if($request->genres){
+        if ($request->genres) {
             $user->genres()->sync($validated['genres']);
         }
 
@@ -308,7 +314,7 @@ class UserController extends Controller
             return null;
         }
 
-        $user = User::where('id', $id)->update(['approved_at' => null ]);
+        $user = User::where('id', $id)->update(['approved_at' => null]);
 
         return redirect('/admin/users');
     }

@@ -14,9 +14,17 @@
         <!--                    </div>-->
         <!--                </div>-->
         <form class="register-form" v-if="selectedPlan">
+
           <personal-details v-if="step === 1" :selected-plan="selectedPlan" @next-step="nextStep"></personal-details>
           <connect-details v-if="step === 2" @skip="onHandleSkip" @next-step="nextStep"></connect-details>
-          <verification-details @finished="onHandleFinished" v-if="step === 3"></verification-details>
+          <phone-details @next-step="nextStep" v-if="step === 3"></phone-details>
+          <phone-verification @next-step="nextStep" v-if="step === 4"></phone-verification>
+          <business-type @next-step="nextStep" v-if="step === 5"></business-type>
+          <identity-details @next-step-verify="nextStepVerify"  @next-step="nextStep" v-if="step === 6"></identity-details>
+          <verify-business-details @next-step-verify="nextStepVerify" v-if="step === 9"></verify-business-details>
+          <professional-details @next-step="nextStep" v-if="step === 7"></professional-details>
+          <payouts-details @next-step="nextStep" @finished="onHandleFinished" v-if="step === 8"></payouts-details>
+
           <div class="time-confirmation-text" style="padding: 20px 50px" v-if="selectedPlan.id !== 1">
             <br />
             <p style="margin-top: 30px;text-align: center;">
@@ -51,6 +59,14 @@ import Logo from "global/logo";
 import PersonalDetails from "./register-steps/personal-details";
 import ConnectDetails from "./register-steps/connect-details";
 import VerificationDetails from "./register-steps/verification-details";
+import PhoneDetails from "./register-steps/phone-details";
+import PhoneVerification from "./register-steps/phone-verification";
+import BusinessType from "./register-steps/business-type";
+import IdentityDetails from "./register-steps/identity-details";
+import VerifyBusinessDetails from "./register-steps/verify-business-details";
+import ProfessionalDetails from "./register-steps/professional-details";
+import PayoutsDetails from "./register-steps/payouts-details";
+
 import { mapGetters } from "vuex";
 
 
@@ -97,8 +113,45 @@ export default {
       if (this.selectedPlan.title === "Standard") {
         return (this.submitted = true);
       }
-
+      // if (this.step == 9) {
+      //   this.step = 8;
+      // }
+      console.log("before", this.step);
+      // if (this.$store.state.app.account.bussiness_type == 'company' && this.step == 6) {
+      //   this.step = 9;
+      // }
+      console.log("after", this.step);
       this.step++;
+    },
+
+    nextStepVerify() {
+
+      if (this.step == 9) {
+        console.log("step == 9", this.step);
+        this.step = 8;
+      }
+      console.log("before", this.step);
+
+      if (this.$store.state.app.account.bussiness_type == 'company' && this.step == 6) {
+        this.step = 9;
+      } 
+
+      if (this.$store.state.app.account.bussiness_type == 'non_profit' && this.step == 6) {
+        this.step = 9;
+      } 
+      
+      // else {
+      //   this.step++;
+      // }
+      console.log("after", this.step);
+
+
+      // console.log("before verify", this.step);
+      // if (this.$store.state.app.account.bussiness_type == 'company' && this.step == 6) {
+      // this.step = 9;
+      // }
+      // console.log("after verify", this.step);
+      // this.step++;
     },
     showLoginModal() {
       this.$modal.hide("modal-auth-register-form");
@@ -111,6 +164,13 @@ export default {
     PersonalDetails,
     ConnectDetails,
     VerificationDetails,
+    PhoneDetails,
+    PhoneVerification,
+    BusinessType,
+    IdentityDetails,
+    VerifyBusinessDetails,
+    ProfessionalDetails,
+    PayoutsDetails
   },
 };
 </script>

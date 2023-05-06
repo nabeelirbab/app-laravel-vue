@@ -1,5 +1,5 @@
 <?php 
 
 Route::get('/countries', function () {
-    return \DB::table("countries")->distinct("iso_code")->get();
+    return \DB::table("countries")->where('status', 'active')->distinct("iso_code")->get();
 });

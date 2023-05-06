@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Rules\Recaptcha;
 use Spatie\Mailcoach\Models\EmailList;
 use Spatie\Mailcoach\Models\Subscriber;
+use Twilio\Rest\Client;
 
 class RegisterController extends Controller
 {
@@ -188,5 +189,25 @@ class RegisterController extends Controller
         ]);
 
         return $this;
+    }
+
+    public function verification(Request $req)
+    {
+        // dd("helo its verification!");
+
+        $client = new Client("AC15f8a9baac5b478b54744d313479478f", "097d04bab23a6a569c0e5115e8357526");
+        $res =  $client->messages->create("+447717376558", [
+            'from' => "+447401119496",
+            'body' => "your Phase verification code is: 234567"
+        ]);
+
+        // $res = $client->calls->create(
+        //     '+447438434346',  // To phone number
+        //     '+447401119496',  // From phone number
+        //     array(
+        //         'url' => 'https://demo.twilio.com/welcome/voice/'
+        //     )
+        // );
+        dd($res);
     }
 }

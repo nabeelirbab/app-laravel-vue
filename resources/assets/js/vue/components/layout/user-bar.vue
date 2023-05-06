@@ -14,7 +14,7 @@
         <ph-button
           v-if="$can('create releases')"
           @click.native="showUpload"
-          :style="!app.user.stripe_account_id || !app.user.approved_at ? 'opacity:0.5;' : null"
+          :style="!app.user.stripe_account_id  || !app.user.approved_at ? 'opacity:0.5;' : null"
           :disabled="!app.user.stripe_account_id || !app.user.approved_at ? 'disabled' : null"
         >
           Upload
@@ -129,6 +129,7 @@ export default {
     if (this.app.user.loggedin) {
       store.dispatch("messenger/fetchThreads");
     }
+    console.log(this.app.user)
   },
 
   destroyed() {

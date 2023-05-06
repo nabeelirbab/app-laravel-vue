@@ -2,9 +2,9 @@
   <div class="page-content-padded page-discover-index">
     <div class="page-main">
 
-      <div v-if="$route.query['email-verified'] === '1'" class="alert alert-success"
+      <div v-if="showMessage" class="alert alert-success"
         style="background: green; color: #fff; padding: 10px;">Email verified successfully.</div>
-        
+
       <masonry-grid v-if="app.feed.length" v-bind:feed_items="app.feed" />
       <spinner style="margin: 3em auto;" v-else :animation-duration="1000" :size="80" color="black" />
     </div>
@@ -45,6 +45,15 @@ export default {
         .then(() => {
           this.loadedAll = true
         });
+    }
+  },
+  mounted() {
+    if (this.$route.query['email-verified'] === '1') {
+      this.showMessage = true
+      setTimeout(() => {
+        this.showMessage = false;
+        this.$router.push('/');
+      }, 15000) // hide message after 15 seconds
     }
   },
 }

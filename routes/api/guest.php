@@ -5,6 +5,7 @@ Route::prefix('/auth')->group(function () {
     Route::get('logout', 'Auth\LoginController@logout');
 
     Route::post('register/{type}', 'Auth\RegisterController@register');
+    Route::post('phone-verification', 'Auth\RegisterController@verification');
     Route::post('marketplace/create', 'Auth\MarketplaceController@store');
     Route::post('marketplace/update', 'Auth\MarketplaceController@update');
     Route::post('mail', 'MailingListController@auth');

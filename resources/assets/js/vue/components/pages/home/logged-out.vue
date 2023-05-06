@@ -2,11 +2,6 @@
   <div>
     <home-hero />
 
-    <div v-if="$route.query['email-verified'] === '1'" class="alert alert-success"
-      style="background: green; color: #fff; padding: 10px;">Email verified successfully. <span
-        v-if="!app.user.loggedin">Please <a href="#" @click="$modal.show('modal-auth-login')"
-          style="color: #fff;">Login</a> to Access.</span></div>
-
     <div class="page-content-padded" style="height:auto;">
       <div class="page-main">
         <home-featured :featured-items="featuredItems" v-if="featuredItems.length" />
@@ -68,9 +63,19 @@ export default {
   computed: {
     ...mapState(["app", "news"])
   },
+  data() {
+    return {
+      showMessage: false,
+    }
+  },
   methods: {
     showAuthModal: function () {
       this.$modal.show("modal-auth-register");
+    },
+  },
+  mounted() {
+    if (this.$route.query['email-verified'] === '1') {
+        this.$router.push('/login?email-verified=1');
     }
   },
   components: {
