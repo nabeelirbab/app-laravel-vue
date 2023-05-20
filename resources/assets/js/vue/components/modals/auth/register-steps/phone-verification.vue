@@ -14,9 +14,10 @@
 
 			<span style="color: red;text-align: center;display: block;font-size: 14px;" v-if="errMsg">{{ errMsg }}</span>
 			<span style="color: #3300ff;text-align: center;display: block;font-size: 14px;" v-if="resendMsg">{{ resendMsg }}</span>
-			<small style="display: flex;justify-content: center;flex-direction: row;margin: 15px 0px;" @click="handleResend"><i class="fa fa-redo"
+			<small style="display: flex;justify-content: center;flex-direction: row;margin: 15px 0px;cursor: pointer;" @click="handleResend"><i class="fa fa-redo"
 					></i>&nbsp;Resend code</small>
 
+					
 			<div class="submit-buttons">
 				<div class="button-wrap">
 					<ph-button size="medium" :loading="submitting">
