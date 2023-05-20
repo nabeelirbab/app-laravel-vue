@@ -63,6 +63,8 @@ class AddStatusToCountriesTable extends Migration
             'Switzerland',
             'Thailand',
             'United Arab Emirates',
+            'United Kingdom',
+            'United States',
         ])->update(['status' => 'active']);
     }
 

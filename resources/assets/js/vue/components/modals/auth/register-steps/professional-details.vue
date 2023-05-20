@@ -5,7 +5,7 @@
 		<form @submit.prevent="handleSubmit" id="account-form">
 			<p>Tell us a few details about how you earn money with Phase</p>
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Industry:</div>
 					<div>
@@ -18,7 +18,7 @@
 						<span class="error-message">{{ errors.first("industry") }}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="flex">
 				<div class="input">
 					<div>Your Website:</div>
@@ -86,7 +86,7 @@ export default {
 		return {
 			date: "",
 			submitting: false,
-			industry: '',
+			// industry: '',
 			site: '',
 			prod_des: '',
 		};
@@ -118,7 +118,7 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
-					console.log(this.industry);
+					// console.log(this.industry);
 					console.log(this.site);
 					this.$emit('next-step');
 				}

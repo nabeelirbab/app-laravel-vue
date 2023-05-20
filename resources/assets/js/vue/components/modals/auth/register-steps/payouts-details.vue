@@ -17,7 +17,9 @@
 				<div class="input">
 					<div>Sort Code:</div>
 					<div>
-						<input type="text" name="sort_code" v-model="sort_code" v-validate="{ required: true, regex: /^([0-9]{2})-([0-9]{2})-([0-9]{2})$/ }" placeholder="11-22-33"/>
+						<input type="text" name="sort_code" v-model="sort_code"
+							v-validate="{ required: true, regex: /^([0-9]{2})-([0-9]{2})-([0-9]{2})$/ }"
+							placeholder="11-22-33" />
 						<span class="error-message">{{ errors.first("sort_code") }}</span>
 					</div>
 				</div>
@@ -27,7 +29,8 @@
 				<div class="input">
 					<div>Account number:</div>
 					<div>
-						<input type="text" name="account_number" v-model="account_number" v-validate="'required'" placeholder="01234567" data-vv-as="account number"/>
+						<input type="text" name="account_number" v-model="account_number" v-validate="'required'"
+							ref="account_number" placeholder="01234567" data-vv-as="account number" />
 						<span class="error-message">{{ errors.first("account_number") }}</span>
 					</div>
 				</div>
@@ -37,10 +40,25 @@
 				<div class="input">
 					<div>Confirm account number:</div>
 					<div>
-						<input type="text" name="confirm_account_number" v-model="confirm_account_number" v-validate="'required'" placeholder="01234567" data-vv-as="account number"/>
+						<input type="text" name="confirm_account_number" v-model="confirm_account_number"
+							v-validate="'required|confirmed:account_number'" placeholder="01234567"
+							data-vv-as="account number" />
 						<span class="error-message">{{ errors.first("confirm_account_number") }}</span>
 					</div>
 				</div>
+			</div>
+
+			<div class="flex" style="flex-direction:column;">
+				<div class="input">
+					<div>Accept Terms of Service:</div>
+					<input name="terms" type="checkbox" v-model="tos_shown_and_accepted" v-validate="'required'"
+						data-vv-as="Terms and Conditions" />
+				</div>
+				<span class="error-message">{{ errors.first("terms") }}</span>
+			</div>
+
+			<div class="error-message flex" v-if="connectErrors">
+				{{ connectErrors }}
 			</div>
 
 			<div class="submit-buttons">
@@ -75,6 +93,8 @@ export default {
 			sort_code: '',
 			account_number: '',
 			confirm_account_number: '',
+			tos_shown_and_accepted: false,
+
 		};
 	},
 
@@ -99,10 +119,60 @@ export default {
 	},
 
 	methods: {
+		async getAccountToken() {
+			const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
+			// For Indiviual.
+			const newAccountObj = {
+				business_type: this.$store.state.app.account.business_type,
+				individual: {
+					first_name: this.$store.state.app.account.first_name,
+					last_name: this.$store.state.app.account.last_name,
+					dob: {
+						day: this.$store.state.app.account.dob.day,
+						month: this.$store.state.app.account.dob.month,
+						year: this.$store.state.app.account.dob.year,
+					},
+					email: this.$store.state.app.account.email,
+					phone: this.$store.state.app.account.phone,
+					address: {
+						line1: this.$store.state.app.account.address.line1,
+						line2: this.$store.state.app.account.address.line2,
+						city: this.$store.state.app.account.address.city,
+						state: this.$store.state.app.account.address.state,
+						postal_code: this.$store.state.app.account.address.postal_code,
+						country: this.$store.state.app.account.address.country,
+					},
+				},
+				website: this.$store.state.app.account.website,
+				tos_shown_and_accepted: this.$store.state.app.account.tos_shown_and_accepted,
+			};
+			await stripe
+				.createToken("account", newAccountObj)
+				.then((result) => {
+					console.log(result);
+					if (result.token) {
+						this.connectErrors = null;
+						this.accountToken = result.token.id;
+					}
+					if (result.error) {
+						this.connectErrors = result.error.message;
+						this.submitting = false;
+					}
+				})
+				.catch((error) => {
+					this.connectErrors = error.message;
+					this.submitting = false;
+				});
+		},
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
+					this.$store.state.app.account.bank_account_number = this.country;
+					this.$store.state.app.account.sort_code = this.sort_code;
+					this.$store.state.app.account.account_number = this.account_number;
+					this.$store.state.app.account.tos_shown_and_accepted = this.tos_shown_and_accepted;
 					console.log("testing......");
+					// await this.getAccountToken();
 					this.$emit('finished');
 				}
 			});
@@ -196,4 +266,5 @@ ul.gridtypelist li label input[type="radio"] {
 		border: 1px solid $color-grey4 !important;
 		border-radius: 3px;
 	}
-}</style>
+}
+</style>

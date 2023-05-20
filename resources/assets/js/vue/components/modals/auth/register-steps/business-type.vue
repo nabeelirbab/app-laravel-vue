@@ -5,16 +5,6 @@
 		<form @submit.prevent="handleSubmit" id="account-form">
 			<div class="flex">
 				<div class="input">
-					<div>Country:</div>
-					<div>
-						<country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
-						<span class="error-message">{{ errors.first("country") }}</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="flex">
-				<div class="input">
 					<div>Business Type:</div>
 					<div>
 						<select name="business_type" v-model="bussiness_type" data-vv-as="business type"
@@ -59,11 +49,6 @@
 						Continue
 					</ph-button>
 				</div>
-				<!-- <div class="button-wrap">
-					<ph-button size="large" @click.native="$emit('skip')">
-						Skip
-					</ph-button>
-				</div> -->
 			</div>
 		</form>
 	</div>
@@ -71,7 +56,6 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import CountrySelect from "../../upload/country-select";
 export default {
 	name: "business-type",
 
@@ -81,7 +65,6 @@ export default {
 			connectErrors: null,
 			accountToken: null,
 			submitting: false,
-			country: this.$store.state.app.account.country,
 			bussiness_type: '',
 			bussiness_structure: '',
 		};
@@ -102,19 +85,12 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
-					this.$store.state.app.account.country = this.country;
 					this.$store.state.app.account.bussiness_type = this.bussiness_type;
+					this.$store.state.app.account.bussiness_structure = this.bussiness_structure;
 					this.$emit('next-step');
 				}
 			});
 		},
-		artistCountryChanged(country) {
-			this.country = country;
-			this.$validator.validate();
-		},
-	},
-	components: {
-		CountrySelect,
 	},
 };
 </script>

@@ -728,12 +728,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../User */ "./resources/assets/js/vue/User.js");
+var _account;
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 // App Store
 
 
@@ -765,37 +770,38 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     priceRangesForTrack: [],
     captchaCredentials: [],
     artistTypes: [],
-    account: {
+    account: (_account = {
       type: "Individual",
       business_type: "individual",
-      individual: {
-        first_name: '',
-        last_name: '',
-        dob: {
-          day: "",
-          month: "",
-          year: ""
-        },
-        email: '',
-        phone: '',
-        address: {
-          line1: '',
-          line2: "",
-          city: '',
-          state: '',
-          postal_code: '',
-          country: 'GB'
-        }
+      first_name: '',
+      last_name: '',
+      dob: {
+        day: "",
+        month: "",
+        year: ""
       },
-      company: {
-        name: ""
+      address: {
+        line1: '',
+        line2: "",
+        city: '',
+        state: '',
+        postal_code: ''
+        // country: 'GB',
       },
-      website: null,
-      country: "GB",
-      phone: '',
-      email: '',
-      tos_shown_and_accepted: false
-    }
+
+      companyAddress: {
+        line1: '',
+        line2: "",
+        city: '',
+        state: '',
+        postal_code: ''
+        // country: 'GB',
+      },
+
+      title: '',
+      relationship: '',
+      percentage: ''
+    }, _defineProperty(_account, "title", ''), _defineProperty(_account, "crn", ''), _defineProperty(_account, "business_number", ''), _defineProperty(_account, "website", null), _defineProperty(_account, "country", "GB"), _defineProperty(_account, "phone", ''), _defineProperty(_account, "email", ''), _defineProperty(_account, "sort", ''), _defineProperty(_account, "account_number", ''), _defineProperty(_account, "bank_account_country", ''), _defineProperty(_account, "tos_shown_and_accepted", false), _account)
   },
   mutations: {
     setNavigation: function setNavigation(state, data) {

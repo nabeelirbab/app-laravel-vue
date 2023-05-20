@@ -5,17 +5,6 @@
 		<form @submit.prevent="handleSubmit" id="account-form">
 			<p>The following details are required to provide verification and a method of payment for sales</p>
 
-
-			<div class="flex">
-				<div class="input">
-					<div>Email:</div>
-					<div>
-						<input type="text" name="email" v-model="email" v-validate="'required|email'" />
-						<span class="error-message">{{ errors.first("email") }}</span>
-					</div>
-				</div>
-			</div>
-
 			<div class="flex">
 				<div class="input">
 					<div>Phone:</div>
@@ -74,7 +63,6 @@ export default {
 		this.$validator.localize('en', dict);
 
 		if (this.tempUser) {
-			this.email = this.tempUser.email;
 			this.phone = this.tempUser.phone ? this.tempUser.phone : '';
 		}
 	},
@@ -93,8 +81,19 @@ export default {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
 					this.$store.state.app.account.phone = this.phone;
-					this.$store.state.app.account.email = this.email;
-					this.$emit('next-step');
+					// console.log(this.$store.state.app.tempUser);
+					await axios.post(
+						"/api/auth/send-otp",
+						{
+							// user_id: '45',
+							user_id: this.$store.state.app.tempUser.id,
+							// phone: '+441234567890',
+							phone: this.$store.state.app.account.phone ,
+						}
+					).then((res) => {
+						this.$emit('next-step');
+					})
+
 				}
 			});
 		},

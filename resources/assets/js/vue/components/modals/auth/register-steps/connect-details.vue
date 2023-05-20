@@ -3,7 +3,7 @@
 		<h1>Verification</h1>
 
 		<form @submit.prevent="handleSubmit" id="account-form">
-			<p>The following details are required to provide verification and a method of payment for sales</p>
+			<p>The following details are required to provide verification and a method of payment for sales, Details given must be full legal and registered names</p>
 
 			<div class="flex">
 				<div class="input">
@@ -103,7 +103,8 @@
 				<i class="fa fa-info-circle" aria-hidden="true" v-tooltip="'my text'"> </i>
 				Country not
 				listed?
-				<p class="tooltip-text" id="left">if your country not listed we are not yet able to setup and verify you as
+				<p class="tooltip-text" id="left">Unfortunately, if your country is not listed we are not yet able to setup
+					and verify you as
 					an
 					Artist or
 					Artist PRO.</p>
@@ -219,36 +220,17 @@ export default {
 	},
 
 	methods: {
-		async getAccountToken() {
-			const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
-
-			await stripe
-				.createToken("account", this.account)
-				.then((result) => {
-					if (result.token) {
-						this.connectErrors = null;
-						this.accountToken = result.token.id;
-					}
-					if (result.error) {
-						this.connectErrors = result.error.message;
-						this.submitting = false;
-					}
-				})
-				.catch((error) => {
-					this.connectErrors = error.message;
-					this.submitting = false;
-				});
-		},
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
 					if (this.$store.state.app.account.type == "Individual") {
-						this.$store.state.app.account.individual.first_name = this.first_name;
-						this.$store.state.app.account.individual.last_name = this.last_name;
+						this.$store.state.app.account.first_name = this.first_name;
+						this.$store.state.app.account.last_name = this.last_name;
 					} else {
-						this.$store.state.app.account.company.company_name = this.company_name;
+						this.$store.state.app.account.company_name = this.company_name;
 					}
 					this.$store.state.app.account.country = this.country;
+					this.$store.state.app.account.email = this.tempUser.email;
 					console.log(this.$store.state.app.account);
 					this.$emit('next-step');
 				}

@@ -8,10 +8,12 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Spatie\Mailcoach\Models\Tag;
 use App\Http\Controllers\Controller;
+use App\Otp;
 use App\Rules\Recaptcha;
 use Spatie\Mailcoach\Models\EmailList;
 use Spatie\Mailcoach\Models\Subscriber;
 use Twilio\Rest\Client;
+use Exception;
 
 class RegisterController extends Controller
 {
@@ -191,23 +193,56 @@ class RegisterController extends Controller
         return $this;
     }
 
+    public function createOTP(Request $req)
+    {
+        $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        try {
+            $otp = Otp::where('user_id', $req->user_id)->first();
+
+            // FOR RESEND: Check if the OTP record exists
+            if ($otp) {
+                // Delete the OTP record
+                $otp->delete();
+            }
+            $otp = Otp::create([
+                'user_id' => $req->user_id,
+                'code' => $code,
+            ]);
+
+            if ($otp) {
+                $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+                $res = $client->messages->create($req->phone, [
+                    'from' => "+447401119496",
+                    'body' => "Your Phase verification code is: " . $code
+                ]);
+
+                // Success response
+                return response()->json(['message' => 'OTP created and code sent successfully.']);
+            }
+        } catch (Exception $e) {
+            // Error handling
+            return response()->json(['message' => 'Error occurred while creating OTP.'], 500);
+        }
+    }
+
     public function verification(Request $req)
     {
-        // dd("helo its verification!");
+        $code = $req->code;
+        $user_id = $req->user_id;
 
-        $client = new Client("AC15f8a9baac5b478b54744d313479478f", "097d04bab23a6a569c0e5115e8357526");
-        $res =  $client->messages->create("+447717376558", [
-            'from' => "+447401119496",
-            'body' => "your Phase verification code is: 234567"
-        ]);
+        // Retrieve the OTP record based on the user ID
+        $otp = Otp::where('user_id', $user_id)->first();
 
-        // $res = $client->calls->create(
-        //     '+447438434346',  // To phone number
-        //     '+447401119496',  // From phone number
-        //     array(
-        //         'url' => 'https://demo.twilio.com/welcome/voice/'
-        //     )
-        // );
-        dd($res);
+        // Check if the OTP record exists and the code matches
+        if ($otp && $otp->code === $code) {
+            // Verification successful
+            // Delete the OTP record
+            $otp->delete();
+            return response()->json(['message' => 'OTP verification successful.']);
+        } else {
+            // Verification failed
+            return response()->json(['message' => 'Invalid OTP code.'], 400);
+        }
     }
 }

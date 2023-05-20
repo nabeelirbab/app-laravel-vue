@@ -13,8 +13,9 @@
 			<hr />
 
 			<span style="color: red;text-align: center;display: block;font-size: 14px;" v-if="errMsg">{{ errMsg }}</span>
-			<small style="display: flex;justify-content: center;flex-direction: row;margin: 15px 0px;"><i
-					class="fa fa-redo"></i>&nbsp;Resend code</small>
+			<span style="color: #3300ff;text-align: center;display: block;font-size: 14px;" v-if="resendMsg">{{ resendMsg }}</span>
+			<small style="display: flex;justify-content: center;flex-direction: row;margin: 15px 0px;" @click="handleResend"><i class="fa fa-redo"
+					></i>&nbsp;Resend code</small>
 
 			<div class="submit-buttons">
 				<div class="button-wrap">
@@ -44,6 +45,7 @@ export default {
 			inputs: Array(this.inputCount),
 			currentKey: 0,
 			errMsg: null,
+			resendMsg: null,
 		};
 	},
 	props: {
@@ -76,7 +78,7 @@ export default {
 		},
 	},
 	methods: {
-		handleSubmit() {
+		async handleSubmit() {
 			console.log(this.inputs.join(""));
 			console.log(this.inputs.filter(value => value).length);
 			if (this.inputs.filter(value => value).length == 0) {
@@ -95,14 +97,31 @@ export default {
 				return 0;
 			}
 
-			axios.post(
+			await axios.post(
 				"/api/auth/phone-verification",
 				{
-					code: "234563",
+					code: this.inputs.join(""),
+					user_id: this.$store.state.app.tempUser.id,
 				}
-			)
+			).then((res) => {
+				this.$emit('next-step');
+			}).catch((err) => {
+				console.log(err);
+			})
 
-			this.$emit('next-step');
+		},
+		async handleResend() {
+			await axios.post(
+				"/api/auth/send-otp",
+				{
+					// user_id: '45',
+					user_id: this.$store.state.app.tempUser.id,
+					// phone: '+441234567890',
+					phone: this.$store.state.app.account.phone,
+				}
+			).then((res) => {
+				this.resendMsg = 'Verification code resend successfully!'
+			})
 		},
 		handleChange(key, event) {
 			this.inputs[key] = event.target.value;

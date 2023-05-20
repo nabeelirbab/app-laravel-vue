@@ -5,7 +5,7 @@
 			<p>This form must be filled out by someone with significant control and management of your business. if that's
 				not you, make sure to ask the right person to continue.</p>
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Legal Name:</div>
 					<div>
@@ -21,7 +21,7 @@
 						<span class="error-message">{{ errors.first("last_name") }}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="flex">
 				<div class="input">
@@ -42,14 +42,14 @@
 							<option value="" disabled selected>Select your Relation</option>
 							<option value="owner">Owner</option>
 							<option value="director">Director</option>
-							<option value="repersentative">Repersentative</option>
+							<option value="representitive">Representitive</option>
 						</select>
 						<span class="error-message">{{ errors.first("relation") }}</span>
 					</div>
 				</div>
 			</div>
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Email:</div>
 					<div>
@@ -57,7 +57,7 @@
 						<span class="error-message">{{ errors.first("email") }}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="flex">
 				<div class="input">
@@ -76,7 +76,7 @@
 				</div>
 			</div>
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Phone:</div>
 					<div>
@@ -85,7 +85,7 @@
 						<span class="error-message">{{ errors.first("phone") }}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="flex">
 				<div class="input">
@@ -119,7 +119,7 @@
 					<div>Percentage of Ownership:</div>
 					<div>
 						<input type="number" name="percentage" placeholder="0" v-model="percentage"
-							v-validate="{ required: true, max: 100, min: 1 }" data-vv-validate-on="blur" />
+							v-validate="{ required: true, max_value: 100, min_value: 0.1 }" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("percentage") }}</span>
 					</div>
 				</div>
@@ -156,7 +156,6 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import CountrySelect from "../../upload/country-select";
 export default {
 	name: "identity-details",
 
@@ -166,40 +165,39 @@ export default {
 			date: "",
 			title: '',
 			relationship: '',
-			email: '',
+			// email: '',
 			percentage: '',
-			legal: {
-				first_name: '',
-				last_name: '',
-			},
+			// legal: {
+			// 	first_name: '',
+			// 	last_name: '',
+			// },
 			dob: {
 				day: "",
 				month: "",
 				year: "",
 			},
-			phone: '',
+			// phone: '',
 			address: {
 				line1: '',
 				line2: "",
 				city: '',
 				postal_code: '',
-				country: 'GB',
 			},
 		};
 	},
 
-	mounted() {
-		const dict = {
-			custom: {
-				phone: {
-					required: 'This field is required',
-					regex: 'Phone number needs to be in the format +44xxxxxxxxxx'
-				},
-			}
-		};
+	// mounted() {
+	// 	const dict = {
+	// 		custom: {
+	// 			phone: {
+	// 				required: 'This field is required',
+	// 				regex: 'Phone number needs to be in the format +44xxxxxxxxxx'
+	// 			},
+	// 		}
+	// 	};
 
-		this.$validator.localize('en', dict);
-	},
+	// 	this.$validator.localize('en', dict);
+	// },
 
 	computed: {
 		...mapGetters({
@@ -214,19 +212,21 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
+					this.$store.state.app.account.title = this.title;
+					this.$store.state.app.account.relationship = this.relationship;
+					this.$store.state.app.account.percentage = this.percentage;
+					this.$store.state.app.account.dob.day = this.dob.day;
+					this.$store.state.app.account.dob.month = this.dob.month;
+					this.$store.state.app.account.dob.year = this.dob.year;
+					this.$store.state.app.account.address.line1 = this.address.line1;
+					this.$store.state.app.account.address.line2 = this.address.line2;
+					this.$store.state.app.account.address.city = this.address.city;
+					this.$store.state.app.account.address.postal_code = this.address.postal_code;
 					console.log("indiviual");
 					this.$emit('next-step-verify');
 				}
 			});
 		},
-
-		artistCountryChanged(country) {
-			this.country = country;
-			this.$validator.validate();
-		},
-	},
-	components: {
-		CountrySelect,
 	},
 };
 </script>

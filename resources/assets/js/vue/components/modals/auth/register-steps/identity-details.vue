@@ -27,7 +27,7 @@
 				</div>
 			</div>
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Phone:</div>
 					<div>
@@ -36,7 +36,7 @@
 						<span class="error-message">{{ errors.first("phone") }}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="flex">
 				<div class="input">
 					<div>Address:</div>
@@ -57,9 +57,9 @@
 							v-model="individual.address.postal_code" v-validate="'required'" placeholder="Post Code"
 							data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
-						<country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
 
-						<span class="error-message">{{ errors.first("country") }}</span>
+						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
+						<span class="error-message">{{ errors.first("country") }}</span> -->
 					</div>
 				</div>
 			</div>
@@ -94,8 +94,8 @@
 		<form @submit.prevent="handleSubmit" id="account-form"
 			v-if="this.$store.state.app.account.bussiness_type == 'company' || this.$store.state.app.account.bussiness_type == 'non_profit'">
 			<p>Phase collects this information to better
-				serve your business and help meet the requirements of regulators, financial partners, ando our Services
-				Agreements</p>
+				serve your business and help meet the requirements of regulators, financial partners, and our service
+				agreements</p>
 
 			<div class="flex">
 				<div class="input">
@@ -113,7 +113,7 @@
 				<div class="input">
 					<div>Business Phone Number:</div>
 					<div>
-						<input type="text" name="phone" placeholder="+441234567890" v-model="company.phone"
+						<input type="text" name="phone" placeholder="+441234567890" v-model="company.business_number"
 							v-validate="{ required: true, regex: /((\+?))\d{10,14}/ }" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("phone") }}</span>
 					</div>
@@ -140,7 +140,7 @@
 
 			<div class="flex">
 				<div class="input">
-					<div>Registered Business Address:</div>
+					<div style="padding-bottom: 56px;">Registered Business Address:</div>
 					<div>
 						<input type="text" name="line1" style="margin-top: 8px; margin-bottom: 8px;"
 							v-model="company.address.line1" v-validate="'required'" placeholder="Line 1"
@@ -161,8 +161,8 @@
 							data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
 
-						<country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
-						<span class="error-message">{{ errors.first("country") }}</span>
+						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
+						<span class="error-message">{{ errors.first("country") }}</span> -->
 						<br>
 						<small>This address must match the address filed with the UK tax authority.</small>
 						<br>
@@ -171,7 +171,7 @@
 				</div>
 			</div>
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Industry:</div>
 					<div>
@@ -184,9 +184,9 @@
 						<span class="error-message">{{ errors.first("industry") }}</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
-			<div class="flex">
+			<!-- <div class="flex">
 				<div class="input">
 					<div>Your Website:</div>
 					<div>
@@ -215,7 +215,7 @@
 						</span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<!-- <div class="flex" style="flex-direction:column;">
 				<div class="input">
@@ -248,7 +248,7 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import CountrySelect from "../../upload/country-select";
+// import CountrySelect from "../../upload/country-select";
 export default {
 	name: "identity-details",
 
@@ -273,7 +273,7 @@ export default {
 			},
 			company: {
 				crn: "",
-				phone: '',
+				business_number: '',
 				address: {
 					line1: '',
 					line2: "",
@@ -281,9 +281,9 @@ export default {
 					postal_code: '',
 					country: 'GB',
 				},
-				industry: "",
-				site: "",
-				prod_des: "",
+				// industry: "",
+				// site: "",
+				// prod_des: "",
 			}
 		};
 	},
@@ -314,6 +314,13 @@ export default {
 		handlePersonalSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
+					this.$store.state.app.account.dob.day = this.individual.dob.day;
+					this.$store.state.app.account.dob.month = this.individual.dob.month;
+					this.$store.state.app.account.dob.year = this.individual.dob.year;
+					this.$store.state.app.account.address.line1 = this.individual.address.line1;
+					this.$store.state.app.account.address.line2 = this.individual.address.line2;
+					this.$store.state.app.account.address.city = this.individual.address.city;
+					this.$store.state.app.account.address.postal_code = this.individual.address.postal_code;
 					console.log("indiviual");
 					this.$emit('next-step');
 				}
@@ -322,20 +329,26 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
+					this.$store.state.app.account.companyAddress.line1 = this.company.address.line1;
+					this.$store.state.app.account.companyAddress.line2 = this.company.address.line2;
+					this.$store.state.app.account.companyAddress.city = this.company.address.city;
+					this.$store.state.app.account.companyAddress.postal_code = this.company.address.postal_code;
+					this.$store.state.app.account.crn = this.company.crn;
+					this.$store.state.app.account.business_number = this.company.business_number;
 					console.log("company");
 					this.$emit('next-step-verify');
 				}
 			});
 		},
 
-		artistCountryChanged(country) {
-			this.country = country;
-			this.$validator.validate();
-		},
+		// artistCountryChanged(country) {
+		// 	this.country = country;
+		// 	this.$validator.validate();
+		// },
 	},
-	components: {
-		CountrySelect,
-	},
+	// components: {
+	// 	CountrySelect,
+	// },
 };
 </script>
 

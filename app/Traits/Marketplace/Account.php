@@ -8,13 +8,14 @@ trait Account
 {
     public function getAccount()
     {
-        if (! $this->accountId()) return;
+        if (!$this->accountId()) return;
 
         return StripeAccount::retrieve($this->accountId(), $this->stripeOptions());
     }
 
     public function createAccount($data)
     {
+        dd($data);
         $account = StripeAccount::create([
             'country' => !empty($data['country']) ? $data['country'] : 'GB',
             'type' => 'custom',
@@ -27,6 +28,7 @@ trait Account
             'business_profile' => [
                 'mcc' => 5815,
                 'url' => isset($data['website']) ? $data['website'] : 'https://phase.com',
+                'product_description' => 'Music in digital form (WAV/MP3) formats',
             ],
         ], $this->stripeOptions());
 
