@@ -213,7 +213,7 @@ class RegisterController extends Controller
             if ($otp) {
                 $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
                 $res = $client->messages->create($req->phone, [
-                    'from' => "+447401119496",
+                    'from' => env('TWILIO_PHONE'),
                     'body' => "Your Phase verification code is: " . $code
                 ]);
 

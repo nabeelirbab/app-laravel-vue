@@ -33,6 +33,7 @@ export default {
         account: {
             type: "Individual",
             business_type: "individual",
+            business_structure: "",
             first_name: '',
             last_name: '',
             dob: {
@@ -56,6 +57,7 @@ export default {
                 postal_code: '',
                 // country: 'GB',
             },
+            company_name: '',
             title:'',
             relationship:'',
             percentage:'',
@@ -68,7 +70,7 @@ export default {
             email: '',
             sort:'',
             account_number:'',
-            bank_account_country:'',
+            account_country:'',
             tos_shown_and_accepted: false,
         },
     },

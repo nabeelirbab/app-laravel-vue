@@ -116,11 +116,11 @@ export default {
       //   this.step = 8;
       // }
       console.log("before", this.step);
-      // if (this.$store.state.app.account.bussiness_type == 'company' && this.step == 6) {
+      // if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
       //   this.step = 9;
       // }
-      console.log("after", this.step);
       this.step++;
+      console.log("after", this.step);
     },
 
     nextStepVerify() {
@@ -131,11 +131,11 @@ export default {
       }
       console.log("before", this.step);
 
-      if (this.$store.state.app.account.bussiness_type == 'company' && this.step == 6) {
+      if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
         this.step = 9;
       } 
 
-      if (this.$store.state.app.account.bussiness_type == 'non_profit' && this.step == 6) {
+      if (this.$store.state.app.account.business_type == 'non_profit' && this.step == 6) {
         this.step = 9;
       } 
       
@@ -146,7 +146,7 @@ export default {
 
 
       // console.log("before verify", this.step);
-      // if (this.$store.state.app.account.bussiness_type == 'company' && this.step == 6) {
+      // if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
       // this.step = 9;
       // }
       // console.log("after verify", this.step);

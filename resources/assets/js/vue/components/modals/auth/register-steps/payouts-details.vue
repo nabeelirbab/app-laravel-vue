@@ -94,6 +94,7 @@ export default {
 			account_number: '',
 			confirm_account_number: '',
 			tos_shown_and_accepted: false,
+			accountObj: null
 
 		};
 	},
@@ -119,35 +120,83 @@ export default {
 	},
 
 	methods: {
+		accountMutation() {
+			if (this.$store.state.app.account.business_type == 'individual') {
+				// For Indiviual.
+				this.accountObj = {
+					business_type: this.$store.state.app.account.business_type,
+					individual: {
+						first_name: this.$store.state.app.account.first_name,
+						last_name: this.$store.state.app.account.last_name,
+						dob: {
+							day: this.$store.state.app.account.dob.day,
+							month: this.$store.state.app.account.dob.month,
+							year: this.$store.state.app.account.dob.year,
+						},
+						email: this.$store.state.app.account.email,
+						phone: this.$store.state.app.account.phone,
+						address: {
+							line1: this.$store.state.app.account.address.line1,
+							line2: this.$store.state.app.account.address.line2,
+							city: this.$store.state.app.account.address.city,
+							// state: this.$store.state.app.account.address.state,
+							postal_code: this.$store.state.app.account.address.postal_code,
+							country: this.$store.state.app.account.country,
+						},
+					},
+					website: this.$store.state.app.account.website,
+					tos_shown_and_accepted: this.$store.state.app.account.tos_shown_and_accepted,
+				};
+			} else if (this.$store.state.app.account.business_type == 'company') {
+				this.accountObj = {
+					business_type: this.$store.state.app.account.business_type,
+					company: {
+						name: "ePhase",
+						registration_number: "12345678",
+						tax_id: "12345678",
+						structure: this.$store.state.app.account.business_structure,
+						// name: this.$store.state.app.account.company_name,
+						phone: this.$store.state.app.account.business_number,
+						address: {
+							line1: this.$store.state.app.account.companyAddress.line1,
+							line2: this.$store.state.app.account.companyAddress.line2,
+							city: this.$store.state.app.account.companyAddress.city,
+							// state: this.$store.state.app.account.companyAddress.state,
+							postal_code: this.$store.state.app.account.companyAddress.postal_code,
+							country: this.$store.state.app.account.country,
+						},
+					},
+					tos_shown_and_accepted: this.$store.state.app.account.tos_shown_and_accepted,
+				};
+			} else {
+				this.accountObj = {
+					business_type: this.$store.state.app.account.business_type,
+					non_profit: {
+						name: "ePhase",
+						registration_number: "12345678",
+						tax_id: "12345678",
+						structure: this.$store.state.app.account.business_structure,
+						// name: this.$store.state.app.account.company_name,
+						phone: this.$store.state.app.account.business_number,
+						address: {
+							line1: this.$store.state.app.account.companyAddress.line1,
+							line2: this.$store.state.app.account.companyAddress.line2,
+							city: this.$store.state.app.account.companyAddress.city,
+							// state: this.$store.state.app.account.companyAddress.state,
+							postal_code: this.$store.state.app.account.companyAddress.postal_code,
+							country: this.$store.state.app.account.country,
+						},
+					},
+					tos_shown_and_accepted: this.$store.state.app.account.tos_shown_and_accepted,
+				};
+			}
+		},
 		async getAccountToken() {
 			const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
-			// For Indiviual.
-			const newAccountObj = {
-				business_type: this.$store.state.app.account.business_type,
-				individual: {
-					first_name: this.$store.state.app.account.first_name,
-					last_name: this.$store.state.app.account.last_name,
-					dob: {
-						day: this.$store.state.app.account.dob.day,
-						month: this.$store.state.app.account.dob.month,
-						year: this.$store.state.app.account.dob.year,
-					},
-					email: this.$store.state.app.account.email,
-					phone: this.$store.state.app.account.phone,
-					address: {
-						line1: this.$store.state.app.account.address.line1,
-						line2: this.$store.state.app.account.address.line2,
-						city: this.$store.state.app.account.address.city,
-						state: this.$store.state.app.account.address.state,
-						postal_code: this.$store.state.app.account.address.postal_code,
-						country: this.$store.state.app.account.address.country,
-					},
-				},
-				website: this.$store.state.app.account.website,
-				tos_shown_and_accepted: this.$store.state.app.account.tos_shown_and_accepted,
-			};
+			this.accountMutation();
+			console.log(this.accountObj);
 			await stripe
-				.createToken("account", newAccountObj)
+				.createToken("account", this.accountObj)
 				.then((result) => {
 					console.log(result);
 					if (result.token) {
@@ -167,13 +216,30 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
-					this.$store.state.app.account.bank_account_number = this.country;
+					this.$store.state.app.account.account_country = this.country;
 					this.$store.state.app.account.sort_code = this.sort_code;
 					this.$store.state.app.account.account_number = this.account_number;
 					this.$store.state.app.account.tos_shown_and_accepted = this.tos_shown_and_accepted;
-					console.log("testing......");
-					// await this.getAccountToken();
-					this.$emit('finished');
+					console.log("testing......", this.$store.state.app.account);
+					await this.getAccountToken();
+					if (this.accountToken && !this.connectErrors) {
+						await axios
+							.post("/api/auth/marketplace/create", {
+								account_token: this.accountToken,
+								user_id: this.$store.state.app.tempUser.id,
+								account: this.$store.state.app.account,
+							})
+							.then((response) => {
+								this.submitting = false;
+								this.$emit('finished');
+
+							})
+							.catch((error) => {
+								this.submitting = false;
+								this.connectErrors = error.response.data.message;
+							});
+					}
+					// this.$emit('finished');
 				}
 			});
 		},

@@ -773,6 +773,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     account: (_account = {
       type: "Individual",
       business_type: "individual",
+      business_structure: "",
       first_name: '',
       last_name: '',
       dob: {
@@ -798,10 +799,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         // country: 'GB',
       },
 
+      company_name: '',
       title: '',
       relationship: '',
       percentage: ''
-    }, _defineProperty(_account, "title", ''), _defineProperty(_account, "crn", ''), _defineProperty(_account, "business_number", ''), _defineProperty(_account, "website", null), _defineProperty(_account, "country", "GB"), _defineProperty(_account, "phone", ''), _defineProperty(_account, "email", ''), _defineProperty(_account, "sort", ''), _defineProperty(_account, "account_number", ''), _defineProperty(_account, "bank_account_country", ''), _defineProperty(_account, "tos_shown_and_accepted", false), _account)
+    }, _defineProperty(_account, "title", ''), _defineProperty(_account, "crn", ''), _defineProperty(_account, "business_number", ''), _defineProperty(_account, "website", null), _defineProperty(_account, "country", "GB"), _defineProperty(_account, "phone", ''), _defineProperty(_account, "email", ''), _defineProperty(_account, "sort", ''), _defineProperty(_account, "account_number", ''), _defineProperty(_account, "account_country", ''), _defineProperty(_account, "tos_shown_and_accepted", false), _account)
   },
   mutations: {
     setNavigation: function setNavigation(state, data) {

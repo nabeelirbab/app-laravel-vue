@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<h1 v-if="this.$store.state.app.account.bussiness_type == 'individual'">Verify your personal details</h1>
+		<h1 v-if="this.$store.state.app.account.business_type == 'individual'">Verify your personal details</h1>
 		<h1
-			v-if="this.$store.state.app.account.bussiness_type == 'company' || this.$store.state.app.account.bussiness_type == 'non_profit'">
+			v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'">
 			Tell us more about your business</h1>
 
 		<form @submit.prevent="handlePersonalSubmit" id="account-form"
-			v-if="this.$store.state.app.account.bussiness_type == 'individual'">
+			v-if="this.$store.state.app.account.business_type == 'individual'">
 			<p>Phase collects this information to verify your identity and keep your account safe</p>
 
 			<div class="flex">
@@ -92,7 +92,7 @@
 		</form>
 
 		<form @submit.prevent="handleSubmit" id="account-form"
-			v-if="this.$store.state.app.account.bussiness_type == 'company' || this.$store.state.app.account.bussiness_type == 'non_profit'">
+			v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'">
 			<p>Phase collects this information to better
 				serve your business and help meet the requirements of regulators, financial partners, and our service
 				agreements</p>

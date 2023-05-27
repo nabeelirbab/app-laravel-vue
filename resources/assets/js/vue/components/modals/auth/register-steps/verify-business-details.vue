@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1 v-if="this.$store.state.app.account.bussiness_type == 'company' || this.$store.state.app.account.bussiness_type == 'non_profit'">Verify you represent this business</h1>
+		<h1 v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'">Verify you represent this business</h1>
 		<form @submit.prevent="handleSubmit" id="account-form">
 			<p>This form must be filled out by someone with significant control and management of your business. if that's
 				not you, make sure to ask the right person to continue.</p>
@@ -107,9 +107,7 @@
 							v-model="address.postal_code" v-validate="'required'" placeholder="Post Code"
 							data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
-						<country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
-
-						<span class="error-message">{{ errors.first("country") }}</span>
+						
 					</div>
 				</div>
 			</div>

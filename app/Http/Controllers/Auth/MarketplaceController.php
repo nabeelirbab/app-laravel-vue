@@ -13,7 +13,7 @@ class MarketplaceController extends Controller
     {
         try {
             $user = User::find($request->user_id);
-
+            // dd($request);
             $user->createAccount($request);
             if ($request->phone) {
                 $user->phone = $request->phone;

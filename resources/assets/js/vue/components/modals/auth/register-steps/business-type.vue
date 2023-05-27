@@ -7,7 +7,7 @@
 				<div class="input">
 					<div>Business Type:</div>
 					<div>
-						<select name="business_type" v-model="bussiness_type" data-vv-as="business type"
+						<select name="business_type" v-model="business_type" data-vv-as="business type"
 							v-validate="'required'" style="width: 100%;">
 							<option value="" disabled selected>Select Type</option>
 							<option value="individual">Individual / Sole Trader</option>
@@ -19,12 +19,12 @@
 				</div>
 			</div>
 
-			<div class="flex" v-if="bussiness_type == 'company' || bussiness_type == 'non_profit'">
+			<div class="flex" v-if="business_type == 'company' || business_type == 'non_profit'">
 				<div class="input">
 					<div>Business Structure:</div>
 					<div>
-						<select name="business_structure" v-model="bussiness_structure" data-vv-as="business structure"
-							v-validate="'required'" style="width: 100%;" v-if="bussiness_type == 'company'">
+						<select name="business_structure" v-model="business_structure" data-vv-as="business structure"
+							v-validate="'required'" style="width: 100%;" v-if="business_type == 'company'">
 							<option value="" disabled selected>Select Structure</option>
 							<option value="incorporated_partnership">Incorporated Partnership</option>
 							<option value="unincorporated_partnership">Unincorporated Partnership</option>
@@ -32,8 +32,8 @@
 							<option value="private_corporation">Private corporation</option>
 						</select>
 
-						<select name="business_structure" v-model="bussiness_structure" data-vv-as="business structure"
-							v-validate="'required'" style="width: 100%;" v-if="bussiness_type == 'non_profit'">
+						<select name="business_structure" v-model="business_structure" data-vv-as="business structure"
+							v-validate="'required'" style="width: 100%;" v-if="business_type == 'non_profit'">
 							<option value="" disabled selected>Select Structure</option>
 							<option value="incorporated_non_profit">Incorporated Non-Profit</option>
 							<option value="unincorporated_non_profit">Unincorporated Non-Profit</option>
@@ -65,8 +65,8 @@ export default {
 			connectErrors: null,
 			accountToken: null,
 			submitting: false,
-			bussiness_type: '',
-			bussiness_structure: '',
+			business_type: '',
+			business_structure: '',
 		};
 	},
 
@@ -85,8 +85,8 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
-					this.$store.state.app.account.bussiness_type = this.bussiness_type;
-					this.$store.state.app.account.bussiness_structure = this.bussiness_structure;
+					this.$store.state.app.account.business_type = this.business_type;
+					this.$store.state.app.account.business_structure = this.business_structure;
 					this.$emit('next-step');
 				}
 			});
