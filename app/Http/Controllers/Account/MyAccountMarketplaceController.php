@@ -46,12 +46,25 @@ class MyAccountMarketplaceController extends Controller
         ];
     }
 
+    public function updateFile(Request $request)
+    {
+        return [
+            'account' => Auth::user()->updateAccountFile([
+                'account_token' => $request->token,
+                'business_profile' => $request->business_profile,
+                'verification' => $request->verification,
+                'requireFor' => $request->requireFor,
+            ]),
+        ];
+    }
+
     public function update(Request $request)
     {
         return [
             'account' => Auth::user()->updateAccount([
                 'account_token' => $request->token,
-                'business_profile' => $request->business_profile,
+                'account' => $request->account,
+                'business_type' => $request->business_type,
             ]),
         ];
     }

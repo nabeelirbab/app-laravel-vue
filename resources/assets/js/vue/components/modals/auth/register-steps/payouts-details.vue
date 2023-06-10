@@ -151,11 +151,11 @@ export default {
 				this.accountObj = {
 					business_type: this.$store.state.app.account.business_type,
 					company: {
-						name: "ePhase",
-						registration_number: "12345678",
-						tax_id: "12345678",
+						// name: "ePhase",
+						registration_number: this.$store.state.app.account.crn,
+						tax_id: this.$store.state.app.account.crn,
 						structure: this.$store.state.app.account.business_structure,
-						// name: this.$store.state.app.account.company_name,
+						name: this.$store.state.app.account.company_name,
 						phone: this.$store.state.app.account.business_number,
 						address: {
 							line1: this.$store.state.app.account.companyAddress.line1,
@@ -172,11 +172,11 @@ export default {
 				this.accountObj = {
 					business_type: this.$store.state.app.account.business_type,
 					non_profit: {
-						name: "ePhase",
-						registration_number: "12345678",
-						tax_id: "12345678",
+						// name: "ePhase",
+						registration_number: this.$store.state.app.account.crn,
+						tax_id: this.$store.state.app.account.crn,
 						structure: this.$store.state.app.account.business_structure,
-						// name: this.$store.state.app.account.company_name,
+						name: this.$store.state.app.account.company_name,
 						phone: this.$store.state.app.account.business_number,
 						address: {
 							line1: this.$store.state.app.account.companyAddress.line1,

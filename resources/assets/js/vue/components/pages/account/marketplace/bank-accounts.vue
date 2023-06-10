@@ -19,9 +19,9 @@
                             <span v-else><i class="fas fa-times"></i></span>
                         </td>
                         <td>
-                            <a v-if="! bankAccount.default_for_currency" href="#"
+                            <a v-if="!bankAccount.default_for_currency" href="#"
                                @click.prevent="makeDefault(bankAccount.id)">Make Default</a>
-                            <a v-if="! bankAccount.default_for_currency" href="#"
+                            <a v-if="!bankAccount.default_for_currency" href="#"
                                @click.prevent="removeAccount(bankAccount.id)">Remove</a>
                         </td>
                     </tr>
@@ -89,6 +89,7 @@
                     .then(response => {
                         this.loading = false
                         this.bankAccounts = response.data.accounts
+                        console.log(this.bankAccounts);
                     })
 
                 this.loading = false

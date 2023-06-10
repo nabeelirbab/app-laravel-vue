@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Spatie\Mailcoach\Models\EmailList;
 use Spatie\Mailcoach\Models\Subscriber;
 use App\Validators\Account\MyAccountValidator;
+use Auth;
 
 class MyAccountController extends Controller
 {
@@ -149,6 +150,8 @@ class MyAccountController extends Controller
         $user = $request->user();
 
         $user->syncRoles('standard');
+
+        Auth::user()->deleteAccount();
 
         Mail::to($user->email)->send(new AccountDowngraded($user));
 

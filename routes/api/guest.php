@@ -9,6 +9,7 @@ Route::prefix('/auth')->group(function () {
     Route::post('phone-verification', 'Auth\RegisterController@verification');
     Route::post('marketplace/create', 'Auth\MarketplaceController@store');
     Route::post('marketplace/update', 'Auth\MarketplaceController@update');
+    Route::post('marketplace/update/file', 'Auth\MarketplaceController@updateFile');
     Route::post('mail', 'MailingListController@auth');
     //    Route::post('register/music_fan', 'Auth\RegisterController@registerMusicFan');
     //    Route::post('register/pro_standard', 'Auth\RegisterController@registerProfessionalStandard');

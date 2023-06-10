@@ -3,7 +3,8 @@
 		<h1>Verification</h1>
 
 		<form @submit.prevent="handleSubmit" id="account-form">
-			<p>The following details are required to provide verification and a method of payment for sales, Details given must be full legal and registered names</p>
+			<p>The following details are required to provide verification and a method of payment for sales, Details given
+				must be full legal and registered names</p>
 
 			<div class="flex">
 				<div class="input">
@@ -223,12 +224,12 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
-					if (this.$store.state.app.account.type == "Individual") {
-						this.$store.state.app.account.first_name = this.first_name;
-						this.$store.state.app.account.last_name = this.last_name;
-					} else {
-						this.$store.state.app.account.company_name = this.company_name;
-					}
+					// if (this.$store.state.app.account.type == "Individual") {
+					this.$store.state.app.account.first_name = this.first_name;
+					this.$store.state.app.account.last_name = this.last_name;
+					// } else {
+					this.$store.state.app.account.company_name = this.company_name;
+					// }
 					this.$store.state.app.account.country = this.country;
 					this.$store.state.app.account.email = this.tempUser.email;
 					console.log(this.$store.state.app.account);

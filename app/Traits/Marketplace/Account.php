@@ -2,6 +2,7 @@
 
 namespace App\Traits\Marketplace;
 
+use App\User;
 use Stripe\Account as StripeAccount;
 
 trait Account
@@ -16,7 +17,7 @@ trait Account
     public function createAccount($data)
     {
         // dd($data['account']['address']['city']);
-        if ($data['account']['business_type'] == 'Individual') {
+        if ($data['account']['business_type'] == 'individual') {
             $account = StripeAccount::create([
                 'country' => !empty($data['account']['country']) ? $data['account']['country'] : 'GB',
                 'type' => 'custom',
@@ -57,19 +58,18 @@ trait Account
                     'object' => 'bank_account',
                     'account' => $data['account_token'],
                     'bank_name' => 'Test Bank',
-                    'country' => 'GB',
+                    'country' => $data['account']['account_country'],
                     "currency" => "gbp",
-                    "account_number" => "GB82WEST12345698765432"
+                    "account_number" => $data['account']['account_number']
                 ],
                 'business_profile' => [
                     'mcc' => 5815,
-                    'name' => 'phase',
+                    'name' => $data['account']['company_name'],
                     'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.com',
                     'product_description' => 'Music in digital form (WAV/MP3) formats',
                 ],
             ], $this->stripeOptions());
         } else {
-
             $account = StripeAccount::create([
                 'country' => !empty($data['account']['country']) ? $data['account']['country'] : 'GB',
                 'type' => 'custom',
@@ -129,7 +129,7 @@ trait Account
                 ],
                 'business_profile' => [
                     'mcc' => 5815,
-                    'name' => 'phase',
+                    'name' => $data['account']['company_name'],
                     'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.com',
                     'product_description' => 'Music in digital form (WAV/MP3) formats',
                 ],
@@ -171,11 +171,52 @@ trait Account
         return $account;
     }
 
+    public function updateAccountFile($data)
+    {
+        $person_id = explode('.', $data['requireFor'][0])[0];
+        if ($person_id == 'individual') {
+            return StripeAccount::update($this->accountId(), [
+                'account_token' => $data['account_token']
+            ], $this->stripeOptions());
+        } else {
+            StripeAccount::updatePerson($this->accountId(), $person_id, [
+                'verification' => [
+                    'document' => [
+                        'front' => $data['verification']['document']['front']
+                    ]
+                ],
+            ], $this->stripeOptions());
+            return StripeAccount::update($this->accountId(), [
+                'account_token' => $data['account_token'],
+                'business_profile' => $data['business_profile']
+            ], $this->stripeOptions());
+        }
+    }
+
     public function updateAccount($data)
     {
-        return StripeAccount::update($this->accountId(), [
-            'account_token' => $data['account_token'],
-            'business_profile' => $data['business_profile']
-        ], $this->stripeOptions());
+        if ($data['business_type'] == 'individual') {
+            return StripeAccount::update($this->accountId(), [
+                'account_token' => $data['account_token'],
+                'email' => $data['account']['email'],
+            ], $this->stripeOptions());
+        } elseif ($data['business_type'] == 'company') {
+            return StripeAccount::update($this->accountId(), [
+                'account_token' => $data['account_token'],
+                'email' => $data['account']['email'],
+            ], $this->stripeOptions());
+        } else {
+            return StripeAccount::update($this->accountId(), [
+                'account_token' => $data['account_token'],
+                'email' => $data['account']['email'],
+            ], $this->stripeOptions());
+        }
+    }
+
+    public function deleteAccount()
+    {
+        $account =  StripeAccount::retrieve($this->accountId(), $this->stripeOptions());
+        User::where('stripe_account_id', $account->id)->update(['stripe_account_id' => null]);
+        return $account->delete();
     }
 }

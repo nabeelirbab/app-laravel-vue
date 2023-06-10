@@ -57,6 +57,7 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
         Route::post('set_default_bank', 'MyAccountMarketplaceController@setDefaultBankAccount');
         Route::get('account', 'MyAccountMarketplaceController@account');
         Route::post('update', 'MyAccountMarketplaceController@update');
+        Route::post('update/file', 'MyAccountMarketplaceController@updateFile');
         Route::post('create', 'MyAccountMarketplaceController@store');
 
 //        Route::get('files', 'MyAccountMarketplaceController@getFiles');
