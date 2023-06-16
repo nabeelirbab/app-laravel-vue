@@ -8,8 +8,8 @@
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">First Name:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="first_name" v-model="individual.first_name"
-                            v-validate="'required'" />
+                        <input class="w-full" type="text" name="first_name" v-validate="'required'"
+                            v-model="individual.first_name" />
                         <span class="error-message">{{
                             errors.first("first_name")
                         }}</span>
@@ -18,8 +18,8 @@
                 <div class="flex flex-1">
                     <div class="flex w-1/3 items-center">Last Name:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="last_name" v-model="individual.last_name"
-                            v-validate="'required'" />
+                        <input class="w-full" type="text" name="last_name" v-validate="'required'"
+                            v-model="individual.last_name" />
                         <span class="error-message">{{
                             errors.first("last_name")
                         }}</span>
@@ -31,18 +31,18 @@
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">Email:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="email" name="email2" v-model="individual.email"/>
+                        <input class="w-full" type="email" name="email" v-model="individual.email" v-validate="'required'" />
                         <span class="error-message">{{
-                            errors.first("email2")
+                            errors.first("email")
                         }}</span>
                     </div>
                 </div>
                 <div class="flex flex-1">
                     <div class="flex w-1/3 items-center">Phone:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="phone2" v-model="individual.phone"/>
+                        <input class="w-full" type="text" name="phone" v-model="individual.phone"  v-validate="{ required: true, regex: /((\+44?))\d{11}/ }" />
                         <span class="error-message">{{
-                            errors.first("phone2")
+                            errors.first("phone")
                         }}</span>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                 <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
             </div>
         </div>
-        <div v-else>
+        <div v-if="business_type == 'company' || business_type == 'non_profit'">
             <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">Company Name:</div>
@@ -179,8 +179,8 @@
                         <span class="error-message">{{
                             errors.first("city")
                         }}</span>
-                        <!-- <input class="w-full mb-4" type="text" name="state" v-model="company.address.state"
-                            placeholder="County" /> -->
+                        <input class="w-full mb-4" type="text" name="state" v-model="company.address.state"
+                            placeholder="County" />
                         <input class="w-full mb-4" type="text" name="postal_code" v-model="company.address.postal_code
                                 " v-validate="'required'" placeholder="Post Code" />
                         <span class="error-message">{{
@@ -344,35 +344,41 @@ export default {
             }
         },
         async updateAccount() {
+            await this.$validator.validate();
+            if (this.$validator.errors.any()) {
+                console.log("Validation errors:", this.$validator.errors.all());
+            } else {
+                console.log("Values are valid!");
+            }
             // const method = this.account ? "update" : "create";
-            this.$validator.validate().then(async (valid) => {
-                console.log(valid);
-                // if (valid) {
-                    await this.createToken();
+            // this.$validator.validate().then(async (valid) => {
+            // console.log(valid);
+            // if (valid) {
+            //     await this.createToken();
 
-                    if (this.accountToken) {
-                        await axios
-                            .post(`/api/account/marketplace/update`, {
-                                token: this.accountToken.id,
-                                account: this.business_type == 'individual' ? this.individual : this.company,
-                                business_type: this.business_type 
-                            })
-                            .then((response) => {
-                                this.loading = false;
-                                this.$emit("account_updated");
-                                Vue.$notify({
-                                    group: "main",
-                                    type: "success",
-                                    title: "<img src='/img/success.gif' alt='success'>",
-                                });
-                            })
-                            .catch((error) => {
-                                this.stripeError = error.response.data.message;
-                                this.loading = false;
-                            });
-                    }
-                // }
-            });
+            //     if (this.accountToken) {
+            //         await axios
+            //             .post(`/api/account/marketplace/update`, {
+            //                 token: this.accountToken.id,
+            //                 account: this.business_type == 'individual' ? this.individual : this.company,
+            //                 business_type: this.business_type 
+            //             })
+            //             .then((response) => {
+            //                 this.loading = false;
+            //                 this.$emit("account_updated");
+            //                 Vue.$notify({
+            //                     group: "main",
+            //                     type: "success",
+            //                     title: "<img src='/img/success.gif' alt='success'>",
+            //                 });
+            //             })
+            //             .catch((error) => {
+            //                 this.stripeError = error.response.data.message;
+            //                 this.loading = false;
+            //             });
+            //     }
+            // }
+            // });
         },
 
         async createToken() {
@@ -393,7 +399,7 @@ export default {
                     business_type: this.business_type,
                     tos_shown_and_accepted: this.tos_shown_and_accepted,
                 }
-            }else{
+            } else {
                 const { email, ...company } = this.company;
                 this.accountData = {
                     non_profit: company,
