@@ -203,11 +203,11 @@ class RegisterController extends Controller
 
             // dd($otp);
             if ($otp) {
-                // $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
-                // $res = $client->messages->create($req->phone, [
-                //     'from' => env('TWILIO_PHONE'),
-                //     'body' => "Your Phase verification code is: " . $code
-                // ]);
+                $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+                $res = $client->messages->create($req->phone, [
+                    'from' => env('TWILIO_PHONE'),
+                    'body' => "Your Phase verification code is: " . $code
+                ]);
 
                 // Success response
                 return response()->json(['message' => 'OTP created and code sent successfully.', 'otp_id' => $otp->id]);
