@@ -1,6 +1,6 @@
 <template>
     <ph-panel>
-        <h2 v-if="business_type == 'individual'">Account's Personal Details</h2>
+        <h2 v-if="business_type == 'individual'">Personal Details</h2>
         <h2 v-else>Account's Business Details</h2>
         <hr />
         <div v-if="business_type == 'individual'">
@@ -9,7 +9,7 @@
                     <div class="flex w-1/3 items-center">First Name:</div>
                     <div class="w-2/3">
                         <input class="w-full" type="text" name="first_name" v-validate="'required'"
-                            v-model="individual.first_name" />
+                            v-model="personal.first_name" />
                         <span class="error-message">{{
                             errors.first("first_name")
                         }}</span>
@@ -19,7 +19,7 @@
                     <div class="flex w-1/3 items-center">Last Name:</div>
                     <div class="w-2/3">
                         <input class="w-full" type="text" name="last_name" v-validate="'required'"
-                            v-model="individual.last_name" />
+                            v-model="personal.last_name" />
                         <span class="error-message">{{
                             errors.first("last_name")
                         }}</span>
@@ -31,24 +31,90 @@
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">Email:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="email" name="email" v-model="individual.email" v-validate="'required'" />
+                        <input class="w-full" type="email" name="email" v-model="personal.email"
+                            v-validate="'required'" />
                         <span class="error-message">{{
                             errors.first("email")
                         }}</span>
                     </div>
                 </div>
                 <div class="flex flex-1">
-                    <div class="flex w-1/3 items-center">Phone:</div>
+                    <!-- <div class="flex w-1/3 items-center">Phone:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="phone" v-model="individual.phone"  v-validate="{ required: true, regex: /((\+44?))\d{11}/ }" />
+                        <input class="w-full" type="text" name="phone" v-model="individual.phone"
+                            v-validate="{ required: true, regex: /((\+44?))\d{11}/ }" />
                         <span class="error-message">{{
                             errors.first("phone")
+                        }}</span>
+                    </div> -->
+                    <div class="flex w-1/3 items-center">Website:</div>
+                    <div class="w-2/3">
+                        <input class="w-full" type="text" name="website" v-model="personal.website" v-validate="{
+                            max: 255,
+                            regex: /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/,
+                        }" />
+                        <span class="error-message">{{
+                            errors.first("website")
                         }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="flex pb-4">
+                <div class="flex flex-1 pr-4">
+                    <div class="flex w-1/3 items-center">Facebook:</div>
+                    <div class="w-2/3">
+                        <input class="w-full" type="text" name="facebook" v-model="personal.facebook" v-validate="{
+                            max: 255,
+                            regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?facebook\.com\/[A-z 0-9 _ .]*\/?$/,
+                        }" />
+                        <span class="error-message">{{
+                            errors.first("facebook")
+                        }}</span>
+                    </div>
+                </div>
+                <div class="flex flex-1">
+                    <div class="flex w-1/3 items-center">Twitter:</div>
+                    <div class="w-2/3">
+                        <input class="w-full" type="text" name="twitter" v-model="personal.twitter" v-validate="{
+                            max: 255,
+                            regex: /^(http(s)?:\/\/)?(www\.)?(mobile\.)?twitter\.com\/[A-z 0-9 _]{1,15}\/?$/,
+                        }" />
+                        <span class="error-message">{{
+                            errors.first("twitter")
+                        }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex pb-4">
+                <div class="flex flex-1 pr-4">
+                    <div class="flex w-1/3 items-center">Soundcloud:</div>
+                    <div class="w-2/3">
+                        <input class="w-full" type="text" name="soundcloud" v-model="personal.soundcloud" v-validate="{
+                            max: 255,
+                            regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?(soundcloud\.com|snd\.sc)\/(.*)$/,
+                        }" />
+                        <span class="error-message">{{
+                            errors.first("soundcloud")
+                        }}</span>
+                    </div>
+                </div>
+                <div class="flex flex-1">
+                    <div class="flex w-1/3 items-center">YouTube:</div>
+                    <div class="w-2/3">
+                        <input class="w-full" type="text" name="youtube" v-model="personal.youtube" v-validate="{
+                            max: 255,
+                            regex: /(https?:\/\/)?(www\.)?(m\.)?youtube\.com\/(channel|user|c|u)\/[\w-]+/,
+                        }" />
+                        <span class="error-message">{{
+                            errors.first("youtube")
+                        }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">DOB:</div>
                     <div class="w-2/3 flex flex-dir-col">
@@ -66,7 +132,19 @@
                     </div>
 
                 </div>
-                <!-- <div class="flex flex-1">
+                <div class="flex flex-1">
+                    <div class="flex w-1/3">
+                        <label for="tos_shown_and_accepted ">TOS</label>
+                    </div>
+                    <div class="w-2/3">
+                        <input type="checkbox" id="tos_shown_and_accepted" name="tos_shown_and_accepted"
+                            v-model="tos_shown_and_accepted" v-validate="'required'" />
+                        <span class="error-message">{{
+                            errors.first("tos_shown_and_accepted") ? 'You must agree to the terms of service.' : ''
+                        }}</span>
+                    </div>
+                </div>
+                <div class="flex flex-1">
                     <div class="flex w-1/3 items-center">Website:</div>
                     <div class="w-2/3">
                         <input class="w-full" type="text" name="website" v-model="business_profile.url"
@@ -75,10 +153,10 @@
                             errors.first("website")
                         }}</span>
                     </div>
-                </div> -->
-            </div>
+                </div>
+            </div> -->
 
-            <div class="flex">
+            <!-- <div class="flex">
                 <div class="flex w-1/2 pr-4">
                     <div class="flex w-1/3">Address</div>
                     <div class=" w-2/3">
@@ -94,8 +172,6 @@
                         <span class="error-message">{{
                             errors.first("city")
                         }}</span>
-                        <!-- <input class="w-full mb-4" type="text" name="state" v-model="individual.address.state"
-                            placeholder="County" /> -->
                         <input class="w-full mb-4" type="text" name="postal_code" v-model="individual.address.postal_code
                                 " v-validate="'required'" placeholder="Post Code" />
                         <span class="error-message">{{
@@ -103,19 +179,8 @@
                         }}</span>
                     </div>
                 </div>
-                <div class="w-1/2 flex">
-                    <div class="flex w-1/3">
-                        <label for="tos_shown_and_accepted ">TOS</label>
-                    </div>
-                    <div class="w-2/3">
-                        <input type="checkbox" id="tos_shown_and_accepted" name="tos_shown_and_accepted"
-                            v-model="tos_shown_and_accepted" v-validate="'required'" />
-                        <span class="error-message">{{
-                            errors.first("tos_shown_and_accepted") ? 'You must agree to the terms of service.' : ''
-                        }}</span>
-                    </div>
-                </div>
-            </div>
+
+            </div> -->
             <div class="flex error-message mt-2 mb-2" v-if="stripeError">
                 {{ stripeError }}
             </div>
@@ -182,7 +247,7 @@
                         <input class="w-full mb-4" type="text" name="state" v-model="company.address.state"
                             placeholder="County" />
                         <input class="w-full mb-4" type="text" name="postal_code" v-model="company.address.postal_code
-                                " v-validate="'required'" placeholder="Post Code" />
+                            " v-validate="'required'" placeholder="Post Code" />
                         <span class="error-message">{{
                             errors.first("postal_code")
                         }}</span>
@@ -242,6 +307,16 @@ export default {
             stripeError: null,
             accountToken: null,
             business_type: "",
+            personal: {
+                first_name: "",
+                last_name: "",
+                email: "",
+                website: "",
+                facebook: "",
+                twitter: "",
+                youtube: "",
+                soundcloud: "",
+            },
             individual: {
                 first_name: "",
                 last_name: "",
@@ -276,7 +351,6 @@ export default {
                 },
             },
             tos_shown_and_accepted: false,
-            url: "",
             accountData: {},
         };
     },
@@ -300,11 +374,21 @@ export default {
         if (this.account) {
             // this.mutableAccount = this.account;
             this.business_type = this.account.business_type;
-            console.log("this.business_type", this.business_type);
+            // console.log("this.business_type", this.business_type);
             console.log("this.account", this.account);
-            this.accountMuatation(this.account)
+            // this.accountMuatation(this.account)
+
             this.tos_shown_and_accepted = true;
-            // this.mutableAccount.business_profile.url = this.account.business_profile.url ? this.account.business_profile.url : '';
+
+            // adding vaules 
+            this.personal.first_name = this.app.user.first_name;
+            this.personal.last_name = this.app.user.last_name;
+            this.personal.email = this.app.user.email;
+            this.personal.facebook = this.app.user.social_facebook;
+            this.personal.youtube = this.app.user.social_youtube;
+            this.personal.twitter = this.app.user.social_twitter;
+            this.personal.soundcloud = this.app.user.social_soundcloud;
+            this.personal.website = this.app.user.social_web;
         }
     },
 

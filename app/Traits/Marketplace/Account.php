@@ -16,7 +16,7 @@ trait Account
 
     public function createAccount($data)
     {
-        // dd($data['account']['address']['city']);
+        // dd($data['account']['identity_document']['document']['front']);
         if ($data['account']['business_type'] == 'individual') {
             $account = StripeAccount::create([
                 'country' => !empty($data['account']['country']) ? $data['account']['country'] : 'GB',
@@ -57,7 +57,7 @@ trait Account
                 'external_account' => [
                     'object' => 'bank_account',
                     'account' => $data['account_token'],
-                    'bank_name' => 'Test Bank',
+                    'bank_name' => $data['account']['account_name'],
                     'country' => $data['account']['account_country'],
                     "currency" => "gbp",
                     "account_number" => $data['account']['account_number']
@@ -65,7 +65,7 @@ trait Account
                 'business_profile' => [
                     'mcc' => 5815,
                     'name' => $data['account']['company_name'],
-                    'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.com',
+                    'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
                     'product_description' => 'Music in digital form (WAV/MP3) formats',
                 ],
             ], $this->stripeOptions());
@@ -122,7 +122,7 @@ trait Account
                 'external_account' => [
                     'object' => 'bank_account',
                     'account' => $data['account_token'],
-                    'bank_name' => 'Test Bank',
+                    'bank_name' => $data['account']['account_name'],
                     'country' => $data['account']['account_country'],
                     "currency" => "gbp",
                     "account_number" => $data['account']['account_number']
@@ -130,7 +130,7 @@ trait Account
                 'business_profile' => [
                     'mcc' => 5815,
                     'name' => $data['account']['company_name'],
-                    'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.com',
+                    'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
                     'product_description' => 'Music in digital form (WAV/MP3) formats',
                 ],
             ], $this->stripeOptions());
@@ -161,9 +161,13 @@ trait Account
                     'owner' => $data['account']['relationship'] == 'owner' ? true : true,
                     'representative' => $data['account']['relationship'] == 'representative' ? true : true,
                 ],
+                'verification' => [
+                    'document' => [
+                        'front' => $data['account']['identity_document']['document']['front']
+                    ]
+                ],
             ], $this->stripeOptions());
         }
-
 
         $this->stripe_account_id = $account->id;
         $this->save();

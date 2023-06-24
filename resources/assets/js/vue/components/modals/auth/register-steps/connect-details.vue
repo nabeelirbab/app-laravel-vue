@@ -203,10 +203,10 @@ export default {
 		this.$validator.localize('en', dict);
 
 		if (this.tempUser) {
-			this.first_name = this.tempUser.first_name;
-			this.last_name = this.tempUser.last_name;
+			this.first_name = this.tempUser.personal.firstname;
+			this.last_name = this.tempUser.personal.surname;
 			// this.email = this.tempUser.email;
-			this.phone = this.tempUser.phone ? this.tempUser.phone : '';
+			this.phone = this.tempUser.personal.mobile ? this.tempUser.personal.mobile : '';
 			// this.account.website = this.tempUser.social_web;
 		}
 	},
@@ -231,7 +231,8 @@ export default {
 					this.$store.state.app.account.company_name = this.company_name;
 					// }
 					this.$store.state.app.account.country = this.country;
-					this.$store.state.app.account.email = this.tempUser.email;
+					this.$store.state.app.account.email = this.tempUser.personal.email;
+					this.$store.state.app.account.webiste = this.tempUser.social.website;
 					console.log(this.$store.state.app.account);
 					this.$emit('next-step');
 				}

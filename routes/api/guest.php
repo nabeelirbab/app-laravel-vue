@@ -6,6 +6,7 @@ Route::prefix('/auth')->group(function () {
 
     Route::post('register/{type}', 'Auth\RegisterController@register');
     Route::post('send-otp', 'Auth\RegisterController@createOTP');
+    Route::post('resend-otp', 'Auth\RegisterController@resendOTP');
     Route::post('phone-verification', 'Auth\RegisterController@verification');
     Route::post('marketplace/create', 'Auth\MarketplaceController@store');
     Route::post('marketplace/update', 'Auth\MarketplaceController@update');

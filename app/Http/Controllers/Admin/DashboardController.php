@@ -42,7 +42,7 @@ class DashboardController extends Controller
 
         $releases = Release::statusPending()->orderBy('release_date', 'desc');
         $releases = $releases->paginate(15);
-        $users = User::where('approved_at', null)->paginate();
+        $users = User::where('approved_at', null)->paginate(15);
 
         return view('admin.dashboard')->with([
             'releases' => $releases,

@@ -14,15 +14,15 @@
         <!--                    </div>-->
         <!--                </div>-->
         <form class="register-form" v-if="selectedPlan">
-          <personal-details v-if="step === 1" :selected-plan="selectedPlan" @next-step="nextStep"></personal-details>
+          <personal-details v-if="step === 1" :selected-plan="selectedPlan" :verrors="verrors" @next-step="nextStep"></personal-details>
           <connect-details v-if="step === 2" @skip="onHandleSkip" @next-step="nextStep"></connect-details>
-          <phone-details @next-step="nextStep" v-if="step === 3"></phone-details>
-          <phone-verification @next-step="nextStep" v-if="step === 4"></phone-verification>
+          <phone-details @next-step="nextStep" @handleOtpId="handleOtpId" v-if="step === 3"></phone-details>
+          <phone-verification @next-step="nextStep" :otpId="otpId" @handleOtpId="handleOtpId" v-if="step === 4"></phone-verification>
           <business-type @next-step="nextStep" v-if="step === 5"></business-type>
           <identity-details @next-step-verify="nextStepVerify"  @next-step="nextStep" v-if="step === 6"></identity-details>
           <verify-business-details @next-step-verify="nextStepVerify" v-if="step === 9"></verify-business-details>
           <!-- <professional-details @next-step="nextStep" v-if="step === 7"></professional-details> -->
-          <payouts-details @next-step="nextStep" @finished="onHandleFinished" v-if="step === 7"></payouts-details>
+          <payouts-details @next-step="nextStep" @prev-step="prevStep" :selected-plan="selectedPlan" @finished="onHandleFinished" v-if="step === 7"></payouts-details>
 
           <div class="time-confirmation-text" style="padding: 20px 50px" v-if="selectedPlan.id !== 1">
             <br />
@@ -75,6 +75,8 @@ export default {
       step: 1,
       selectedPlan: null,
       submitted: false,
+      otpId: null,
+      verrors: null,
     };
   },
   computed: {
@@ -108,49 +110,38 @@ export default {
       this.submitted = true;
       this.step = 1;
     },
+    prevStep(step, data = null){
+      if(step == 1){
+        this.step = step;
+        this.verrors = data;
+      }
+    },
     nextStep() {
       if (this.selectedPlan.title === "Standard") {
         return (this.submitted = true);
       }
-      // if (this.step == 9) {
-      //   this.step = 8;
-      // }
-      console.log("before", this.step);
-      // if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
-      //   this.step = 9;
-      // }
-      this.step++;
-      console.log("after", this.step);
+      if(this.$store.state.app.isUserOnLastStep){
+        this.step = 7;
+        return 0;
+      }else{
+        this.step++;
+      }
     },
 
     nextStepVerify() {
-
       if (this.step == 9) {
-        console.log("step == 9", this.step);
         this.step = 7;
       }
-      console.log("before", this.step);
-
       if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
         this.step = 9;
       } 
-
       if (this.$store.state.app.account.business_type == 'non_profit' && this.step == 6) {
         this.step = 9;
       } 
-      
-      // else {
-      //   this.step++;
-      // }
-      console.log("after", this.step);
-
-
-      // console.log("before verify", this.step);
-      // if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
-      // this.step = 9;
-      // }
-      // console.log("after verify", this.step);
-      // this.step++;
+    },
+    handleOtpId(id){
+      this.otpId = id;
+      console.log(this.otpId);
     },
     showLoginModal() {
       this.$modal.hide("modal-auth-register-form");

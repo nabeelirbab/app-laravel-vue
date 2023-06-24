@@ -196,29 +196,53 @@ class RegisterController extends Controller
     public function createOTP(Request $req)
     {
         $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
         try {
-            $otp = Otp::where('user_id', $req->user_id)->first();
+            $otp = Otp::create([
+                'code' => $code,
+            ]);
+
+            // dd($otp);
+            if ($otp) {
+                // $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+                // $res = $client->messages->create($req->phone, [
+                //     'from' => env('TWILIO_PHONE'),
+                //     'body' => "Your Phase verification code is: " . $code
+                // ]);
+
+                // Success response
+                return response()->json(['message' => 'OTP created and code sent successfully.', 'otp_id' => $otp->id]);
+            }
+        } catch (Exception $e) {
+            // Error handling
+            return response()->json(['message' => 'Error occurred while creating OTP.'], 500);
+        }
+    }
+
+    public function resendOTP(Request $req)
+    {
+        $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        try {
+            $otp = Otp::where('id', $req->id)->first();
 
             // FOR RESEND: Check if the OTP record exists
             if ($otp) {
                 // Delete the OTP record
                 $otp->delete();
             }
+
             $otp = Otp::create([
-                'user_id' => $req->user_id,
                 'code' => $code,
             ]);
 
             if ($otp) {
-                $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
-                $res = $client->messages->create($req->phone, [
-                    'from' => env('TWILIO_PHONE'),
-                    'body' => "Your Phase verification code is: " . $code
-                ]);
+                // $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+                // $res = $client->messages->create($req->phone, [
+                //     'from' => env('TWILIO_PHONE'),
+                //     'body' => "Your Phase verification code is: " . $code
+                // ]);
 
                 // Success response
-                return response()->json(['message' => 'OTP created and code sent successfully.']);
+                return response()->json(['message' => 'OTP created and code sent successfully.', 'otp_id' => $otp->id]);
             }
         } catch (Exception $e) {
             // Error handling
@@ -228,11 +252,12 @@ class RegisterController extends Controller
 
     public function verification(Request $req)
     {
+        // dd($req);
         $code = $req->code;
-        $user_id = $req->user_id;
+        $id = $req->id;
 
         // Retrieve the OTP record based on the user ID
-        $otp = Otp::where('user_id', $user_id)->first();
+        $otp = Otp::where('id', $id)->first();
 
         // Check if the OTP record exists and the code matches
         if ($otp && $otp->code === $code) {

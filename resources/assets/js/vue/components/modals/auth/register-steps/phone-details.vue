@@ -86,11 +86,13 @@ export default {
 						"/api/auth/send-otp",
 						{
 							// user_id: '45',
-							user_id: this.$store.state.app.tempUser.id,
+							// id: this.$store.state.app.tempUser.id,
 							// phone: '+441234567890',
 							phone: this.$store.state.app.account.phone ,
 						}
 					).then((res) => {
+						console.log(res);
+						this.$emit('handleOtpId', res.data.otp_id);
 						this.$emit('next-step');
 					})
 

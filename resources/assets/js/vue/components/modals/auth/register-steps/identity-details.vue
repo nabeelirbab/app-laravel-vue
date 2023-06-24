@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<h1 v-if="this.$store.state.app.account.business_type == 'individual'">Verify your personal details</h1>
+		<h1 v-if="this.$store.state.app.account.business_type == 'individual'" style="text-align: center;">Verify your personal details</h1>
 		<h1
-			v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'">
+			v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'" style="text-align: center;">
 			Tell us more about your business</h1>
 
 		<form @submit.prevent="handlePersonalSubmit" id="account-form"
 			v-if="this.$store.state.app.account.business_type == 'individual'">
-			<p>Phase collects this information to verify your identity and keep your account safe</p>
+			<p style="text-align: center;">Phase collects this information to verify your identity and keep your account safe</p>
 
 			<div class="flex">
 				<div class="input">
@@ -64,6 +64,21 @@
 				</div>
 			</div>
 
+			<div class="flex">
+				<div class="input">
+					<div>Identity Document:</div>
+					<div>
+						<input type="file" name="identity_document" style="margin-top: 8px; margin-bottom: 8px;"
+						v-on:change="handleIdentityDocumentChange"  v-validate="'required|ext:jpeg,jpg,png'"
+							data-vv-validate-on="blur" />
+						<span class="error-message">{{ errors.first("identity_document") }}</span>
+
+						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
+						<span class="error-message">{{ errors.first("country") }}</span> -->
+					</div>
+				</div>
+			</div>
+
 			<!-- <div class="flex" style="flex-direction:column;">
 				<div class="input">
 					<div>Accept Terms of Service:</div>
@@ -93,7 +108,7 @@
 
 		<form @submit.prevent="handleSubmit" id="account-form"
 			v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'">
-			<p>Phase collects this information to better
+			<p style="text-align: center;">Phase collects this information to better
 				serve your business and help meet the requirements of regulators, financial partners, and our service
 				agreements</p>
 
@@ -167,6 +182,21 @@
 						<small>This address must match the address filed with the UK tax authority.</small>
 						<br>
 						<small>You can use your home address if you don't have a business address.</small>
+					</div>
+				</div>
+			</div>
+
+			<div class="flex">
+				<div class="input">
+					<div>Identity Document:</div>
+					<div>
+						<input type="file" name="identity_document" style="margin-top: 8px; margin-bottom: 8px;"
+						v-on:change="handleIdentityDocumentChange"  v-validate="'required|ext:jpeg,jpg,png'"
+							data-vv-validate-on="blur" />
+						<span class="error-message">{{ errors.first("identity_document") }}</span>
+
+						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
+						<span class="error-message">{{ errors.first("country") }}</span> -->
 					</div>
 				</div>
 			</div>
@@ -284,7 +314,8 @@ export default {
 				// industry: "",
 				// site: "",
 				// prod_des: "",
-			}
+			},
+			identity_document: null,
 		};
 	},
 
@@ -311,6 +342,15 @@ export default {
 	},
 
 	methods: {
+		handleIdentityDocumentChange(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.identity_document = file;
+		this.$store.state.app.stripeFiles = this.identity_document;
+		this.$validator.validate();
+      }
+    },
+	
 		handlePersonalSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
