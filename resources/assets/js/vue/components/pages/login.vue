@@ -2,8 +2,9 @@
   <div class="page-content-padded">
 
     <div class="page-main" v-if="!app.user.loggedin">
-      <div v-if="showMessage" class="alert alert-success" style="background: green; color: #fff; padding: 10px;margin-bottom: 15px;">Email
-      verified successfully. Please Login  to Access.</div>
+      <div v-if="showMessage" class="alert alert-success"
+        style="background: green; color: #fff; padding: 10px;margin-bottom: 15px;">Email
+        verified successfully. Please Login to Access.</div>
 
       <h1 class="no-top">Login</h1>
 
@@ -54,7 +55,13 @@ export default {
   },
   mounted() {
     if (this.$route.query['email-verified'] === '1') {
-      this.showMessage = true
+      // console.log("successsuccesssuccess");
+      // this.showMessage = true
+      this.$notify({
+        group: 'main',
+        type: 'success',
+        title: '<img src="/img/mail-approved.gif" alt="success" style="width=80%">',
+      })
     }
   },
   computed: {

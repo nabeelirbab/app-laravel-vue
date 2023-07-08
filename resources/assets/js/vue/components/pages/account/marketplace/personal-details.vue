@@ -31,8 +31,7 @@
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">Email:</div>
                     <div class="w-2/3">
-                        <input class="w-full" type="email" name="email" v-model="personal.email"
-                            v-validate="'required'" />
+                        <input class="w-full" type="email" name="email" v-model="personal.email" v-validate="'required'" />
                         <span class="error-message">{{
                             errors.first("email")
                         }}</span>
@@ -62,54 +61,58 @@
 
             <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
-                    <div class="flex w-1/3 items-center">Facebook:</div>
+                    <div class="w-1/3 items-center">Phone Number:
+                        <span class="hover-text" style="margin-left: 0px;">
+                            <i class="fa fa-info-circle" aria-hidden="true" v-tooltip="'my text'"> </i>
+                            <p class="tooltip-text" id="left">Current details stored are hidden for security reasons.</p>
+                        </span>
+                    </div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="facebook" v-model="personal.facebook" v-validate="{
-                            max: 255,
-                            regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?facebook\.com\/[A-z 0-9 _ .]*\/?$/,
-                        }" />
-                        <span class="error-message">{{
-                            errors.first("facebook")
-                        }}</span>
+                        <input type="text" class="w-full" name="phone" placeholder="+441234567890" v-model="personal.phone"
+                            v-validate="{ regex: /((\+?))\d{10,14}/ }" data-vv-validate-on="blur" />
+                        <span class="error-message">{{ errors.first("phone") }}</span>
                     </div>
                 </div>
-                <div class="flex flex-1">
-                    <div class="flex w-1/3 items-center">Twitter:</div>
+                <div class="flex flex-1 input">
+                    <div class="w-1/3 items-center">Country of bank account:
+                        <span class="hover-text" style="margin-left: 0px;">
+                            <i class="fa fa-info-circle" aria-hidden="true" v-tooltip="'my text'"> </i>
+                            <p class="tooltip-text" id="left">Current details stored are hidden for security reasons.</p>
+                        </span>
+                    </div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="twitter" v-model="personal.twitter" v-validate="{
-                            max: 255,
-                            regex: /^(http(s)?:\/\/)?(www\.)?(mobile\.)?twitter\.com\/[A-z 0-9 _]{1,15}\/?$/,
-                        }" />
-                        <span class="error-message">{{
-                            errors.first("twitter")
-                        }}</span>
+                        <country-select @change="bankCountryChanged" style="width: 100%; margin-top: 8px" />
+                        <span class="error-message">{{ errors.first("country") }}</span>
                     </div>
                 </div>
             </div>
 
             <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
-                    <div class="flex w-1/3 items-center">Soundcloud:</div>
+                    <div class="w-1/3 items-center">Bank Name:
+                        <span class="hover-text" style="margin-left: 0px;">
+                            <i class="fa fa-info-circle" aria-hidden="true" v-tooltip="'my text'"> </i>
+                            <p class="tooltip-text" id="left">Current details stored are hidden for security reasons.</p>
+                        </span>
+                    </div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="soundcloud" v-model="personal.soundcloud" v-validate="{
-                            max: 255,
-                            regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?(soundcloud\.com|snd\.sc)\/(.*)$/,
-                        }" />
-                        <span class="error-message">{{
-                            errors.first("soundcloud")
-                        }}</span>
+                        <input type="text" class="w-full" name="account_name" v-model="personal.bank.name" v-validate=""
+                            placeholder="" />
+                        <span class="error-message">{{ errors.first("account_name") }}</span>
                     </div>
                 </div>
                 <div class="flex flex-1">
-                    <div class="flex w-1/3 items-center">YouTube:</div>
+                    <div class="w-1/3 items-center">Bank Account Number:
+                        <span class="hover-text" style="margin-left: 0px;">
+                            <i class="fa fa-info-circle" aria-hidden="true" v-tooltip="'my text'"> </i>
+                            <p class="tooltip-text" id="left">Current details stored are hidden for security reasons.</p>
+                        </span>
+                    </div>
                     <div class="w-2/3">
-                        <input class="w-full" type="text" name="youtube" v-model="personal.youtube" v-validate="{
-                            max: 255,
-                            regex: /(https?:\/\/)?(www\.)?(m\.)?youtube\.com\/(channel|user|c|u)\/[\w-]+/,
-                        }" />
-                        <span class="error-message">{{
-                            errors.first("youtube")
-                        }}</span>
+                        <input type="text" class="w-full" name="account_number" v-model="personal.bank.account_number"
+                            v-validate="''" ref="account_number" placeholder="GB82WEST12345698765432"
+                            data-vv-as="bank account number" />
+                        <span class="error-message">{{ errors.first("account_number") }}</span>
                     </div>
                 </div>
             </div>
@@ -156,37 +159,73 @@
                 </div>
             </div> -->
 
-            <!-- <div class="flex">
-                <div class="flex w-1/2 pr-4">
-                    <div class="flex w-1/3">Address</div>
+            <div class="flex">
+                <div class="flex w-1/2 pr-4 input">
+                    <div class="w-1/3">Address:
+                        <span class="hover-text" style="margin-left: 0px;">
+                            <i class="fa fa-info-circle" aria-hidden="true" v-tooltip="'my text'"> </i>
+                            <p class="tooltip-text" id="left">Current details stored are hidden for security reasons.</p>
+                        </span>
+                    </div>
                     <div class=" w-2/3">
-                        <input class="w-full mb-4" type="text" name="line1" v-model="individual.address.line1"
-                            placeholder="Line 1" v-validate="'required'" />
+                        <input class="w-full mb-4" type="text" name="line1" v-model="personal.address.line1"
+                            placeholder="Line 1" v-validate="''" />
                         <span class="error-message">{{
                             errors.first("line1")
                         }}</span>
-                        <input class="w-full mb-4" type="text" name="line2" v-model="individual.address.line2"
+                        <input class="w-full mb-4" type="text" name="line2" v-model="personal.address.line2"
                             placeholder="Line 2" />
-                        <input class="w-full mb-4" type="text" name="city" v-model="individual.address.city"
-                            placeholder="City" v-validate="'required'" />
+                        <input class="w-full mb-4" type="text" name="city" v-model="personal.address.city"
+                            placeholder="City" v-validate="''" />
                         <span class="error-message">{{
                             errors.first("city")
                         }}</span>
-                        <input class="w-full mb-4" type="text" name="postal_code" v-model="individual.address.postal_code
-                                " v-validate="'required'" placeholder="Post Code" />
+                        <input class="w-full mb-4" type="text" name="postal_code" v-model="personal.address.postal_code
+                                " v-validate="''" placeholder="Post Code" />
                         <span class="error-message">{{
                             errors.first("postal_code")
                         }}</span>
+                        <country-select @change="artistCountryChanged" style="width: 100%; margin-top: 8px" />
+                        <span class="error-message">{{ errors.first("country") }}</span>
                     </div>
                 </div>
+                <div class="flex w-1/2">
+                    <div v-if="verification">
+                        <div class="w-1/3">Identity Document:
+                            <span class="hover-text" style="margin-left: 0px;">
+                                <i class="fa fa-info-circle" aria-hidden="true" v-t ooltip="'my text'"> </i>
+                                <p class="tooltip-text" id="left">Current details stored are hidden for security reasons.
+                                </p>
+                            </span>
+                        </div>
+                        <div class=" w-2/3" v-if="!personal.file">
+                            <ph-button @click.native.prevent="selectFile">Choose File</ph-button>
+                            <input type="file" @change="setFile($event)" name="file" accept=".pdf, .jpeg, .jpg, .doc, .docx"
+                                v-validate="'ext:jpeg,jpg,doc,docx'" ref="fileInput" :key="1" style="display:none" />
+                        </div>
+                        <div class=" w-2/3" v-else style="display: flex;justify-content: space-between;">
+                            <div class="selected-file__left" style="display: flex;">
+                                <span><i class="fas fa-file"></i></span>
+                                &nbsp;
+                                <p class="selected-file__name">{{ personal.file.name }}</p>
+                            </div>
+                            <span @click="removeFile"><i class="fas fa-times"></i></span>
+                        </div>
 
-            </div> -->
-            <div class="flex error-message mt-2 mb-2" v-if="stripeError">
-                {{ stripeError }}
+                        <span class="error-message">{{ errors.first('file') }}</span>
+                    </div>
+                    <div v-else>
+                        Identity Document <span style="color:green">Verified</span>
+                    </div>
+                </div>
             </div>
-            <div>
-                <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
-            </div>
+        </div>
+
+        <div class="flex error-message mt-2 mb-2" v-if="stripeError">
+            {{ stripeError }}
+        </div>
+        <div>
+            <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
         </div>
         <div v-if="business_type == 'company' || business_type == 'non_profit'">
             <div class="flex pb-4">
@@ -283,16 +322,24 @@
                 <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
             </div>
         </div>
+
+
+        <h4 style="margin-top: 30px;">Card Details</h4>
+        <hr>
+        <existing-card-account :card="card" :actions="true" />
+
     </ph-panel>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import CountrySelect from "../../../modals/upload/country-select";
+import ExistingCardAccount from '../../../global/existing-card-account';
 
 export default {
     components: {
         CountrySelect,
+        ExistingCardAccount,
     },
     name: "personal-details",
     props: {
@@ -312,21 +359,8 @@ export default {
                 last_name: "",
                 email: "",
                 website: "",
-                facebook: "",
-                twitter: "",
-                youtube: "",
-                soundcloud: "",
-            },
-            individual: {
-                first_name: "",
-                last_name: "",
-                email: "",
                 phone: "",
-                dob: {
-                    day: "",
-                    month: "",
-                    year: "",
-                },
+                file: null,
                 address: {
                     line1: "",
                     line2: "",
@@ -335,6 +369,30 @@ export default {
                     postal_code: "",
                     country: "GB",
                 },
+                bank: {
+                    name: '',
+                    country: '',
+                    account_number: '',
+                },
+            },
+            bank: {
+                name: '',
+                country: '',
+                account_number: '',
+            },
+            individual: {
+                first_name: "",
+                last_name: "",
+                phone: "",
+                address: {
+                    line1: "",
+                    line2: "",
+                    city: "",
+                    state: "",
+                    postal_code: "",
+                    country: "GB",
+                },
+                // verfication: "",
             },
             company: {
                 name: "",
@@ -350,16 +408,29 @@ export default {
                     country: "GB",
                 },
             },
+            identity_document_verification: '',
             tos_shown_and_accepted: false,
             accountData: {},
+            verification: null,
+            card: null,
         };
     },
 
     computed: {
         ...mapState(["app"]),
     },
+    watch: {
+        account: {
+            handler: function (val, oldVal) {
+                this.initVerification();
+            },
+            deep: true
+        },
+    },
 
     mounted() {
+        this.initVerification();
+        this.getPaymentMethod()
 
         const dict = {
             custom: {
@@ -384,15 +455,40 @@ export default {
             this.personal.first_name = this.app.user.first_name;
             this.personal.last_name = this.app.user.last_name;
             this.personal.email = this.app.user.email;
-            this.personal.facebook = this.app.user.social_facebook;
-            this.personal.youtube = this.app.user.social_youtube;
-            this.personal.twitter = this.app.user.social_twitter;
-            this.personal.soundcloud = this.app.user.social_soundcloud;
             this.personal.website = this.app.user.social_web;
         }
     },
 
     methods: {
+        initVerification() {
+            if (this.account && this.account.requirements.eventually_due.length && !this.verified && this.account.external_accounts.data.length > 0) {
+                this.verification = this.account.requirements.eventually_due.filter(item => {
+                    return item.endsWith('verification.document')
+                }).map(item => {
+                    return item.split('.').pop()
+                })
+            } else {
+                this.verification = null;
+            }
+        },
+        selectFile() {
+            let fileInputElement = this.$refs.fileInput;
+            fileInputElement.click();
+        },
+        setFile: function (event) {
+            const { files } = event.target;
+            if (files && files[0]) {
+                this.personal.file = files[0];
+                this.$validator.validate();
+            }
+        },
+        removeFile: function () {
+            this.personal.file = null;
+        },
+        bankCountryChanged(country) {
+            this.personal.bank.country = country;
+            this.$validator.validate();
+        },
         artistCountryChanged(country) {
             if (this.business_type == 'individual') {
                 this.individual.address.country = country;
@@ -401,19 +497,23 @@ export default {
             }
             this.$validator.validate();
         },
-        accountMuatation(account) {
+        accountMuatation() {
             if (this.business_type == 'individual') {
-                this.individual.first_name = account.individual.first_name;
-                this.individual.last_name = account.individual.last_name;
-                this.individual.phone = account.individual.phone;
-                this.individual.email = account.individual.email;
-                this.individual.dob.day = account.individual.dob.day;
-                this.individual.dob.month = account.individual.dob.month;
-                this.individual.dob.year = account.individual.dob.year;
-                this.individual.address.city = account.individual.address.city;
-                this.individual.address.line1 = account.individual.address.line1;
-                this.individual.address.line2 = account.individual.address.line2;
-                this.individual.address.postal_code = account.individual.address.postal_code;
+                this.individual.first_name = this.personal.first_name;
+                this.individual.last_name = this.personal.last_name;
+                this.individual.phone = this.personal.phone ? this.personal.phone : this.account.individual.phone;
+                // this.individual.website = this.personal.website;
+                this.individual.address.city = this.personal.address.city ? this.personal.address.city : this.account.individual.address.city;
+                this.individual.address.line1 = this.personal.address.line1 ? this.personal.address.line1 : this.account.individual.address.line1;
+                this.individual.address.line2 = this.personal.address.line2 ? this.personal.address.line2 : this.account.individual.address.line2;
+                this.individual.address.postal_code = this.personal.address.postal_code ? this.personal.address.postal_code : this.account.individual.address.postal_code;
+                this.individual.address.country = this.personal.address.country ? this.personal.address.country : this.account.individual.address.country;
+                this.bank.name = this.personal.bank.name ? this.personal.bank.name : this.account.external_accounts.data[0].bank_name;
+                this.bank.account_number = this.personal.bank.account_number ? this.personal.bank.account_number : null;
+                this.bank.country = this.personal.bank.country ? this.personal.bank.country : this.account.external_accounts.data[0].country;
+                if (this.identity_document_verification) {
+                    this.individual.verification = this.identity_document_verification;
+                }
             } else {
                 this.company.name = account.company.name;
                 this.company.phone = account.company.phone;
@@ -428,52 +528,62 @@ export default {
             }
         },
         async updateAccount() {
-            await this.$validator.validate();
-            if (this.$validator.errors.any()) {
-                console.log("Validation errors:", this.$validator.errors.all());
-            } else {
-                console.log("Values are valid!");
-            }
             // const method = this.account ? "update" : "create";
-            // this.$validator.validate().then(async (valid) => {
-            // console.log(valid);
-            // if (valid) {
-            //     await this.createToken();
+            this.$validator.validate().then(async (valid) => {
+                console.log(valid);
+                if (valid) {
+                    if (this.personal.file !== null) {
+                        const files = await this.uploadFiles({
+                            document: this.personal.file
+                                ? this.personal.file
+                                : null,
+                        });
+                        this.identity_document_verification = {
+                            document: {
+                                front: files.document ? files.document.id : null,
+                            },
+                        };
+                    }
 
-            //     if (this.accountToken) {
-            //         await axios
-            //             .post(`/api/account/marketplace/update`, {
-            //                 token: this.accountToken.id,
-            //                 account: this.business_type == 'individual' ? this.individual : this.company,
-            //                 business_type: this.business_type 
-            //             })
-            //             .then((response) => {
-            //                 this.loading = false;
-            //                 this.$emit("account_updated");
-            //                 Vue.$notify({
-            //                     group: "main",
-            //                     type: "success",
-            //                     title: "<img src='/img/success.gif' alt='success'>",
-            //                 });
-            //             })
-            //             .catch((error) => {
-            //                 this.stripeError = error.response.data.message;
-            //                 this.loading = false;
-            //             });
-            //     }
-            // }
-            // });
+                    await this.createToken();
+                    if (this.accountToken) {
+                        console.log(this.accountToken);
+                        await axios
+                            .post(`/api/account/marketplace/update`, {
+                                token: this.accountToken.id,
+                                account: this.business_type == 'individual' ? this.personal : this.company,
+                                business_type: this.business_type,
+                                bank: this.bank,
+                                file: this.identity_document_verification ? this.identity_document_verification.document.front : this.account.individual.verification.document.front,
+                            })
+                            .then((response) => {
+                                this.loading = false;
+                                this.$emit("account_updated");
+                                Vue.$notify({
+                                    group: "main",
+                                    type: "success",
+                                    title: "<img src='/img/success.gif' alt='success'>",
+                                });
+                            })
+                            .catch((error) => {
+                                this.stripeError = error.response.data.message;
+                                this.loading = false;
+                            });
+                    }
+                }
+            });
         },
 
         async createToken() {
             this.loading = true;
             const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY);
             this.stripeError = null;
+            this.accountMuatation()
             if (this.business_type == 'individual') {
-                const { email, ...individual } = this.individual;
                 this.accountData = {
-                    individual: individual,
+                    individual: this.individual,
                     business_type: this.business_type,
+                    website: this.personal.website ? this.personal.website : this.account.business_profile.url,
                     tos_shown_and_accepted: this.tos_shown_and_accepted,
                 }
             } else if (this.business_type == 'company') {
@@ -492,6 +602,8 @@ export default {
                 }
             }
 
+            console.log(this.accountData);
+
             await stripe
                 .createToken("account", {
                     account: this.accountData,
@@ -508,6 +620,38 @@ export default {
                 .catch((error) => {
                     console.log(error)
                 });
+        },
+
+        async uploadFiles(files) {
+            const document = await this.uploadFile(files.document);
+            const additional_document = await this.uploadFile(files.additional_document);
+
+            return {
+                document: document,
+                additional_document: additional_document,
+            };
+        },
+        async uploadFile(file) {
+            if (file) {
+                const data = new FormData();
+                data.append("file", file);
+                data.append("purpose", "identity_document");
+                this.loading = true;
+                const fileResult = await fetch("https://uploads.stripe.com/v1/files", {
+                    method: "POST",
+                    headers: { Authorization: `Bearer ${process.env.MIX_VUE_APP_STRIPE_KEY}` },
+                    body: data,
+                });
+
+                return await fileResult.json();
+            }
+        },
+        getPaymentMethod() {
+            axios.get('/api/account/billing/method')
+                .then(response => {
+                    this.card = response.data.payment_method
+                    console.log("billing card", this.card);
+                })
         },
     },
 };

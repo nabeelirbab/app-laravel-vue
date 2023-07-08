@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Tell us about your business</h1>
+		<h1 style="text-align: center;">Tell us about your business</h1>
 
 		<form @submit.prevent="handleSubmit" id="account-form">
 			<div class="flex">

@@ -5,7 +5,7 @@
     <form @submit.prevent="handleSubmit" id="account-form">
       <div class="flex">
         <div class="input">
-          <div>Country of back account:</div>
+          <div>Country of bank account:</div>
           <div>
             <country-select
               @change="artistCountryChanged"
@@ -54,7 +54,7 @@
               v-model="account_number"
               v-validate="'required'"
               ref="account_number"
-              placeholder="01234567"
+              placeholder="GB82WEST12345698765432"
               data-vv-as="account number"
             />
             <span class="error-message">{{ errors.first("account_number") }}</span>
@@ -71,7 +71,7 @@
               name="confirm_account_number"
               v-model="confirm_account_number"
               v-validate="'required|confirmed:account_number'"
-              placeholder="01234567"
+              placeholder="GB82WEST12345698765432"
               data-vv-as="account number"
             />
             <span class="error-message">{{

@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<h1 v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'">Verify you represent this business</h1>
+		<h1 v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'" style="text-align: center;">Verify you represent this business</h1>
 		<form @submit.prevent="handleSubmit" id="account-form">
-			<p>This form must be filled out by someone with significant control and management of your business. if that's
+			<p style="text-align: center;">This form must be filled out by someone with significant control and management of your business. if that's
 				not you, make sure to ask the right person to continue.</p>
 
 			<!-- <div class="flex">

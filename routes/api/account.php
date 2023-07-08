@@ -20,7 +20,8 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
 
     Route::prefix('billing')->group(function() {
         Route::post('/', 'BillingController@store');
-//        Route::post('update', 'BillingController@update');
+    //    Route::post('update', 'BillingController@update');
+       Route::post('remove', 'BillingController@remove');
         Route::get('/method', 'BillingController@getPaymentMethod');
     });
 

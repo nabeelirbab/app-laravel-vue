@@ -180,7 +180,7 @@ trait Account
         $person_id = explode('.', $data['requireFor'][0])[0];
         if ($person_id == 'individual') {
             return StripeAccount::update($this->accountId(), [
-                'account_token' => $data['account_token']
+                'account_token' => $data['account_token'],
             ], $this->stripeOptions());
         } else {
             StripeAccount::updatePerson($this->accountId(), $person_id, [
@@ -199,11 +199,28 @@ trait Account
 
     public function updateAccount($data)
     {
+        // dd($data);
         if ($data['business_type'] == 'individual') {
-            return StripeAccount::update($this->accountId(), [
+            $updateData = [
                 'account_token' => $data['account_token'],
                 'email' => $data['account']['email'],
-            ], $this->stripeOptions());
+                'business_profile' => [
+                    'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
+                ]
+            ];
+
+            if (isset($data['bank']['account_number'])) {
+                $updateData['external_account'] = [
+                    'object' => 'bank_account',
+                    'account' => $data['account_token'],
+                    'bank_name' => $data['bank']['name'],
+                    'country' => $data['bank']['country'],
+                    'currency' => 'gbp',
+                    'account_number' => $data['bank']['account_number']
+                ];
+            }
+            
+            return StripeAccount::update($this->accountId(), $updateData, $this->stripeOptions());
         } elseif ($data['business_type'] == 'company') {
             return StripeAccount::update($this->accountId(), [
                 'account_token' => $data['account_token'],

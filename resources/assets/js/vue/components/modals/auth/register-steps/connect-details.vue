@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<h1>Verification</h1>
+		<h1 style="text-align: center;">Verification</h1>
 
 		<form @submit.prevent="handleSubmit" id="account-form">
-			<p>The following details are required to provide verification and a method of payment for sales, Details given
+			<p style="text-align: center;">The following details are required to provide verification and a method of payment for sales, Details given
 				must be full legal and registered names</p>
 
 			<div class="flex">

@@ -24,7 +24,8 @@ class BillingController extends Controller
             $user->newSubscription('default', 'artist_pro')
                 // ->trialUntil(Carbon::parse($user->trial_ends_at))
                 ->create(
-                    $request->payment_method, [
+                    $request->payment_method,
+                    [
                         'email' => $user->email,
                     ]
                 );
@@ -36,17 +37,30 @@ class BillingController extends Controller
         ];
     }
 
-        public function getPaymentMethod()
-        {
-            if (Auth::user()->defaultPaymentMethod()) {
-                $paymentMethod = PaymentMethod::retrieve(
-                    Auth::user()->defaultPaymentMethod()->id,
-                    Cashier::stripeOptions()
-                );
-            }
-
-            return [
-                'payment_method' => $paymentMethod ?? null
-            ];
+    public function getPaymentMethod()
+    {
+        if (Auth::user()->defaultPaymentMethod()) {
+            $paymentMethod = PaymentMethod::retrieve(
+                Auth::user()->defaultPaymentMethod()->id,
+                Cashier::stripeOptions()
+            );
         }
+
+        return [
+            'payment_method' => $paymentMethod ?? null
+        ];
+    }
+
+    public function remove(Request $request)
+    {
+
+        // dd($request->payment_method);
+        if (Auth::user()->defaultPaymentMethod()) {
+            Auth::user()->deletePaymentMethods();
+        }
+
+        return [
+            'payment_method' => "delete"
+        ];
+    }
 }

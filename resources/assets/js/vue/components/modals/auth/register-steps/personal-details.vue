@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="register-form-group">
-      <h2>Personal Details</h2>
+      <h2 style="text-align: center;">Personal Details</h2>
       <div class="register-form-inputs" v-if="selectedPlan.role.name === 'standard'">
         <div class="full-width">
           <div class="full-width">

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Phone Verification</h1>
+    <h1 style="text-align: center;">Phone Verification</h1>
 
     <form @submit.prevent="handleSubmit" id="account-form">
-      <p>Enter the verification code we sent to your phone</p>
+      <p style="text-align: center;">Enter the verification code we sent to your phone</p>
 
       <div class="flex flex-row justify-between" id="in">
         <input
@@ -138,6 +138,8 @@ export default {
         });
     },
     async handleResend() {
+      this.inputs = Array(this.inputCount);
+      this.currentKey = 0;
       await axios
         .post("/api/auth/resend-otp", {
           // user_id: '45',

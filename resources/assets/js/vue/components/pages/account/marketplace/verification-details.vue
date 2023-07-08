@@ -52,7 +52,6 @@ export default {
 
   methods: {
     initVerification() {
-      console.log("initVerification", this.account);
       if (this.account && this.account.requirements.eventually_due.length && !this.verified && this.account.external_accounts.data.length > 0) {
         this.verification = this.account.requirements.eventually_due.filter(item => {
           return item.endsWith('verification.document')

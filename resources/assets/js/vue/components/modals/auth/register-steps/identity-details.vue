@@ -1,13 +1,15 @@
 <template>
 	<div>
-		<h1 v-if="this.$store.state.app.account.business_type == 'individual'" style="text-align: center;">Verify your personal details</h1>
-		<h1
-			v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'" style="text-align: center;">
+		<h1 v-if="this.$store.state.app.account.business_type == 'individual'" style="text-align: center;">Verify your
+			personal details</h1>
+		<h1 v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'"
+			style="text-align: center;">
 			Tell us more about your business</h1>
 
 		<form @submit.prevent="handlePersonalSubmit" id="account-form"
 			v-if="this.$store.state.app.account.business_type == 'individual'">
-			<p style="text-align: center;">Phase collects this information to verify your identity and keep your account safe</p>
+			<p style="text-align: center;">Phase collects this information to verify your identity and keep your account
+				safe</p>
 
 			<div class="flex">
 				<div class="input">
@@ -55,7 +57,7 @@
 						<span class="error-message">{{ errors.first("city") }}</span>
 						<input type="text" name="postal_code" style="margin-top: 8px; margin-bottom: 8px;"
 							v-model="individual.address.postal_code" v-validate="'required'" placeholder="Post Code"
-							data-vv-validate-on="blur" />
+							data-vv-validate-on="blur" data-vv-as="postal code"/>
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
 
 						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
@@ -67,15 +69,24 @@
 			<div class="flex">
 				<div class="input">
 					<div>Identity Document:</div>
-					<div>
-						<input type="file" name="identity_document" style="margin-top: 8px; margin-bottom: 8px;"
-						v-on:change="handleIdentityDocumentChange"  v-validate="'required|ext:jpeg,jpg,png'"
-							data-vv-validate-on="blur" />
-						<span class="error-message">{{ errors.first("identity_document") }}</span>
-
+					<div v-if="!identity_document">
+						<ph-button @click.native.prevent="selectFile">Choose File</ph-button>
+						<input type="file" @change="setFile($event)" name="identity_document" style="display:none"
+							v-on:change="handleIdentityDocumentChange" accept=".pdf, .jpeg, .jpg, .doc, .docx"
+							v-validate="'ext:jpeg,jpg,doc,docx'" ref="fileInput" :key="1" data-vv-validate-on="blur"
+							data-vv-as="identity document" />
 						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
 						<span class="error-message">{{ errors.first("country") }}</span> -->
 					</div>
+					<div v-else style="display: flex;justify-content: space-between;">
+						<div class="selected-file__left" style="display: flex;">
+							<span><i class="fas fa-file"></i></span>
+							&nbsp;
+							<p class="selected-file__name">{{ identity_document.name }}</p>
+						</div>
+						<span @click="removeFile"><i class="fas fa-times"></i></span>
+					</div>
+					<span class="error-message">{{ errors.first("identity_document") }}</span>
 				</div>
 			</div>
 
@@ -173,7 +184,7 @@
 
 						<input type="text" name="postal_code" style="margin-top: 8px; margin-bottom: 8px;"
 							v-model="company.address.postal_code" v-validate="'required'" placeholder="Post Code"
-							data-vv-validate-on="blur" />
+							data-vv-validate-on="blur" data-vv-as="postal code" />
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
 
 						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
@@ -189,15 +200,24 @@
 			<div class="flex">
 				<div class="input">
 					<div>Identity Document:</div>
-					<div>
-						<input type="file" name="identity_document" style="margin-top: 8px; margin-bottom: 8px;"
-						v-on:change="handleIdentityDocumentChange"  v-validate="'required|ext:jpeg,jpg,png'"
-							data-vv-validate-on="blur" />
-						<span class="error-message">{{ errors.first("identity_document") }}</span>
-
+					<div v-if="!identity_document">
+						<ph-button @click.native.prevent="selectFile">Choose File</ph-button>
+						<input type="file" @change="setFile($event)" name="identity_document" style="display:none"
+							v-on:change="handleIdentityDocumentChange" accept=".pdf, .jpeg, .jpg, .doc, .docx"
+							v-validate="'ext:jpeg,jpg,doc,docx'" ref="fileInput" :key="1" data-vv-validate-on="blur"
+							data-vv-as="identity document" />
 						<!-- <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
 						<span class="error-message">{{ errors.first("country") }}</span> -->
 					</div>
+					<div v-else style="display: flex;justify-content: space-between;">
+						<div class="selected-file__left" style="display: flex;">
+							<span><i class="fas fa-file"></i></span>
+							&nbsp;
+							<p class="selected-file__name">{{ identity_document.name }}</p>
+						</div>
+						<span @click="removeFile"><i class="fas fa-times"></i></span>
+					</div>
+					<span class="error-message">{{ errors.first("identity_document") }}</span>
 				</div>
 			</div>
 
@@ -342,15 +362,23 @@ export default {
 	},
 
 	methods: {
-		handleIdentityDocumentChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.identity_document = file;
-		this.$store.state.app.stripeFiles = this.identity_document;
-		this.$validator.validate();
-      }
-    },
-	
+		selectFile() {
+			let fileInputElement = this.$refs.fileInput;
+			fileInputElement.click();
+		},
+		removeFile: function () {
+			this.identity_document = null;
+			this.$store.state.app.stripeFiles = null;
+		},
+		setFile(event) {
+			const file = event.target.files[0];
+			if (file) {
+				this.identity_document = file;
+				this.$store.state.app.stripeFiles = this.identity_document;
+				this.$validator.validate();
+			}
+		},
+
 		handlePersonalSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
@@ -475,6 +503,12 @@ ul.gridtypelist li label input[type="radio"] {
 		font-size: 17px !important;
 		border: 1px solid $color-grey4 !important;
 		border-radius: 3px;
+	}
+}
+
+@media (max-width: 767px) {
+	.flex .input {
+		flex-wrap: wrap;
 	}
 }
 </style>
