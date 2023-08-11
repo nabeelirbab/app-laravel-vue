@@ -775,7 +775,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     stripeFiles: null,
     account: (_account = {
       type: "Individual",
-      business_type: "individual",
+      business_type: "company",
       business_structure: "",
       first_name: '',
       last_name: '',
@@ -802,11 +802,38 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         // country: 'GB',
       },
 
+      persons: [
+        // {
+        //     "id": 1,
+        //     "first_name": "phase",
+        //     "last_name": "demo",
+        //     "title": "devv",
+        //     "relationship": "director",
+        //     "percentage": "12",
+        //     "dob": { "day": "12", "month": "12", "year": "1990" },
+        //     "address": { "line1": "asd", "line2": "das", "city": "asd", "postal_code": "E16" }
+        // },
+        // {
+        //     "id": 2,
+        //     "first_name": "phase2",
+        //     "last_name": "demo2",
+        //     "title": "devv2",
+        //     "relationship": "director",
+        //     "percentage": "12",
+        //     "dob": { "day": "12", "month": "12", "year": "1990" },
+        //     "address": { "line1": "asd", "line2": "das", "city": "asd", "postal_code": "E16" }
+        // }
+      ],
       company_name: '',
       title: '',
       relationship: '',
       percentage: ''
-    }, _defineProperty(_account, "title", ''), _defineProperty(_account, "crn", ''), _defineProperty(_account, "business_number", ''), _defineProperty(_account, "website", null), _defineProperty(_account, "country", "GB"), _defineProperty(_account, "phone", ''), _defineProperty(_account, "email", ''), _defineProperty(_account, "sort", ''), _defineProperty(_account, "account_name", ''), _defineProperty(_account, "account_number", ''), _defineProperty(_account, "account_country", ''), _defineProperty(_account, "identity_document", null), _defineProperty(_account, "tos_shown_and_accepted", false), _account)
+    }, _defineProperty(_account, "title", ''), _defineProperty(_account, "crn", ''), _defineProperty(_account, "business_number", ''), _defineProperty(_account, "website", null), _defineProperty(_account, "country", "GB"), _defineProperty(_account, "phone", ''), _defineProperty(_account, "email", ''), _defineProperty(_account, "sort", ''), _defineProperty(_account, "account_name", ''), _defineProperty(_account, "account_number", ''), _defineProperty(_account, "account_country", ''), _defineProperty(_account, "identity_document", null), _defineProperty(_account, "tos_shown_and_accepted", false), _defineProperty(_account, "person_options", {
+      auth_pri_repre: false,
+      own_percent: false,
+      member_gov: false,
+      exe_senior: false
+    }), _account)
   },
   mutations: {
     setNavigation: function setNavigation(state, data) {

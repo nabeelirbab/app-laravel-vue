@@ -1,27 +1,32 @@
 <template>
 	<div>
-		<h1 v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'" style="text-align: center;">Verify you represent this business</h1>
+		<h1 v-if="this.$store.state.app.account.business_type == 'company' || this.$store.state.app.account.business_type == 'non_profit'"
+			style="text-align: center;">Verify you represent this business</h1>
+
+		<!-- <span>{{ $store.state.app.account.persons }}</span> -->
+
 		<form @submit.prevent="handleSubmit" id="account-form">
-			<p style="text-align: center;">This form must be filled out by someone with significant control and management of your business. if that's
+			<p style="text-align: center;">This form must be filled out by someone with significant control and management
+				of your business. if that's
 				not you, make sure to ask the right person to continue.</p>
 
-			<!-- <div class="flex">
+			<div class="flex">
 				<div class="input">
 					<div>Legal Name:</div>
 					<div>
-						<input type="text" name="first_name" v-model="legal.first_name" tabindex="1"
-							placeholder="First name" v-validate="'required|max:255'" data-vv-as="first name" />
+						<input type="text" name="first_name" v-model="first_name" tabindex="1" placeholder="First name"
+							v-validate="'required|max:255'" data-vv-as="first name"/>
 						<span class="error-message">{{ errors.first("first_name") }}</span>
 					</div>
 				</div>
 				<div class="input">
 					<div>
-						<input type="text" name="last_name" v-model="legal.last_name" tabindex="1" placeholder="Last name"
-							v-validate="'required|max:255'" data-vv-as="last name" />
+						<input type="text" name="last_name" v-model="last_name" tabindex="1" placeholder="Last name"
+							v-validate="'required|max:255'" data-vv-as="last name"/>
 						<span class="error-message">{{ errors.first("last_name") }}</span>
 					</div>
 				</div>
-			</div> -->
+			</div>
 
 			<div class="flex">
 				<div class="input">
@@ -42,7 +47,7 @@
 							<option value="" disabled selected>Select your Relation</option>
 							<option value="owner">Owner</option>
 							<option value="director">Director</option>
-							<option value="representitive">Representitive</option>
+							<option value="representative">Representative</option>
 						</select>
 						<span class="error-message">{{ errors.first("relation") }}</span>
 					</div>
@@ -91,23 +96,21 @@
 				<div class="input">
 					<div>Home Address:</div>
 					<div>
-						<input type="text" name="line1" style="margin-top: 8px; margin-bottom: 8px;"
-							v-model="address.line1" v-validate="'required'" placeholder="Line 1"
-							data-vv-validate-on="blur" />
+						<input type="text" name="line1" style="margin-top: 8px; margin-bottom: 8px;" v-model="address.line1"
+							v-validate="'required'" placeholder="Line 1" data-vv-validate-on="blur" />
 						<span class="error-message">
 							{{ errors.first("line1") }}
 						</span>
-						<input type="text" name="line2" style="margin-top: 8px; margin-bottom: 8px;"
-							v-model="address.line2" placeholder="Line 2" data-vv-validate-on="blur" />
-						<input type="text" name="city" style="margin-top: 8px; margin-bottom: 8px;"
-							v-model="address.city" v-validate="'required'" placeholder="City"
-							data-vv-validate-on="blur" />
+						<input type="text" name="line2" style="margin-top: 8px; margin-bottom: 8px;" v-model="address.line2"
+							placeholder="Line 2" data-vv-validate-on="blur" />
+						<input type="text" name="city" style="margin-top: 8px; margin-bottom: 8px;" v-model="address.city"
+							v-validate="'required'" placeholder="City" data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("city") }}</span>
 						<input type="text" name="postal_code" style="margin-top: 8px; margin-bottom: 8px;"
 							v-model="address.postal_code" v-validate="'required'" placeholder="Post Code"
 							data-vv-validate-on="blur" />
 						<span class="error-message">{{ errors.first("postal_code") }}</span>
-						
+
 					</div>
 				</div>
 			</div>
@@ -156,25 +159,24 @@
 import { mapGetters, mapState } from "vuex";
 export default {
 	name: "identity-details",
-
+	props: {
+		editPerson: Object,
+	},
 	data() {
 		return {
 			submitting: false,
-			date: "",
+			updateMode: false,
+			count: 0,
 			title: '',
 			relationship: '',
-			// email: '',
 			percentage: '',
-			// legal: {
-			// 	first_name: '',
-			// 	last_name: '',
-			// },
+			first_name: null,
+			last_name: null,
 			dob: {
 				day: "",
 				month: "",
 				year: "",
 			},
-			// phone: '',
 			address: {
 				line1: '',
 				line2: "",
@@ -184,18 +186,24 @@ export default {
 		};
 	},
 
-	// mounted() {
-	// 	const dict = {
-	// 		custom: {
-	// 			phone: {
-	// 				required: 'This field is required',
-	// 				regex: 'Phone number needs to be in the format +44xxxxxxxxxx'
-	// 			},
-	// 		}
-	// 	};
-
-	// 	this.$validator.localize('en', dict);
-	// },
+	mounted() {
+		console.log("editPerson", this.editPerson);
+		if (this.editPerson != null) {
+			this.first_name = this.editPerson.first_name;
+			this.last_name = this.editPerson.last_name;
+			this.title = this.editPerson.title;
+			this.relationship = this.editPerson.relationship;
+			this.percentage = this.editPerson.percentage;
+			this.dob.day = this.editPerson.dob.day;
+			this.dob.month = this.editPerson.dob.month;
+			this.dob.year = this.editPerson.dob.year;
+			this.address.line1 = this.editPerson.address.line1;
+			this.address.line2 = this.editPerson.address.line2;
+			this.address.city = this.editPerson.address.city;
+			this.address.postal_code = this.editPerson.address.postal_code;
+			this.updateMode = true;
+		}
+	},
 
 	computed: {
 		...mapGetters({
@@ -210,18 +218,46 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
-					this.$store.state.app.account.title = this.title;
-					this.$store.state.app.account.relationship = this.relationship;
-					this.$store.state.app.account.percentage = this.percentage;
-					this.$store.state.app.account.dob.day = this.dob.day;
-					this.$store.state.app.account.dob.month = this.dob.month;
-					this.$store.state.app.account.dob.year = this.dob.year;
-					this.$store.state.app.account.address.line1 = this.address.line1;
-					this.$store.state.app.account.address.line2 = this.address.line2;
-					this.$store.state.app.account.address.city = this.address.city;
-					this.$store.state.app.account.address.postal_code = this.address.postal_code;
+					if (!this.updateMode) {
+						const newPerson = {
+							id: Math.floor(Math.random() * (999 - 0 + 1)) + 0,
+							first_name: this.first_name,
+							last_name: this.last_name,
+							title: this.title,
+							relationship: this.relationship,
+							percentage: this.percentage,
+							dob: {
+								day: this.dob.day,
+								month: this.dob.month,
+								year: this.dob.year,
+							},
+							address: {
+								line1: this.address.line1,
+								line2: this.address.line2,
+								city: this.address.city,
+								postal_code: this.address.postal_code,
+							},
+						};
+						this.$store.state.app.account.persons.push(newPerson);
+						console.log("persons", this.$store.state.app.account.persons);
+					} else {
+						const person = this.$store.state.app.account.persons.find((p) => p.id === this.editPerson.id);
+						console.log(person);
+						person.first_name = this.first_name;
+						person.last_name = this.last_name;
+						person.title = this.title;
+						person.relationship = this.relationship;
+						person.percentage = this.percentage;
+						person.dob.day = this.dob.day;
+						person.dob.month = this.dob.month;
+						person.dob.year = this.dob.year;
+						person.address.line1 = this.address.line1;
+						person.address.line2 = this.address.line2;
+						person.address.city = this.address.city;
+						person.address.postal_code = this.address.postal_code;
+					}
 					console.log("indiviual");
-					this.$emit('next-step-verify');
+					this.$emit('next-step');
 				}
 			});
 		},

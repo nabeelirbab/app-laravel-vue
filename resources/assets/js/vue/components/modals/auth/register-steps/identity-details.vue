@@ -123,7 +123,7 @@
 				serve your business and help meet the requirements of regulators, financial partners, and our service
 				agreements</p>
 
-			<div class="flex">
+			<div class="flex" v-if="this.$store.state.app.account.business_structure != 'unincorporated_partnership'">
 				<div class="input">
 					<div>Companies House Registration Number (CRN):</div>
 					<div>
@@ -404,7 +404,7 @@ export default {
 					this.$store.state.app.account.crn = this.company.crn;
 					this.$store.state.app.account.business_number = this.company.business_number;
 					console.log("company");
-					this.$emit('next-step-verify');
+					this.$emit('next-step');
 				}
 			});
 		},

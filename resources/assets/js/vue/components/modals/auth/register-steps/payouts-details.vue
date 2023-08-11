@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="persons">
+      <span>Sam Palfery: Owner, percentage ownership: 25%</span>
+    </div>
     <h1 style="text-align: center">Select an account for payouts</h1>
 
     <form @submit.prevent="handleSubmit" id="account-form">
@@ -7,10 +10,7 @@
         <div class="input">
           <div>Country of bank account:</div>
           <div>
-            <country-select
-              @change="artistCountryChanged"
-              style="width: 100%; margin-top: 8px"
-            />
+            <country-select @change="artistCountryChanged" style="width: 100%; margin-top: 8px" />
             <span class="error-message">{{ errors.first("country") }}</span>
           </div>
         </div>
@@ -32,13 +32,8 @@
         <div class="input">
           <div>Account name:</div>
           <div>
-            <input
-              type="text"
-              name="account_name"
-              v-model="account_name"
-              v-validate="{ required: true }"
-              placeholder="Test Bank"
-            />
+            <input type="text" name="account_name" v-model="account_name" v-validate="{ required: true }"
+              placeholder="Test Bank" />
             <span class="error-message">{{ errors.first("account_name") }}</span>
           </div>
         </div>
@@ -48,15 +43,8 @@
         <div class="input">
           <div>Account number:</div>
           <div>
-            <input
-              type="text"
-              name="account_number"
-              v-model="account_number"
-              v-validate="'required'"
-              ref="account_number"
-              placeholder="GB82WEST12345698765432"
-              data-vv-as="account number"
-            />
+            <input type="text" name="account_number" v-model="account_number" v-validate="'required'" ref="account_number"
+              placeholder="GB82WEST12345698765432" data-vv-as="account number" />
             <span class="error-message">{{ errors.first("account_number") }}</span>
           </div>
         </div>
@@ -66,14 +54,9 @@
         <div class="input">
           <div>Confirm account number:</div>
           <div>
-            <input
-              type="text"
-              name="confirm_account_number"
-              v-model="confirm_account_number"
-              v-validate="'required|confirmed:account_number'"
-              placeholder="GB82WEST12345698765432"
-              data-vv-as="account number"
-            />
+            <input type="text" name="confirm_account_number" v-model="confirm_account_number"
+              v-validate="'required|confirmed:account_number'" placeholder="GB82WEST12345698765432"
+              data-vv-as="account number" />
             <span class="error-message">{{
               errors.first("confirm_account_number")
             }}</span>
@@ -84,13 +67,8 @@
       <div class="flex" style="flex-direction: column">
         <div class="input">
           <div>Accept Terms of Service:</div>
-          <input
-            name="terms"
-            type="checkbox"
-            v-model="tos_shown_and_accepted"
-            v-validate="'required'"
-            data-vv-as="Terms and Conditions"
-          />
+          <input name="terms" type="checkbox" v-model="tos_shown_and_accepted" v-validate="'required'"
+            data-vv-as="Terms and Conditions" />
         </div>
         <span class="error-message">{{ errors.first("terms") }}</span>
       </div>
@@ -133,8 +111,8 @@ export default {
       country: this.$store.state.app.account.country,
       sort_code: "",
       account_name: this.$store.state.app.account.account_name ? this.$store.state.app.account.account_name : "",
-      account_number: this.$store.state.app.account.account_number ? this.$store.state.app.account.account_number :"",
-      confirm_account_number: this.$store.state.app.account.account_number ? this.$store.state.app.account.account_number :"",
+      account_number: this.$store.state.app.account.account_number ? this.$store.state.app.account.account_number : "",
+      confirm_account_number: this.$store.state.app.account.account_number ? this.$store.state.app.account.account_number : "",
       tos_shown_and_accepted: false,
       accountObj: null,
       identity_document_verification: null,
@@ -258,70 +236,73 @@ export default {
           this.submitting = false;
         });
     },
-    handleSubmit() {
-      this.$validator.validate().then(async (valid) => {
-        if (valid) {
-          this.submitting = true;
-          await this.registerUser();
-          const files = await this.uploadFiles({
-            document: this.$store.state.app.stripeFiles
-              ? this.$store.state.app.stripeFiles
-              : null,
-          });
-          this.identity_document_verification = {
-            document: {
-              front: files.document ? files.document.id : null,
-            },
-          };
-          this.$store.state.app.account.identity_document = this.identity_document_verification;
-          this.$store.state.app.account.account_country = this.country;
-          // this.$store.state.app.account.sort_code = this.sort_code;
-          this.$store.state.app.account.account_name = this.account_name;
-          this.$store.state.app.account.account_number = this.account_number;
-          this.$store.state.app.account.tos_shown_and_accepted = this.tos_shown_and_accepted;
-          console.log("testing......", this.$store.state.app.account);
-          await this.getAccountToken();
-          // console.log();
+    async handleSubmit() {
+      // this.$validator.validate().then(async (valid) => {
+      //   if (valid) {
+      // this.submitting = true;
+      // await this.registerUser();
+      // const files = await this.uploadFiles({
+      //   document: this.$store.state.app.stripeFiles
+      //     ? this.$store.state.app.stripeFiles
+      //     : null,
+      // });
+      // this.identity_document_verification = {
+      //   document: {
+      //     front: files.document ? files.document.id : null,
+      //   },
+      // };
+      // this.$store.state.app.account.identity_document = this.identity_document_verification;
+      // this.$store.state.app.account.account_country = this.country;
+      // this.$store.state.app.account.sort_code = this.sort_code;
+      // this.$store.state.app.account.account_name = this.account_name;
+      // this.$store.state.app.account.account_number = this.account_number;
+      // this.$store.state.app.account.tos_shown_and_accepted = this.tos_shown_and_accepted;
+      // console.log("testing......", this.$store.state.app.account);
+      // await this.getAccountToken();
+      // console.log();
 
-          if (this.accountToken && !this.connectErrors) {
-            await axios
-              .post("/api/auth/marketplace/create", {
-                account_token: this.accountToken,
-                user_id: this.$store.state.app.tempRegUser.id,
-                account: this.$store.state.app.account,
-              })
-              .then((response) => {
-                this.submitting = false;
-                this.$emit("finished");
-              })
-              .catch((error) => {
-                this.submitting = false;
-                this.connectErrors = error.response.data.message;
-              });
-          }
-          // this.$emit('finished');
-        }
-      });
+      // if (this.accountToken && !this.connectErrors) {
+      await axios
+        .post("/api/auth/marketplace/create", {
+          account_token: "asdasd_123123dasde2312sadsa",
+          user_id: '100',
+          // user_id: this.$store.state.app.tempRegUser.id,
+          account: this.$store.state.app.account,
+        })
+        .then((response) => {
+          const accountLinkUrl = response.data.url; // Replace with the actual URL obtained from Stripe
+          window.location.href = accountLinkUrl;
+          // this.submitting = false;
+          // this.$emit("finished");
+        })
+        .catch((error) => {
+          // this.submitting = false;
+          // this.connectErrors = error.response.data.message;
+        });
+      // }
+      // this.$emit('finished');
+      // }
+      // });
     },
     async registerUser() {
-        const transferCart = this.$route.query.transferCart;
-        let guestCart = null;
-        if (transferCart === "true") {
-          guestCart = Cookies.getJSON("phase_cart");
-        }
-          try {
-    const response = await axios.post("/api/auth/register/" + this.selectedPlan.role.name, {
-      ...this.$store.state.app.tempUser,
-      guestCart,
-    });
-    this.$store.state.app.tempRegUser = response.data;
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-    this.$emit("prev-step", 1, error.response.data.errors);
-    return; // Exit the method to prevent further execution
-  }
-          
+      const transferCart = this.$route.query.transferCart;
+      let guestCart = null;
+      if (transferCart === "true") {
+        guestCart = Cookies.getJSON("phase_cart");
+      }
+      try {
+        const response = await axios.post("/api/auth/register/" + this.selectedPlan.role.name, {
+          ...this.$store.state.app.tempUser,
+          guestCart,
+        });
+        this.$store.state.app.tempRegUser = response.data;
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        this.$emit("prev-step", 1, error.response.data.errors);
+        return; // Exit the method to prevent further execution
+      }
+
     },
     async uploadFiles(files) {
       const document = await this.uploadFile(files.document);
@@ -404,6 +385,7 @@ ul.gridtypelist li label input[type="radio"] {
 }
 
 .dob-fields {
+
   input,
   select {
     margin: 10px 0;
@@ -417,13 +399,13 @@ ul.gridtypelist li label input[type="radio"] {
   width: 48%;
   padding: 0 20px;
 
-  & > div:first-of-type {
+  &>div:first-of-type {
     width: 125px;
     display: flex;
     align-items: center;
   }
 
-  & > div:last-of-type {
+  &>div:last-of-type {
     flex: 1;
     position: relative;
   }

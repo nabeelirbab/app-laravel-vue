@@ -13,8 +13,9 @@ class MarketplaceController extends Controller
     {
         try {
             $user = User::find($request->user_id);
-            // dd($request);
-            $user->createAccount($request);
+            $chk = $user->createAccount($request);
+            // dd($chk);
+
             if ($request->phone) {
                 $user->phone = $request->phone;
                 $user->save();
@@ -32,7 +33,7 @@ class MarketplaceController extends Controller
             // event(new Register($user));
 
 
-            return $user;
+            return ['user' => $user, 'url' => $chk];
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()])->setStatusCode(500);;
         }

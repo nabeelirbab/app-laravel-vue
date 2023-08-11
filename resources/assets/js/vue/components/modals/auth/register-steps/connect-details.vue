@@ -3,23 +3,30 @@
 		<h1 style="text-align: center;">Verification</h1>
 
 		<form @submit.prevent="handleSubmit" id="account-form">
-			<p style="text-align: center;">The following details are required to provide verification and a method of payment for sales, Details given
+			<p style="text-align: center;">The following details are required to provide verification and a method of
+				payment for sales, Details given
 				must be full legal and registered names</p>
 
 			<div class="flex">
 				<div class="input">
-					<div>Account Type:</div>
+					<div>Business Type:</div>
 					<ul class="gridtypelist list-unstyled list-inline float-left">
 						<li>
-							<label v-bind:class="[type === 'Independent' ? 'active' : '']">
-								<input type="radio" v-validate="'required|max:255'" v-model="type" value="Independent"
-									@click="bussinessTypeChanged()" /> Independent
+							<label v-bind:class="[type === 'individual' ? 'active' : '']">
+								<input type="radio" v-validate="'required|max:255'" v-model="type" value="individual"
+									@click="bussinessTypeChanged()" /> Individual
 							</label>
 						</li>
 						<li>
-							<label v-bind:class="[type === 'Company' ? 'active' : '']">
+							<label v-bind:class="[type === 'company' ? 'active' : '']">
 								<input type="radio" v-validate="'required|max:255'" v-model="type"
-									@click="bussinessTypeChanged()" value="Company" /> Company
+									@click="bussinessTypeChanged()" value="company" /> Company
+							</label>
+						</li>
+						<li>
+							<label v-bind:class="[type === 'non_profit' ? 'active' : '']">
+								<input type="radio" v-validate="'required|max:255'" v-model="type"
+									@click="bussinessTypeChanged()" value="non_profit" /> Non Profit
 							</label>
 						</li>
 
@@ -27,7 +34,29 @@
 					</ul>
 				</div>
 			</div>
-			<div class="flex" v-if="type == 'Independent'">
+			<div class="flex" v-if="type == 'company' || type == 'non_profit'">
+				<div class="input">
+					<div>Business Structure:</div>
+					<div>
+						<select name="business_structure" v-model="business_structure" data-vv-as="business structure"
+							v-validate="'required'" style="width: 100%;" v-if="type == 'company'">
+							<option value="" disabled selected>Select Structure</option>
+							<option value="incorporated_partnership">Limited Liability Partnership (LLP)</option>
+							<option value="unincorporated_partnership">Unincorporated Partnership</option>
+							<option value="private_company">Private Company</option>
+						</select>
+
+						<select name="business_structure" v-model="business_structure" data-vv-as="business structure"
+							v-validate="'required'" style="width: 100%;" v-if="type == 'non_profit'">
+							<option value="" disabled selected>Select Structure</option>
+							<option value="incorporated_non_profit">Incorporated Non-Profit</option>
+							<option value="unincorporated_non_profit">Unincorporated Non-Profit</option>
+						</select>
+						<span class="error-message">{{ errors.first("business_structure") }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="flex" v-if="type == 'individual'">
 				<div class="input">
 					<div>First Name:</div>
 					<div>
@@ -45,7 +74,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="flex" v-if="type == 'Company'">
+			<div class="flex" v-if="type == 'company' || type == 'non_profit'">
 				<div class="input">
 					<div>Company Name:</div>
 					<div>
@@ -182,7 +211,8 @@ export default {
 			connectErrors: null,
 			accountToken: null,
 			submitting: false,
-			type: "Independent",
+			type: "individual",
+			business_structure: '',
 			first_name: '',
 			last_name: '',
 			country: 'GB',
@@ -224,7 +254,10 @@ export default {
 		handleSubmit() {
 			this.$validator.validate().then(async (valid) => {
 				if (valid) {
+					console.log(this.$store.state.app.account);
 					// if (this.$store.state.app.account.type == "Individual") {
+					this.$store.state.app.account.business_type = this.type;
+					this.$store.state.app.account.business_structure = this.business_structure;
 					this.$store.state.app.account.first_name = this.first_name;
 					this.$store.state.app.account.last_name = this.last_name;
 					// } else {
@@ -276,6 +309,7 @@ export default {
 
 		bussinessTypeChanged(type) {
 			this.type = type;
+			this.business_structure = '';
 			// this.$validator.validate();
 		},
 

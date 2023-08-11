@@ -8,15 +8,8 @@
             <div class="input">
               <div>Username:</div>
               <div>
-                <input
-                  type="text"
-                  name="personal-username"
-                  v-model="data.personal.username"
-                  tabindex="1"
-                  :disabled="submitting"
-                  v-validate="'required|username|max:20'"
-                  data-vv-as="user name"
-                />
+                <input type="text" name="personal-username" v-model="data.personal.username" tabindex="1"
+                  :disabled="submitting" v-validate="'required|username|max:20'" data-vv-as="user name" />
                 <p class="error-message">
                   {{ errors.first("personal-username") }}
                 </p>
@@ -29,40 +22,22 @@
         </div>
       </div>
 
-      <div
-        class="register-form-inputs"
-        v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'"
-      >
+      <div class="register-form-inputs" v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'">
         <div class="full-width">
           <div class="full-width">
             <div class="input">
               <div>Artist Type:</div>
               <div>
-                <artist-type-select
-                  @change="artistTypesChanged"
-                  :min="2"
-                  :max="4"
-                  tabindex="10"
-                  :disabled="submitting"
-                  data-vv-validate-on="blur"
-                />
+                <artist-type-select @change="artistTypesChanged" :min="2" :max="4" tabindex="10" :disabled="submitting"
+                  data-vv-validate-on="blur" />
 
-                <input
-                  type="hidden"
-                  name="artist_user_type"
-                  placeholder="Artist Type"
-                  v-validate="'required'"
-                  ref="artist_user_type_input"
-                />
+                <input type="hidden" name="artist_user_type" placeholder="Artist Type" v-validate="'required'"
+                  ref="artist_user_type_input" />
 
                 <p class="error-message">
                   {{ errors.first("personal.artist_user_type") }}
                 </p>
-                <p
-                  class="error-message"
-                  v-show="emptyArtistType"
-                  style="margin-top: 20px"
-                >
+                <p class="error-message" v-show="emptyArtistType" style="margin-top: 20px">
                   The artist type is required
                 </p>
               </div>
@@ -75,16 +50,9 @@
           <div class="input">
             <div>First Name:</div>
             <div>
-              <input
-                type="text"
-                name="personal-name"
-                v-model="data.personal.firstname"
-                tabindex="2"
-                :disabled="submitting"
-                v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/ }"
-                data-vv-as="first name"
-                data-vv-validate-on="focusout"
-              />
+              <input type="text" name="personal-name" v-model="data.personal.firstname" tabindex="2"
+                :disabled="submitting" v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/ }"
+                data-vv-as="first name" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("personal-name") }}
               </p>
@@ -106,20 +74,11 @@
           <div class="input">
             <div>Password:</div>
             <div>
-              <input
-                type="password"
-                name="personal-password"
-                v-model="data.personal.password"
-                tabindex="6"
-                :disabled="submitting"
-                v-validate="{
+              <input type="password" name="personal-password" v-model="data.personal.password" tabindex="6"
+                :disabled="submitting" v-validate="{
                   required: true,
                   max: 255,
-                }"
-                data-vv-as="password"
-                data-vv-validate-on="focusout"
-                ref="password"
-              />
+                }" data-vv-as="password" data-vv-validate-on="focusout" ref="password" />
               <p class="error-message">
                 {{ errors.first("personal-password") }}
               </p>
@@ -130,16 +89,9 @@
           <div class="input">
             <div>Last Name:</div>
             <div>
-              <input
-                type="text"
-                name="personal-surname"
-                v-model="data.personal.surname"
-                tabindex="3"
-                :disabled="submitting"
-                v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/ }"
-                data-vv-as="surname"
-                data-vv-validate-on="focusout"
-              />
+              <input type="text" name="personal-surname" v-model="data.personal.surname" tabindex="3"
+                :disabled="submitting" v-validate="{ required: true, max: 255, regex: /^[a-zA-Z][a-zA-Z ]*$/ }"
+                data-vv-as="surname" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("personal-surname") }}
               </p>
@@ -148,16 +100,9 @@
           <div class="input">
             <div>Confirm Password:</div>
             <div>
-              <input
-                type="password"
-                name="personal-password-confirmation"
-                v-model="data.personal.password_confirmation"
-                tabindex="7"
-                :disabled="submitting"
-                v-validate="'required|max:255|confirmed:password'"
-                data-vv-as="password"
-                data-vv-validate-on="focusout"
-              />
+              <input type="password" name="personal-password-confirmation" v-model="data.personal.password_confirmation"
+                tabindex="7" :disabled="submitting" v-validate="'required|max:255|confirmed:password'"
+                data-vv-as="password" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("personal-password-confirmation") }}
               </p>
@@ -171,25 +116,13 @@
             <div class="input">
               <div>Email:</div>
               <div>
-                <input
-                  type="text"
-                  name="personal-email"
-                  v-model="data.personal.email"
-                  tabindex="8"
-                  :disabled="submitting"
-                  v-validate="'required|email|max:255'"
-                  data-vv-as="email address"
-                  ref="email"
-                  data-vv-validate-on="focusout"
-                />
+                <input type="text" name="personal-email" v-model="data.personal.email" tabindex="8" :disabled="submitting"
+                  v-validate="'required|email|max:255'" data-vv-as="email address" ref="email"
+                  data-vv-validate-on="focusout" />
                 <p class="error-message">
                   {{ errors.first("personal-email") }}
                 </p>
-                <p
-                  class="error-message"
-                  v-show="validationErrors['personal.email']"
-                  style="bottom: -40px"
-                >
+                <p class="error-message" v-show="validationErrors['personal.email']" style="bottom: -40px">
                   The email has been taken
                 </p>
               </div>
@@ -197,27 +130,29 @@
           </div>
         </div>
       </div>
+      <div class="register-form-inputs">
+        <div class="full-width">
+          <div class="full-width">
+            <div class="input">
+              <div>Country:</div>
+              <div>
+                <country-select @change="artistCountryChanged" style="width: 100%;margin-top: 8px;" />
+                <span class="error-message">{{ errors.first("country") }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div
-      class="register-form-group"
-      v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'"
-    >
+    <div class="register-form-group" v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'">
       <h2>Artist / Producer / Label Details</h2>
       <div class="register-form-inputs">
         <div class="full-width">
           <div class="input">
             <div>Name:</div>
             <div>
-              <input
-                type="text"
-                name="artist-name"
-                v-model="data.artist.username"
-                tabindex="9"
-                :disabled="submitting"
-                v-validate="'required|max:20'"
-                data-vv-as="name"
-                data-vv-validate-on="focusout"
-              />
+              <input type="text" name="artist-name" v-model="data.artist.username" tabindex="9" :disabled="submitting"
+                v-validate="'required|max:20'" data-vv-as="name" data-vv-validate-on="focusout" />
               <p class="error-message" v-show="validationErrors['artist.username']">
                 The name has been taken
               </p>
@@ -227,21 +162,10 @@
             <div>Genres:</div>
             <div>
               <!--<input type="text" name="artist-genres" />-->
-              <genre-select
-                @change="artistGenresChanged"
-                :min="2"
-                :max="4"
-                tabindex="10"
-                :disabled="submitting"
-                data-vv-validate-on="blur"
-              />
-              <input
-                type="hidden"
-                name="artist genre"
-                placeholder="Genre"
-                v-validate="'required'"
-                ref="artist_genre_input"
-              />
+              <genre-select @change="artistGenresChanged" :min="2" :max="4" tabindex="10" :disabled="submitting"
+                data-vv-validate-on="blur" />
+              <input type="hidden" name="artist genre" placeholder="Genre" v-validate="'required'"
+                ref="artist_genre_input" />
               <p class="error-message">
                 {{ errors.first("artist genre") }}
               </p>
@@ -250,10 +174,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="register-form-group"
-      v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'"
-    >
+    <div class="register-form-group" v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'">
       <h2 class="social-header">Social & Website Links</h2>
       <p class="social-error" v-if="submitted && !hasValidSocial">
         You must enter at least one social url
@@ -264,19 +185,11 @@
           <div class="input">
             <div>Website</div>
             <div>
-              <input
-                type="text"
-                name="social-website"
-                v-model="data.social.website"
-                tabindex="11"
-                :disabled="submitting"
+              <input type="text" name="social-website" v-model="data.social.website" tabindex="11" :disabled="submitting"
                 v-validate="{
                   max: 255,
                   regex: /^((https?):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/,
-                }"
-                data-vv-as="website"
-                data-vv-validate-on="focusout"
-              />
+                }" data-vv-as="website" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("social-website") }}
               </p>
@@ -289,19 +202,11 @@
           <div class="input">
             <div>Facebook</div>
             <div>
-              <input
-                type="text"
-                name="social-facebook"
-                v-model="data.social.facebook"
-                tabindex="12"
-                :disabled="submitting"
-                v-validate="{
+              <input type="text" name="social-facebook" v-model="data.social.facebook" tabindex="12"
+                :disabled="submitting" v-validate="{
                   max: 255,
                   regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?facebook\.com\/[A-z 0-9 _ .]*\/?$/,
-                }"
-                data-vv-as="Facebook"
-                data-vv-validate-on="focusout"
-              />
+                }" data-vv-as="Facebook" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("social-facebook") }}
               </p>
@@ -310,19 +215,11 @@
           <div class="input">
             <div>Soundcloud</div>
             <div>
-              <input
-                type="text"
-                name="social-soundcloud"
-                v-model="data.social.soundcloud"
-                tabindex="14"
-                :disabled="submitting"
-                v-validate="{
+              <input type="text" name="social-soundcloud" v-model="data.social.soundcloud" tabindex="14"
+                :disabled="submitting" v-validate="{
                   max: 255,
                   regex: /^(http(s)?:\/\/)?(www\.)?(m\.)?(soundcloud\.com|snd\.sc)\/(.*)$/,
-                }"
-                data-vv-as="Soundcloud"
-                data-vv-validate-on="focusout"
-              />
+                }" data-vv-as="Soundcloud" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("social-soundcloud") }}
               </p>
@@ -333,19 +230,11 @@
           <div class="input">
             <div>Twitter</div>
             <div>
-              <input
-                type="text"
-                name="social-twitter"
-                v-model="data.social.twitter"
-                tabindex="13"
-                :disabled="submitting"
+              <input type="text" name="social-twitter" v-model="data.social.twitter" tabindex="13" :disabled="submitting"
                 v-validate="{
                   max: 255,
                   regex: /^(http(s)?:\/\/)?(www\.)?(mobile\.)?twitter\.com\/[A-z 0-9 _]{1,15}\/?$/,
-                }"
-                data-vv-as="Twitter"
-                data-vv-validate-on="focusout"
-              />
+                }" data-vv-as="Twitter" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("social-twitter") }}
               </p>
@@ -354,19 +243,11 @@
           <div class="input">
             <div>YouTube</div>
             <div>
-              <input
-                type="text"
-                name="social-youtube"
-                v-model="data.social.youtube"
-                tabindex="15"
-                :disabled="submitting"
+              <input type="text" name="social-youtube" v-model="data.social.youtube" tabindex="15" :disabled="submitting"
                 v-validate="{
                   max: 255,
                   regex: /(https?:\/\/)?(www\.)?(m\.)?youtube\.com\/(channel|user|c|u)\/[\w-]+/,
-                }"
-                data-vv-as="Youtube"
-                data-vv-validate-on="focusout"
-              />
+                }" data-vv-as="Youtube" data-vv-validate-on="focusout" />
               <p class="error-message">
                 {{ errors.first("social-youtube") }}
               </p>
@@ -382,21 +263,10 @@
           <div class="input">
             <div>Genres:</div>
             <div>
-              <genre-select
-                @change="interestGenresChanged"
-                :min="2"
-                :max="4"
-                tabindex="16"
-                :disabled="submitting"
-                data-vv-validate-on="blur"
-              />
-              <input
-                type="hidden"
-                name="interest genre"
-                placeholder="Genre"
-                v-validate="'required'"
-                ref="interest_genre_input"
-              />
+              <genre-select @change="interestGenresChanged" :min="2" :max="4" tabindex="16" :disabled="submitting"
+                data-vv-validate-on="blur" />
+              <input type="hidden" name="interest genre" placeholder="Genre" v-validate="'required'"
+                ref="interest_genre_input" />
               <p class="error-message">
                 {{ errors.first("interest genre") }}
               </p>
@@ -410,11 +280,7 @@
           <div class="input">
             <div>Sign up to newsletter:</div>
             <div>
-              <input
-                type="checkbox"
-                :name="`${selectedPlan.role.name}_newsletter`"
-                v-model="data.newsletter"
-              />
+              <input type="checkbox" :name="`${selectedPlan.role.name}_newsletter`" v-model="data.newsletter" />
             </div>
           </div>
         </div>
@@ -426,18 +292,9 @@
             <div></div>
             <div class="center"></div>
             <div>
-              <vue-recaptcha
-                :sitekey="getSiteKey()"
-                :loadRecaptchaScript="true"
-                ref="recaptcha"
-                @verify="onCaptchaVerified"
-                @expired="onCaptchaExpired"
-              />
-              <p
-                v-if="captchaValidationError"
-                class="error-message"
-                style="padding-top: 40px"
-              >
+              <vue-recaptcha :sitekey="getSiteKey()" :loadRecaptchaScript="true" ref="recaptcha"
+                @verify="onCaptchaVerified" @expired="onCaptchaExpired" />
+              <p v-if="captchaValidationError" class="error-message" style="padding-top: 40px">
                 {{ captchaValidationError }}
               </p>
             </div>
@@ -457,6 +314,7 @@
 <script>
 import GenreSelect from "../../upload/genre-select";
 import ArtistTypeSelect from "../../../global/artist-type-select";
+import CountrySelect from "../../upload/country-select";
 import { VueRecaptcha } from "vue-recaptcha";
 import { mapState } from "vuex";
 import Cookies from "js-cookie";
@@ -493,6 +351,7 @@ export default {
           password: "",
           password_confirmation: "",
           mobile: "",
+          country: "",
           artist_user_type: "",
         },
         artist: {
@@ -523,12 +382,12 @@ export default {
     },
   },
   mounted() {
-    if(this.verrors){
+    if (this.verrors) {
       this.validationErrors = this.verrors;
       this.data = this.app.tempUser;
-if (this.validationErrors.recaptcha) {
-  this.captchaValidationError = this.validationErrors.recaptcha[0];
-}
+      if (this.validationErrors.recaptcha) {
+        this.captchaValidationError = this.validationErrors.recaptcha[0];
+      }
     }
     // console.log(this.app.captchaCredentials.key);
   },
@@ -557,6 +416,10 @@ if (this.validationErrors.recaptcha) {
       this.$refs.artist_user_type_input.value = artistType;
       this.emptyArtistType = false;
     },
+    artistCountryChanged(country) {
+      this.data.personal.country = country;
+      this.$validator.validate();
+    },
     registerUser() {
       if (this.data.personal.artist_user_type == "" && this.selectedPlan.role.name !== "standard") {
         this.emptyArtistType = true;
@@ -578,35 +441,52 @@ if (this.validationErrors.recaptcha) {
           this.validationErrors = "";
           this.submitting = true;
           this.captchaValidationError = "";
-          if (this.selectedPlan.role.name == "standard") {
-            axios
-              .post("/api/auth/register/" + this.selectedPlan.role.name, {
-                ...this.data,
-                guestCart,
-              })
-              .then((response) => {
-                this.submitting = false;
-                this.$store.commit("app/setTempUser", response.data);
-                this.onCaptchaExpired();
-                this.$emit("next-step");
-              })
-              .catch((error) => {
-                console.log(error);
-                this.submitting = false;
-                this.onCaptchaExpired();
-                this.validationErrors = error.response.data.errors;
+          // if (this.selectedPlan.role.name == "standard") {
+          axios
+            .post("/api/auth/register/" + this.selectedPlan.role.name, {
+              ...this.data,
+              guestCart,
+            })
+            .then(async (response) => {
+              // this.submitting = false;
+              this.$store.commit("app/setTempUser", response.data);
+              this.onCaptchaExpired();
+              await axios
+                .post("/api/auth/marketplace/create", {
+                  // account_token: "asdasd_123123dasde2312sadsa",
+                  user_id: response.data.id,
+                  country: this.data.personal.country,
+                  account: response.data,
+                })
+                .then((response) => {
+                  this.submitting = false;
+                  const accountLinkUrl = response.data.url; // Replace with the actual URL obtained from Stripe
+                  window.location.href = accountLinkUrl;
+                  // this.$emit("finished");
+                })
+                .catch((error) => {
+                  // this.submitting = false;
+                  // this.connectErrors = error.response.data.message;
+                });
+              // this.$emit("next-step");
+            })
+            .catch((error) => {
+              console.log(error);
+              this.submitting = false;
+              this.onCaptchaExpired();
+              this.validationErrors = error.response.data.errors;
 
-                if (this.validationErrors.recaptcha) {
-                  this.captchaValidationError = this.validationErrors.recaptcha[0];
-                }
-              });
-          } else {
-            this.submitting = false;
-            this.$store.commit("app/setTempUser", this.data);
-            console.log(this.app.tempUser);
-            // this.onCaptchaExpired();
-            this.$emit("next-step");
-          }
+              if (this.validationErrors.recaptcha) {
+                this.captchaValidationError = this.validationErrors.recaptcha[0];
+              }
+            });
+          // } else {
+          //   this.submitting = false;
+          //   this.$store.commit("app/setTempUser", this.data);
+          //   console.log(this.app.tempUser);
+          //   // this.onCaptchaExpired();
+          //   this.$emit("next-step");
+          // }
         }
       });
     },
@@ -653,19 +533,30 @@ if (this.validationErrors.recaptcha) {
     GenreSelect,
     VueRecaptcha,
     ArtistTypeSelect,
+    CountrySelect,
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~styles/helpers/_variables.scss";
+
 .center {
   width: 22%;
 }
+
 form.register-form {
   margin-top: 100px;
   padding: 0;
   width: 100%;
+}
+
+select {
+  padding: 10px !important;
+  box-sizing: border-box;
+  font-size: 17px !important;
+  border: 1px solid $color-grey4 !important;
+  border-radius: 3px;
 }
 
 .register-form-group {
@@ -728,13 +619,13 @@ form.register-form {
     margin: 1em 0;
   }
 
-  & > div:first-of-type {
+  &>div:first-of-type {
     width: 125px;
     display: flex;
     align-items: center;
   }
 
-  & > div:last-of-type {
+  &>div:last-of-type {
     flex: 1;
     position: relative;
   }

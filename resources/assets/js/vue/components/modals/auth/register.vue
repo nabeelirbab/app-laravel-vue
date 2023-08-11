@@ -17,12 +17,16 @@
           <personal-details v-if="step === 1" :selected-plan="selectedPlan" :verrors="verrors" @next-step="nextStep"></personal-details>
           <connect-details v-if="step === 2" @skip="onHandleSkip" @next-step="nextStep"></connect-details>
           <phone-details @next-step="nextStep" @handleOtpId="handleOtpId" v-if="step === 3"></phone-details>
-          <phone-verification @next-step="nextStep" :otpId="otpId" @handleOtpId="handleOtpId" v-if="step === 4"></phone-verification>
-          <business-type @next-step="nextStep" v-if="step === 5"></business-type>
-          <identity-details @next-step-verify="nextStepVerify"  @next-step="nextStep" v-if="step === 6"></identity-details>
-          <verify-business-details @next-step-verify="nextStepVerify" v-if="step === 9"></verify-business-details>
+          <phone-verification @next-step="nextStep" :otpId="otpId" @handleOtpId="handleOtpId"
+            v-if="step === 4"></phone-verification>
+          <!-- <business-type @next-step="nextStep" v-if="step === 5"></business-type> -->
+          <identity-details @next-step-verify="nextStepVerify" @next-step="nextStep" v-if="step === 5"></identity-details>
+          <verify-business-details @next-step="nextStep" :editPerson="person"
+            v-if="step === 6"></verify-business-details>
+          <person-options @next-step="nextStep" @editPerson="handleEditPerson" @addPerson="handleAddPerson" v-if="step === 7"></person-options>
           <!-- <professional-details @next-step="nextStep" v-if="step === 7"></professional-details> -->
-          <payouts-details @next-step="nextStep" @prev-step="prevStep" :selected-plan="selectedPlan" @finished="onHandleFinished" v-if="step === 7"></payouts-details>
+          <payouts-details @next-step="nextStep" @prev-step="prevStep" :selected-plan="selectedPlan"
+            @finished="onHandleFinished" v-if="step === 8"></payouts-details>
 
           <div class="time-confirmation-text" style="padding: 20px 50px" v-if="selectedPlan.id !== 1">
             <br />
@@ -61,6 +65,7 @@ import VerificationDetails from "./register-steps/verification-details";
 import PhoneDetails from "./register-steps/phone-details";
 import PhoneVerification from "./register-steps/phone-verification";
 import BusinessType from "./register-steps/business-type";
+import PersonOptions from "./register-steps/person-options.vue";
 import IdentityDetails from "./register-steps/identity-details";
 import VerifyBusinessDetails from "./register-steps/verify-business-details";
 import ProfessionalDetails from "./register-steps/professional-details";
@@ -77,6 +82,7 @@ export default {
       submitted: false,
       otpId: null,
       verrors: null,
+      person: null,
     };
   },
   computed: {
@@ -110,8 +116,8 @@ export default {
       this.submitted = true;
       this.step = 1;
     },
-    prevStep(step, data = null){
-      if(step == 1){
+    prevStep(step, data = null) {
+      if (step == 1) {
         this.step = step;
         this.verrors = data;
       }
@@ -120,26 +126,26 @@ export default {
       if (this.selectedPlan.title === "Standard") {
         return (this.submitted = true);
       }
-      if(this.$store.state.app.isUserOnLastStep){
-        this.step = 7;
+      if (this.$store.state.app.isUserOnLastStep) {
+        this.step = 8;
         return 0;
-      }else{
+      } else {
         this.step++;
       }
     },
 
     nextStepVerify() {
-      if (this.step == 9) {
+      // if (this.step == 6) {
+      //   this.step = 8;
+      // }
+      if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
         this.step = 7;
       }
-      if (this.$store.state.app.account.business_type == 'company' && this.step == 6) {
-        this.step = 9;
-      } 
       if (this.$store.state.app.account.business_type == 'non_profit' && this.step == 6) {
-        this.step = 9;
-      } 
+        this.step = 7;
+      }
     },
-    handleOtpId(id){
+    handleOtpId(id) {
       this.otpId = id;
       console.log(this.otpId);
     },
@@ -147,6 +153,14 @@ export default {
       this.$modal.hide("modal-auth-register-form");
       this.$modal.show("modal-auth-login");
     },
+    handleAddPerson(){
+      this.person = null;
+      this.step = 6;
+    },
+    handleEditPerson(person) {
+      this.person = person;
+      this.step = 6;
+    }
   },
   components: {
     CloseIcon,
@@ -160,7 +174,8 @@ export default {
     IdentityDetails,
     VerifyBusinessDetails,
     ProfessionalDetails,
-    PayoutsDetails
+    PayoutsDetails,
+    PersonOptions
   },
 };
 </script>

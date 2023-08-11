@@ -200,15 +200,14 @@ class RegisterController extends Controller
             $otp = Otp::create([
                 'code' => $code,
             ]);
-
             // dd($otp);
             if ($otp) {
                 $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
+
                 $res = $client->messages->create($req->phone, [
                     'from' => "Phase",
                     'body' => "Your Phase verification code is: " . $code
                 ]);
-                // dd($res);
                 // $alpha_sender = $client->messaging->v1->services("MGd6e57aaa0bab52a58e955292e2a08799")
                 // ->alphaSenders
                 // ->create("Phase");
