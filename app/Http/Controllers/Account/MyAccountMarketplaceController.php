@@ -61,19 +61,15 @@ class MyAccountMarketplaceController extends Controller
     public function update(Request $request)
     {
         // update user in the app.
-        $user = Auth::user();
-        $user->first_name = $request->account['first_name'];
-        $user->last_name = $request->account['last_name'];
-        $user->email = $request->account['email'];
-        $user->save();
+        // $user = Auth::user();
+        // $user->first_name = $request->account['first_name'];
+        // $user->last_name = $request->account['last_name'];
+        // $user->email = $request->account['email'];
+        // $user->save();
 
         return [
             'account' => Auth::user()->updateAccount([
-                'account_token' => $request->token,
-                'account' => $request->account,
-                'bank' => $request->bank,
-                'business_type' => $request->business_type,
-                'file' => $request->file,
+                'account_id' => $request->account,
             ]),
         ];
     }

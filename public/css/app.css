@@ -815,6 +815,10 @@ main.viewport {
   place-content: center;
 }
 
+.vue-notification-phase {
+  background: transparent !important;
+}
+
 .page {
   width: 100%;
   display: flex;

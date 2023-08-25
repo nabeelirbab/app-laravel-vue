@@ -1,5 +1,14 @@
 <template>
   <div>
+    <!-- Overlay for Notify -->
+    <overlay-notify :is-visible="isOverlayVisible" :duration="10000">
+      <!-- Content of the overlay -->
+      <div class="overlay-content">
+        <spinner style="margin: 3em auto;" :animation-duration="1000" :size="80" color="black" />
+        <p>Redirecting to stripe...</p>
+      </div>
+    </overlay-notify>
+
     <div class="register-form-group">
       <h2 style="text-align: center;">Personal Details</h2>
       <div class="register-form-inputs" v-if="selectedPlan.role.name === 'standard'">
@@ -318,6 +327,8 @@ import CountrySelect from "../../upload/country-select";
 import { VueRecaptcha } from "vue-recaptcha";
 import { mapState } from "vuex";
 import Cookies from "js-cookie";
+import { HalfCircleSpinner as Spinner } from 'epic-spinners'
+import OverlayNotify from './../../../layout/overlay-notify.vue';
 
 export default {
   name: "personal-details",
@@ -334,6 +345,7 @@ export default {
 
   data() {
     return {
+      isOverlayVisible: false,
       emptyArtistType: false,
       artistGenresString: "",
       interestGenresString: "",
@@ -389,7 +401,6 @@ export default {
         this.captchaValidationError = this.validationErrors.recaptcha[0];
       }
     }
-    // console.log(this.app.captchaCredentials.key);
   },
 
   methods: {
@@ -441,34 +452,38 @@ export default {
           this.validationErrors = "";
           this.submitting = true;
           this.captchaValidationError = "";
-          // if (this.selectedPlan.role.name == "standard") {
           axios
             .post("/api/auth/register/" + this.selectedPlan.role.name, {
               ...this.data,
               guestCart,
             })
             .then(async (response) => {
-              // this.submitting = false;
+              this.submitting = false;
               this.$store.commit("app/setTempUser", response.data);
               this.onCaptchaExpired();
-              await axios
-                .post("/api/auth/marketplace/create", {
-                  // account_token: "asdasd_123123dasde2312sadsa",
-                  user_id: response.data.id,
-                  country: this.data.personal.country,
-                  account: response.data,
-                })
-                .then((response) => {
-                  this.submitting = false;
-                  const accountLinkUrl = response.data.url; // Replace with the actual URL obtained from Stripe
-                  window.location.href = accountLinkUrl;
-                  // this.$emit("finished");
-                })
-                .catch((error) => {
-                  // this.submitting = false;
-                  // this.connectErrors = error.response.data.message;
-                });
-              // this.$emit("next-step");
+              console.log(response.data);
+              if (response.data.roles[0].name == "standard") {
+                this.$emit("next-step");
+              } else {
+                this.isOverlayVisible = true;
+                await axios
+                  .post("/api/auth/marketplace/create", {
+                    user_id: response.data.id,
+                    country: this.data.personal.country,
+                    account: response.data,
+                  })
+                  .then((response) => {
+                    this.submitting = false;
+                    const accountLinkUrl = response.data.url; // Replace with the actual URL obtained from Stripe
+                    window.location.href = accountLinkUrl;
+                    this.isOverlayVisible = false;
+                  })
+                  .catch((error) => {
+                    this.isOverlayVisible = false;
+                    // this.connectErrors = error.response.data.message;
+                  });
+              }
+
             })
             .catch((error) => {
               console.log(error);
@@ -480,13 +495,6 @@ export default {
                 this.captchaValidationError = this.validationErrors.recaptcha[0];
               }
             });
-          // } else {
-          //   this.submitting = false;
-          //   this.$store.commit("app/setTempUser", this.data);
-          //   console.log(this.app.tempUser);
-          //   // this.onCaptchaExpired();
-          //   this.$emit("next-step");
-          // }
         }
       });
     },
@@ -534,6 +542,8 @@ export default {
     VueRecaptcha,
     ArtistTypeSelect,
     CountrySelect,
+    Spinner,
+    OverlayNotify
   },
 };
 </script>

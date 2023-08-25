@@ -47,19 +47,27 @@ export default {
         });
     }
   },
-  mounted() {
-    if (this.$route.query['email-verified'] === '1') {
-      // this.showMessage = true
-      //   setTimeout(() => {
-      //     this.showMessage = false;
-      //     this.$router.push('/');
-      //   }, 15000) // hide message after 15 seconds
-      this.$notify({
-        group: 'main',
-        type: 'success',
-        title: '<img src="/img/mail-approved.gif" alt="success" style="width=80%">',
-      })
-    }
-  },
+  // mounted() {
+  //   if (this.$route.query['email-verified'] === '1') {
+  //     // console.log("logged in");
+
+  //     // this.showMessage = true
+  //     //   setTimeout(() => {
+  //     //     this.showMessage = false;
+  //     //     this.$router.push('/');
+  //     //   }, 15000) // hide message after 15 seconds
+  //     axios.get("/api/auth/logout").then(function (response) {
+  //       console.log("logged in");
+  //       this.$store.commit("app/unsetUser");
+  //       // this.$notify({
+  //       //   group: 'main',
+  //       //   type: 'success',
+  //       //   title: '<img src="/img/Resized_mail.gif" alt="success" style="width=80%">',
+  //       // })
+  //       this.$router.push('/login');
+  //     });
+
+  //   }
+  // },
 }
 </script>

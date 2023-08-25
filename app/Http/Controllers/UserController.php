@@ -373,6 +373,6 @@ class UserController extends Controller
         $user->status = 'active';
         $user->save();
 
-        return redirect('/?email-verified=1');
+        return redirect('login/?email_verified=1');
     }
 }

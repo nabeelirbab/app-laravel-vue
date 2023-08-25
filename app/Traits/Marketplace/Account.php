@@ -176,18 +176,18 @@ trait Account
             'collect' => 'eventually_due',
         ], $this->stripeOptions());
 
+        $this->stripe_account_id = $account->id;
+        $this->save();
+
         return $accountLink->url;
 
         // header("Location: " . $accountLink->url);
-// exit;
+        // exit;
 
         // return redirect($accountLink->url);
 
 
         // $this->redirectUrl = $accountLink->url;
-
-        // $this->stripe_account_id = $account->id;
-        // $this->save();
 
         // return $account;
     }
@@ -216,39 +216,49 @@ trait Account
 
     public function updateAccount($data)
     {
+        $accountLink = StripeAccountLink::create([
+            'account' => $data['account_id'],
+            'refresh_url' => env('STRIPE_REFRESH_URL'),
+            'return_url' => env('STRIPE_UPDATE_RETURN_URL'),
+            'type' => 'account_update',
+            'collect' => 'eventually_due',
+        ], $this->stripeOptions());
+
+        // dd($accountLink);
+        return $accountLink->url;
         // dd($data);
-        if ($data['business_type'] == 'individual') {
-            $updateData = [
-                'account_token' => $data['account_token'],
-                'email' => $data['account']['email'],
-                'business_profile' => [
-                    'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
-                ]
-            ];
+        // if ($data['business_type'] == 'individual') {
+        //     $updateData = [
+        //         'account_token' => $data['account_token'],
+        //         'email' => $data['account']['email'],
+        //         'business_profile' => [
+        //             'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
+        //         ]
+        //     ];
 
-            if (isset($data['bank']['account_number'])) {
-                $updateData['external_account'] = [
-                    'object' => 'bank_account',
-                    'account' => $data['account_token'],
-                    'bank_name' => $data['bank']['name'],
-                    'country' => $data['bank']['country'],
-                    'currency' => 'gbp',
-                    'account_number' => $data['bank']['account_number']
-                ];
-            }
+        //     if (isset($data['bank']['account_number'])) {
+        //         $updateData['external_account'] = [
+        //             'object' => 'bank_account',
+        //             'account' => $data['account_token'],
+        //             'bank_name' => $data['bank']['name'],
+        //             'country' => $data['bank']['country'],
+        //             'currency' => 'gbp',
+        //             'account_number' => $data['bank']['account_number']
+        //         ];
+        //     }
 
-            return StripeAccount::update($this->accountId(), $updateData, $this->stripeOptions());
-        } elseif ($data['business_type'] == 'company') {
-            return StripeAccount::update($this->accountId(), [
-                'account_token' => $data['account_token'],
-                'email' => $data['account']['email'],
-            ], $this->stripeOptions());
-        } else {
-            return StripeAccount::update($this->accountId(), [
-                'account_token' => $data['account_token'],
-                'email' => $data['account']['email'],
-            ], $this->stripeOptions());
-        }
+        //     return StripeAccount::update($this->accountId(), $updateData, $this->stripeOptions());
+        // } elseif ($data['business_type'] == 'company') {
+        //     return StripeAccount::update($this->accountId(), [
+        //         'account_token' => $data['account_token'],
+        //         'email' => $data['account']['email'],
+        //     ], $this->stripeOptions());
+        // } else {
+        //     return StripeAccount::update($this->accountId(), [
+        //         'account_token' => $data['account_token'],
+        //         'email' => $data['account']['email'],
+        //     ], $this->stripeOptions());
+        // }
     }
 
     public function deleteAccount()

@@ -73,11 +73,18 @@ export default {
       this.$modal.show("modal-auth-register");
     },
   },
-  mounted() {
-    if (this.$route.query['email-verified'] === '1') {
-        this.$router.push('/login?email-verified=1');
-    }
-  },
+  // mounted() {
+  //   if (this.$route.query['email-verified'] === '1') {
+  //       console.log("logged out");
+
+  //     // var self = this;
+  //     // axios.get("/api/auth/logout").then(function (response) {
+  //     //   console.log("logged out");
+  //     //   self.$store.commit("app/unsetUser");
+  //       this.$router.push('/login?email-verified=1');
+  //     // });
+  //   }
+  // },
   components: {
     PhButton,
     SidebarGroup,

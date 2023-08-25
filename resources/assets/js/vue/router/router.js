@@ -15,7 +15,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.noAuth)) {
     if (window.user) {
-      next({ name: "home" });
+      if (to.query.email_verified) {
+        next();
+      } else {
+        next({ name: "home" });
+      }
     } else {
       next();
     }

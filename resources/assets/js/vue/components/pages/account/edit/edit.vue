@@ -5,7 +5,7 @@
       <hr />
       <table>
 
-        <tr v-if="app.user.roles[0].name == 'artist' || app.user.roles[0].name == 'pro'">
+        <!-- <tr v-if="app.user.roles[0].name == 'artist' || app.user.roles[0].name == 'pro'">
           <td>Artist Type</td>
           <td>
             <artist-type-select
@@ -32,6 +32,24 @@
                   The artist type is required
               </p>
           </td>
+        </tr> -->
+        <tr>
+          <td>First Name</td>
+          <td>
+            <input type="text" name="first_name" id="first_name" v-model="form.first_name" />
+          </td>
+        </tr>
+        <tr>
+          <td>Last Name</td>
+          <td>
+            <input type="text" name="last_name" id="last_name" v-model="form.last_name" />
+          </td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>
+            <input type="text" name="email" id="email" v-model="form.email" />
+          </td>
         </tr>
         <tr>
           <td>Bio</td>
@@ -45,9 +63,7 @@
               v-validate.disable="'max:500'"
               @keyup="bioChange"
             ></textarea>
-            <span
-              >{{ bioLength }} of {{ bioTotalLength }} characters used.</span
-            >
+            <span>{{ bioLength }} of {{ bioTotalLength }} characters used.</span>
             <span class="error-msg">{{ errors.first("bio") }}</span>
           </td>
         </tr>
@@ -149,6 +165,9 @@ export default {
   data() {
     return {
       form: {
+        first_name: "",
+        last_name: "",
+        email: "",
         bio: "",
         phone: "",
         web: "",
@@ -174,6 +193,9 @@ export default {
   components: { GenreSelect, ArtistTypeSelect },
 
   created() {
+    this.form.first_name = this.app.user.first_name;
+    this.form.last_name = this.app.user.last_name;
+    this.form.email = this.app.user.email;
     this.form.bio = this.app.user.bio;
     this.form.phone = this.app.user.phone;
     this.form.web = this.app.user.social_web;
@@ -225,7 +247,7 @@ export default {
               this.$notify({
                 group: "main",
                 type: "success",
-                title: "<img src='/img/success.gif' alt='success'>",
+                title: "<img src='/img/success.gif' alt='success' style='background:transparent'>",
               });
             })
             .catch((err) => {

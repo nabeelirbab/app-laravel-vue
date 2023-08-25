@@ -1,9 +1,9 @@
 <template>
     <ph-panel>
-        <h2 v-if="business_type == 'individual'">Personal Details</h2>
-        <h2 v-else>Account's Business Details</h2>
-        <hr />
-        <div v-if="business_type == 'individual'">
+        <!-- <h2 v-if="business_type == 'individual'">Personal Details</h2> -->
+        <!-- <h2 v-else>Account's Business Details</h2> -->
+        <!-- <hr /> -->
+        <!-- <div v-if="business_type == 'individual'">
             <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">First Name:</div>
@@ -38,14 +38,14 @@
                     </div>
                 </div>
                 <div class="flex flex-1">
-                    <!-- <div class="flex w-1/3 items-center">Phone:</div>
+                    <div class="flex w-1/3 items-center">Phone:</div>
                     <div class="w-2/3">
                         <input class="w-full" type="text" name="phone" v-model="individual.phone"
                             v-validate="{ required: true, regex: /((\+44?))\d{11}/ }" />
                         <span class="error-message">{{
                             errors.first("phone")
                         }}</span>
-                    </div> -->
+                    </div>
                     <div class="flex w-1/3 items-center">Website:</div>
                     <div class="w-2/3">
                         <input class="w-full" type="text" name="website" v-model="personal.website" v-validate="{
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <!-- <div class="flex pb-4">
+            <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">DOB:</div>
                     <div class="w-2/3 flex flex-dir-col">
@@ -157,7 +157,7 @@
                         }}</span>
                     </div>
                 </div>
-            </div> -->
+            </div>
 
             <div class="flex">
                 <div class="flex w-1/2 pr-4 input">
@@ -219,15 +219,15 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="flex error-message mt-2 mb-2" v-if="stripeError">
+        <!-- <div class="flex error-message mt-2 mb-2" v-if="stripeError">
             {{ stripeError }}
         </div>
         <div>
             <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
-        </div>
-        <div v-if="business_type == 'company' || business_type == 'non_profit'">
+        </div> -->
+        <!-- <div v-if="business_type == 'company' || business_type == 'non_profit'">
             <div class="flex pb-4">
                 <div class="flex flex-1 pr-4">
                     <div class="flex w-1/3 items-center">Company Name:</div>
@@ -321,10 +321,16 @@
             <div>
                 <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
             </div>
+        </div> -->
+        <h3>Stripe Status</h3>
+        <hr>
+        <div v-if="verification">
+            <p style="margin-bottom: 10px;">Your Stripe Account is <span style="color:red">not verified</span></p>
+            <ph-button @click.native.prevent="handleVerificationAccount"  :loading="loading">Verify Stripe Account</ph-button>
         </div>
+        <p v-else>The Stripe Account is <span style="color:green">Verified</span></p>
 
-
-        <h4 style="margin-top: 30px;">Card Details</h4>
+        <h3 style="margin-top: 30px;">Card Details</h3>
         <hr>
         <existing-card-account :card="card" :actions="true" />
 
@@ -445,7 +451,7 @@ export default {
         if (this.account) {
             // this.mutableAccount = this.account;
             this.business_type = this.account.business_type;
-            // console.log("this.business_type", this.business_type);
+            // console.log("this.verified", this.verified);
             console.log("this.account", this.account);
             // this.accountMuatation(this.account)
 
@@ -461,14 +467,15 @@ export default {
 
     methods: {
         initVerification() {
-            if (this.account && this.account.requirements.eventually_due.length && !this.verified && this.account.external_accounts.data.length > 0) {
-                this.verification = this.account.requirements.eventually_due.filter(item => {
-                    return item.endsWith('verification.document')
-                }).map(item => {
-                    return item.split('.').pop()
-                })
+            if (this.account && (this.account.requirements.eventually_due.length || this.account.requirements.currently_due.length || this.account.requirements.pending_verification.length || this.account.external_accounts.data.length == 0)) {
+                // this.verification = this.account.requirements.eventually_due.filter(item => {
+                //     return item.endsWith('verification.document')
+                // }).map(item => {
+                //     return item.split('.').pop()
+                // })
+                this.verification = true;
             } else {
-                this.verification = null;
+                this.verification = false;
             }
         },
         selectFile() {
@@ -526,6 +533,23 @@ export default {
                 this.company.address.postal_code = account.company.address.postal_code;
                 this.company.address.country = account.company.address.country;
             }
+        },
+        async handleVerificationAccount() {
+            this.loading = true;
+            await axios
+                .post(`/api/account/marketplace/update`, {
+                    account: this.account.id,
+                })
+                .then((response) => {
+                    this.loading = false;
+                    console.log(response);
+                    const accountLinkUrl = response.data.account; // Replace with the actual URL obtained from Stripe
+                    window.location.href = accountLinkUrl;
+                })
+                .catch((error) => {
+                    this.stripeError = error.response.data.message;
+                    this.loading = false;
+                });
         },
         async updateAccount() {
             // const method = this.account ? "update" : "create";
