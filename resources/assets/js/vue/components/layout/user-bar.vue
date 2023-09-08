@@ -3,24 +3,18 @@
     <div v-if="!app.user.loggedin" style="margin: 0 10px">
       <back-button />
     </div>
-    <div
-      class="user-bar-main"
-      :class="{ 'user-bar-guest': !app.user.loggedin }"
-    >
+    <div class="user-bar-main" :class="{ 'user-bar-guest': !app.user.loggedin }">
       <div class="user-bar-left" v-if="app.user.loggedin">
         <back-button />
 
         <!--                <v-popover :disabled="!app.user.account_verified">-->
-        <ph-button
-          v-if="$can('create releases')"
-          @click.native="showUpload"
-          :style="!app.user.stripe_account_id  || !app.user.approved_at ? 'opacity:0.5;' : null"
-          :disabled="!app.user.stripe_account_id || !app.user.approved_at ? 'disabled' : null"
-        >
+        <ph-button v-if="$can('create releases')" @click.native="showUpload"
+          :style="!app.user.stripe_account_id || !app.user.approved_at ? 'opacity:0.5;' : null"
+          :disabled="!app.user.stripe_account_id || !app.user.approved_at ? 'disabled' : null">
           Upload
           <template v-if="!app.user.stripe_account_id || !app.user.approved_at" slot="tooltip">
-            <p v-if="!app.user.stripe_account_id" >Complete verification in your account section</p>
-            <p v-if="app.user.stripe_account_id && !app.user.approved_at" >We're just verifying your account first.</p>
+            <p v-if="!app.user.stripe_account_id">Complete verification in your account section</p>
+            <p v-if="app.user.stripe_account_id && !app.user.approved_at">We're just verifying your account first.</p>
           </template>
 
           <template v-else-if="app.user.tracks_count_this_month >= free_release_limit" slot="tooltip">
@@ -33,15 +27,15 @@
                     {{ app.user.name }} - <router-link :to="{ name: 'news' }">News</router-link>
         </span>-->
       </div>
+      
+      <div class="verify-account-notify" v-if="isAccountNotVerified()">
+        <i class="fa fa-exclamation"></i> Verify your Account
+      </div>
 
       <div class="user-bar-actions" v-if="app.user.loggedin">
         <a class="user-bar-item fa-layers fa-fw" @click="showCart" href="#">
           <i class="fa fa-shopping-cart"></i>
-          <span
-            class="fa-layers-counter message-counter"
-            v-if="cart.items.length"
-            >{{ cart.items.length }}</span
-          >
+          <span class="fa-layers-counter message-counter" v-if="cart.items.length">{{ cart.items.length }}</span>
         </a>
         <router-link class="user-bar-item" to="/account/mymusic">
           <i class="fa fa-music"></i>
@@ -49,35 +43,21 @@
         <a class="user-bar-item" href="#" @click.prevent="toggleMessages">
           <span class="fa-layers fa-fw">
             <i class="fas fa-envelope"></i>
-            <span
-              class="fa-layers-counter message-counter"
-              v-if="messenger.unreadThreads.length"
-              >{{ messenger.unreadThreads.length }}</span
-            >
+            <span class="fa-layers-counter message-counter" v-if="messenger.unreadThreads.length">{{
+              messenger.unreadThreads.length }}</span>
           </span>
         </a>
-        <message-dropdown
-          :show="messages.show"
-          :threads="messenger.unreadThreads"
-        />
+        <message-dropdown :show="messages.show" :threads="messenger.unreadThreads" />
         <router-link class="user-bar-item" :to="'/user/' + app.user.path">
-          <avatar
-            v-if="app.user.avatar"
-            :src="app.user.avatar.files.medium.url"
-            :alt="app.user.avatar.alt"
-            :size="35"
-          ></avatar>
+          <avatar v-if="app.user.avatar" :src="app.user.avatar.files.medium.url" :alt="app.user.avatar.alt" :size="35">
+          </avatar>
         </router-link>
       </div>
 
       <div class="user-bar-actions" v-else>
         <a class="user-bar-item fa-layers fa-fw" @click="showCart" href="#">
           <i class="fa fa-shopping-cart"></i>
-          <span
-            class="fa-layers-counter message-counter"
-            v-if="cart.items.length"
-            >{{ cart.items.length }}</span
-          >
+          <span class="fa-layers-counter message-counter" v-if="cart.items.length">{{ cart.items.length }}</span>
         </a>
       </div>
 
@@ -125,11 +105,11 @@ export default {
 
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
+    store.dispatch("app/fetchStripeAccountReq");
 
     if (this.app.user.loggedin) {
       store.dispatch("messenger/fetchThreads");
     }
-    console.log(this.app.user)
   },
 
   destroyed() {
@@ -137,6 +117,18 @@ export default {
   },
 
   methods: {
+    isAccountNotVerified() {
+      if (this.app.user.approved_at == '' && this.app.user.status !== 'active') {
+        return true;
+      }
+
+      if (this.app.user.roles[0].name != 'standard' && this.app.stripeAccountReq?.length > 0) {
+        return true;
+      }
+      
+      return false;
+    },
+
     handleClickOutside(evt) {
       if (!this.$el.contains(evt.target)) {
         this.messages.show = false;
@@ -178,10 +170,19 @@ export default {
     // padding-top: 2em;
     padding: 20px 0;
   }
+
+  .verify-account-notify {
+    border: 1px solid red;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
   &.hidden {
     display: none;
   }
 }
+
 .user-bar-main {
   justify-content: space-between;
   flex: 1;
@@ -196,15 +197,17 @@ export default {
     // flex-direction: column;
   }
 }
+
 .user-bar-guest {
   justify-content: flex-end;
 }
+
 .user-bar-left {
   flex: 1;
   display: flex;
   align-items: center;
 
-  & > * {
+  &>* {
     margin: 0 10px;
 
     @media (max-width: 488px) {
@@ -224,12 +227,14 @@ export default {
     }
   }
 }
+
 .user-bar-actions {
   display: flex;
   position: relative;
   justify-content: flex-end;
   align-items: center;
 }
+
 a.user-bar-item {
   margin: 0 10px;
   color: initial;
@@ -240,6 +245,7 @@ a.user-bar-item {
     margin: 0 8px;
   }
 }
+
 .message-counter {
   background: $color-blue;
   font-size: 150%;
@@ -251,6 +257,7 @@ a.user-bar-item {
   position: absolute;
   top: -4px;
 }
+
 .user-bar-player {
   flex: 0 0 18%;
   font-size: 90%;

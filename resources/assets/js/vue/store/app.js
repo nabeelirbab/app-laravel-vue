@@ -33,6 +33,7 @@ export default {
         captchaCredentials: [],
         artistTypes: [],
         stripeFiles: null,
+        stripeAccountReq: null,
         account: {
             type: "Individual",
             business_type: "company",
@@ -219,6 +220,10 @@ export default {
         setCaptchaCredentials(state, credentials) {
             state.captchaCredentials = credentials;
         },
+        setStripeAccountReq(state, requirements) {
+            state.stripeAccountReq = requirements;
+            console.log(state.stripeAccountReq);
+        }
     },
 
     actions: {
@@ -411,6 +416,20 @@ export default {
                     })
                     .catch(function (error) {
                         console.log(error);
+                        reject();
+                    });
+            });
+        },
+        fetchStripeAccountReq({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get("/api/account/marketplace/account")
+                    .then(function (response) {
+                        commit("setStripeAccountReq", response.data.account.requirements.eventually_due);
+                        resolve();
+                    })
+                    .catch(function (error) {
+                        console.error(error);
                         reject();
                     });
             });

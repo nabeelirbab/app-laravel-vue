@@ -1,11 +1,12 @@
 <template>
   <div>
     <!-- Overlay for Notify -->
-    <overlay-notify :is-visible="isOverlayVisible" :duration="10000">
+    <overlay-notify :is-visible="isOverlayVisible">
       <!-- Content of the overlay -->
       <div class="overlay-content">
-        <spinner style="margin: 3em auto;" :animation-duration="1000" :size="80" color="black" />
-        <p>Redirecting to stripe...</p>
+        <!-- <spinner style="margin: 3em auto;" :animation-duration="1000" :size="80" color="black" /> -->
+        <img src="/img/phase-loading.gif" alt="" srcset="">
+        <h3>Redirecting to stripe...</h3>
       </div>
     </overlay-notify>
 
@@ -124,7 +125,24 @@
           <div class="full-width">
             <div class="input">
               <div>Email:</div>
-              <div>
+              <div :class="{ 'email-input': true, valid: isValid }">
+                <input type="email" v-model="data.personal.email" placeholder="aaron@gmail.com"
+                  v-validate="'required|email|max:255'" data-vv-as="email address" data-vv-validate-on="focusout"
+                  name="personal-email" tabindex="8" :disabled="submitting">
+                <svg viewBox="0 0 18 18">
+                  <path
+                    d="M11.5,10.5 C6.4987941,17.5909626 1,3.73719105 11.5,6 C10.4594155,14.5485365 17,13.418278 17,9 C17,4.581722 13.418278,1 9,1 C4.581722,1 1,4.581722 1,9 C1,13.418278 4.581722,17 9,17 C13.418278,17 17,13.42 17,9">
+                  </path>
+                  <polyline points="5 9.25 8 12 13 6"></polyline>
+                </svg>
+                <p class="error-message">
+                  {{ errors.first("personal-email") }}
+                </p>
+                <p class="error-message" v-show="validationErrors['personal.email']" style="bottom: -40px">
+                  The email has been taken
+                </p>
+              </div>
+              <!-- <div>
                 <input type="text" name="personal-email" v-model="data.personal.email" tabindex="8" :disabled="submitting"
                   v-validate="'required|email|max:255'" data-vv-as="email address" ref="email"
                   data-vv-validate-on="focusout" />
@@ -134,7 +152,7 @@
                 <p class="error-message" v-show="validationErrors['personal.email']" style="bottom: -40px">
                   The email has been taken
                 </p>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -295,6 +313,20 @@
         </div>
       </div>
 
+      <div class="register-form-inputs" v-if="selectedPlan.role.name == 'pro'">
+        <div class="full-width">
+          <div class="input">
+            <div>Direct debit terms & conditions:</div>
+            <div>
+              <input type="checkbox" :name="`${selectedPlan.role.name}_ddtc`" v-model="data.direct_debit" />
+              <p class="error-message" v-show="emptyDirectDebit">
+                For the Artist Pro you must have to agree with Direct debit terms and condition.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="register-form-inputs">
         <div class="full-width">
           <div class="input">
@@ -347,6 +379,7 @@ export default {
     return {
       isOverlayVisible: false,
       emptyArtistType: false,
+      emptyDirectDebit: false,
       artistGenresString: "",
       interestGenresString: "",
       validationErrors: "",
@@ -381,6 +414,7 @@ export default {
           genres: [],
         },
         newsletter: false,
+        direct_debit: false,
         recaptcha: "",
       },
     };
@@ -391,6 +425,10 @@ export default {
     /** Determine if any of the values in the social data are valid */
     hasValidSocial() {
       return !!Object.entries(this.data.social).filter(([_, value]) => !!value).length;
+    },
+    isValid() {
+      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return regex.test(this.data.personal.email);
     },
   },
   mounted() {
@@ -434,6 +472,11 @@ export default {
     registerUser() {
       if (this.data.personal.artist_user_type == "" && this.selectedPlan.role.name !== "standard") {
         this.emptyArtistType = true;
+        return 0;
+      }
+
+      if (this.data.direct_debit == false && this.selectedPlan.role.name == "pro") {
+        this.emptyDirectDebit = true;
         return 0;
       }
 
@@ -551,6 +594,103 @@ export default {
 <style lang="scss" scoped>
 @import "~styles/helpers/_variables.scss";
 
+.email-input {
+  --text: #646B8C;
+  --text-placeholder: #BBC1E1;
+  --icon: #A6ACCD;
+  --icon-focus: #646B8C;
+  --icon-invalid: #F04949;
+  --icon-valid: #16BF78;
+  --background: #fff;
+  --border: #D1D6EE;
+  --border-hover: #A6ACCD;
+  --border-focus: #275EFE;
+  --shadow-focus: #{rgba(#275EFE, .32)};
+  position: relative;
+  // max-width: 220px;
+
+  input {
+    width: 100% !important;
+    -webkit-appearance: none;
+    outline: none;
+    display: block;
+    font-size: 14px;
+    font-family: inherit;
+    margin: 0;
+    padding: 8px 16px 8px 41px !important;
+    line-height: 26px;
+    border-radius: 6px;
+    color: var(--text);
+    border: 1px solid var(--bc, var(--border));
+    background: var(--background);
+    transition: border-color .3s, box-shadow .3s;
+
+    &::placeholder {
+      color: var(--text-placeholder);
+    }
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    top: 14px;
+    left: 14px;
+    display: block;
+    position: absolute;
+    fill: none;
+    stroke: var(--i, var(--icon));
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+    transition: stroke .3s;
+
+    path {
+      stroke-dasharray: 80;
+      stroke-dashoffset: var(--path, 170);
+      transition: stroke-dashoffset .5s ease var(--path-delay, .3s);
+    }
+
+    polyline {
+      stroke-dasharray: 12;
+      stroke-dashoffset: var(--tick, 12);
+      transition: stroke-dashoffset .45s ease var(--tick-delay, 0s);
+    }
+  }
+
+  &:hover {
+    --bc: var(--border-hover);
+  }
+
+  &:focus-within {
+    --bc: var(--border-focus);
+    --i: var(--icon-focus);
+
+    input {
+      box-shadow: 0 1px 6px -1px var(--shadow-focus);
+    }
+  }
+
+  &:not(.valid) {
+    input {
+      &:not(:placeholder-shown) {
+        &:not(:focus) {
+          &+svg {
+            --i: var(--icon-invalid);
+          }
+        }
+      }
+    }
+  }
+
+  &.valid {
+    --i: var(--icon-valid);
+    --path: 132;
+    --path-delay: 0s;
+    --tick: 0;
+    --tick-delay: .3s;
+  }
+}
+
 .center {
   width: 22%;
 }
@@ -651,7 +791,7 @@ select {
 }
 
 .register-form-inputs input {
-  padding: 10px !important;
+  padding: 10px;
   box-sizing: border-box;
   font-size: 17px !important;
   border: 1px solid $color-grey4 !important;

@@ -773,6 +773,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     captchaCredentials: [],
     artistTypes: [],
     stripeFiles: null,
+    stripeAccountReq: null,
     account: (_account = {
       type: "Individual",
       business_type: "company",
@@ -947,6 +948,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     setCaptchaCredentials: function setCaptchaCredentials(state, credentials) {
       state.captchaCredentials = credentials;
+    },
+    setStripeAccountReq: function setStripeAccountReq(state, requirements) {
+      state.stripeAccountReq = requirements;
+      console.log(state.stripeAccountReq);
     }
   },
   actions: {
@@ -1135,8 +1140,20 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
-    fetchPageData: function fetchPageData(_ref5, page) {
+    fetchStripeAccountReq: function fetchStripeAccountReq(_ref5) {
       var commit = _ref5.commit;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/account/marketplace/account").then(function (response) {
+          commit("setStripeAccountReq", response.data.account.requirements.eventually_due);
+          resolve();
+        })["catch"](function (error) {
+          console.error(error);
+          reject();
+        });
+      });
+    },
+    fetchPageData: function fetchPageData(_ref6, page) {
+      var commit = _ref6.commit;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/page", {
           path: page
@@ -1149,9 +1166,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
-    fetchFeed: function fetchFeed(_ref6) {
-      var commit = _ref6.commit,
-        state = _ref6.state;
+    fetchFeed: function fetchFeed(_ref7) {
+      var commit = _ref7.commit,
+        state = _ref7.state;
       // TODO - how does this result get cleared?
       if (state.feed.length) return; // Don't re-fetch if data is already set.
       return new Promise(function (resolve, reject) {
@@ -1165,9 +1182,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
-    fetchPlans: function fetchPlans(_ref7) {
-      var commit = _ref7.commit,
-        state = _ref7.state;
+    fetchPlans: function fetchPlans(_ref8) {
+      var commit = _ref8.commit,
+        state = _ref8.state;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get("api/plans").then(function (response) {
           commit("setPlans", response.data);
@@ -1177,37 +1194,37 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
-    fetchPricePerFeaturedSlot: function fetchPricePerFeaturedSlot(_ref8) {
-      var commit = _ref8.commit,
-        state = _ref8.state;
+    fetchPricePerFeaturedSlot: function fetchPricePerFeaturedSlot(_ref9) {
+      var commit = _ref9.commit,
+        state = _ref9.state;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/price-per-featured-slot").then(function (response) {
         commit("setPrice", response.data);
       })["catch"](function (e) {
         return;
       });
     },
-    fetchPriceRangesForTrack: function fetchPriceRangesForTrack(_ref9) {
-      var commit = _ref9.commit,
-        state = _ref9.state;
+    fetchPriceRangesForTrack: function fetchPriceRangesForTrack(_ref10) {
+      var commit = _ref10.commit,
+        state = _ref10.state;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/price-ranges-for-tracks").then(function (response) {
         commit("setPriceRanges", response.data);
       })["catch"](function (e) {
         return;
       });
     },
-    fetchCaptchaCredentials: function fetchCaptchaCredentials(_ref10) {
-      var commit = _ref10.commit,
-        state = _ref10.state;
+    fetchCaptchaCredentials: function fetchCaptchaCredentials(_ref11) {
+      var commit = _ref11.commit,
+        state = _ref11.state;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/fetch-captcha-credentials").then(function (response) {
         commit("setCaptchaCredentials", response.data);
       })["catch"](function (e) {
         return;
       });
     },
-    fetchUsersReleases: function fetchUsersReleases(_ref11) {
-      var commit = _ref11.commit,
-        state = _ref11.state,
-        getters = _ref11.getters;
+    fetchUsersReleases: function fetchUsersReleases(_ref12) {
+      var commit = _ref12.commit,
+        state = _ref12.state,
+        getters = _ref12.getters;
       if (!getters.releasesHasAnotherPage) return;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/account/releases/mine/?page=".concat(state.user.releases.current_page + 1)).then(function (response) {
@@ -1218,10 +1235,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
-    fetchUsersUploadedMusic: function fetchUsersUploadedMusic(_ref12, user_id) {
-      var commit = _ref12.commit,
-        state = _ref12.state,
-        getters = _ref12.getters;
+    fetchUsersUploadedMusic: function fetchUsersUploadedMusic(_ref13, user_id) {
+      var commit = _ref13.commit,
+        state = _ref13.state,
+        getters = _ref13.getters;
       if (!getters.releasesHasAnotherPage) return;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/mymusic/uploaded/".concat(user_id, "/?page=").concat(state.uploadedMusic.current_page + 1)).then(function (response) {
@@ -1232,21 +1249,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
-    fetchUsersEvents: function fetchUsersEvents(_ref13) {
-      var commit = _ref13.commit,
-        state = _ref13.state;
+    fetchUsersEvents: function fetchUsersEvents(_ref14) {
+      var commit = _ref14.commit,
+        state = _ref14.state;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/event/".concat(state.user.id, "/list")).then(function (response) {
         commit("setUserEvents", response.data);
       });
     },
-    removeUserRelease: function removeUserRelease(_ref14, release) {
-      var commit = _ref14.commit;
+    removeUserRelease: function removeUserRelease(_ref15, release) {
+      var commit = _ref15.commit;
       axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/account/releases/mine/delete/".concat(release.id)).then(function (response) {
         commit("removeUserReleaseFromState", release);
       });
     },
-    updateUserRelease: function updateUserRelease(_ref15, data) {
-      var commit = _ref15.commit;
+    updateUserRelease: function updateUserRelease(_ref16, data) {
+      var commit = _ref16.commit;
       axios__WEBPACK_IMPORTED_MODULE_0___default().patch("/api/account/releases/mine/".concat(data.release.id), {
         status: data.status
       }).then(function (response) {

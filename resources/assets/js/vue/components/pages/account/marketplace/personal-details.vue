@@ -322,30 +322,47 @@
                 <ph-button @click.native="updateAccount" :loading="loading">Save</ph-button>
             </div>
         </div> -->
-        <h3>Stripe Status</h3>
+        <h2>Stripe Verification</h2>
         <hr>
-        <div v-if="verification">
-            <p style="margin-bottom: 10px;">Your Stripe Account is <span style="color:red">not verified</span></p>
-            <ph-button @click.native.prevent="handleVerificationAccount"  :loading="loading">Verify Stripe Account</ph-button>
+        <div v-if="account">
+            <div class="stripe-status-headings">
+                <h5>Payouts enabled: </h5>
+                <i class="fa fa-check" aria-hidden="true" v-if="account?.payouts_enabled"></i>
+                <i class="fa fa-times" aria-hidden="true" v-else></i>
+            </div>
+            <div class="stripe-status-headings">
+                <h5>Account details verified: </h5>
+                <i class="fa fa-times" aria-hidden="true"
+                    v-if="account?.external_accounts?.data.length > 0 && account?.requirements?.eventually_due.length > 0"></i>
+                <i class="fa fa-check" aria-hidden="true" v-else></i>
+
+            </div>
+
+
+            <div v-if="verification">
+                <p style="margin-bottom: 10px;">Your Stripe Account is <span style="color:red">not verified</span></p>
+                <ph-button @click.native.prevent="handleVerificationAccount" :loading="loading">Verify Stripe
+                    Account</ph-button>
+            </div>
+            <div v-else>
+                <p style="margin-bottom: 10px;">The Stripe Account is <span style="color:green">verified</span></p>
+                <ph-button @click.native.prevent="handleVerificationAccount" :loading="loading">Update Stripe
+                    details</ph-button>
+            </div>
         </div>
-        <p v-else>The Stripe Account is <span style="color:green">Verified</span></p>
-
-        <h3 style="margin-top: 30px;">Card Details</h3>
-        <hr>
-        <existing-card-account :card="card" :actions="true" />
-
+        <div v-else>
+            <p>Please add your Stripe account first</p>
+        </div>
     </ph-panel>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import CountrySelect from "../../../modals/upload/country-select";
-import ExistingCardAccount from '../../../global/existing-card-account';
 
 export default {
     components: {
         CountrySelect,
-        ExistingCardAccount,
     },
     name: "personal-details",
     props: {
@@ -670,19 +687,26 @@ export default {
                 return await fileResult.json();
             }
         },
-        getPaymentMethod() {
-            axios.get('/api/account/billing/method')
-                .then(response => {
-                    this.card = response.data.payment_method
-                    console.log("billing card", this.card);
-                })
-        },
     },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~styles/helpers/_variables.scss";
+
+.stripe-status-headings {
+    display: flex;
+}
+
+.fa-check {
+    color: green;
+    margin-left: 10px
+}
+
+.fa-times {
+    color: red;
+    margin-left: 10px;
+}
 
 .flex {
     display: flex;

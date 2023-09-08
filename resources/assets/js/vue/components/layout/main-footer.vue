@@ -1,5 +1,5 @@
 <template>
-  <footer class="main" :style="currentRouteName == 'message_thread' ? 'margin-top:0px;' : 'margin-top:40px;'">
+  <footer class="main" :style="currentRouteName == 'message_thread' || 'login' ? 'margin-top:0px;' : 'margin-top:40px;'">
     <!--    <div class="footer-overlay"></div>-->
     <div class="footer-upper">
       <div class="footer-logo">
@@ -56,7 +56,6 @@ export default {
 }
 
 footer {
-  margin-top: 40px;
   position: relative;
 
   .footer-overlay {

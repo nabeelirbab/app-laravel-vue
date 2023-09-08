@@ -1,11 +1,12 @@
 <template>
     <div v-if="isVisible" class="overlay">
-        <img v-if="imageSrc" :src="imageSrc" alt="Overlay Image" />
+        <!-- <img v-if="imageSrc" :src="imageSrc" alt="Overlay Image" /> -->
         <slot></slot>
     </div>
 </template>
   
 <script>
+
 export default {
     props: {
         isVisible: Boolean,
