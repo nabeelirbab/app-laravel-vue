@@ -27,8 +27,8 @@
                     {{ app.user.name }} - <router-link :to="{ name: 'news' }">News</router-link>
         </span>-->
       </div>
-      
-      <div class="verify-account-notify" v-if="isAccountNotVerified()">
+
+      <div class="verify-account-notify" v-if="app.user.loggedin && isAccountNotVerified()">
         <i class="fa fa-exclamation"></i> Verify your Account
       </div>
 
@@ -105,10 +105,10 @@ export default {
 
   mounted() {
     document.addEventListener("click", this.handleClickOutside);
-    store.dispatch("app/fetchStripeAccountReq");
 
     if (this.app.user.loggedin) {
       store.dispatch("messenger/fetchThreads");
+      store.dispatch("app/fetchStripeAccountReq");
     }
   },
 
@@ -125,7 +125,7 @@ export default {
       if (this.app.user.roles[0].name != 'standard' && this.app.stripeAccountReq?.length > 0) {
         return true;
       }
-      
+
       return false;
     },
 
