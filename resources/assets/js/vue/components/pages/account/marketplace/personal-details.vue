@@ -327,13 +327,13 @@
         <div v-if="account">
             <div class="stripe-status-headings">
                 <h5>Payouts enabled: </h5>
-                <i class="fa fa-check" aria-hidden="true" v-if="account?.payouts_enabled"></i>
+                <i class="fa fa-check" aria-hidden="true" v-if="isPayoutEnabled()"></i>
                 <i class="fa fa-times" aria-hidden="true" v-else></i>
             </div>
             <div class="stripe-status-headings">
                 <h5>Account details verified: </h5>
                 <i class="fa fa-times" aria-hidden="true"
-                    v-if="account?.external_accounts?.data.length > 0 && account?.requirements?.eventually_due.length > 0"></i>
+                    v-if="isAccountDetailsVerified()"></i>
                 <i class="fa fa-check" aria-hidden="true" v-else></i>
 
             </div>
@@ -494,6 +494,12 @@ export default {
             } else {
                 this.verification = false;
             }
+        },
+        isPayoutEnabled(){
+            return this.account && this.account.payouts_enabled;
+        },
+        isAccountDetailsVerified(){
+            return this.account && this.account.external_accounts.data.length > 0 && this.account.requirements.eventually_due.length > 0;
         },
         selectFile() {
             let fileInputElement = this.$refs.fileInput;
