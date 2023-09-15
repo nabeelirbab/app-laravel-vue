@@ -16,8 +16,10 @@
                 <i class="fas fa-spinner fa-pulse"></i>
             </li> -->
         </ul>
-        <spinner style="margin: 2em auto" v-show="loadingUserMore" :animation-duration="1000" :size="60" color="black" />
-
+        <!-- <spinner style="margin: 2em auto" v-show="loadingUserMore" :animation-duration="1000" :size="60" color="black" /> -->
+        <div class="phase-loading" v-show="loadingUserMore">
+            <img src="/img/phase-loading.gif" alt="" srcset="">
+        </div>
         <!-- <span style="color: red;" v-else>No users found in this search!</span> -->
 
         <h6>Releases: {{ releases.length }} Results</h6>
@@ -38,8 +40,10 @@
                 <i class="fas fa-spinner fa-pulse"></i>
             </li> -->
         </ul>
-        <spinner style="margin: 2em auto" v-show="loadingReleaseMore" :animation-duration="1000" :size="60" color="black" />
-
+        <!-- <spinner style="margin: 2em auto" v-show="loadingReleaseMore" :animation-duration="1000" :size="60" color="black" /> -->
+        <div class="phase-loading" v-show="loadingReleaseMore">
+            <img src="/img/phase-loading.gif" alt="" srcset="">
+        </div>
         <!-- <span style="color: red;" v-else>No releases found in this search!</span> -->
 
 
@@ -59,8 +63,10 @@
                 <i class="fas fa-spinner fa-pulse"></i>
             </li> -->
         </ul>
-        <spinner style="margin: 2em auto" v-show="loadingTrackMore" :animation-duration="1000" :size="60" color="black" />
-
+        <!-- <spinner style="margin: 2em auto" v-show="loadingTrackMore" :animation-duration="1000" :size="60" color="black" /> -->
+        <div class="phase-loading" v-show="loadingTrackMore">
+            <img src="/img/phase-loading.gif" alt="" srcset="">
+        </div>
         <!-- <span style="color: red;" v-else>No tracks found in this search!</span> -->
 
     </div>
@@ -152,7 +158,7 @@ h6 {
 }
 
 .load-more-icon {
-    margin: auto 0px;
+    margin: 61px 0px;
     width: 160px;
 }
 

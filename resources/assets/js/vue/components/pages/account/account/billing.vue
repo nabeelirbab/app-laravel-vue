@@ -4,7 +4,7 @@
     <hr>
     <h3>Payment Method</h3>
 
-    <existing-card-account :card="card" :actions="false" @handleRemove="handleRemove"/>
+    <existing-card-account :card="card" :actions="false" @handleRemove="handleRemove" />
 
     <!-- Stripe Elements Placeholder -->
     <div id="card-element" style="margin-bottom: 20px;"></div>
@@ -46,7 +46,7 @@ export default {
   },
 
   methods: {
-    
+
     payment() {
 
       const stripe = Stripe(process.env.MIX_VUE_APP_STRIPE_KEY)
@@ -81,7 +81,7 @@ export default {
             Vue.notify({
               group: 'main',
               type: 'success',
-              title: '<img src="/img/success.gif" alt="success">',
+              title: '<img src="/img/confirm.gif" alt="success" width="60%">',
             })
           }).catch(error => {
             this.submitting = false
@@ -97,7 +97,7 @@ export default {
           console.log("billing card", this.card);
         })
     },
-    handleRemove(){
+    handleRemove() {
       this.card = null
     }
   },

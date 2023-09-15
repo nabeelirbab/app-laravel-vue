@@ -79,7 +79,9 @@
             <input type="email" name="email" id="" v-model="email" placeholder="Email">
             <button type="submit" style="margin: auto;display: block;">Submit</button>
           </form>
-          <span v-if="emailErrMsg" style="display: block; padding-top: 10px;text-align: center; color: red; font-size: 12px;">{{ emailErrMsg }}</span>
+          <span v-if="emailErrMsg"
+            style="display: block; padding-top: 10px;text-align: center; color: red; font-size: 12px;">{{ emailErrMsg
+            }}</span>
         </div>
         <div class="reset-form-wrap" v-if="loading" style="margin: auto; transition: 1s ease;">
           <img src="/img/logo.png" class="reset-logo modal-logo centered-block" />
@@ -145,11 +147,11 @@ export default {
           this.loading = false
 
           if (response.data.success) {
-            // this.username = ''
-            // this.password = ''
+            this.username = ''
+            this.password = ''
 
-            // this.$store.commit('app/setUser', response.data.user)
-            // this.$modal.hide('modal-auth-login')
+            this.$store.commit('app/setUser', response.data.user)
+            this.$modal.hide('modal-auth-login')
 
             // Remove the cart cookie
             CartManager.reset();

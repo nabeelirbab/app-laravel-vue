@@ -28,8 +28,9 @@
         </span>-->
       </div>
 
-      <div class="verify-account-notify" v-if="app.user.loggedin && isAccountNotVerified()">
-        <i class="fa fa-exclamation"></i> Verify your Account
+      <div class="verify-account-notify" v-if="app.user.loggedin && isAccountNotVerified()"
+        v-tooltip.top="{ content: 'Verify your account in My Account > Verification' }">
+        <i class="fa fa-exclamation"></i>
       </div>
 
       <div class="user-bar-actions" v-if="app.user.loggedin">
@@ -172,7 +173,7 @@ export default {
   }
 
   .verify-account-notify {
-    border: 1px solid red;
+    border: 2px solid red;
     padding: 6px;
     border-radius: 5px;
     font-size: 16px;

@@ -57,4 +57,5 @@ svg {
     to {
         stroke-dashoffset: 0;
     }
-}</style>
+}
+</style>

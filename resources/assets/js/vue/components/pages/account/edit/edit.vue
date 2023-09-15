@@ -45,24 +45,17 @@
             <input type="text" name="last_name" id="last_name" v-model="form.last_name" />
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>Email</td>
           <td>
             <input type="text" name="email" id="email" v-model="form.email" />
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td>Bio</td>
           <td>
-            <textarea
-              name="bio"
-              id="bio"
-              cols="30"
-              rows="10"
-              v-model="form.bio"
-              v-validate.disable="'max:500'"
-              @keyup="bioChange"
-            ></textarea>
+            <textarea name="bio" id="bio" cols="30" rows="10" v-model="form.bio" v-validate.disable="'max:500'"
+              @keyup="bioChange"></textarea>
             <span>{{ bioLength }} of {{ bioTotalLength }} characters used.</span>
             <span class="error-msg">{{ errors.first("bio") }}</span>
           </td>
@@ -91,63 +84,34 @@
         <tr>
           <td>Youtube</td>
           <td>
-            <input
-              type="text"
-              name="youtube"
-              id="youtube"
-              v-model="form.youtube"
-            />
+            <input type="text" name="youtube" id="youtube" v-model="form.youtube" />
           </td>
         </tr>
         <tr>
           <td>Twitter</td>
           <td>
-            <input
-              type="text"
-              name="twitter"
-              id="twitter"
-              v-model="form.twitter"
-            />
+            <input type="text" name="twitter" id="twitter" v-model="form.twitter" />
           </td>
         </tr>
         <tr>
           <td>Facebook</td>
           <td>
-            <input
-              type="text"
-              name="facebook"
-              id="facebook"
-              v-model="form.facebook"
-            />
+            <input type="text" name="facebook" id="facebook" v-model="form.facebook" />
           </td>
         </tr>
         <tr>
           <td>Interests</td>
-          <input
-            type="hidden"
-            name="interest genre"
-            placeholder="Genre"
-            ref="interest_genre_input"
-          />
+          <input type="hidden" name="interest genre" placeholder="Genre" ref="interest_genre_input" />
           <td>
-            <genre-select
-              @change="interestGenresChanged"
-              :min="2"
-              :max="4"
-              tabindex="16"
-              :disabled="submitting"
-              :populated="app.user.interests"
-              style="width:100%;"
-            />
+            <genre-select @change="interestGenresChanged" :min="2" :max="4" tabindex="16" :disabled="submitting"
+              :populated="app.user.interests" style="width:100%;" />
             <span class="error-msg">{{ errors.first("interest genre") }}</span>
           </td>
         </tr>
       </table>
 
       <div style="margin: 30px 0;">
-        <ph-button size="medium" @click.native="save" :loading="submitting"
-          >Save</ph-button
-        >
+        <ph-button size="medium" @click.native="save" :loading="submitting">Save</ph-button>
       </div>
     </ph-panel>
   </div>
@@ -167,7 +131,7 @@ export default {
       form: {
         first_name: "",
         last_name: "",
-        email: "",
+        // email: "",
         bio: "",
         phone: "",
         web: "",
@@ -195,7 +159,7 @@ export default {
   created() {
     this.form.first_name = this.app.user.first_name;
     this.form.last_name = this.app.user.last_name;
-    this.form.email = this.app.user.email;
+    // this.form.email = this.app.user.email;
     this.form.bio = this.app.user.bio;
     this.form.phone = this.app.user.phone;
     this.form.web = this.app.user.social_web;
@@ -247,7 +211,7 @@ export default {
               this.$notify({
                 group: "main",
                 type: "success",
-                title: "<img src='/img/success.gif' alt='success' style='background:transparent'>",
+                title: "<img src='/img/confirm.gif' alt='success' style='background:transparent'>",
               });
             })
             .catch((err) => {
@@ -269,6 +233,7 @@ export default {
 table {
   width: 100%;
 }
+
 td {
   padding: 15px 10px;
   vertical-align: middle;
@@ -278,12 +243,14 @@ td {
     font-size: 14px;
   }
 }
+
 input:not([type="radio"]):not([type="checkbox"]),
 textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 5px;
 }
+
 .error-msg {
   color: #ff6e6e;
   position: absolute;

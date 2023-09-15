@@ -78,7 +78,7 @@ class MyAccountController extends Controller
     {
         $request->user()->first_name = $request->first_name;
         $request->user()->last_name = $request->last_name;
-        $request->user()->email = $request->email;
+        // $request->user()->email = $request->email;
         $request->user()->bio = $request->bio;
         $request->user()->phone = $request->phone;
         $request->user()->social_web = $request->web;

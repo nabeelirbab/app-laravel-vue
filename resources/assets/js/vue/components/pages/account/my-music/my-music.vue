@@ -28,7 +28,10 @@
       </div>
     </div>
 
-    <spinner style="margin: 5em auto;" :animation-duration="1000" :size="60" color="black" v-else />
+    <!-- <spinner style="margin: 5em auto;" :animation-duration="1000" :size="60" color="black" v-else /> -->
+    <div class="phase-loading widget-center" v-else>
+      <img src="/img/phase-loading.gif" alt="" srcset="">
+    </div>
   </div>
 </template>
 
@@ -76,6 +79,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

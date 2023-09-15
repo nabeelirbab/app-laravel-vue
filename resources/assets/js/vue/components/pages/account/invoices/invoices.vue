@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading" class="phase-loading">
+    <div v-if="loading" class="phase-loading widget-center">
       <img src="/img/phase-loading.gif" alt="" srcset="">
     </div>
     <div v-else>
@@ -97,13 +97,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.phase-loading {
-  text-align: center;
-
-  img {
-    width: 150px;
-  }
-}
 
 table {
   width: 100%;

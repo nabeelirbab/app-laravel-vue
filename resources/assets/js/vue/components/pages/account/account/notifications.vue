@@ -77,90 +77,95 @@
             </div>
             <ph-button size="medium" @click.native="save" :loading="submitting">Save</ph-button>
         </div>
-        <spinner style="margin: 3em auto;"
+        <!-- <spinner style="margin: 3em auto;"
 
                  v-else
                  :animation-duration="1000"
                  :size="60"
                  :color="'black'"
-        />
+        /> -->
+        <div class="phase-loading widget-center" v-else>
+            <img src="/img/phase-loading.gif" alt="" srcset="">
+        </div>
     </ph-panel>
 </template>
 
 <script>
-    import { HalfCircleSpinner as Spinner } from 'epic-spinners'
+import { HalfCircleSpinner as Spinner } from 'epic-spinners'
 
-    export default {
-        data () {
-            return {
-                loaded: false,
-                submitting: false,
-                options: {
-                    activity_follower_on_me_email: false,
-                    activity_share_on_mine_email: false,
-                    activity_post_from_followee_email: false,
-                    activity_like_on_mine_email: false,
-                    activity_comment_on_mine_email: false,
-                    activity_message_email: false,
-                    phase_new_features_email: false,
-                    phase_surveys_feedback_email: false,
-                    phase_tips_offers_email: false,
-                    phase_newsletter_email: false,
-                }
+export default {
+    data() {
+        return {
+            loaded: false,
+            submitting: false,
+            options: {
+                activity_follower_on_me_email: false,
+                activity_share_on_mine_email: false,
+                activity_post_from_followee_email: false,
+                activity_like_on_mine_email: false,
+                activity_comment_on_mine_email: false,
+                activity_message_email: false,
+                phase_new_features_email: false,
+                phase_surveys_feedback_email: false,
+                phase_tips_offers_email: false,
+                phase_newsletter_email: false,
             }
-        },
-        computed: {
-
-        },
-        mounted: function() {
-            this.fetch();
-        },
-        methods: {
-            fetch() {
-                this.loaded = false;
-                axios.get('/api/account/notifications').then(response => {
-                    for (var property in response.data) {
-                        response.data[property] = !!response.data[property];
-                    }
-                    this.options = response.data;
-                }).finally(() => {
-                    this.loaded = true;
-                });
-            },
-            save() {
-                this.submitting = true;
-                axios.post('/api/account/notifications', this.options).then(response => {
-                    this.$notify({
-                        group: 'main',
-                        type: 'success',
-                        title: "<img src='/img/success.gif' alt='success'>",
-                    });
-                }).catch(() => {
-                    this.$notify({
-                        group: 'main',
-                        type: 'error',
-                        title: 'Error saving notification settings. Please try again later',
-                    });
-                }).finally(() => {
-                    this.submitting = false;
-                });
-            }
-        },
-        components: {
-            Spinner
         }
+    },
+    computed: {
+
+    },
+    mounted: function () {
+        this.fetch();
+    },
+    methods: {
+        fetch() {
+            this.loaded = false;
+            axios.get('/api/account/notifications').then(response => {
+                for (var property in response.data) {
+                    response.data[property] = !!response.data[property];
+                }
+                this.options = response.data;
+            }).finally(() => {
+                this.loaded = true;
+            });
+        },
+        save() {
+            this.submitting = true;
+            axios.post('/api/account/notifications', this.options).then(response => {
+                this.$notify({
+                    group: 'main',
+                    type: 'success',
+                    title: "<img src='/img/confirm.gif' alt='success'>",
+                });
+            }).catch(() => {
+                this.$notify({
+                    group: 'main',
+                    type: 'error',
+                    title: 'Error saving notification settings. Please try again later',
+                });
+            }).finally(() => {
+                this.submitting = false;
+            });
+        }
+    },
+    components: {
+        Spinner
     }
+}
 </script>
 
 <style lang="scss" scoped>
-    .options-container {
-        margin: 15px 0;
-        overflow: auto;
-    }
-    .options-column {
-        lost-column: 1/2;
-    }
-    li {
-        margin: 5px 0;
-    }
+.options-container {
+    margin: 15px 0;
+    overflow: auto;
+}
+
+.options-column {
+    lost-column: 1/2;
+}
+
+li {
+    margin: 5px 0;
+}
 </style>

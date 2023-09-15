@@ -26,7 +26,10 @@
       </ph-button>
     </div>
     <div v-if="loading || loadingNextPage">
-      <spinner style="margin: 3em auto;" :animation-duration="1000" :size="60" :color="'black'" />
+      <div class="phase-loading widget-center">
+        <img src="/img/phase-loading.gif" alt="" srcset="">
+      </div>
+      <!-- <spinner style="margin: 3em auto;" :animation-duration="1000" :size="60" :color="'black'" /> -->
     </div>
   </div>
 </template>
@@ -59,7 +62,7 @@ export default {
     },
     createButtonTooltip() {
       return this.isAccountVerifying
-        ? { content: 'We are just verifying your account', targetClasses: ['toolTipBg'], classes: ['asdasd', 'fvfvf'] }
+        ? { content: 'We are just verifying your account' }
         : null;
     },
     createButtonStyle() {
@@ -109,7 +112,8 @@ export default {
 .vue-tooltip {
   background: red !important;
 }
-.tooltip-arrow{
+
+.tooltip-arrow {
   border-color: red !important;
 }
 </style>

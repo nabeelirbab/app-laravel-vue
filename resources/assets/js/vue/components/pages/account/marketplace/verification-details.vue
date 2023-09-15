@@ -108,7 +108,7 @@ export default {
           Vue.$notify({
             group: 'main',
             type: 'success',
-            title: '<img src="/img/success.gif" alt="success">',
+            title: '<img src="/img/confirm.gif" alt="success" width="60%">',
           })
           this.$emit('document_uploaded')
           this.verified = true;

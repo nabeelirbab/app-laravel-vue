@@ -1,5 +1,14 @@
 <template>
     <ph-panel>
+        <!-- Overlay for Notify -->
+        <overlay-notify :is-visible="loading">
+            <!-- Content of the overlay -->
+            <div class="overlay-content">
+                <!-- <spinner style="margin: 3em auto;" :animation-duration="1000" :size="80" color="black" /> -->
+                <img src="/img/phase-loading.gif" alt="" srcset="">
+                <h3>Redirecting to stripe...</h3>
+            </div>
+        </overlay-notify>
         <!-- <h2 v-if="business_type == 'individual'">Personal Details</h2> -->
         <!-- <h2 v-else>Account's Business Details</h2> -->
         <!-- <hr /> -->
@@ -332,8 +341,7 @@
             </div>
             <div class="stripe-status-headings">
                 <h5>Account details verified: </h5>
-                <i class="fa fa-times" aria-hidden="true"
-                    v-if="isAccountDetailsVerified()"></i>
+                <i class="fa fa-times" aria-hidden="true" v-if="isAccountDetailsVerified()"></i>
                 <i class="fa fa-check" aria-hidden="true" v-else></i>
 
             </div>
@@ -359,10 +367,12 @@
 <script>
 import { mapState } from "vuex";
 import CountrySelect from "../../../modals/upload/country-select";
+import OverlayNotify from './../../../layout/overlay-notify.vue';
 
 export default {
     components: {
         CountrySelect,
+        OverlayNotify
     },
     name: "personal-details",
     props: {
@@ -495,10 +505,10 @@ export default {
                 this.verification = false;
             }
         },
-        isPayoutEnabled(){
+        isPayoutEnabled() {
             return this.account && this.account.payouts_enabled;
         },
-        isAccountDetailsVerified(){
+        isAccountDetailsVerified() {
             return this.account && this.account.external_accounts.data.length > 0 && this.account.requirements.eventually_due.length > 0;
         },
         selectFile() {
@@ -609,7 +619,7 @@ export default {
                                 Vue.$notify({
                                     group: "main",
                                     type: "success",
-                                    title: "<img src='/img/success.gif' alt='success'>",
+                                    title: "<img src='/img/confirm.gif' alt='success'>",
                                 });
                             })
                             .catch((error) => {

@@ -126,9 +126,9 @@
             <div class="input">
               <div>Email:</div>
               <div :class="{ 'email-input': true, valid: isValid }">
-                <input type="email" v-model="data.personal.email" placeholder="aaron@gmail.com"
+                <input type="email" v-model="data.personal.email"
                   v-validate="'required|email|max:255'" data-vv-as="email address" data-vv-validate-on="focusout"
-                  name="personal-email" tabindex="8" :disabled="submitting">
+                  name="personal-email" tabindex="8" :disabled="submitting" placeholder="Enter Email">
                 <svg viewBox="0 0 18 18">
                   <path
                     d="M11.5,10.5 C6.4987941,17.5909626 1,3.73719105 11.5,6 C10.4594155,14.5485365 17,13.418278 17,9 C17,4.581722 13.418278,1 9,1 C4.581722,1 1,4.581722 1,9 C1,13.418278 4.581722,17 9,17 C13.418278,17 17,13.42 17,9">
@@ -138,7 +138,7 @@
                 <p class="error-message">
                   {{ errors.first("personal-email") }}
                 </p>
-                <p class="error-message" v-show="validationErrors['personal.email']" style="bottom: -40px">
+                <p class="error-message" v-show="validationErrors['personal.email']">
                   The email has been taken
                 </p>
               </div>
@@ -784,8 +784,8 @@ select {
 .error-message {
   font-size: 12px;
   position: absolute;
-  /*bottom: -25px;*/
-  top: 35px;
+  bottom: -25px;
+  // top: 35px;
   color: red;
   clear: both;
 }

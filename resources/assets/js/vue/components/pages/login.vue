@@ -5,18 +5,22 @@
     </div>
 
     <!-- Overlay for Notify -->
-    <overlay-notify :is-visible="isOverlayVisible" :duration="6500" @close="hideOverlay">
+    <overlay-notify :is-visible="isOverlayVisible" :duration="$route.query['email_verified'] === '1' ? 6500 : null"
+      @close="hideOverlay">
       <!-- Content of the overlay -->
       <div class="overlay-content">
         <div v-if="$route.query['email_verified'] === '1'">
           <email-verified-svg></email-verified-svg>
           <h2>Email Verified.</h2>
-          <span style="color: blue;cursor: pointer">Login</span>
+          <!-- <span style="color: blue;cursor: pointer">Login</span> -->
         </div>
         <div v-else>
+          <div class="overLayClose" @click="hideOverlay">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </div>
           <email-not-verified-svg></email-not-verified-svg>
-          <h2>Verify your email address</h2>
-          <span>Check your email to complete verification</span>
+          <h2>Registration complete</h2>
+          <span>go to your email to verify</span>
         </div>
         <!-- <img slot="imageSrc" src="/img/Resized_mail.gif" alt="verified" srcset="" /> -->
         <!-- <div v-html="overlayContent" @click="handleOverlayClick"></div> -->
@@ -30,17 +34,17 @@
       </p> -->
       <form class="form-login" @submit.prevent="formSubmit">
         <input type="email" name="email" placeholder="Email" v-model="email" v-validate="'required|email'"
-          :class="{ error: errors.has('email') }" />
+          :class="{ error: errors.has('email') }" data-vv-validate-on="focusout" />
         <span class="error-msg" v-if="errors.has('email')">{{
           errors.first("email")
         }}</span>
 
         <input type="password" name="password" placeholder="Password" v-model="password" v-validate="'required'"
-          :class="{ error: errors.has('password') }" />
+          :class="{ error: errors.has('password') }" data-vv-validate-on="focusout" />
         <span class="error-msg" v-if="errors.has('password')">{{
           errors.first("password")
         }}</span>
-
+        <span v-if="showMessage" style="color: red;font-size: 12px;">{{ showMessage }}</span>
         <!-- <div style="display: flex; justify-content: space-between"> -->
         <label style="display: block">
           <input type="checkbox" name="remember" id="remember" v-model="remember" />
@@ -146,10 +150,13 @@ export default {
                 this.password = "";
 
                 this.$store.commit("app/setUser", response.data.user);
-                window.location = "/admin";
+                // window.location = "/admin";
+                location.reload()
+
               } else {
                 if (response.data.deactivated) {
                   this.deActivatedUser = true;
+                  this.showMessage = response.data.message;
                 } else if (response.data.banned) {
                   this.banned = true;
                 } else {
@@ -179,6 +186,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.overLayClose {
+  position: absolute;
+  top: 10px;
+  font-size: 30px;
+  right: 10px;
+  cursor: pointer;
+}
+
 .no-top {
   text-align: center;
 }

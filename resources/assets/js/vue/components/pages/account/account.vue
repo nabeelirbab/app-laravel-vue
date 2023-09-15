@@ -18,34 +18,46 @@
 </template>
 
 <script>
-    import SidebarGroup from 'global/sidebar-group';
-    import AccountMenu from './account-menu';
-    import { UserEvents } from "events";
+import SidebarGroup from 'global/sidebar-group';
+import AccountMenu from './account-menu';
+import { UserEvents } from "events";
 
-    import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
-    export default {
-        data () {
-            return {
-                pageTitle: 'My Account',
-            }
-        },
-        created: function() {
-            if(!this.app.user.loggedin) {
-                this.$router.push({path: '/login'});
-            }
-            UserEvents.$on('updateTitle', title => this.pageTitle = title)
-        },
-        components: {
-            SidebarGroup,
-            AccountMenu,
-        },
-        computed: {
-            ...mapState(['app'])
+export default {
+    data() {
+        return {
+            pageTitle: 'My Account',
         }
+    },
+    created: function () {
+        if (!this.app.user.loggedin) {
+            this.$router.push({ path: '/login' });
+        }
+        UserEvents.$on('updateTitle', title => this.pageTitle = title)
+    },
+    components: {
+        SidebarGroup,
+        AccountMenu,
+    },
+    computed: {
+        ...mapState(['app'])
     }
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.phase-loading {
+    text-align: center;
 
+    img {
+        width: 150px;
+    }
+}
+.widget-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 </style>
