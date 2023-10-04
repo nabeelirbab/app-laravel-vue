@@ -1,14 +1,15 @@
 <template>
   <div class="page-content-padded">
-    <div class="phase-logo-outline-top-left">
+    <!-- <div class="phase-logo-outline-top-left">
       <img src="/img/logo_outline_top_left.png" alt="" srcset="">
-    </div>
+    </div> -->
 
     <!-- Overlay for Notify -->
     <overlay-notify :is-visible="isOverlayVisible" :duration="$route.query['email_verified'] === '1' ? 6500 : null"
       @close="hideOverlay">
       <!-- Content of the overlay -->
       <div class="overlay-content">
+        <img src="/img/logo.png" alt="" srcset="" class="overlay-logo">
         <div v-if="$route.query['email_verified'] === '1'">
           <email-verified-svg></email-verified-svg>
           <h2>Email Verified.</h2>
@@ -20,7 +21,7 @@
           </div>
           <email-not-verified-svg></email-not-verified-svg>
           <h2>Registration complete</h2>
-          <span>go to your email to verify</span>
+          <span>Go to your email to verify</span>
         </div>
         <!-- <img slot="imageSrc" src="/img/Resized_mail.gif" alt="verified" srcset="" /> -->
         <!-- <div v-html="overlayContent" @click="handleOverlayClick"></div> -->
@@ -61,9 +62,9 @@
       </form>
     </div>
 
-    <div class="phase-logo-outline-bottom-right">
+    <!-- <div class="phase-logo-outline-bottom-right">
       <img src="/img/logo_outline_bottom_right.png" alt="" srcset="">
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -189,31 +190,37 @@ export default {
 .overLayClose {
   position: absolute;
   top: 10px;
-  font-size: 30px;
+  font-size: 50px;
   right: 10px;
   cursor: pointer;
+}
+
+.overlay-logo {
+  position: absolute;
+  top: 10px;
+  left: 44%;
 }
 
 .no-top {
   text-align: center;
 }
 
-.phase-logo-outline-top-left {
-  img {
-    position: absolute;
-    width: 40%;
-    top: 0px;
-  }
-}
+// .phase-logo-outline-top-left {
+//   img {
+//     position: absolute;
+//     width: 40%;
+//     top: 0px;
+//   }
+// }
 
-.phase-logo-outline-bottom-right {
-  img {
-    position: absolute;
-    width: 40%;
-    bottom: 0px;
-    right: 0px;
-  }
-}
+// .phase-logo-outline-bottom-right {
+//   img {
+//     position: absolute;
+//     width: 40%;
+//     bottom: 0px;
+//     right: 0px;
+//   }
+// }
 
 form.form-login {
   width: 30%;

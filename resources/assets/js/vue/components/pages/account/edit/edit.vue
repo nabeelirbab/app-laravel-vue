@@ -211,7 +211,7 @@ export default {
               this.$notify({
                 group: "main",
                 type: "success",
-                title: "<img src='/img/confirm.gif' alt='success' style='background:transparent'>",
+                title: "<img src='/img/confirm.gif' alt='success' style='background:transparent',width=60%>",
               });
             })
             .catch((err) => {

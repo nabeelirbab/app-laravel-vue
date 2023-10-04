@@ -313,7 +313,7 @@
         </div>
       </div>
 
-      <div class="register-form-inputs" v-if="selectedPlan.role.name == 'pro'">
+      <!-- <div class="register-form-inputs" v-if="selectedPlan.role.name == 'pro'">
         <div class="full-width">
           <div class="input">
             <div>Direct debit terms & conditions:</div>
@@ -325,7 +325,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="register-form-inputs">
         <div class="full-width">
@@ -379,7 +379,7 @@ export default {
     return {
       isOverlayVisible: false,
       emptyArtistType: false,
-      emptyDirectDebit: false,
+      // emptyDirectDebit: false,
       artistGenresString: "",
       interestGenresString: "",
       validationErrors: "",
@@ -475,10 +475,10 @@ export default {
         return 0;
       }
 
-      if (this.data.direct_debit == false && this.selectedPlan.role.name == "pro") {
-        this.emptyDirectDebit = true;
-        return 0;
-      }
+      // if (this.data.direct_debit == false && this.selectedPlan.role.name == "pro") {
+      //   this.emptyDirectDebit = true;
+      //   return 0;
+      // }
 
       this.submitted = true;
       this.$validator.validate().then((passes) => {

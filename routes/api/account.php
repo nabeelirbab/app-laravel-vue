@@ -61,6 +61,8 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
         Route::post('update/file', 'MyAccountMarketplaceController@updateFile');
         Route::post('create', 'MyAccountMarketplaceController@store');
 
+        Route::post('subscription-checkout', 'MyAccountMarketplaceController@subsCheckout');
+
 //        Route::get('files', 'MyAccountMarketplaceController@getFiles');
 //        Route::get('get_file/{id}', 'MyAccountMarketplaceController@getFile');
     });

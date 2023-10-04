@@ -6,6 +6,7 @@ use App\Genre;
 use App\Events\FreezeAccount;
 use App\Events\BanUserAccount;
 use App\Events\UnFreezeAccount;
+use App\Http\Controllers\Account\MyAccountMarketplaceController;
 use App\Http\Controllers\Controller;
 use App\Mail\UserFreeze;
 use Illuminate\Http\Request;
@@ -171,6 +172,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:255',
+            'path' => 'nullable',
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
             'email' => "required|email|unique:users,email,{$id}",
@@ -188,6 +190,8 @@ class UserController extends Controller
         if (!$validated['password']) {
             $validated = Arr::except($validated, ['password']);
         }
+
+        $validated['path'] = strtolower(str_replace(' ', '_', $request->name));
 
         $user = User::findOrFail($id);
         $user->syncRoles($validated['role']);
@@ -210,6 +214,8 @@ class UserController extends Controller
         $user->approved_at = now();
         $user->save();
         Mail::to($user->email)->send(new UserApproved($user));
+
+        MyAccountMarketplaceController::subsCheckout($user);
 
         return redirect('/admin/users');
     }

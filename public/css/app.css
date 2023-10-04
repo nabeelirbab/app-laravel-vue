@@ -813,6 +813,7 @@ main.viewport {
   top: 35vh !important;
   display: grid !important;
   place-content: center;
+  left: calc(50% - 100px) !important;
 }
 
 .vue-notification-phase {

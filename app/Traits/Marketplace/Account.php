@@ -5,6 +5,8 @@ namespace App\Traits\Marketplace;
 use App\User;
 use Stripe\Account as StripeAccount;
 use Stripe\AccountLink as StripeAccountLink;
+use Stripe\Checkout\Session as StripeCheckoutSession;
+use Stripe\Subscription as StripeSubscription;
 
 trait Account
 {
@@ -15,181 +17,79 @@ trait Account
         return StripeAccount::retrieve($this->accountId(), $this->stripeOptions());
     }
 
+    public function getAccountByUser($id)
+    {
+        if (!$id) return;
+
+        return StripeAccount::retrieve($id, $this->stripeOptions());
+    }
+
     public function createAccount($data)
     {
-        // dd($data);
-        // if ($data['account']['business_type'] == 'individual') {
         $account = StripeAccount::create([
             'country' => !empty($data['country']) ? $data['country'] : 'GB',
             'type' => 'custom',
             'requested_capabilities' => ['card_payments', 'transfers'],
-            // 'account_token' => $data['account_token'],
             'email' => $data['account']['email'],
             'metadata' => [
                 'internal_id' => $this->id,
             ],
-            // 'individual' => [
-            //     'first_name' => $data['account']['first_name'],
-            //     'last_name' => $data['account']['last_name'],
-            //     'email' => $data['account']['email'],
-            //     'phone' => $data['account']['phone'],
-            //     'nationality' => $data['account']['country'],
-            //     'dob' => [
-            //         'day' => $data['account']['dob']['day'],
-            //         'month' => $data['account']['dob']['month'],
-            //         'year' => $data['account']['dob']['year'],
-            //     ],
-            //     'address' => [
-            //         'city' => $data['account']['address']['city'],
-            //         'line1' => $data['account']['address']['line1'],
-            //         'line2' => $data['account']['address']['line2'],
-            //         'postal_code' => $data['account']['address']['postal_code'],
-            //         'country' => $data['account']['country'],
-            //     ],
-            // 'relationship' => [
-            //     'title' => $data['account']['title'],
-            //     'percent_ownership' => $data['account']['percentage'],
-            //     'country' => $data['account']['country'],
-            //     'director' => $data['account']['relationship'] == 'director' ? true : false,
-            //     'owner' => $data['account']['relationship'] == 'owner' ? true : false,
-            //     'representative' => $data['account']['relationship'] == 'representative' ? true : false,
-            // ],
-            // ],
-            // 'external_account' => [
-            //     'object' => 'bank_account',
-            //     'account' => $data['account_token'],
-            //     'bank_name' => $data['account']['account_name'],
-            //     'country' => $data['account']['account_country'],
-            //     "currency" => "gbp",
-            //     "account_number" => $data['account']['account_number']
-            // ],
-            // 'business_profile' => [
-            //     'mcc' => 5815,
-            //     'name' => $data['account']['company_name'],
-            //     'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
-            //     'product_description' => 'Music in digital form (WAV/MP3) formats',
-            // ],
         ], $this->stripeOptions());
-        // } else {
-        //     $account = StripeAccount::create([
-        //         'country' => !empty($data['account']['country']) ? $data['account']['country'] : 'GB',
-        //         'type' => 'custom',
-        //         'requested_capabilities' => ['card_payments', 'transfers'],
-        //         'account_token' => $data['account_token'],
-        //         'email' => $this->email,
-        //         'metadata' => [
-        //             'internal_id' => $this->id,
-        //         ],
-        //         // 'individual' => [
-        //         //     'first_name' => $data['account']['first_name'],
-        //         //     'last_name' => $data['account']['last_name'],
-        //         //     'email' => $data['account']['email'],
-        //         //     'phone' => $data['account']['phone'],
-        //         //     'nationality' => $data['account']['country'],
-        //         //     'dob' => [
-        //         //         'day' => $data['account']['dob']['day'],
-        //         //         'month' => $data['account']['dob']['month'],
-        //         //         'year' => $data['account']['dob']['year'],
-        //         //     ],
-        //         //     'address' => [
-        //         //         'city' => $data['account']['address']['city'],
-        //         //         'line1' => $data['account']['address']['line1'],
-        //         //         'line2' => $data['account']['address']['line2'],
-        //         //         'postal_code' => $data['account']['address']['postal_code'],
-        //         //         'country' => $data['account']['country'],
-        //         //     ],
-        //         // 'relationship' => [
-        //         //     'title' => $data['account']['title'],
-        //         //     'percent_ownership' => $data['account']['percentage'],
-        //         //     'country' => $data['account']['country'],
-        //         //     'director' => $data['account']['relationship'] == 'director' ? true : false,
-        //         //     'owner' => $data['account']['relationship'] == 'owner' ? true : false,
-        //         //     'representative' => $data['account']['relationship'] == 'representative' ? true : false,
-        //         // ],
-        //         // ],
-        //         // 'company' => [
-        //         //     'name' => $data['account']['company_name'] ? $data['account']['company_name'] : "Phase",
-        //         //     'phone' => $data['account']['business_number'],
-        //         //     'registration_number' => $data['account']['crn'],
-        //         //     'structure' => $data['account']['business_structure'],
-        //         //     'address' => [
-        //         //         'city' => $data['account']['companyAddress']['city'],
-        //         //         'line1' => $data['account']['companyAddress']['line1'],
-        //         //         'line2' => $data['account']['companyAddress']['line2'],
-        //         //         'postal_code' => $data['account']['companyAddress']['postal_code'],
-        //         //         'country' => $data['account']['country'],
-        //         //     ],
-        //         // ],
-        //         'external_account' => [
-        //             'object' => 'bank_account',
-        //             'account' => $data['account_token'],
-        //             'bank_name' => $data['account']['account_name'],
-        //             'country' => $data['account']['account_country'],
-        //             "currency" => "gbp",
-        //             "account_number" => $data['account']['account_number']
-        //         ],
-        //         'business_profile' => [
-        //             'mcc' => 5815,
-        //             'name' => $data['account']['company_name'],
-        //             'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
-        //             'product_description' => 'Music in digital form (WAV/MP3) formats',
-        //         ],
-        //     ], $this->stripeOptions());
-        //     $person = StripeAccount::createPerson($account['id'], [
-        //         'first_name' => $data['account']['first_name'],
-        //         'last_name' => $data['account']['last_name'],
-        //         'email' => $data['account']['email'],
-        //         'phone' => $data['account']['phone'],
-        //         'nationality' => $data['account']['country'],
-        //         'dob' => [
-        //             'day' => $data['account']['dob']['day'],
-        //             'month' => $data['account']['dob']['month'],
-        //             'year' => $data['account']['dob']['year'],
-        //         ],
-        //         'address' => [
-        //             'city' => $data['account']['address']['city'],
-        //             'line1' => $data['account']['address']['line1'],
-        //             'line2' => $data['account']['address']['line2'],
-        //             'postal_code' => $data['account']['address']['postal_code'],
-        //             'country' => $data['account']['country'],
-        //         ],
-        //         'relationship' => [
-        //             'title' => $data['account']['title'],
-        //             'percent_ownership' => $data['account']['percentage'],
-        //             // 'country' => $data['account']['country'],
-        //             'director' => $data['account']['relationship'] == 'director' ? true : false,
-        //             'owner' => $data['account']['relationship'] == 'owner' ? true : true,
-        //             'representative' => $data['account']['relationship'] == 'representative' ? true : true,
-        //         ],
-        //         'verification' => [
-        //             'document' => [
-        //                 'front' => $data['account']['identity_document']['document']['front']
-        //             ]
-        //         ],
-        //     ], $this->stripeOptions());
-        // }
-        $accountLink = StripeAccountLink::create([
-            'account' => $account->id,
-            'refresh_url' => env('STRIPE_REFRESH_URL'),
-            'return_url' => env('STRIPE_RETURN_URL'),
-            'type' => 'account_onboarding',
-            'collect' => 'eventually_due',
-        ], $this->stripeOptions());
+
+        $sessionCheckout = $this->sessionCheckoutSetup($account->country);
+
+        $accountLink = $this->createAccountLink($account->id, $this->is_pro, $sessionCheckout->url);
 
         $this->stripe_account_id = $account->id;
         $this->save();
 
         return $accountLink->url;
-
-        // header("Location: " . $accountLink->url);
-        // exit;
-
-        // return redirect($accountLink->url);
-
-
-        // $this->redirectUrl = $accountLink->url;
-
         // return $account;
+    }
+
+    public function createAccountLink($id, $isPro, $checkoutUrl)
+    {
+
+        return StripeAccountLink::create([
+            'account' => $id,
+            'refresh_url' => env('STRIPE_REFRESH_URL'),
+            'return_url' => $isPro ? $checkoutUrl : env('STRIPE_RETURN_URL'),
+            'type' => 'account_onboarding',
+            'collect' => 'eventually_due',
+        ], $this->stripeOptions());
+    }
+
+    public function sessionCheckoutSetup($country)
+    {
+        return StripeCheckoutSession::create([
+            'mode' => 'setup',
+            'customer' => $this->stripe_id,
+            'payment_method_types' => $country == 'GB' ? ['bacs_debit'] : ['sepa_debit'],
+            'success_url' => env('STRIPE_CHECKOUT_RETURN_URL'),
+            'cancel_url' =>  env('STRIPE_REFRESH_URL')
+        ], $this->stripeOptions());
+    }
+
+    public function subscriptionCheckout()
+    {
+        // dd("asdasdasd", $this);
+        $stripeAccount = $this->getAccount();
+        // dd($stripeAccount);
+
+        $checkout =  StripeSubscription::create([
+            'customer' => $this->stripe_id,
+            'items' => [
+                $stripeAccount['country'] === "GB" ? ['price' => 'artist_pro'] : ['price' => 'price_1NuW5kJ05tUsYkdQvvsV61DV'],
+            ],
+            'trial_period_days' => '30',
+        ], $this->stripeOptions());
+
+        // dd($checkout);
+
+        return [
+            'user_id' => $stripeAccount['metadata']['internal_id'],
+            'subscription_details' => $checkout
+        ];
     }
 
     public function updateAccountFile($data)
@@ -224,41 +124,7 @@ trait Account
             'collect' => 'eventually_due',
         ], $this->stripeOptions());
 
-        // dd($accountLink);
         return $accountLink->url;
-        // dd($data);
-        // if ($data['business_type'] == 'individual') {
-        //     $updateData = [
-        //         'account_token' => $data['account_token'],
-        //         'email' => $data['account']['email'],
-        //         'business_profile' => [
-        //             'url' => isset($data['account']['website']) ? $data['account']['website'] : 'https://phase.uk',
-        //         ]
-        //     ];
-
-        //     if (isset($data['bank']['account_number'])) {
-        //         $updateData['external_account'] = [
-        //             'object' => 'bank_account',
-        //             'account' => $data['account_token'],
-        //             'bank_name' => $data['bank']['name'],
-        //             'country' => $data['bank']['country'],
-        //             'currency' => 'gbp',
-        //             'account_number' => $data['bank']['account_number']
-        //         ];
-        //     }
-
-        //     return StripeAccount::update($this->accountId(), $updateData, $this->stripeOptions());
-        // } elseif ($data['business_type'] == 'company') {
-        //     return StripeAccount::update($this->accountId(), [
-        //         'account_token' => $data['account_token'],
-        //         'email' => $data['account']['email'],
-        //     ], $this->stripeOptions());
-        // } else {
-        //     return StripeAccount::update($this->accountId(), [
-        //         'account_token' => $data['account_token'],
-        //         'email' => $data['account']['email'],
-        //     ], $this->stripeOptions());
-        // }
     }
 
     public function deleteAccount()

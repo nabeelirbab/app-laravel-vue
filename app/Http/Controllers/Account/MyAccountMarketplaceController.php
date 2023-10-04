@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Services\SubscriptionService;
 
 class MyAccountMarketplaceController extends Controller
 {
@@ -60,18 +61,19 @@ class MyAccountMarketplaceController extends Controller
 
     public function update(Request $request)
     {
-        // update user in the app.
-        // $user = Auth::user();
-        // $user->first_name = $request->account['first_name'];
-        // $user->last_name = $request->account['last_name'];
-        // $user->email = $request->account['email'];
-        // $user->save();
-
         return [
             'account' => Auth::user()->updateAccount([
                 'account_id' => $request->account,
             ]),
         ];
+    }
+
+
+    public static function subsCheckout($user)
+    {
+        $service = new SubscriptionService();
+        $userSubsDetails = $user->subscriptionCheckout();
+        return $service->createSubscription($userSubsDetails);
     }
 
     public function getBankAccounts()

@@ -60,7 +60,8 @@ export default {
   created() {
     UserEvents.$emit("updateTitle", "Billing");
     this.getInvoices();
-    this.getPaymentMethod()
+    this.getPaymentMethod();
+    this.subCheckout();
   },
 
   methods: {
@@ -92,12 +93,17 @@ export default {
           console.log("billing card", this.card);
         })
     },
+    async subCheckout() {
+      await axios.post('/api/account/marketplace/subscription-checkout')
+        .then(response => {
+          console.log(response);
+        })
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 table {
   width: 100%;
 

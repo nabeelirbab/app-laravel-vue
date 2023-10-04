@@ -84,7 +84,7 @@
                  :size="60"
                  :color="'black'"
         /> -->
-        <div class="phase-loading widget-center" v-else>
+        <div class="phase-loading" v-else>
             <img src="/img/phase-loading.gif" alt="" srcset="">
         </div>
     </ph-panel>
@@ -136,7 +136,7 @@ export default {
                 this.$notify({
                     group: 'main',
                     type: 'success',
-                    title: "<img src='/img/confirm.gif' alt='success'>",
+                    title: "<img src='/img/confirm.gif' alt='success' width='60%'>",
                 });
             }).catch(() => {
                 this.$notify({

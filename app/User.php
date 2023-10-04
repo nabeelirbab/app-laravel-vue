@@ -79,6 +79,7 @@ class User extends Authenticatable
         // 'interests',
         //        'plays',
         'is_recent',
+        'is_pro',
         //        'stripe_account_id',
         //        'on_grace_period',
     ];
@@ -131,6 +132,15 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function getIsProAttribute()
+    {
+        if ($this->hasRole('pro')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getAccountTypeAttribute()

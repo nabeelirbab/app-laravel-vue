@@ -388,6 +388,7 @@ class SearchController extends Controller
 
         $releaseIds = $releaseQuery->pluck("id")->toArray();
         $releaseNames = $releaseQuery->pluck("name")->toArray();
+
         $tracks =  DB::table('tracks')
             ->select(DB::raw('tracks.*, users.name as artist_name, users.email as artist_email, users.path as artist_path'))
             ->join('releases', 'tracks.release_id', '=', 'releases.id')
@@ -406,13 +407,28 @@ class SearchController extends Controller
             })
             ->get()
             ->map(function ($track) {
+                // dd($track);
                 $tempTrack = Track::where('id', $track->id)->first();
                 // $track->streamable = Asset::with('files')->where('id', $track->streamable_id)->first();
+                // dd($tempTrack->streamable);
                 $track->type = 'track';
-                $track->streamable = $tempTrack->streamable;
-                $track->is_liked = $tempTrack->is_liked;
-                $track->is_shared = $tempTrack->is_shared;
-                $track->is_recent = $tempTrack->is_recent;
+                // $track->streamable = $tempTrack->streamable;
+                
+                // Check if $tempTrack exists and has 'streamable' property
+                if ($tempTrack && property_exists($tempTrack, 'streamable')) {
+                    $track->streamable = $tempTrack->streamable;
+                } else {
+                    $track->streamable = null;
+                }
+
+                $track->is_liked = $tempTrack ? $tempTrack->is_liked : null;
+                $track->is_shared = $tempTrack ? $tempTrack->is_shared : null;
+                $track->is_recent = $tempTrack ? $tempTrack->is_recent : null;
+
+                // $track->is_liked = $tempTrack->is_liked;
+                // $track->is_shared = $tempTrack->is_shared;
+                // $track->is_recent = $tempTrack->is_recent;
+
                 $track->release = Release::where('id', $track->release_id)->first();
                 $track->artist = [
                     'name' => $track->artist_name,
@@ -427,7 +443,7 @@ class SearchController extends Controller
                 return $track;
             });
 
-
+        // dd($tracks);
 
         $trackfilter = new Filter($tracks);
 

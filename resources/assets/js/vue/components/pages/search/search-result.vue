@@ -8,6 +8,9 @@
             <li class="load-more-icon">
                 <button class="btn" @click="userLoad" v-if="counts.user > pages.user" v-show="!loadingUserMore">Load
                     More</button>
+                <div class="more-search-loading" v-show="loadingUserMore">
+                    <img src="/img/phase-loading.gif" alt="" srcset="">
+                </div>
             </li>
             <!-- <li class="load-more-icon">
                 <i class="fa fa-plus-circle"></i>
@@ -17,9 +20,9 @@
             </li> -->
         </ul>
         <!-- <spinner style="margin: 2em auto" v-show="loadingUserMore" :animation-duration="1000" :size="60" color="black" /> -->
-        <div class="phase-loading" v-show="loadingUserMore">
+        <!-- <div class="phase-loading" v-show="loadingUserMore">
             <img src="/img/phase-loading.gif" alt="" srcset="">
-        </div>
+        </div> -->
         <!-- <span style="color: red;" v-else>No users found in this search!</span> -->
 
         <h6>Releases: {{ releases.length }} Results</h6>
@@ -31,6 +34,9 @@
                 <button class="btn" @click="releaseLoad" v-if="counts.release > pages.release"
                     v-show="!loadingReleaseMore">Load
                     More</button>
+                <div class="more-search-loading" v-show="loadingReleaseMore">
+                    <img src="/img/phase-loading.gif" alt="" srcset="">
+                </div>
             </li>
             <!-- <li class="load-more-icon" @click="releaseLoad" v-if="counts.release > pages.release"
                 v-show="!loadingReleaseMore">
@@ -41,9 +47,9 @@
             </li> -->
         </ul>
         <!-- <spinner style="margin: 2em auto" v-show="loadingReleaseMore" :animation-duration="1000" :size="60" color="black" /> -->
-        <div class="phase-loading" v-show="loadingReleaseMore">
+        <!-- <div class="phase-loading" v-show="loadingReleaseMore">
             <img src="/img/phase-loading.gif" alt="" srcset="">
-        </div>
+        </div> -->
         <!-- <span style="color: red;" v-else>No releases found in this search!</span> -->
 
 
@@ -55,6 +61,9 @@
             <li class="load-more-icon">
                 <button class="btn" @click="trackLoad" v-if="counts.track > pages.track" v-show="!loadingTrackMore">Load
                     More</button>
+                <div class="more-search-loading" v-show="loadingTrackMore">
+                    <img src="/img/phase-loading.gif" alt="" srcset="">
+                </div>
             </li>
             <!-- <li class="load-more-icon" @click="trackLoad" v-if="counts.track > pages.track" v-show="!loadingTrackMore">
                 <i class="fa fa-plus-circle"></i>
@@ -64,9 +73,9 @@
             </li> -->
         </ul>
         <!-- <spinner style="margin: 2em auto" v-show="loadingTrackMore" :animation-duration="1000" :size="60" color="black" /> -->
-        <div class="phase-loading" v-show="loadingTrackMore">
+        <!-- <div class="phase-loading" v-show="loadingTrackMore">
             <img src="/img/phase-loading.gif" alt="" srcset="">
-        </div>
+        </div> -->
         <!-- <span style="color: red;" v-else>No tracks found in this search!</span> -->
 
     </div>
@@ -119,11 +128,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Koulen&family=Lato&family=Nunito&family=Playfair+Display:ital@1&family=Prata&family=Raleway:ital,wght@1,100&family=Roboto&family=Roboto+Condensed&family=Teko&display=swap');
 
-.btn {
+.more-search-loading {
+    text-align: center;
+    margin: 33px auto;
 
+    img {
+        width: 80%;
+    }
+}
+
+.btn {
     font-family: "Comfortaa", cursive;
     font-weight: 400;
     font-size: 13px;
@@ -139,7 +156,7 @@ export default {
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    margin: auto;
+    margin: 60px auto;
 }
 
 .btn:hover {
@@ -158,7 +175,7 @@ h6 {
 }
 
 .load-more-icon {
-    margin: 61px 0px;
+    /* margin: 61px 0px; */
     width: 160px;
 }
 

@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
         $stripeUser = $request->user()->createOrGetStripeCustomer();
         $user = Cashier::findBillable($stripeUser->id);
 
-        if (! $user->hasPaymentMethod()) {
+        if (!$user->hasPaymentMethod()) {
             return [
                 'success' => false,
                 'message' => 'You need to add a card to your billing section first.'
@@ -85,16 +85,16 @@ class SubscriptionController extends Controller
 
     public function restartSubscription(Request $request, $planid)
     {
-//        $plan = Plan::findOrFail($planid);
-//        $user = $request->user();
-//
-//        $subscription = Subscription::findUserOnPlan($user->id, $plan->id)->first();
-//
-//        $subscription->restart();
-//
-//        return [
-//            'success' => true,
-//            'subscription' => $subscription->refresh(),
-//        ];
+        //        $plan = Plan::findOrFail($planid);
+        //        $user = $request->user();
+        //
+        //        $subscription = Subscription::findUserOnPlan($user->id, $plan->id)->first();
+        //
+        //        $subscription->restart();
+        //
+        //        return [
+        //            'success' => true,
+        //            'subscription' => $subscription->refresh(),
+        //        ];
     }
 }
