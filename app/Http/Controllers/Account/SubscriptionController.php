@@ -11,16 +11,19 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use App\Http\Controllers\Controller;
+use App\Services\SubscriptionService;
 
 class SubscriptionController extends Controller
 {
     public function getPlans()
     {
-        return Plan::where('price', '>', 0)->get();
+        // return Plan::where('price', '>', 0)->get();
+        return SubscriptionService::getSubscriptionProducts();
     }
 
     public function getSubscriptions(Request $request)
     {
+        // return SubscriptionService::getSubscriptions();
         return $request->user()->subscriptions;
     }
 
@@ -52,10 +55,16 @@ class SubscriptionController extends Controller
 
     public function unsubscribeFromPlan(Request $request, $planid)
     {
-        $plan = Plan::findOrFail($planid);
+        $updatedSubscription = SubscriptionService::cancelSubscripton($planid);
+
         $user = $request->user();
-        $subs = Subscription::with('user')->where("user_id", $user->id)->first();
-        $subscription = $user->subscription('default', Str::snake($plan->title))->cancel();
+        $subscription = Subscription::with('user')->where("user_id", $user->id)->first();
+
+        if ($subscription) {
+            // Update the stripe_status
+            $subscription->stripe_status = $updatedSubscription['status'];
+            $subscription->save();
+        }
 
         $user->syncRoles('artist');
 
@@ -63,7 +72,7 @@ class SubscriptionController extends Controller
 
         return [
             'success' => true,
-            'subscription' => $subscription->refresh(),
+            'subscription' => $subscription,
         ];
     }
 

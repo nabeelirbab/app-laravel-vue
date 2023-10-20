@@ -5,8 +5,12 @@
     <p>
       All subscriptions are billed monthly.
     </p>
-    <subscription-plan v-for="plan in plans" v-if="plansLoaded && subscriptionsLoaded" :plan="plan"
-      :subscription="getSubscriptionForPlan(plan)" :key="plan.id" />
+    <!-- <subscription-plan v-for="plan in plans" v-if="plansLoaded && subscriptionsLoaded" :plan="plan"
+      :subscription="getSubscriptionForPlan(plan)" :key="plan.id" /> -->
+
+    <subscription-plan v-for="subscription in subscriptions" v-if="plansLoaded && subscriptionsLoaded"
+      :subscription="subscription" :plan="subscription.stripe_plan == 'Artist Pro EU' ? plans[0] : plans[1]" :key="subscription.id" />
+
     <div v-show="!(plansLoaded && subscriptionsLoaded)">
       <div class="phase-loading">
         <img src="/img/phase-loading.gif" alt="" srcset="">

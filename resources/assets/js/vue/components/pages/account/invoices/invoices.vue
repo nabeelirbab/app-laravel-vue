@@ -1,5 +1,7 @@
 <template>
   <div>
+    <subscriptions v-if="app.user.roles[0].name !== 'standard'" />
+
     <div v-if="loading" class="phase-loading widget-center">
       <img src="/img/phase-loading.gif" alt="" srcset="">
     </div>
@@ -41,13 +43,16 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import { UserEvents } from "events";
 import ExistingCardAccount from '../../../global/existing-card-account';
+import Subscriptions from "../account/subscriptions/subscriptions.vue";
 
 export default {
   name: "invoices",
   components: {
     ExistingCardAccount,
+    Subscriptions
   },
   data() {
     return {
@@ -56,7 +61,9 @@ export default {
       card: null,
     };
   },
-
+  computed: {
+    ...mapState(["app"]),
+  },
   created() {
     UserEvents.$emit("updateTitle", "Billing");
     this.getInvoices();

@@ -90,7 +90,7 @@
     </ph-panel>
 
     <billing />
-    <subscriptions v-if="app.user.roles[0].name !== 'standard'" />
+    <!-- <subscriptions v-if="app.user.roles[0].name !== 'standard'" /> -->
     <manage />
   </div>
 </template>
@@ -106,7 +106,7 @@ import AccountMenu from "../account-menu";
 
 import Notifications from "./notifications";
 import Billing from "./billing";
-import Subscriptions from "./subscriptions/subscriptions";
+// import Subscriptions from "./subscriptions/subscriptions";
 import Manage from "./manage";
 
 export default {
@@ -204,7 +204,7 @@ export default {
     PhButton,
     Notifications,
     Billing,
-    Subscriptions,
+    // Subscriptions,
     Manage,
   },
 };

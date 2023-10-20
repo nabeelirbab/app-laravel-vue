@@ -58,6 +58,7 @@ class User extends Authenticatable
         'social_soundcloud',
         'social_facebook',
         'notification_setting_id',
+        'artist_user_type_id'
     ];
 
     protected $hidden = [

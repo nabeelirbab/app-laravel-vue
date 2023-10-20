@@ -6,7 +6,8 @@
                     My Account
                 </router-link>
             </li>
-            <li :class="{ active: active === 'invoices' }" v-if="$can('create unlimited releases')">
+            <!-- v-if="$can('create unlimited releases')" -->
+            <li :class="{ active: active === 'invoices' }" >
                 <router-link :to="{ name: 'account_invoices' }">
                     Billing
                 </router-link>

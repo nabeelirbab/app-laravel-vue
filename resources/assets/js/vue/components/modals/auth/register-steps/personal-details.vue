@@ -126,9 +126,9 @@
             <div class="input">
               <div>Email:</div>
               <div :class="{ 'email-input': true, valid: isValid }">
-                <input type="email" v-model="data.personal.email"
-                  v-validate="'required|email|max:255'" data-vv-as="email address" data-vv-validate-on="focusout"
-                  name="personal-email" tabindex="8" :disabled="submitting" placeholder="Enter Email">
+                <input type="email" v-model="data.personal.email" v-validate="'required|email|max:255'"
+                  data-vv-as="email address" data-vv-validate-on="focusout" name="personal-email" tabindex="8"
+                  :disabled="submitting" placeholder="Enter Email">
                 <svg viewBox="0 0 18 18">
                   <path
                     d="M11.5,10.5 C6.4987941,17.5909626 1,3.73719105 11.5,6 C10.4594155,14.5485365 17,13.418278 17,9 C17,4.581722 13.418278,1 9,1 C4.581722,1 1,4.581722 1,9 C1,13.418278 4.581722,17 9,17 C13.418278,17 17,13.42 17,9">
@@ -200,6 +200,16 @@
           </div>
         </div>
       </div>
+
+      <div class="subscription-box">
+        <h2>{{ data.personal.country == "GB" ? 'Artist Pro' : 'Artist Pro EU' }}</h2>
+        <p>Include 30 days free trial.</p>
+        <span> <b>{{ data.personal.country == "GB" ? '£10' : '€12' }}</b>/month </span>
+      </div>
+
+      <div>
+      </div>
+
     </div>
     <div class="register-form-group" v-if="selectedPlan.role.name === 'artist' || selectedPlan.role.name === 'pro'">
       <h2 class="social-header">Social & Website Links</h2>
@@ -396,7 +406,7 @@ export default {
           password: "",
           password_confirmation: "",
           mobile: "",
-          country: "",
+          country: "GB",
           artist_user_type: "",
         },
         artist: {
@@ -805,5 +815,40 @@ select {
 .social-error {
   color: red;
   font-size: 12px;
+}
+
+/* Container for the subscription box */
+.subscription-box {
+  border: 1px solid #3300ff;
+  padding: 20px;
+  text-align: center;
+  border-radius: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+}
+
+/* Title for the subscription box */
+.subscription-box h2 {
+  font-size: 24px;
+  margin: 0;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Description for the subscription box */
+.subscription-box p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.subscription-box b {
+  color: #3300ff;
+}
+
+/* Subscribe button on hover */
+.subscribe-button:hover {
+  background-color: #0056b3;
 }
 </style>

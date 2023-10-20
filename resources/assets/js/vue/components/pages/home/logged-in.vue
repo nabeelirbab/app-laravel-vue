@@ -6,7 +6,10 @@
         verified successfully.</div> -->
 
       <masonry-grid v-if="app.feed.length" v-bind:feed_items="app.feed" />
-      <spinner style="margin: 3em auto;" v-else :animation-duration="1000" :size="80" color="black" />
+      <!-- <spinner style="margin: 3em auto;" v-else :animation-duration="1000" :size="80" color="black" /> -->
+      <div class="phase-loading" v-else>
+        <img src="/img/phase-loading.gif" alt="" srcset="">
+      </div>
     </div>
     <aside class="sidebar-right">
       <sidebar-group title="News" :items="news.articles.slice(0, 5)"></sidebar-group>

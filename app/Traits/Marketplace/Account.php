@@ -66,7 +66,10 @@ trait Account
             'customer' => $this->stripe_id,
             'payment_method_types' => $country == 'GB' ? ['bacs_debit'] : ['sepa_debit'],
             'success_url' => env('STRIPE_CHECKOUT_RETURN_URL'),
-            'cancel_url' =>  env('STRIPE_REFRESH_URL')
+            'cancel_url' =>  env('STRIPE_REFRESH_URL'),
+            'custom_text' => [
+                'submit' => ['message' => 'By signing up to this agreement you are agreeing to a monthly subscription of £10 for Phase - Artist PRO.'],
+            ],
         ], $this->stripeOptions());
     }
 

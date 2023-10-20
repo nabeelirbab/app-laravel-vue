@@ -9,7 +9,7 @@
       @close="hideOverlay">
       <!-- Content of the overlay -->
       <div class="overlay-content">
-        <img src="/img/logo.png" alt="" srcset="" class="overlay-logo">
+        <logo style="width: 183px;" color="black" class="overlay-logo"/>
         <div v-if="$route.query['email_verified'] === '1'">
           <email-verified-svg></email-verified-svg>
           <h2>Email Verified.</h2>
@@ -73,12 +73,14 @@ import { mapState } from "vuex";
 import OverlayNotify from "./../layout/overlay-notify.vue";
 import EmailVerifiedSvg from "./../icons/email-verified.vue";
 import EmailNotVerifiedSvg from "./../icons/email-not-verified.vue";
+import Logo from "global/logo";
 
 export default {
   components: {
     OverlayNotify,
     EmailVerifiedSvg,
-    EmailNotVerifiedSvg
+    EmailNotVerifiedSvg,
+    Logo
   },
   data() {
     return {

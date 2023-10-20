@@ -177,6 +177,7 @@ class UserController extends Controller
             'last_name' => 'required|max:255',
             'email' => "required|email|unique:users,email,{$id}",
             'role' => 'integer|required|exists:roles,id',
+            'artist_user_type_id' => 'integer|exists:artist_types,id',
             'password' => 'nullable|confirmed|min:6',
             'social_web' => 'nullable',
             'phone' => 'required|max:255',
