@@ -89,7 +89,7 @@
       <ph-button size="medium" @click.native="savePassword" :loading="password.submitting">Save</ph-button>
     </ph-panel>
 
-    <billing />
+    <!-- <billing /> -->
     <!-- <subscriptions v-if="app.user.roles[0].name !== 'standard'" /> -->
     <manage />
   </div>
@@ -105,7 +105,7 @@ import PhButton from "global/ph-button";
 import AccountMenu from "../account-menu";
 
 import Notifications from "./notifications";
-import Billing from "./billing";
+// import Billing from "./billing";
 // import Subscriptions from "./subscriptions/subscriptions";
 import Manage from "./manage";
 
@@ -203,7 +203,7 @@ export default {
     AccountMenu,
     PhButton,
     Notifications,
-    Billing,
+    // Billing,
     // Subscriptions,
     Manage,
   },

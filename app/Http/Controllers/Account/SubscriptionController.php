@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Laravel\Cashier\Cashier;
 use App\Http\Controllers\Controller;
 use App\Services\SubscriptionService;
+use Auth;
 
 class SubscriptionController extends Controller
 {
@@ -27,29 +28,35 @@ class SubscriptionController extends Controller
         return $request->user()->subscriptions;
     }
 
-    public function subscribeToPlan(Request $request, $planid)
+    public function subscribeToPlan(Request $request)
     {
-        $plan = Plan::findOrFail($planid);
-        $stripeUser = $request->user()->createOrGetStripeCustomer();
-        $user = Cashier::findBillable($stripeUser->id);
+        $user = Auth::user();
 
-        if (!$user->hasPaymentMethod()) {
-            return [
-                'success' => false,
-                'message' => 'You need to add a card to your billing section first.'
-            ];
-        }
+        $subscription = SubscriptionService::createSubscriptionWithCheckout($user);
 
-        $subscription = $user->newSubscription('default', Str::snake($plan->title))
-            ->create($user->defaultPaymentMethod()->id, [
-                'email' => $user->email
-            ]);
 
-        $user->syncRoles('pro');
+        // dd($subscription);
+        // $plan = Plan::findOrFail($planid);
+        // $stripeUser = $request->user()->createOrGetStripeCustomer();
+        // $user = Cashier::findBillable($stripeUser->id);
+
+        // if (!$user->hasPaymentMethod()) {
+        //     return [
+        //         'success' => false,
+        //         'message' => 'You need to add a card to your billing section first.'
+        //     ];
+        // }
+
+        // $subscription = $user->newSubscription('default', Str::snake($plan->title))
+        //     ->create($user->defaultPaymentMethod()->id, [
+        //         'email' => $user->email
+        //     ]);
+
+        // $user->syncRoles('pro');
 
         return [
             'success' => true,
-            'subscription' => $subscription->refresh(),
+            'subscription' => $subscription->url,
         ];
     }
 

@@ -104,12 +104,12 @@ class RegisterController extends Controller
 
         if ($type === 'pro' || $type == 'artist') {
 
-            if ($type == 'pro') {
+            // if ($type == 'pro') {
                 $user->createAsStripeCustomer([
                     'name' => $data['personal']['firstname'] . ' ' . $data['personal']['surname'],
                 ]);
-                $user->trial_ends_at = now()->addDays(30);
-            }
+                // $user->trial_ends_at = now()->addDays(30);
+            // }
 
             $genreIDs = collect($data['artist']['genres'])->pluck('id');
 

@@ -17,7 +17,7 @@
         :disabled="disabledbtn">
         Start Trial
       </ph-button>
-      
+
       <ph-button v-else-if="button === 'cancel'" size="medium" @click.native="unsubscribe" :loading="loading"
         :disabled="disabledbtn">
         Cancel
@@ -58,6 +58,9 @@ export default {
       loading: false,
       localSubscription: this.subscription,
     }
+  },
+  mounted() {
+    console.log("from sub plan");
   },
   computed: {
     ...mapState([
@@ -127,6 +130,7 @@ export default {
       // if (!this.localSubscription && (this.app.user.is_on_trial && !this.app.user.cast_last_four)) {
       //   return 'add_card'
       // }
+      console.log(this.loadSubscription);
       if (this.localSubscription) {
         let s = this.localSubscription
         if ((s.stripe_status === 'active' || s.stripe_status === 'trialing') && (s.ends_at || s.trial_ends_at)) {
@@ -284,4 +288,6 @@ export default {
   align-items: flex-end;
   justify-content: center;
 }
+
+
 </style>

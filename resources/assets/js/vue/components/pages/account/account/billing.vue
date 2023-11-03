@@ -4,7 +4,7 @@
     <hr>
     <h3>Payment Method</h3>
 
-    <existing-card-account :card="card" :actions="false" @handleRemove="handleRemove" />
+    <existing-card-account :card="card" :actions="true" @handleRemove="handleRemove" />
 
     <!-- Stripe Elements Placeholder -->
     <div id="card-element" style="margin-bottom: 20px;"></div>

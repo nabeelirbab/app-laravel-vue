@@ -10,6 +10,7 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
     Route::post('info', 'MyAccountController@postInfo');
 
     Route::post('upgrade', 'MyAccountController@upgrade');
+    Route::post('upgrade/pro', 'MyAccountController@upgradeToPro');
     Route::post('downgrade', 'MyAccountController@downgrade');
     Route::post('downgrade/pro', 'MyAccountController@downgradeToArtist');
 
@@ -28,7 +29,7 @@ Route::prefix('account')->middleware('auth')->namespace('Account')->group(functi
     Route::prefix('subscription')->group(function() {
         Route::get('plans', 'SubscriptionController@getPlans');
         Route::get('subscriptions', 'SubscriptionController@getSubscriptions');
-        Route::get('plan/{planid}/subscribe', 'SubscriptionController@subscribeToPlan');
+        Route::get('plan/subscribe', 'SubscriptionController@subscribeToPlan');
         Route::get('plan/{planid}/unsubscribe', 'SubscriptionController@unsubscribeFromPlan');
         Route::get('plan/{planid}/resume', 'SubscriptionController@resumeSubscription');
         Route::get('plan/{planid}/restart', 'SubscriptionController@restartSubscription');

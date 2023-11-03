@@ -8,6 +8,7 @@ use App\Mail\AccountUpgraded;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\SubscriptionService;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Mailcoach\Models\EmailList;
 use Spatie\Mailcoach\Models\Subscriber;
@@ -143,6 +144,20 @@ class MyAccountController extends Controller
         $user->syncRoles('artist');
         $user->save();
 
+        Mail::to($user->email)->send(new AccountUpgraded($user));
+
+        return $user->fresh();
+    }
+
+    public function upgradeToPro(Request $request)
+    {
+        $user = $request->user();
+
+        // $user->approved_at = null;
+        $user->syncRoles('pro');
+        $user->save();
+
+        SubscriptionService::createSubscriptionForPro();
         Mail::to($user->email)->send(new AccountUpgraded($user));
 
         return $user->fresh();

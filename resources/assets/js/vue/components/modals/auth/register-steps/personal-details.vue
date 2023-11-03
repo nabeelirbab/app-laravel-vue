@@ -201,12 +201,6 @@
         </div>
       </div>
 
-      <div class="subscription-box">
-        <h2>{{ data.personal.country == "GB" ? 'Artist Pro' : 'Artist Pro EU' }}</h2>
-        <p>Include 30 days free trial.</p>
-        <span> <b>{{ data.personal.country == "GB" ? '£10' : '€12' }}</b>/month </span>
-      </div>
-
       <div>
       </div>
 
@@ -527,7 +521,7 @@ export default {
                   })
                   .then((response) => {
                     this.submitting = false;
-                    const accountLinkUrl = response.data.url; // Replace with the actual URL obtained from Stripe
+                    const accountLinkUrl = response.data.url;
                     window.location.href = accountLinkUrl;
                     this.isOverlayVisible = false;
                   })
@@ -536,7 +530,6 @@ export default {
                     // this.connectErrors = error.response.data.message;
                   });
               }
-
             })
             .catch((error) => {
               console.log(error);
@@ -815,40 +808,5 @@ select {
 .social-error {
   color: red;
   font-size: 12px;
-}
-
-/* Container for the subscription box */
-.subscription-box {
-  border: 1px solid #3300ff;
-  padding: 20px;
-  text-align: center;
-  border-radius: 20px;
-  max-width: 300px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-}
-
-/* Title for the subscription box */
-.subscription-box h2 {
-  font-size: 24px;
-  margin: 0;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* Description for the subscription box */
-.subscription-box p {
-  color: #666;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.subscription-box b {
-  color: #3300ff;
-}
-
-/* Subscribe button on hover */
-.subscribe-button:hover {
-  background-color: #0056b3;
 }
 </style>

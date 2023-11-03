@@ -1,16 +1,22 @@
 <template>
   <div>
+    <!-- Overlay for Notify -->
+    <overlay-notify :is-visible="overlayLoading">
+      <!-- Content of the overlay -->
+      <div class="overlay-content">
+        <img src="/img/phase-loading.gif" alt="" srcset="">
+        <h3>Processing your subscription...</h3>
+      </div>
+    </overlay-notify>
+
+
     <subscriptions v-if="app.user.roles[0].name !== 'standard'" />
 
     <div v-if="loading" class="phase-loading widget-center">
       <img src="/img/phase-loading.gif" alt="" srcset="">
     </div>
     <div v-else>
-      <ph-panel>
-        <h2>Card Details</h2>
-        <hr>
-        <existing-card-account :card="card" :actions="true" />
-      </ph-panel>
+      <billing />
 
       <ph-panel>
         <h2 style="margin-top: 30px;">Invoices</h2>
@@ -47,18 +53,22 @@ import { mapState } from "vuex";
 import { UserEvents } from "events";
 import ExistingCardAccount from '../../../global/existing-card-account';
 import Subscriptions from "../account/subscriptions/subscriptions.vue";
+import billing from "../account/billing.vue";
+import OverlayNotify from './../../../layout/overlay-notify.vue';
 
 export default {
   name: "invoices",
   components: {
     ExistingCardAccount,
-    Subscriptions
+    Subscriptions,
+    billing,
+    OverlayNotify
   },
   data() {
     return {
       invoices: null,
       loading: false,
-      card: null,
+      overlayLoading: false,
     };
   },
   computed: {
@@ -67,10 +77,12 @@ export default {
   created() {
     UserEvents.$emit("updateTitle", "Billing");
     this.getInvoices();
-    this.getPaymentMethod();
-    this.subCheckout();
   },
-
+  mounted() {
+    if (this.$route.query['subscription'] === '1') {
+      this.upgradeToArtistPro();
+    }
+  },
   methods: {
     invoiceDate(invoice) {
       return moment.unix(invoice.created).format("DD/MM/YYYY");
@@ -83,28 +95,21 @@ export default {
       });
       return formatter.format(invoice.amount_due / 100);
     },
+    async upgradeToArtistPro() {
+      this.overlayLoading = true;
+      await axios.post('/api/account/upgrade/pro', { user_id: this.app.user })
+        .then(response => {
+          this.$store.commit('app/setUser', response.data)
+          this.overlayLoading = false;
+          window.location.href = "/account/invoices"
+        });
+    },
     async getInvoices() {
       this.loading = true;
       await axios.get("/api/account/invoices").then((response) => {
         this.invoices = response.data;
         this.loading = false;
       });
-    },
-
-    async getPaymentMethod() {
-      this.loading = true;
-      await axios.get('/api/account/billing/method')
-        .then(response => {
-          this.card = response.data.payment_method
-          this.loading = false;
-          console.log("billing card", this.card);
-        })
-    },
-    async subCheckout() {
-      await axios.post('/api/account/marketplace/subscription-checkout')
-        .then(response => {
-          console.log(response);
-        })
     },
   },
 };
