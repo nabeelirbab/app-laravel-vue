@@ -1,22 +1,20 @@
 <template>
   <div>
-    <!-- Overlay for Notify -->
-    <overlay-notify :is-visible="overlayLoading">
-      <!-- Content of the overlay -->
+    <!-- <overlay-notify :is-visible="overlayLoading">
       <div class="overlay-content">
         <img src="/img/phase-loading.gif" alt="" srcset="">
         <h3>Processing your subscription...</h3>
       </div>
-    </overlay-notify>
+    </overlay-notify> -->
 
 
-    <subscriptions v-if="app.user.roles[0].name !== 'standard'" />
+    <!-- <subscriptions v-if="app.user.roles[0].name !== 'standard'" /> -->
 
-    <div v-if="loading" class="phase-loading widget-center">
+    <div v-if="loading" class="phase-loading ">
       <img src="/img/phase-loading.gif" alt="" srcset="">
     </div>
     <div v-else>
-      <billing />
+      <!-- <billing /> -->
 
       <ph-panel>
         <h2 style="margin-top: 30px;">Invoices</h2>
@@ -53,7 +51,6 @@ import { mapState } from "vuex";
 import { UserEvents } from "events";
 import ExistingCardAccount from '../../../global/existing-card-account';
 import Subscriptions from "../account/subscriptions/subscriptions.vue";
-import billing from "../account/billing.vue";
 import OverlayNotify from './../../../layout/overlay-notify.vue';
 
 export default {
@@ -61,7 +58,6 @@ export default {
   components: {
     ExistingCardAccount,
     Subscriptions,
-    billing,
     OverlayNotify
   },
   data() {

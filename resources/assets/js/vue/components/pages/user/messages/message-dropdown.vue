@@ -103,7 +103,7 @@ export default {
   background: darken($color-grey, 3);
   position: absolute;
   right: 0;
-  top: 45px;
+  top: 61px;
   padding: 0 1em;
   z-index: 999;
 

@@ -6,9 +6,9 @@
             </div>
         </div>
 
-        <nav class="main-nav">
+        <!-- <nav class="main-nav">
             <navigation-list :items="navigation.main_menu" :menu="'main_menu'" />
-        </nav>
+        </nav> -->
     </div>
 </template>
 

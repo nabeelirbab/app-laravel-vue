@@ -177,8 +177,9 @@
                 padding: 5px;
                 margin-right: 5px;
                 cursor: pointer;
-                background: darken(white, 15);
+                background: #3523FB;
                 border-radius: 5px;
+                color: white;
 
                 &:hover {
                     background: darken(white, 20);
@@ -194,4 +195,5 @@
             width: 100%;
         }
     }
+   
 </style>

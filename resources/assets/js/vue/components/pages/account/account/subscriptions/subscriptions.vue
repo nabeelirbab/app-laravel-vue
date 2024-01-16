@@ -1,7 +1,6 @@
 <template>
   <ph-panel id="subscriptions">
     <h2>Subscriptions</h2>
-    <hr>
     <p>
       All subscriptions are billed monthly.
     </p>
@@ -118,6 +117,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h2{
+  margin-bottom: 20px;
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #30f;
+}
 p {
   margin: 10px 0;
 }

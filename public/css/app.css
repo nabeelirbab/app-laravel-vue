@@ -214,6 +214,10 @@ ul.list-inline li {
   justify-content: space-between;
 }
 
+.align-item-center {
+  align-items: center;
+}
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -368,7 +372,7 @@ hr.color-2 {
   }
 }
 .hero-content .button {
-  width: 280px;
+  width: 215px;
 }
 .hero-content .button h2 {
   font-family: "Montserrat", sans-serif;
@@ -908,9 +912,6 @@ aside.sidebar-right, aside.sidebar-left {
   overflow: hidden;
 }
 
-nav.sub-nav {
-  margin-bottom: 2em;
-}
 nav.sub-nav li {
   display: inline-block;
   font-size: 19px;

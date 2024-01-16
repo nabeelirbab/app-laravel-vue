@@ -1,9 +1,9 @@
 <template>
   <div>
     <ph-panel>
-      <h2>Edit Info</h2>
+      <h2>Profile</h2>
       <hr />
-      <table>
+      <table style="background: white;">
 
         <!-- <tr v-if="app.user.roles[0].name == 'artist' || app.user.roles[0].name == 'pro'">
           <td>Artist Type</td>
@@ -33,7 +33,7 @@
               </p>
           </td>
         </tr> -->
-        <tr>
+        <!-- <tr>
           <td>First Name</td>
           <td>
             <input type="text" name="first_name" id="first_name" v-model="form.first_name" />
@@ -44,7 +44,7 @@
           <td>
             <input type="text" name="last_name" id="last_name" v-model="form.last_name" />
           </td>
-        </tr>
+        </tr> -->
         <!-- <tr>
           <td>Email</td>
           <td>
@@ -58,6 +58,15 @@
               @keyup="bioChange"></textarea>
             <span>{{ bioLength }} of {{ bioTotalLength }} characters used.</span>
             <span class="error-msg">{{ errors.first("bio") }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Interests</td>
+          <input type="hidden" name="interest genre" placeholder="Genre" ref="interest_genre_input" />
+          <td>
+            <genre-select @change="interestGenresChanged" :min="2" :max="4" tabindex="16" :disabled="submitting"
+              :populated="app.user.interests" style="width:100%;" />
+            <span class="error-msg">{{ errors.first("interest genre") }}</span>
           </td>
         </tr>
         <!--                <tr>-->
@@ -99,15 +108,7 @@
             <input type="text" name="facebook" id="facebook" v-model="form.facebook" />
           </td>
         </tr>
-        <tr>
-          <td>Interests</td>
-          <input type="hidden" name="interest genre" placeholder="Genre" ref="interest_genre_input" />
-          <td>
-            <genre-select @change="interestGenresChanged" :min="2" :max="4" tabindex="16" :disabled="submitting"
-              :populated="app.user.interests" style="width:100%;" />
-            <span class="error-msg">{{ errors.first("interest genre") }}</span>
-          </td>
-        </tr>
+     
       </table>
 
       <div style="margin: 30px 0;">
@@ -232,6 +233,9 @@ export default {
 <style lang="scss" scoped>
 table {
   width: 100%;
+  tr{
+    padding: 0 12px;
+  }
 }
 
 td {
@@ -248,7 +252,7 @@ input:not([type="radio"]):not([type="checkbox"]),
 textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 5px;
+  padding: 10px;
 }
 
 .error-msg {
@@ -262,5 +266,8 @@ input,
 textarea {
   font-size: 16px;
   width: 100%;
+  border: 1px solid #BABABA;
+  border-radius: 5px;
 }
+
 </style>

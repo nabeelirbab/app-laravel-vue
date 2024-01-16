@@ -1,10 +1,8 @@
 <template>
   <ph-panel id="billing">
-    <h2>Billing</h2>
-    <hr>
-    <h3>Payment Method</h3>
+    <h2>Payment Methods</h2>
 
-    <existing-card-account :card="card" :actions="true" @handleRemove="handleRemove" />
+    <existing-card-account :card="card" :account="'bill'" :actions="true" @handleRemove="handleRemove" />
 
     <!-- Stripe Elements Placeholder -->
     <div id="card-element" style="margin-bottom: 20px;"></div>
@@ -112,6 +110,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h2{
+  margin-bottom: 20px;
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #30f;
+}
 .error-msg {
   color: #ff6e6e;
   font-size: 12px;

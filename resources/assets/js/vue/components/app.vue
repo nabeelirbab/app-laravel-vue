@@ -1,52 +1,36 @@
 <template>
   <div>
-    <notifications
-        group="main"
-        position="top center"
-        classes="vue-notification-phase"
-        width="400px"
-    />
-    <vue-snotify/>
-    <modals/>
-    <div
-        class="body"
-        id="page-content"
-        :class="{ 'slideout-open': slideoutActive }"
-    >
+    <notifications group="main" position="top center" classes="vue-notification-phase" width="400px" />
+    <vue-snotify />
+    <modals />
+    <div class="body" id="page-content" :class="{ 'slideout-open': slideoutActive }">
       <div class="page">
-        <aside class="main-left" :class="{ searching: search.visible }">
+        <!-- <aside class="main-left" :class="{ searching: search.visible }">
           <main-left @slideoutToggle="toggleSlideout"/>
-        </aside>
+        </aside> -->
         <main class="viewport" style="min-height: 100vh">
-          <top-bar
-              @slideoutToggle="mobileSlideoutActivte = !mobileSlideoutActivte"
-          />
-          <user-bar v-if="app.user.loggedin || $route.path !== '/'"/>
-          <only-music-bar v-if="!app.user.loggedin && $route.path === '/'"/>
+          <top-bar @slideoutToggle="mobileSlideoutActivte = !mobileSlideoutActivte" @sidebarToggle="toggleSlideout" />
+          <user-bar v-if="app.user.loggedin || $route.path !== '/'" />
+          <only-music-bar v-if="!app.user.loggedin && $route.path === '/'" />
           <!-- <transition-group mode="out-in" style="flex: 1"> -->
-          <search-view v-if="search.visible" key="search-view"/>
-          <router-view v-show="!search.visible" key="router-view"/>
+          <search-view v-if="search.visible" key="search-view" />
+          <router-view v-show="!search.visible" key="router-view" />
           <!-- </transition-group> -->
-          <vue-progress-bar/>
+          <vue-progress-bar />
         </main>
-        
-      </div>
-      <main-footer/>
 
-      <slideout-menu
-          @slideoutToggle="toggleSlideout"
-          v-if="slideoutActive"
-      />
-      <mobile-slideout-menu
-          @slideoutToggle="mobileSlideoutActivte = !mobileSlideoutActivte"
-          v-if="mobileSlideoutActivte"
-      />
+      </div>
+      <main-footer />
+
+      <slideout-menu @slideoutToggle="toggleSlideout" v-if="slideoutActive" />
+      <mobile-slideout-menu @slideoutToggle="mobileSlideoutActivte = !mobileSlideoutActivte"
+        v-if="mobileSlideoutActivte" />
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import Modals from "./modals/container";
 import SlideoutMenu from "./layout/slideout-menu";
 import MobileSlideoutMenu from "./layout/mobile-slideout-menu.vue";
@@ -56,7 +40,7 @@ import OnlyMusicBar from "./layout/only-music-bar";
 import SearchView from "./pages/search/search-view";
 import MainLeft from "./layout/main-left";
 import MainFooter from "./layout/main-footer";
-import {MessageEvents} from "../event-bus";
+import { MessageEvents } from "../event-bus";
 
 export default {
   data() {
@@ -94,7 +78,7 @@ export default {
 
     if (this.$route.query.showModal) {
       this.$modal.show(this.$route.query.showModal);
-      this.$router.push({query: {}});
+      this.$router.push({ query: {} });
     }
   },
 
@@ -104,7 +88,7 @@ export default {
       window.Echo.private(`App.User.${userId}`).notification((notification) => {
         let notificationTypeStringArray = notification.type.split("\\");
         let notificationType =
-            notificationTypeStringArray[notificationTypeStringArray.length - 1];
+          notificationTypeStringArray[notificationTypeStringArray.length - 1];
         if (notificationType == "NewMessage") {
           MessageEvents.$emit("newMessage", notification.data);
         }
@@ -157,8 +141,8 @@ export default {
       this.$store.commit("app/setSettings", window.settings);
     }
     this.$store.commit(
-        "app/setReleaseClasses",
-        window.variables.release_classes
+      "app/setReleaseClasses",
+      window.variables.release_classes
     );
     this.$store.commit("app/setMusicKeys", window.variables.music_keys);
     /*
@@ -201,7 +185,7 @@ export default {
       handler: function () {
         this.$store.state.messenger.threads.forEach((thread) => {
           Echo.channel(`thread`).listen("ThreadEvent", (event) =>
-              this.$store.commit("messenger/newMessageInThread", event)
+            this.$store.commit("messenger/newMessageInThread", event)
           );
         });
       },
@@ -214,6 +198,7 @@ export default {
 
 <style lang="scss" scoped>
 @media (max-width: 1000px) {
+
   .main-right,
   .main-left {
     display: none;

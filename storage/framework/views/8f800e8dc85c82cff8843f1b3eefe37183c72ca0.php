@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en-GB">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,35 +19,42 @@
 
         window.variables = {
             colors: {
-                colorBlue:  '#3300ff',
+                colorBlue: '#3300ff',
                 colorBlue2: '#366efc',
-                color2:     '#9eefe1',
+                color2: '#9eefe1',
             },
             stripe_public: '<?php echo e(env('STRIPE_KEY')); ?>',
             music_keys: <?php echo json_encode(App\Phase\MusicKey::all()); ?>,
-            release_classes:<?php echo json_encode(App\Phase\ReleaseClass::all()); ?>,
+            release_classes: <?php echo json_encode(App\Phase\ReleaseClass::all()); ?>,
         };
     </script>
+    <style>
+        @font-face {
+            font-family: "aquawax";
+            src: url("font/Aquawax-Light.woff") format('woff');
+        }
+    </style>
 </head>
 
 <body>
-<div id="vue">
-</div>
+    <div id="vue">
+    </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-<script>
-    WebFont.load({
-        google: {
-            families: ['Comfortaa:400,700', 'Montserrat:400,600']
-        }
-    });
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                families: ['Comfortaa:400,700', 'Montserrat:400,600']
+            }
+        });
+    </script>
 
-<script src="https://js.stripe.com/v3/"></script>
-<script src="/js/manifest.js"></script>
-<script src="/js/vendor.js"></script>
-<script src="/js/app.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="/js/manifest.js"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
 
 </body>
+
 </html>
 <?php /**PATH C:\xampp\htdocs\phase\resources\views/vue.blade.php ENDPATH**/ ?>

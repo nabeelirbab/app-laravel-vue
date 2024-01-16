@@ -1,14 +1,17 @@
 <template>
-    <div class="page-content-padded">
+    <div class="page-content-padded" style="padding: 0;">
         <!-- <aside class="sidebar-right">
             <sidebar-group title="My Tracks" :view-all="true" :items="[]"></sidebar-group>
             <sidebar-group title="My Albums" :view-all="true" :items="[]"></sidebar-group>
         </aside> -->
-        <div v-if="app.user.loggedin" class="page-main">
-            <account-menu active="account"></account-menu>
-            <transition mode="out-in">
-                <router-view></router-view>
-            </transition>
+        <div v-if="app.user.loggedin" class="page-main" style="display:flex">
+            <!-- {{ $router }} -->
+            <account-menu :active="activeTab" @handleActiveTab="handleActiveTab"></account-menu>
+            <div style="width:80%">
+                <transition mode="out-in">
+                    <router-view></router-view>
+                </transition>
+            </div>
         </div>
         <!-- <aside class="sidebar-right">
             <sidebar-group title="Followed" :view-all="true" :items="[]"></sidebar-group>
@@ -28,6 +31,12 @@ export default {
     data() {
         return {
             pageTitle: 'My Account',
+            activeTab: 'account',
+        }
+    },
+    methods: {
+        handleActiveTab(tab) {
+            this.activeTab = tab
         }
     },
     created: function () {
@@ -54,7 +63,8 @@ export default {
         width: 150px;
     }
 }
-.widget-center{
+
+.widget-center {
     display: flex;
     justify-content: center;
     align-items: center;

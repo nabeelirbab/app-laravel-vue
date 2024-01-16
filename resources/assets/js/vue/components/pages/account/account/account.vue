@@ -6,18 +6,69 @@
     <ph-panel v-if="app.user.status === 'frozen'">
       <p>Your account is currently frozen</p>
     </ph-panel>
+    <manage />
+    
+    <notifications />
     <ph-panel id="email">
-      <h2>Email Address</h2>
-      <hr />
-      <table>
-        <tr>
-          <td>Your Email</td>
-          <td>{{ app.user.email }}</td>
-        </tr>
-        <tr>
-          <td>New Email</td>
-          <td>
-            <!-- <input
+      <h2>Security</h2>
+      <div class="two-col-panel-block">
+        <div class="col-panel-block">
+          <div class="heading-panel-block">
+            <h4>PASSWORD</h4>
+          </div>
+          <table>
+            <tr>
+              <td>Current Password</td>
+              <td>
+                <input type="password" name="password-current"  class="input" data-vv-scope="form-password"
+                  v-validate.disable="'required'" v-model="password.current" placeholder="Current Password" />
+                <span class="error-msg">{{
+                  errors.first("form-password.password-current")
+                }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>New Password</td>
+              <td >
+                  <input type="password" name="password-new" class="input" data-vv-scope="form-password"
+                  v-validate.disable="{ required: true }" v-model="password.new" placeholder="New Password" />
+                <span class="error-msg">{{
+                  errors.first("form-password.password-new")
+                }}</span>
+             
+              </td>
+            </tr>
+            <tr v-if="password.new">
+              <td>Confirm Password</td>
+              <td>
+                <input type="password" name="password-confirm" data-vv-scope="form-password" v-validate.disable="{
+                  is: password.new,
+                  required: true,
+                  max: 255,
+                }" v-model="password.confirm" placeholder="Confirm Password" />
+                <span class="error-msg">{{
+                  errors.first("form-password.password-confirm")
+                }}</span>
+              </td>
+            </tr>
+          </table>
+
+          <ph-button size="small" @click.native="savePassword" :loading="password.submitting">Save</ph-button>
+        </div>
+        <div class="border-line"></div>
+        <div class="col-panel-block">
+          <div class="heading-panel-block">
+            <h4>EMAIL</h4>
+          </div>
+          <table>
+            <tr>
+              <td>Your Email</td>
+              <td>{{ app.user.email }}</td>
+            </tr>
+            <tr>
+              <td>New Email</td>
+              <td>
+                <!-- <input
               type="email"
               name="email-address"
               data-vv-scope="form-email"
@@ -26,72 +77,32 @@
               placeholder="New Email"
             /> -->
 
-            <div :class="{ 'email-input': true, valid: isValid }">
-              <input type="email" v-model="email.address" name="email-address" placeholder="Enter new address"
-                v-validate="'required|email'" data-vv-scope="form-email" data-vv-validate-on="focusout">
-              <svg viewBox="0 0 18 18">
-                <path
-                  d="M11.5,10.5 C6.4987941,17.5909626 1,3.73719105 11.5,6 C10.4594155,14.5485365 17,13.418278 17,9 C17,4.581722 13.418278,1 9,1 C4.581722,1 1,4.581722 1,9 C1,13.418278 4.581722,17 9,17 C13.418278,17 17,13.42 17,9">
-                </path>
-                <polyline points="5 9.25 8 12 13 6"></polyline>
-              </svg>
-            </div>
+                <div :class="{ 'email-input': true, valid: isValid }">
+                  <input type="email" v-model="email.address" name="email-address" placeholder="Enter new address"
+                    v-validate="'required|email'" data-vv-scope="form-email" data-vv-validate-on="focusout">
+                  <svg viewBox="0 0 18 18">
+                    <path
+                      d="M11.5,10.5 C6.4987941,17.5909626 1,3.73719105 11.5,6 C10.4594155,14.5485365 17,13.418278 17,9 C17,4.581722 13.418278,1 9,1 C4.581722,1 1,4.581722 1,9 C1,13.418278 4.581722,17 9,17 C13.418278,17 17,13.42 17,9">
+                    </path>
+                    <polyline points="5 9.25 8 12 13 6"></polyline>
+                  </svg>
+                </div>
 
-            <span class="error-msg">{{
-              errors.first("form-email.email-address")
-            }}</span>
-          </td>
-        </tr>
-      </table>
+                <span class="error-msg">{{
+                  errors.first("form-email.email-address")
+                }}</span>
+              </td>
+            </tr>
+          </table>
 
-      <ph-button size="medium" @click.native="saveEmail" :loading="email.submitting">Save</ph-button>
+          <ph-button size="small" @click.native="saveEmail" :loading="email.submitting">Save</ph-button>
+        </div>
+      </div>
+
     </ph-panel>
-    <notifications />
-    <ph-panel id="password">
-      <h2>Password</h2>
-      <hr />
-      <table>
-        <tr>
-          <td>Current Password</td>
-          <td>
-            <input type="password" name="password-current" data-vv-scope="form-password" v-validate.disable="'required'"
-              v-model="password.current" placeholder="Current Password" />
-            <span class="error-msg">{{
-              errors.first("form-password.password-current")
-            }}</span>
-          </td>
-        </tr>
-        <tr>
-          <td>New Password</td>
-          <td>
-            <input type="password" name="password-new" data-vv-scope="form-password"
-              v-validate.disable="{ required: true }" v-model="password.new" placeholder="New Password" />
-            <span class="error-msg">{{
-              errors.first("form-password.password-new")
-            }}</span>
-          </td>
-        </tr>
-        <tr v-if="password.new">
-          <td>Confirm Password</td>
-          <td>
-            <input type="password" name="password-confirm" data-vv-scope="form-password" v-validate.disable="{
-              is: password.new,
-              required: true,
-              max: 255,
-            }" v-model="password.confirm" placeholder="Confirm Password" />
-            <span class="error-msg">{{
-              errors.first("form-password.password-confirm")
-            }}</span>
-          </td>
-        </tr>
-      </table>
-
-      <ph-button size="medium" @click.native="savePassword" :loading="password.submitting">Save</ph-button>
-    </ph-panel>
-
-    <!-- <billing /> -->
-    <!-- <subscriptions v-if="app.user.roles[0].name !== 'standard'" /> -->
-    <manage />
+    <billing />
+    <subscriptions v-if="app.user.roles[0].name !== 'standard'" />
+    <invoices />
   </div>
 </template>
 
@@ -105,8 +116,9 @@ import PhButton from "global/ph-button";
 import AccountMenu from "../account-menu";
 
 import Notifications from "./notifications";
-// import Billing from "./billing";
-// import Subscriptions from "./subscriptions/subscriptions";
+import Billing from "./billing";
+import Invoices from "../invoices/invoices.vue";
+import Subscriptions from "./subscriptions/subscriptions";
 import Manage from "./manage";
 
 export default {
@@ -203,14 +215,36 @@ export default {
     AccountMenu,
     PhButton,
     Notifications,
-    // Billing,
-    // Subscriptions,
+    Billing,
+    Subscriptions,
     Manage,
+    Invoices
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.input {
+	flex: 1;
+  display: flex;
+  width: 300px !important;
+  border-radius: 5px;
+  height: 33px;
+  padding-left: 8px !important;
+  border: 1px solid #BABABA;
+}
+.border-line{
+    width: 1px;
+    background: #30f;
+    margin-top: -10px;
+}
+
+h2{
+  margin-bottom: 20px;
+  font-size: 24px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #30f;
+}
 .email-input {
   --text: #646B8C;
   --text-placeholder: #BBC1E1;
@@ -307,6 +341,30 @@ export default {
     --tick-delay: .3s;
   }
 }
+
+.two-col-panel-block {
+  display: flex;
+  justify-content: space-between;
+
+  .col-panel-block {
+    background: #fff;
+    padding: 20px;
+    width: 45.5%;
+  
+
+    .heading-panel-block {
+      display: flex;
+      justify-content: center;
+
+      h4 {
+        float: left;
+        clear: both;
+        border-bottom: 2px solid #3300ff;
+      }
+    }
+  }
+}
+
 
 .my-account-responsive {
   @media (max-width: 450px) {
