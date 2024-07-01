@@ -14,6 +14,7 @@
 use App\Mail\TestAmazonSes;
 use Illuminate\Support\Facades\Mail;
 
+
 Route::post('/password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 // Route::post('/password/reset', 'Auth\ForgotPasswordController@index');
 Route::post('/password/change', 'Auth\ForgotPasswordController@reset')->name('password.reset');
